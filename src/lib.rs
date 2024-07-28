@@ -55,6 +55,8 @@ assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 //! `50` *(enabled by default)*: enables the function versions with 50 bits of accuracy.
 //!
 //! `24` *(enabled by default)*: enables the function versions with 24 bits of accuracy.
+//!
+//! It is a compile error to disable both features.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
