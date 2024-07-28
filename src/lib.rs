@@ -8,9 +8,9 @@ const Z0: f64 = -0.367_879_441_171_442_33;
 // 1/sqrt(e)
 const X0: f64 = 0.606_530_659_712_633_4;
 
-/// The principal branch of the Lambert W function, W_0.
+/// The principal branch of the Lambert W function, W_0(`z`).
 ///
-/// Calculated with 50 bits of precision with the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// Computed to 50 bits of accuracy by the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
 /// # Errors
 ///
@@ -19,9 +19,9 @@ pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
     dw0c(z - Z0)
 }
 
-/// The secondary branch of the Lambert W function, W_-1.
+/// The secondary branch of the Lambert W function, W_-1(`z`).
 ///
-/// Calculated with 50 bits of precision with the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// Computed to 50 bits of accuracy by the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
 /// # Errors
 ///
@@ -30,9 +30,9 @@ pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
 
-/// The principal branch of the Lambert W function, W_0.
+/// The principal branch of the Lambert W function, W_0(`z`).
 ///
-/// Calculated with 24 bits of precision with the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// Computed to 24 bits of accuracy by the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
 /// # Errors
 ///
