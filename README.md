@@ -4,7 +4,7 @@ Fast evaluation of the principal and secondary branches of the [Lambert W functi
 
 This method uses a piecewise minimax rational approximation of the function.
 
-This crate is simply a Rust port of the original code by T. Fukushima.
+This crate is simply a Rust port of the original Fortran 90 code by T. Fukushima.
 
 ## Examples
 
