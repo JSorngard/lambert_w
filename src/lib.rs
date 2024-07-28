@@ -1,5 +1,5 @@
 use core::fmt;
-use std::error::Error;
+use std::{backtrace::Backtrace, error::Error};
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
@@ -24,8 +24,14 @@ pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct LambertW0Error;
+#[derive(Debug)]
+pub struct LambertW0Error(Backtrace);
+
+impl LambertW0Error {
+    pub fn backtrace(&self) -> &Backtrace {
+        &self.0
+    }
+}
 
 impl fmt::Display for LambertW0Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -35,17 +41,36 @@ impl fmt::Display for LambertW0Error {
 
 impl Error for LambertW0Error {}
 
+#[derive(Debug)]
+pub struct LambertWm1Error {
+    backtrace: Backtrace,
+    reason: LambertWm1ErrorReason,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum LambertWm1Error {
+enum LambertWm1ErrorReason {
     ArgumentOutOfRange,
     PositiveArgument,
 }
 
+impl LambertWm1Error {
+    pub fn backtrace(&self) -> &Backtrace {
+        &self.backtrace
+    }
+
+    fn new(reason: LambertWm1ErrorReason) -> Self {
+        Self {
+            backtrace: Backtrace::capture(),
+            reason,
+        }
+    }
+}
+
 impl fmt::Display for LambertWm1Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::ArgumentOutOfRange => write!(f, "argument out of range"),
-            Self::PositiveArgument => write!(f, "positive argument"),
+        match self.reason {
+            LambertWm1ErrorReason::ArgumentOutOfRange => write!(f, "argument out of range"),
+            LambertWm1ErrorReason::PositiveArgument => write!(f, "positive argument"),
         }
     }
 }
@@ -66,7 +91,7 @@ impl Error for LambertWm1Error {}
 #[rustfmt::skip]
 fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
     if zc < 0.0 {
-        Err(LambertW0Error)
+        Err(LambertW0Error(Backtrace::capture()))
     } else if zc <= 2.549_893_906_503_473_6 {
         // W <= 0.893, X_1
         let x = zc.sqrt();
@@ -434,19 +459,21 @@ fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
 
 /// 50-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),
 /// by piecewise minimax rational function approximation
-/// 
+///
 /// NOTICE: Required are two input arguements z and its complement defined as zc = z+1/e
-/// 
+///
 /// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
 /// ported to Rust by Johanna Sörngård
-/// 
+///
 /// Reference: T. Fukushima (2020) to be submitted
 ///  "Precise and fast computation of Lambert W-functions by piecewise
 ///   rational function approximation with variable transformation"
 #[rustfmt::skip]
 fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     if zc < 0.0 {
-        Err(LambertWm1Error::ArgumentOutOfRange)
+        Err(LambertWm1Error::new(
+            LambertWm1ErrorReason::ArgumentOutOfRange,
+        ))
     } else if z <= -0.3542913309442164 {
         // W >= -1.3, X_-1
         let x = zc.sqrt();
@@ -456,7 +483,8 @@ fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
                     + x * (-6.844_284_220_083_331
                         + x * (17.084_773_793_345_27
                             + x * (-13.015_133_123_886_661
-                                + x * (3.930_360_862_953_985 + x * (-0.346_367_465_122_474_57))))))))
+                                + x * (3.930_360_862_953_985
+                                    + x * (-0.346_367_465_122_474_57))))))))
             / (1.
                 + x * (-6.627_945_599_474_763
                     + x * (17.740_962_374_121_4
@@ -655,6 +683,8 @@ fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
                                     + u * (4.641_976_809_305_971e-15
                                         + u * (-1.360_871_393_694_260_3e-23)))))))))
     } else {
-        Err(LambertWm1Error::PositiveArgument)
+        Err(LambertWm1Error::new(
+            LambertWm1ErrorReason::PositiveArgument,
+        ))
     }
 }
