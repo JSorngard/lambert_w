@@ -7,8 +7,8 @@ use crate::{LambertWm1Error, LambertWm1ErrorReason};
 /// defined as the solution of nonlinear equation, W exp(W) = z, when W < -1
 /// by piecewise minimax rational function approximation
 ///
-/// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
-/// ported to Rust by Johanna Sörngård <jsorngard@gmail.com>
+/// Created by T. Fukushima,
+/// ported to Rust by Johanna Sörngård
 ///
 /// Reference: T. Fukushima (2020) to be submitted
 ///  "Precise and fast computation of Lambert W-functions by piecewise

@@ -7,8 +7,8 @@ use crate::LambertW0Error;
 ///
 /// NOTICE: Input argument is NOT z but its complement defined as zc = z+1/e
 ///
-/// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
-/// ported to Rust by Johanna Sörngård <jsorngard@gmail.com>
+/// Created by T. Fukushima,
+/// ported to Rust by Johanna Sörngård
 ///
 /// Reference: T. Fukushima (2020) to be submitted
 ///  "Precise and fast computation of Lambert W-functions by piecewise

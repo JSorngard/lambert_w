@@ -8,7 +8,7 @@ use crate::{LambertWm1Error, LambertWm1ErrorReason};
 ///
 /// NOTICE: Required are two input arguments: z and its complement defined as zc = z+1/e
 ///
-/// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
+/// Created by T. Fukushima,
 /// ported to Rust by Johanna Sörngård
 ///
 /// Reference: T. Fukushima (2020) to be submitted

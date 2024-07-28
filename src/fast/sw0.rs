@@ -6,8 +6,8 @@ use crate::LambertW0Error;
 /// 24-bit accuracy computation of principal branch of the Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
 ///
-/// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
-/// ported to Rust by Johanna Sörngård <jsorngard@gmail.com>
+/// Created by T. Fukushima,
+/// ported to Rust by Johanna Sörngård
 ///
 /// Reference: T. Fukushima (2020) to be submitted
 ///  "Precise and fast computation of Lambert W-functions by piecewise
