@@ -1,3 +1,7 @@
+# 0.2.2
+
+ - Minor documentation improvements.
+
 # 0.2.1
 
  - Add github repository badge to `README.md`.
