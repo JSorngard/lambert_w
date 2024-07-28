@@ -2,7 +2,7 @@ use core::fmt;
 use std::backtrace::Backtrace;
 use std::error::Error;
 
-/// The error returned by the Lambert W_0 functions when the input is invalid.
+/// The error returned by the Lambert W_0 functions when the input is less than -1/e.
 #[derive(Debug)]
 pub struct LambertW0Error(Backtrace);
 
@@ -28,7 +28,7 @@ impl fmt::Display for LambertW0Error {
 
 impl Error for LambertW0Error {}
 
-/// The error returned by the Lambert W_-1 functions when the input is invalid.
+/// The error returned by the Lambert W_-1 functions when the input is positive or less than -1/e.
 #[derive(Debug)]
 pub struct LambertWm1Error {
     backtrace: Backtrace,

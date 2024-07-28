@@ -1,3 +1,5 @@
+//! Calculate the Lambert W function to 50 bits of precision.
+
 mod dw0c;
 mod dwm1c;
 
