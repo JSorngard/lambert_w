@@ -22,7 +22,7 @@ impl LambertW0Error {
 
 impl fmt::Display for LambertW0Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "argument out of range")
+        write!(f, "the argument was less than -1/e")
     }
 }
 
@@ -38,7 +38,7 @@ pub struct LambertWm1Error {
 /// The reason for the error in the Lambert W_-1 functions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LambertWm1ErrorReason {
-    ArgumentOutOfRange,
+    TooSmallArgument,
     PositiveArgument,
 }
 
@@ -67,8 +67,8 @@ impl LambertWm1Error {
 impl fmt::Display for LambertWm1Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.reason {
-            LambertWm1ErrorReason::ArgumentOutOfRange => write!(f, "argument out of range"),
-            LambertWm1ErrorReason::PositiveArgument => write!(f, "positive argument"),
+            LambertWm1ErrorReason::TooSmallArgument => write!(f, "the argument was less than -1/e"),
+            LambertWm1ErrorReason::PositiveArgument => write!(f, "the argument was positive"),
         }
     }
 }

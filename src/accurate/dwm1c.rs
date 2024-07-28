@@ -17,7 +17,7 @@ use crate::{LambertWm1Error, LambertWm1ErrorReason};
 pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     if zc < 0.0 {
         Err(LambertWm1Error::new(
-            LambertWm1ErrorReason::ArgumentOutOfRange,
+            LambertWm1ErrorReason::TooSmallArgument,
         ))
     } else if z <= -0.3542913309442164 {
         // W >= -1.3, X_-1
