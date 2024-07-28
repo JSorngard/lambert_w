@@ -8,22 +8,22 @@ This method uses a piecewise minimax rational approximation of the function.
 
 Evaluate the principal branch of the Lambert W function to high precision:
 ```rust
-use lambert_w::accurate::lambert_w0_50;
+use lambert_w::accurate::lambert_w0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w0_50(PI)?;
+let w = lambert_w0(PI)?;
 
 assert_abs_diff_eq!(w, 1.0736581947961492);
 ```
 
 or to lower precision, but with faster execution time:
 ```rust
-use lambert_w::fast::lambert_w0_24;
+use lambert_w::fast::lambert_w0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w0_24(PI)?;
+let w = lambert_w0(PI)?;
 
 assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 ```
