@@ -6,7 +6,7 @@
 //!
 //! ## Examples
 //!
-//! Evaluate the principal branch of the Lambert W function to high precision:
+//! Evaluate the principal branch of the Lambert W function to 50 bits of precision:
 //! ```
 //! # use lambert_w::LambertW0Error;
 //! use lambert_w::accurate::lambert_w0;
@@ -19,7 +19,7 @@
 //! # Ok::<(), LambertW0Error>(())
 //! ```
 //!
-//! or to lower precision, but with faster execution time:
+//! or to only 24 bits of precision, but with faster execution time:
 //! ```
 //! # use lambert_w::LambertW0Error;
 //! use lambert_w::fast::lambert_w0;
