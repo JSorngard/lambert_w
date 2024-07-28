@@ -28,6 +28,10 @@ pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
 pub struct LambertW0Error(Backtrace);
 
 impl LambertW0Error {
+    /// Returns a [`Backtrace`] to where the error was created.
+    ///
+    /// This backtrace was captured with [`Backtrace::capture`],
+    /// see it for more information about how to make this display information when printed.
     pub fn backtrace(&self) -> &Backtrace {
         &self.0
     }
@@ -54,6 +58,10 @@ enum LambertWm1ErrorReason {
 }
 
 impl LambertWm1Error {
+    /// Returns a [`Backtrace`] to where the error was created.
+    ///
+    /// This backtrace was captured with [`Backtrace::capture`],
+    /// see it for more information about how to make this display information when printed.
     pub fn backtrace(&self) -> &Backtrace {
         &self.backtrace
     }
