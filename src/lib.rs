@@ -9,11 +9,11 @@
 //! Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
 //! ```
 //! # use lambert_w::LambertW0Error;
-//! use lambert_w::accurate::lambert_w0;
+//! use lambert_w::accurate::lambert_w_0;
 //! use core::f64::consts::PI;
 //! use approx::assert_abs_diff_eq;
 //!
-//! let w = lambert_w0(PI)?;
+//! let w = lambert_w_0(PI)?;
 //!
 //! assert_abs_diff_eq!(w, 1.0736581947961492);
 //! # Ok::<(), LambertW0Error>(())
@@ -22,11 +22,11 @@
 //! or to only 24 bits of accuracy, but with faster execution time:
 //! ```
 //! # use lambert_w::LambertW0Error;
-//! use lambert_w::fast::lambert_w0;
+//! use lambert_w::fast::lambert_w_0;
 //! use core::f64::consts::PI;
 //! use approx::assert_abs_diff_eq;
 //!
-//! let w = lambert_w0(PI)?;
+//! let w = lambert_w_0(PI)?;
 //!
 //! assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 //! # Ok::<(), LambertW0Error>(())
@@ -47,8 +47,8 @@ pub(crate) const X0: f64 = 0.606_530_659_712_633_4;
 #[cfg(test)]
 mod tets {
     use super::{
-        accurate::{lambert_w0 as lambert_w0_50, lambert_wm1 as lambert_wm1_50},
-        fast::{lambert_w0 as lambert_w0_24, lambert_wm1 as lambert_wm1_24},
+        accurate::{lambert_w_0 as lambert_w0_50, lambert_w_m1 as lambert_wm1_50},
+        fast::{lambert_w_0 as lambert_w0_24, lambert_w_m1 as lambert_wm1_24},
     };
     use approx::assert_abs_diff_eq;
 

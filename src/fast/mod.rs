@@ -20,16 +20,16 @@ use crate::{LambertW0Error, LambertWm1Error};
 ///
 /// ```
 /// # use lambert_w::LambertW0Error;
-/// use lambert_w::fast::lambert_w0;
+/// use lambert_w::fast::lambert_w_0;
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
-/// let w = lambert_w0(PI)?;
+/// let w = lambert_w_0(PI)?;
 ///
 /// assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 /// # Ok::<(), LambertW0Error>(())
 /// ```
-pub fn lambert_w0(z: f64) -> Result<f64, LambertW0Error> {
+pub fn lambert_w_0(z: f64) -> Result<f64, LambertW0Error> {
     sw0(z)
 }
 
@@ -45,15 +45,15 @@ pub fn lambert_w0(z: f64) -> Result<f64, LambertW0Error> {
 ///
 /// ```
 /// # use lambert_w::LambertWm1Error;
-/// use lambert_w::fast::lambert_wm1;
+/// use lambert_w::fast::lambert_w_m1;
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
-/// let w = lambert_wm1(-1.0/PI)?;
+/// let w = lambert_w_m1(-1.0/PI)?;
 ///
 /// assert_abs_diff_eq!(w, -1.6385284199703634, epsilon = 1e-7);
 /// # Ok::<(), LambertWm1Error>(())
 /// ```
-pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
+pub fn lambert_w_m1(z: f64) -> Result<f64, LambertWm1Error> {
     swm1(z)
 }
