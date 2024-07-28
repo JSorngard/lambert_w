@@ -1,3 +1,5 @@
+//! The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
+
 use super::super::Z0;
 use crate::LambertW0Error;
 

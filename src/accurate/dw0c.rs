@@ -1,3 +1,5 @@
+//! The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
+
 use crate::LambertW0Error;
 
 /// 50-bit accuracy computation of principal branch of Lambert W function, W_0(z),
