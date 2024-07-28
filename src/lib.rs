@@ -411,7 +411,7 @@ mod tets {
     #[cfg(feature = "24")]
     #[test]
     fn test_lambert_w_m1_24() {
-        assert_eq!(lambert_w_m1_50(-1.0 / E - f64::EPSILON), None);
+        assert_eq!(lambert_w_m1_24(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_m1_24(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
