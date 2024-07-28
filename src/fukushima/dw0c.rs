@@ -11,6 +11,7 @@ use crate::LambertW0Error;
 /// Reference: T. Fukushima (2020) to be submitted
 ///  "Precise and fast computation of Lambert W-functions by piecewise
 ///   rational function approximation with variable transformation"
+// Formatting this function takes a lot of time, so I have ran `cargo fmt` on it once, and now no one else has to / Johanna.
 #[rustfmt::skip]
 pub fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
     if zc < 0.0 {
