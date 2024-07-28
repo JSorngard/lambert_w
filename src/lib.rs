@@ -55,7 +55,7 @@ pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
 
-/// The principal branch of the Lambert W function, W_0(`z`), computed to 24 bits of precision.
+/// The principal branch of the Lambert W function, W_0(`z`), computed to 24 bits of accuracy.
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
