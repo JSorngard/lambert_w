@@ -12,7 +12,7 @@ use super::Z0;
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
-/// Returns [`Option::None`] if `z` is less than -1/e.
+/// Returns [`None`] if `z` is less than -1/e.
 ///
 /// # Example
 ///
@@ -33,7 +33,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
-/// Returns [`Option::None`] if `z` is positive or less than -1/e.
+/// Returns [`None`] if `z` is positive or less than -1/e.
 ///
 /// # Example
 ///
