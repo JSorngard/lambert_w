@@ -78,10 +78,12 @@ mod tets {
     #[cfg(feature = "24")]
     use super::fast::{lambert_w_0 as lambert_w_0_24, lambert_w_m1 as lambert_w_m1_24};
     use approx::assert_abs_diff_eq;
+    use core::f64::consts::E;
 
     #[cfg(feature = "50")]
     #[test]
     fn test_lambert_w_0_50() {
+        assert_eq!(lambert_w_0_50(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_0_50(-2.678794411714424e-01).unwrap(),
             -3.993824525397807e-01
@@ -204,6 +206,7 @@ mod tets {
     #[cfg(feature = "24")]
     #[test]
     fn test_lambert_w_0_24() {
+        assert_eq!(lambert_w_0_24(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_0_24(-2.678794411714424e-01).unwrap(),
             -3.993824525397807e-01,
@@ -339,6 +342,7 @@ mod tets {
     #[cfg(feature = "50")]
     #[test]
     fn test_lambert_w_m1_50() {
+        assert_eq!(lambert_w_m1_50(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_m1_50(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
@@ -401,11 +405,13 @@ mod tets {
             lambert_w_m1_50(-1.000000000000008e-145).unwrap(),
             -3.397029099254290e+02
         );
+        assert_eq!(lambert_w_m1_50(f64::EPSILON), None);
     }
 
     #[cfg(feature = "24")]
     #[test]
     fn test_lambert_w_m1_24() {
+        assert_eq!(lambert_w_m1_50(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_m1_24(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
@@ -471,5 +477,6 @@ mod tets {
             -3.397029099254290e+02,
             epsilon = 1e-4
         );
+        assert_eq!(lambert_w_m1_24(f64::EPSILON), None);
     }
 }
