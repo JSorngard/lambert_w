@@ -9,7 +9,7 @@ use dwm1c::dwm1c;
 use super::Z0;
 use crate::error::{LambertW0Error, LambertWm1Error};
 
-/// The principal branch of the Lambert W function, W_0(`z`), computed to 50 bits of accuracy by piecewise minimax rational function approximation.
+/// Computes the principal branch of the Lambert W function, W_0(`z`) to 50 bits of accuracy by piecewise minimax rational function approximation.
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
@@ -34,7 +34,7 @@ pub fn lambert_w_0(z: f64) -> Result<f64, LambertW0Error> {
     dw0c(z - Z0)
 }
 
-/// The secondary branch of the Lambert W function, W_-1(`z`), computed to 50 bits of accuracy by piecewise minimax rational function approximation.
+/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 50 bits of accuracy by piecewise minimax rational function approximation.
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
