@@ -16,8 +16,8 @@ pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 /// # Example
 ///
 /// ```
-/// # use lambertw::LambertW0Error;
-/// use lambertw::lambert_w0_50;
+/// # use lambert_w::LambertW0Error;
+/// use lambert_w::lambert_w0_50;
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
@@ -41,8 +41,8 @@ pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
 /// # Example
 ///
 /// ```
-/// # use lambertw::LambertWm1Error;
-/// use lambertw::lambert_wm1_50;
+/// # use lambert_w::LambertWm1Error;
+/// use lambert_w::lambert_wm1_50;
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
@@ -66,8 +66,8 @@ pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
 /// # Example
 ///
 /// ```
-/// # use lambertw::LambertW0Error;
-/// use lambertw::lambert_w0_24;
+/// # use lambert_w::LambertW0Error;
+/// use lambert_w::lambert_w0_24;
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
@@ -91,8 +91,8 @@ pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
 /// # Example
 ///
 /// ```
-/// # use lambertw::LambertWm1Error;
-/// use lambertw::lambert_wm1_24;
+/// # use lambert_w::LambertWm1Error;
+/// use lambert_w::lambert_wm1_24;
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///

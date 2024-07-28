@@ -1,5 +1,5 @@
 [package]
-name = "lambertw"
+name = "lambert_w"
 version = "0.1.0"
 edition = "2021"
 
