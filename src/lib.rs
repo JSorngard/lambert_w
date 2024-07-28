@@ -12,6 +12,18 @@ pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 /// # Errors
 ///
 /// Returns an error if `z` < -1/e.
+///
+/// # Example
+///
+/// ```
+/// # use lambertw::{lambert_w0_50, LambertW0Error};
+/// # use approx::assert_abs_diff_eq;
+/// # use core::f64::consts::PI;
+/// let w = lambert_w0_50(PI)?;
+///
+/// assert_abs_diff_eq!(w, 1.0736581947961492);
+/// # Ok::<(), LambertW0Error >(())
+/// ```
 pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
     dw0c(z - Z0)
 }
@@ -23,6 +35,18 @@ pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
 /// # Errors
 ///
 /// Returns an error if `z` is positive or if `z` < -1/e.
+///
+/// # Example
+///
+/// ```
+/// # use lambertw::{lambert_wm1_50, LambertWm1Error};
+/// # use approx::assert_abs_diff_eq;
+/// # use core::f64::consts::PI;
+/// let w = lambert_wm1_50(-1.0/PI)?;
+///
+/// assert_abs_diff_eq!(w,  -1.6385284199703634);
+/// # Ok::<(), LambertWm1Error>(())
+/// ```
 pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
