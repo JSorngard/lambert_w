@@ -1,4 +1,4 @@
-//! Calculate the Lambert W function to 24 bits of precision.
+//! Calculate the Lambert W function to 24 bits of accuracy.
 
 mod sw0;
 mod swm1;
