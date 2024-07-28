@@ -3,7 +3,7 @@
 use super::super::Z0;
 use crate::LambertW0Error;
 
-/// 24-bit accuracy computation of principal branch of Lambert W function, W_0(z),
+/// 24-bit accuracy computation of principal branch of the Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
 ///
 /// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,

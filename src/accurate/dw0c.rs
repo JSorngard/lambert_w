@@ -2,7 +2,7 @@
 
 use crate::LambertW0Error;
 
-/// 50-bit accuracy computation of principal branch of Lambert W function, W_0(z),
+/// 50-bit accuracy computation of principal branch of the Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
 ///
 /// NOTICE: Input argument is NOT z but its complement defined as zc = z+1/e

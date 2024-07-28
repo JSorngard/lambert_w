@@ -3,7 +3,7 @@
 use super::super::{X0, Z0};
 use crate::{LambertWm1Error, LambertWm1ErrorReason};
 
-/// 50-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),
+/// 50-bit accuracy computation of secondary branch of the Lambert W function, W_-1(z),
 /// by piecewise minimax rational function approximation
 ///
 /// NOTICE: Required are two input arguments: z and its complement defined as zc = z+1/e

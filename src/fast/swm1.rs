@@ -3,7 +3,7 @@
 use super::super::{X0, Z0};
 use crate::{LambertWm1Error, LambertWm1ErrorReason};
 
-/// 24-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),
+/// 24-bit accuracy computation of secondary branch of the Lambert W function, W_-1(z),
 /// defined as the solution of nonlinear equation, W exp(W) = z, when W < -1
 /// by piecewise minimax rational function approximation
 ///
