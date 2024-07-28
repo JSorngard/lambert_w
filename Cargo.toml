@@ -1,8 +1,8 @@
 [package]
 name = "lambert_w"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
-authors = ["Johanna Sörngård <jsorngard@gmail.com>, Toshio Fukushima <Toshio.Fukushima@nao.ac.jp>"]
+authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics"]
 keywords = ["lambert_w", "product_log", "omega_function"]
 description = "Fast and accurate evaluation of the Lambert W function by the method of T. Fukushima."
