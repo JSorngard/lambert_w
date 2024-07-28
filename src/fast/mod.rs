@@ -14,6 +14,7 @@ use swm1::swm1;
 ///
 /// ```
 /// use lambert_w::fast::lambert_w_0;
+///
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
@@ -33,6 +34,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 ///
 /// ```
 /// use lambert_w::fast::lambert_w_m1;
+///
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///

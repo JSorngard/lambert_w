@@ -16,6 +16,7 @@ use super::Z0;
 ///
 /// ```
 /// use lambert_w::accurate::lambert_w_0;
+///
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
@@ -35,6 +36,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 ///
 /// ```
 /// use lambert_w::accurate::lambert_w_m1;
+///
 /// use approx::assert_abs_diff_eq;
 /// use core::f64::consts::PI;
 ///
