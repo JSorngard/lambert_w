@@ -13,14 +13,13 @@
     feature = "50",
     doc = r##"
 ```
-# use lambert_w::LambertW0Error;
 use lambert_w::accurate::lambert_w_0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(PI)?;
+let w = lambert_w_0(PI).unwrap();
+
 assert_abs_diff_eq!(w, 1.0736581947961492);
-# Ok::<(), LambertW0Error>(())
 ```
 "##
 )]
@@ -30,15 +29,13 @@ assert_abs_diff_eq!(w, 1.0736581947961492);
     feature = "24",
     doc = r##"
 ```
-# use lambert_w::LambertW0Error;
 use lambert_w::fast::lambert_w_0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(PI)?;
+let w = lambert_w_0(PI).unwrap();
 
 assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
-# Ok::<(), LambertW0Error>(())
 ```
 "##
 )]
@@ -65,11 +62,8 @@ compile_error!("one or both of the '24' and '50' features must be enabled");
 
 #[cfg(feature = "50")]
 pub mod accurate;
-mod error;
 #[cfg(feature = "24")]
 pub mod fast;
-
-pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
