@@ -2,6 +2,7 @@ use core::fmt;
 use std::backtrace::Backtrace;
 use std::error::Error;
 
+/// The error returned by the Lambert W_0 functions when the input is invalid.
 #[derive(Debug)]
 pub struct LambertW0Error(Backtrace);
 
@@ -27,12 +28,14 @@ impl fmt::Display for LambertW0Error {
 
 impl Error for LambertW0Error {}
 
+/// The error returned by the Lambert W_-1 functions when the input is invalid.
 #[derive(Debug)]
 pub struct LambertWm1Error {
     backtrace: Backtrace,
     reason: LambertWm1ErrorReason,
 }
 
+/// The reason for the error in the Lambert W_-1 functions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LambertWm1ErrorReason {
     ArgumentOutOfRange,
