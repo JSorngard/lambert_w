@@ -38,6 +38,30 @@ pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
 ///
 /// Returns an error if `z` < -1/e.
 pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
+    sw0(z)
+}
+
+/// The secondary branch of the Lambert W function, W_0(`z`).
+///
+/// Computed to 24 bits of accuracy by the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+///
+/// # Errors
+///
+/// Returns an error if `z` < -1/e.
+pub fn lambert_wm1_24(z: f64) -> Result<f64, LambertWm1Error> {
+    swm1(z)
+}
+
+/// 24-bit accuracy computation of principal branch of Lambert W function, W_0(z),
+/// by piecewise minimax rational function approximation
+///
+/// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
+/// ported to Rust by Johanna Sörngård <jsorngard@gmail.com>
+///
+/// Reference: T. Fukushima (2020) to be submitted
+///  "Precise and fast computation of Lambert W-functions by piecewise
+///   rational function approximation with variable transformation"
+fn sw0(z: f64) -> Result<f64, LambertW0Error> {
     if z < Z0 {
         Err(LambertW0Error::new())
     } else if z <= 2.0082178115844726563 {
@@ -212,6 +236,118 @@ pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
             / (1.
                 + y * (0.0083656818677730058769
                     + y * (5.5597154935973275364e-6 + y * (-3.7481535833151202222e-14)))))
+    }
+}
+
+/// 24-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),
+/// defined as the solution of nonlinear equation, W exp(W) = z, when W < -1
+/// by piecewise minimax rational function approximation
+///
+/// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
+/// ported to Rust by Johanna Sörngård <jsorngard@gmail.com>
+///
+/// Reference: T. Fukushima (2020) to be submitted
+///  "Precise and fast computation of Lambert W-functions by piecewise
+///   rational function approximation with variable transformation"
+fn swm1(z: f64) -> Result<f64, LambertWm1Error> {
+    if z < Z0 {
+        Err(LambertWm1Error::new(
+            LambertWm1ErrorReason::ArgumentOutOfRange,
+        ))
+    } else if z <= -0.20729377764038413899 {
+        // W >= -2.483, Y_-1
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-6.3837228228019056402
+            + x * (-74.968653259594050421
+                + x * (-19.714821552432482711 + x * (70.677326667809236886))))
+            / (1.
+                + x * (24.295836951878692244
+                    + x * (64.112460611386039710 + x * (17.994497369039313585)))))
+    } else if z <= -0.071507705083841949275 {
+        // W >= -4.032, Y_-2
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-7.7233284812299780445
+            + x * (-352.48469097042914866
+                + x * (-1242.0088903685677154 + x * (1171.6475960620499033))))
+            / (1.
+                + x * (77.681242588997413555
+                    + x * (648.56431214075246023 + x * (566.70154976436164818)))))
+    } else if z <= -0.020704412621717479786 {
+        // W >= -5.600, Y_-3
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-9.1377731417581546262
+            + x * (-1644.7244791508889407
+                + x * (-28105.096098779681470 + x * (3896.0798103909213915))))
+            / (1.
+                + x * (272.37526135123973261
+                    + x * (7929.2242612913497363 + x * (23980.122860821312510)))))
+    } else if z <= -0.0054800129452094435733 {
+        // W >= -7.178, Y_-4
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-10.603388239566372960
+            + x * (-7733.3485214986476193
+                + x * (-575482.40707964422174 + x * (-2.1545526041889783132e6))))
+            / (1.
+                + x * (1021.7938566066817287
+                    + x * (111300.22915486520918 + x * (1.2614256400088442186e6)))))
+    } else if z <= -0.0013674669892508042687 {
+        // W >= -8.766, Y_-5
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-12.108699273343437997
+            + x * (-36896.535108166377289
+                + x * (-1.1831126720106053574e7 + x * (-2.7565830813940924286e8))))
+            / (1.
+                + x * (4044.9753064880700697
+                    + x * (1.7418277619030004713e6 + x * (7.8436907380806897280e7)))))
+    } else if z <= -0.00032614226731072565915 {
+        // W >= -10.367, Y_-6
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-13.646761936746191398
+            + x * (-179086.11585715148553
+                + x * (-2.5084634935214641020e8 + x * (-2.9343700494833715019e10))))
+            / (1.
+                + x * (16743.826607737142476
+                    + x * (2.9809650946011743047e7 + x * (5.5739514816958001202e9)))))
+    } else if z <= -0.000074906612036101435088 {
+        // W >= -11.983, Y_-7
+        let x = -z / (X0 + (z - Z0).sqrt());
+        Ok((-15.212958142001646273
+            + x * (-884954.68798168953807
+                + x * (-5.5298154378633475379e9 + x * (-3.0934187435314668203e12))))
+            / (1.
+                + x * (72009.255525210120244
+                    + x * (5.5059007671875803470e8 + x * (4.4324894867000340495e11)))))
+    } else if z <= -1.0962444526410993919e-19 {
+        // W >= -47.518, V_-8
+        let u = (-z).ln();
+        Ok((-0.032401163177791086145
+            + u * (2.0281942144742502667
+                + u * (-0.52752431242592713992 + u * (0.017340294772717582230))))
+            / (1.
+                + u * (-0.45004274443891737296
+                    + u * (0.017154705753566296216 + u * (-5.2438196202718358226e-7)))))
+    } else if z <= -2.5096099299945901455e-136 {
+        // W >= -317.993, V_-9
+        let u = (-z).ln();
+        Ok((-1.4411246595812098029
+            + u * (1.2819269639980478095
+                + u * (-0.074979356113812324952 + u * (0.00047636309162069150655))))
+            / (1.
+                + u * (-0.072000873723868650424
+                    + u * (0.00047548932989597029952 + u * (-4.1714979247546840619e-10)))))
+    } else if z < 0.0 {
+        // V_-10
+        let u = (-z).ln();
+        Ok((-3.3108760911710447554
+            + u * (1.0500678809935174775
+                + u * (-0.0082367495821343204940 + u * (5.5289561594910188441e-6))))
+            / (1.
+                + u * (-0.0081892727433315511867
+                    + u * (5.5280076009711954032e-6 + u * (-3.9222773084574060594e-14)))))
+    } else {
+        Err(LambertWm1Error::new(
+            LambertWm1ErrorReason::PositiveArgument,
+        ))
     }
 }
 
