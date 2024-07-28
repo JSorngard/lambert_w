@@ -704,7 +704,7 @@ fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
 
 #[cfg(test)]
 mod tets {
-    use super::lambert_w0;
+    use super::{lambert_w0, lambert_wm1};
     use approx::assert_abs_diff_eq;
 
     #[test]
@@ -822,6 +822,72 @@ mod tets {
         assert_abs_diff_eq!(
             lambert_w0(1.000000000000000e+160).unwrap(),
             3.625205337614976e+02
+        );
+    }
+
+    #[test]
+    fn test_lambert_wm1() {
+        assert_abs_diff_eq!(
+            lambert_wm1(-3.578794411714423e-01).unwrap(),
+            -1.253493791367214,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-2.678794411714424e-01).unwrap(),
+            -2.020625228775403,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000000e-01).unwrap(),
+            -3.577152063957297
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-3.000000000000000e-02).unwrap(),
+            -5.144482721515681
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000000e-02).unwrap(),
+            -6.472775124394005,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-3.000000000000000e-03).unwrap(),
+            -7.872521380098709,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000000e-03).unwrap(),
+            -9.118006470402742,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-3.000000000000001e-04).unwrap(),
+            -1.045921112040100e+01,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000000e-04).unwrap(),
+            -1.166711453256636e+01,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-3.000000000000000e-05).unwrap(),
+            -1.297753279184081e+01,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000000e-05).unwrap(),
+            -1.416360081581018e+01,
+            epsilon = 1e-14
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000004e-75).unwrap(),
+            -1.778749628219512e+02,
+            epsilon = 1e-13
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000008e-145).unwrap(),
+            -3.397029099254290e+02
         );
     }
 }
