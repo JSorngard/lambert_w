@@ -1,4 +1,24 @@
+// -1/e
+const Z0: f64 = -0.36787944117144232160;
+// sqrt(1/e)
+const X0: f64 = 0.60653065971263342360;
+
+pub fn lambertW0(z: f64) -> Result<f64, LambertW0Error> {
+    dw0c(z - Z0)
+}
+
+pub fn lambertWm1(z: f64) -> Result<f64, LambertWm1Error> {
+    dwm1c(z, z - Z0)
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LambertW0Error;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum LambertWm1Error {
+    ArgumentOutOfRange,
+    PositiveArgument,
+}
 
 /// 50-bit accuracy computation of principal branch of Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
@@ -12,7 +32,7 @@ pub struct LambertW0Error;
 ///  "Precise and fast computation of Lambert W-functions by piecewise
 ///   rational function approximation with variable transformation"
 #[rustfmt::skip]
-pub fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
+fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
     if zc < 0.0 {
         Err(LambertW0Error)
     } else if zc <= 2.5498939065034735716 {
@@ -380,12 +400,6 @@ pub fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum LambertWm1Error {
-    ArgumentOutOfRange,
-    PositiveArgument,
-}
-
 /// 50-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),
 /// by piecewise minimax rational function approximation
 /// 
@@ -398,12 +412,7 @@ pub enum LambertWm1Error {
 ///  "Precise and fast computation of Lambert W-functions by piecewise
 ///   rational function approximation with variable transformation"
 #[rustfmt::skip]
-pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
-    // -1/e
-    const Z0: f64 = -0.36787944117144232160;
-    // sqrt(1/e)
-    const X0: f64 = 0.60653065971263342360;
-
+fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     if zc < 0.0 {
         Err(LambertWm1Error::ArgumentOutOfRange)
     } else if z <= -0.3542913309442164 {
