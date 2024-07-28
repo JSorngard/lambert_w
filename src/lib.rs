@@ -9,38 +9,64 @@
 //! ## Examples
 //!
 //! Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
-//! ```
-//! # use lambert_w::LambertW0Error;
-//! use lambert_w::accurate::lambert_w_0;
-//! use core::f64::consts::PI;
-//! use approx::assert_abs_diff_eq;
-//!
-//! let w = lambert_w_0(PI)?;
-//!
-//! assert_abs_diff_eq!(w, 1.0736581947961492);
-//! # Ok::<(), LambertW0Error>(())
-//! ```
+#![cfg_attr(
+    feature = "50",
+    doc = r##"
+```
+# use lambert_w::LambertW0Error;
+use lambert_w::accurate::lambert_w_0;
+use core::f64::consts::PI;
+use approx::assert_abs_diff_eq;
+
+let w = lambert_w_0(PI)?;
+assert_abs_diff_eq!(w, 1.0736581947961492);
+# Ok::<(), LambertW0Error>(())
+```
+"##
+)]
 //!
 //! or to only 24 bits of accuracy, but with faster execution time:
-//! ```
-//! # use lambert_w::LambertW0Error;
-//! use lambert_w::fast::lambert_w_0;
-//! use core::f64::consts::PI;
-//! use approx::assert_abs_diff_eq;
-//!
-//! let w = lambert_w_0(PI)?;
-//!
-//! assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
-//! # Ok::<(), LambertW0Error>(())
-//! ```
+#![cfg_attr(
+    feature = "24",
+    doc = r##"
+```
+# use lambert_w::LambertW0Error;
+use lambert_w::fast::lambert_w_0;
+use core::f64::consts::PI;
+use approx::assert_abs_diff_eq;
+
+let w = lambert_w_0(PI)?;
+
+assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
+# Ok::<(), LambertW0Error>(())
+```
+"##
+)]
 //!
 //! ## Speed-accuracy trade-off
 //!
 //! The 50-bit accurate versions in the [`accurate`] module are more accurate, but slightly slower, than the 24-bit accurate versions in the [`fast`] module.
 //! [`fast::lambert_w_0`] is around 15% faster than [`accurate::lambert_w_0`] and [`fast::lambert_w_m1`] is around 41% faster than [`accurate::lambert_w_m1`].
+//!
+//! ## Feature flags
+//!
+//! You can disable one of these feature flags to potentially save a little bit of binary size.
+//!
+//! `50` *(enabled by default)*: enables the function versions with 50 bits of accuracy.
+//!
+//! `24` *(enabled by default)*: enables the function versions with 24 bits of accuracy.
+//!
+//! It is a compile error to disable both features.
 
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+
+#[cfg(not(any(feature = "50", feature = "24")))]
+compile_error!("one or both of the '24' and '50' features must be enabled");
+
+#[cfg(feature = "50")]
 pub mod accurate;
 mod error;
+#[cfg(feature = "24")]
 pub mod fast;
 
 pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
@@ -51,14 +77,15 @@ pub(crate) const Z0: f64 = -0.367_879_441_171_442_33;
 // 1/sqrt(e)
 pub(crate) const X0: f64 = 0.606_530_659_712_633_4;
 
-#[cfg(test)]
+#[cfg(all(test, any(feature = "24", feature = "50")))]
 mod tets {
-    use super::{
-        accurate::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50},
-        fast::{lambert_w_0 as lambert_w_0_24, lambert_w_m1 as lambert_w_m1_24},
-    };
+    #[cfg(feature = "50")]
+    use super::accurate::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50};
+    #[cfg(feature = "24")]
+    use super::fast::{lambert_w_0 as lambert_w_0_24, lambert_w_m1 as lambert_w_m1_24};
     use approx::assert_abs_diff_eq;
 
+    #[cfg(feature = "50")]
     #[test]
     fn test_lambert_w_0_50() {
         assert_abs_diff_eq!(
@@ -180,6 +207,7 @@ mod tets {
         );
     }
 
+    #[cfg(feature = "24")]
     #[test]
     fn test_lambert_w_0_24() {
         assert_abs_diff_eq!(
@@ -314,6 +342,7 @@ mod tets {
         );
     }
 
+    #[cfg(feature = "50")]
     #[test]
     fn test_lambert_w_m1_50() {
         assert_abs_diff_eq!(
@@ -380,6 +409,7 @@ mod tets {
         );
     }
 
+    #[cfg(feature = "24")]
     #[test]
     fn test_lambert_w_m1_24() {
         assert_abs_diff_eq!(

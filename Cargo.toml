@@ -14,3 +14,17 @@ repository = "https://github.com/JSorngard/lambert_w"
 
 [dev-dependencies]
 approx = "0.5.1"
+
+[features]
+default = ["24", "50"]
+# Enables the function versions with 50 bits of accuracy.
+50 = []
+# Enables the function versions with 24 bits of accuracy.
+24 = []
+
+# docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
+[package.metadata.docs.rs]
+# Document all features.
+all-features = true
+# Enable the docsrs configuration attribute on docs.rs
+rustdoc-args = ["--cfg", "docsrs"]
