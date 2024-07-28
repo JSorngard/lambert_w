@@ -13,8 +13,6 @@ use crate::error::{LambertW0Error, LambertWm1Error};
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 ///
-/// The 24-bit version, [`fast::lambert_w_0`](crate::fast::lambert_w_0), is on average 15% faster than this one.
-///
 /// # Errors
 ///
 /// Returns an error if `z` is less than -1/e.
@@ -39,8 +37,6 @@ pub fn lambert_w_0(z: f64) -> Result<f64, LambertW0Error> {
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 50 bits of accuracy by piecewise minimax rational function approximation and variable transformations.
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// The 24-bit version, [`fast::lambert_w_m1`](crate::fast::lambert_w_m1), is on everage 41% faster than this one.
 ///
 /// # Errors
 ///

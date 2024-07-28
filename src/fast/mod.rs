@@ -1,4 +1,7 @@
 //! Calculate the Lambert W function to 24 bits of accuracy.
+//!
+//! The versions in this module are faster, but less accurate, than the 50 bit versions in the [`accurate`](crate::accurate) module.
+//! [`lambert_w_0`] is around 15% faster than [`accurate::lambert_w_0`](crate::accurate::lambert_w_0), and [`lambert_w_m1`] is around 41% faster than [`accurate::lambert_w_m1`](crate::accurate::lambert_w_m1).
 
 mod sw0;
 mod swm1;
@@ -11,8 +14,6 @@ use crate::{LambertW0Error, LambertWm1Error};
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy by piecewise minimax rational function approximation and variable transformations.
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// This version is on average 15% faster than the 50 bit accurate version, [`accurate::lambert_w_0`](crate::accurate::lambert_w_0).
 ///
 /// # Errors
 ///
@@ -38,8 +39,6 @@ pub fn lambert_w_0(z: f64) -> Result<f64, LambertW0Error> {
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy by piecewise minimax rational function approximation and variable transformations.
 ///
 /// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// This version is on average 41% faster than the 50 bit accurate version, [`accurate::lambert_w_m1`](crate::accurate::lambert_w_m1).
 ///
 /// # Errors
 ///
