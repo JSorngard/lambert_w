@@ -2,10 +2,10 @@
 name = "lambert_w"
 version = "0.1.0"
 edition = "2021"
-authors = ["Toshio Fukushima <Toshio.Fukushima@nao.ac.jp>, Johanna Sörngård <jsorngard@gmail.com>"]
+authors = ["Johanna Sörngård <jsorngard@gmail.com>, Toshio Fukushima <Toshio.Fukushima@nao.ac.jp>"]
 categories = ["mathematics"]
 keywords = ["lambert_w", "product_log", "omega_function"]
-description = "Precise and fast computation of the Lambert W function."
+description = "Fast and accurate evaluation of the Lambert W function by the method of T. Fukushima."
 rust-version = "1.65.0"
 
 [dependencies]
