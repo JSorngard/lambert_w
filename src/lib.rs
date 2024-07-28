@@ -14,7 +14,7 @@ const X0: f64 = 0.606_530_659_712_633_4;
 /// # Errors
 ///
 /// Returns an error if `z` < -1/e.
-pub fn lambert_w0(z: f64) -> Result<f64, LambertW0Error> {
+pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
     dw0c(z - Z0)
 }
 
@@ -25,7 +25,7 @@ pub fn lambert_w0(z: f64) -> Result<f64, LambertW0Error> {
 /// # Errors
 ///
 /// Returns an error if `z` is positive or if `z` < -1/e.
-pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
+pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
 
@@ -94,6 +94,191 @@ impl fmt::Display for LambertWm1Error {
 }
 
 impl Error for LambertWm1Error {}
+
+/// The principal branch of the Lambert W function, W_0.
+///
+/// Calculated with 24 bits of precision with the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+///
+/// # Errors
+///
+/// Returns an error if `z` < -1/e.
+pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
+    if z < Z0 {
+        Err(LambertW0Error(Backtrace::capture()))
+    } else if z <= 2.0082178115844726563 {
+        // W <= 0.854, X_1
+        let x = (z - Z0).sqrt();
+        Ok((-0.9999999403954018833
+            + x * (0.05573005216177780273
+                + x * (2.1269732491053174421
+                    + x * (0.8135112367835287880 + x * (0.016324880146070158165)))))
+            / (1.
+                + x * (2.2759065598634651182
+                    + x * (1.3675970138689040829 + x * (0.18615823452831621870)))))
+    } else if z <= 30.539142109510895244 {
+        // W <= 2.502, X_2
+        let x = (z - Z0).sqrt();
+        Ok((-0.98551970905999093351
+            + x * (1.0774975733813516259
+                + x * (0.87175103068177496565 + x * (0.054352728608275766374))))
+            / (1.
+                + x * (1.1861014037015433637
+                    + x * (0.24996298430828162221 + x * (0.0068813686486759124002)))))
+    } else if z <= 371.66984371375776070 {
+        // W <= 4.430, X_3
+        let x = (z - Z0).sqrt();
+        Ok((-0.76239711346368884239
+            + x * (1.2317731613363595833
+                + x * (0.24342447113056694510 + x * (0.0043206013938782355974))))
+            / (1.
+                + x * (0.57938621503586907609
+                    + x * (0.046601427736078777155 + x * (0.00043512817567474109142)))))
+    } else if z <= 4705.9189542659690377 {
+        // W <= 6.574, X_4
+        let x = (z - Z0).sqrt();
+        Ok((0.085801247434391388025
+            + x * (0.82539798099748343722
+                + x * (0.039781960760329074310 + x * (0.00018785578927583799084))))
+            / (1.
+                + x * (0.21338076817080141022
+                    + x * (0.0054626720397926935553 + x * (0.000015449534481294754830)))))
+    } else if z <= 64640.797355310089675 {
+        // W <= 8.892, X_5
+        let x = (z - Z0).sqrt();
+        Ok((1.6219245383470168742
+            + x * (0.38869145132516663564
+                + x * (0.0045750642678503511111 + x * (5.5384672148644498873e-6))))
+            / (1.
+                + x * (0.065219460735182414183
+                    + x * (0.00047882760789022508940 + x * (3.8094828146292401099e-7)))))
+    } else if z <= 965649.03087116322641 {
+        // W <= 11.351, X_6
+        let x = (z - Z0).sqrt();
+        Ok((3.6218996085695919969
+            + x * (0.14884646754880159869
+                + x * (0.00042469622409998403146 + x * (1.2790179710374216846e-7))))
+            / (1.
+                + x * (0.017985659319608747571
+                    + x * (0.000035446449757357845802 + x * (7.5062492963037047005e-9)))))
+    } else if z <= 1.5593334228038165490e7 {
+        // W <= 13.928, X_7
+        let x = (z - Z0).sqrt();
+        Ok((5.9073369739608090589
+            + x * (0.050053653594737112977
+                + x * (0.000034072148625204698714 + x * (2.4812064693655483492e-9))))
+            / (1.
+                + x * (0.0046558990016843210488
+                    + x * (2.3449445860808812050e-6 + x * (1.2631429964808461140e-10)))))
+    } else if z <= 2.7025640277241903157e8 {
+        // W <= 16.605, X_8
+        let x = (z - Z0).sqrt();
+        Ok((8.3826005848195512671
+            + x * (0.015360346475232500605
+                + x * (2.4433384397869367445e-6 + x * (4.1856803264118549639e-11))))
+            / (1.
+                + x * (0.0011507423223785867830
+                    + x * (1.4221428474813516408e-7 + x * (1.8739172026620122637e-12)))))
+    } else if z <= 4.9950187397041946355e9 {
+        // W <= 19.368, X_9
+        let x = (z - Z0).sqrt();
+        Ok((10.996674803992550975
+            + x * (0.0043942138898673832456
+                + x * (1.5966665354846778026e-7 + x * (6.2665382844968732242e-13))))
+            / (1.
+                + x * (0.00027383757675703647431
+                    + x * (8.0157062319690304209e-9 + x * (2.4956982158871730002e-14)))))
+    } else if z <= 9.7911154416726960277e10 {
+        // W <= 22.207, X_10
+        let x = (z - Z0).sqrt();
+        Ok((13.719833802350861158
+            + x * (0.0011874443805202291429
+                + x * (9.6303381200164675971e-9 + x * (8.4434524232261628808e-15))))
+            / (1.
+                + x * (0.000063056372424395349289
+                    + x * (4.2358766031098840291e-10 + x * (3.0205405005434474304e-16)))))
+    } else if z <= 2.0259753856302099683e12 {
+        // W <= 25.114, X_11
+        let x = (z - Z0).sqrt();
+        Ok((16.533119481561616886
+            + x * (0.00030583125751908040646
+                + x * (5.4112946633720098731e-10 + x * (1.0347130333704711275e-16))))
+            / (1.
+                + x * (0.000014099161212376339883
+                    + x * (2.1121095412354695063e-11 + x * (3.3526927157452469515e-18)))))
+    } else if z <= 4.4077444251477938939e13 {
+        // W <= 28.082, X_12
+        let x = (z - Z0).sqrt();
+        Ok((19.423519260478579324
+            + x * (0.000075559269761977808773
+                + x * (2.8530023120783075984e-11 + x * (1.1629627096463579569e-18))))
+            / (1.
+                + x * (3.0692092789727855657e-6
+                    + x * (9.9866613050311465475e-13 + x * (3.4376717116983915038e-20)))))
+    } else if z <= 1.0048382150571504485e15 {
+        // W <= 31.106, X_13
+        let x = (z - Z0).sqrt();
+        Ok((22.381576050041913103
+            + x * (0.000017994724029162552053
+                + x * (1.4194876420402230259e-12 + x * (1.2071105154385829867e-20))))
+            / (1.
+                + x * (6.5183962806656770340e-7
+                    + x * (4.4958665712812536150e-14 + x * (3.2755429245023581532e-22)))))
+    } else if z <= 2.3932552602359837687e16 {
+        // W <= 34.182, X_14
+        let x = (z - Z0).sqrt();
+        Ok((25.400105417092068195
+            + x * (4.1467378386579246015e-6
+                + x * (6.6962697219681791539e-14 + x * (1.1637905159506476082e-22))))
+            / (1.
+                + x * (1.3529801357030416819e-7
+                    + x * (1.9336081785325750353e-15 + x * (2.9149396199816257636e-24)))))
+    } else if z <= 5.9397996597465754346e17 {
+        // W <= 37.306, X_15
+        let x = (z - Z0).sqrt();
+        Ok((28.473455626379917708
+            + x * (9.2746824693094059019e-7
+                + x * (3.0068990159336805287e-15 + x * (1.0473557591822027852e-24))))
+            / (1.
+                + x * (2.7486489704521729110e-8
+                    + x * (7.9678987071036133398e-17 + x * (2.4331666367061529366e-26)))))
+    } else if z <= 1.5326938589901766592e19 {
+        // W <= 40.475, X_16
+        let x = (z - Z0).sqrt();
+        Ok((31.597055437846359378
+            + x * (2.0184225276786325496e-7
+                + x * (1.2895788196512908898e-16 + x * (8.8361174714101098159e-27))))
+            / (1.
+                + x * (5.4723945126098497202e-9
+                    + x * (3.1537729179929191758e-18 + x * (1.9122035132571670022e-28)))))
+    } else if z <= 4.1035659398885394135e20 {
+        // W <= 43.687, X_17
+        let x = (z - Z0).sqrt();
+        Ok((34.767124490414517175
+            + x * (4.2830799240698942932e-8
+                + x * (5.2975884121036534407e-18 + x * (7.0145515392158775378e-29))))
+            / (1.
+                + x * (1.0689301127696332436e-9
+                    + x * (1.2016699061789422951e-19 + x * (1.4195244810800985235e-30)))))
+    } else if z <= 2.1723706610490604317e141 {
+        // W <= 319.673, U_18
+        let y = z.ln();
+        Ok((-0.60702373371846192476
+            + y * (0.69828716322526983651
+                + y * (0.075795135081824754660 + y * (0.00051669256081737246814))))
+            / (1.
+                + y * (0.079048429972306018289
+                    + y * (0.00051760990899205978468 + y * (-4.2438403931981069786e-10)))))
+    } else {
+        //    U_19
+        let y = z.ln();
+        Ok((-3.1320056028863661192
+            + y * (0.94889465726532600902
+                + y * (0.0083178152961644393217 + y * (5.5587848157833492890e-6))))
+            / (1.
+                + y * (0.0083656818677730058769
+                    + y * (5.5597154935973275364e-6 + y * (-3.7481535833151202222e-14)))))
+    }
+}
 
 /// 50-bit accuracy computation of principal branch of Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
@@ -709,189 +894,323 @@ fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
 
 #[cfg(test)]
 mod tets {
-    use super::{lambert_w0, lambert_wm1};
+    use super::{lambert_w0_24, lambert_w0_50, lambert_wm1_50};
     use approx::assert_abs_diff_eq;
 
     #[test]
-    fn test_lambert_w0() {
+    fn test_lambert_w0_50() {
         assert_abs_diff_eq!(
-            lambert_w0(-2.678794411714424e-01).unwrap(),
+            lambert_w0_50(-2.678794411714424e-01).unwrap(),
             -3.993824525397807e-01
         );
         assert_abs_diff_eq!(
-            lambert_w0(6.321205588285577e-01).unwrap(),
+            lambert_w0_50(6.321205588285577e-01).unwrap(),
             4.167039988177658e-01
         );
-        assert_abs_diff_eq!(lambert_w0(9.632120558828557).unwrap(), 1.721757710976171);
+        assert_abs_diff_eq!(lambert_w0_50(9.632120558828557).unwrap(), 1.721757710976171);
         assert_abs_diff_eq!(
-            lambert_w0(9.963212055882856e+01).unwrap(),
+            lambert_w0_50(9.963212055882856e+01).unwrap(),
             3.382785211058958
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.996321205588285e+02).unwrap(),
+            lambert_w0_50(9.996321205588285e+02).unwrap(),
             5.249293782013269
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999632120558828e+03).unwrap(),
+            lambert_w0_50(9.999632120558828e+03).unwrap(),
             7.231813718542178,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999963212055883e+04).unwrap(),
+            lambert_w0_50(9.999963212055883e+04).unwrap(),
             9.284568107521959
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999996321205589e+05).unwrap(),
+            lambert_w0_50(9.999996321205589e+05).unwrap(),
             1.138335774796812e+01
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999632120559e+06).unwrap(),
+            lambert_w0_50(9.999999632120559e+06).unwrap(),
             1.351434397605273e+01
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999963212056e+07).unwrap(),
+            lambert_w0_50(9.999999963212056e+07).unwrap(),
             1.566899671199287e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999996321206e+08).unwrap(),
+            lambert_w0_50(9.999999996321206e+08).unwrap(),
             1.784172596707312e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999632120e+09).unwrap(),
+            lambert_w0_50(9.999999999632120e+09).unwrap(),
             2.002868541326992e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999963213e+10).unwrap(),
+            lambert_w0_50(9.999999999963213e+10).unwrap(),
             2.222712273495755e+01
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999996321e+11).unwrap(),
+            lambert_w0_50(9.999999999996321e+11).unwrap(),
             2.443500440493456e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999999633e+12).unwrap(),
+            lambert_w0_50(9.999999999999633e+12).unwrap(),
             2.665078750870219e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999999962e+13).unwrap(),
+            lambert_w0_50(9.999999999999962e+13).unwrap(),
             2.887327487929930e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999999996e+14).unwrap(),
+            lambert_w0_50(9.999999999999996e+14).unwrap(),
             3.110151971159478e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+16).unwrap(),
+            lambert_w0_50(1.000000000000000e+16).unwrap(),
             3.333476076844818e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+17).unwrap(),
+            lambert_w0_50(1.000000000000000e+17).unwrap(),
             3.557237716651325e+01
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+18).unwrap(),
+            lambert_w0_50(1.000000000000000e+18).unwrap(),
             3.781385607558877e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+19).unwrap(),
+            lambert_w0_50(1.000000000000000e+19).unwrap(),
             4.005876916198432e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+20).unwrap(),
+            lambert_w0_50(1.000000000000000e+20).unwrap(),
             4.230675509173839e+01
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+40).unwrap(),
+            lambert_w0_50(1.000000000000000e+40).unwrap(),
             8.763027715194720e+01
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+80).unwrap(),
+            lambert_w0_50(1.000000000000000e+80).unwrap(),
             1.790193137415062e+02,
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+120).unwrap(),
+            lambert_w0_50(1.000000000000000e+120).unwrap(),
             2.707091661024979e+02,
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+160).unwrap(),
+            lambert_w0_50(1.000000000000000e+160).unwrap(),
             3.625205337614976e+02
         );
     }
 
     #[test]
-    fn test_lambert_wm1() {
+    fn test_lambert_w0_24() {
         assert_abs_diff_eq!(
-            lambert_wm1(-3.578794411714423e-01).unwrap(),
+            lambert_w0_24(-2.678794411714424e-01).unwrap(),
+            -3.993824525397807e-01,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(6.321205588285577e-01).unwrap(),
+            4.167039988177658e-01,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.632120558828557).unwrap(),
+            1.721757710976171,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.963212055882856e+01).unwrap(),
+            3.382785211058958,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.996321205588285e+02).unwrap(),
+            5.249293782013269,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999632120558828e+03).unwrap(),
+            7.231813718542178,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999963212055883e+04).unwrap(),
+            9.284568107521959,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999996321205589e+05).unwrap(),
+            1.138335774796812e+01,
+            epsilon = 1e-8
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999632120559e+06).unwrap(),
+            1.351434397605273e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999963212056e+07).unwrap(),
+            1.566899671199287e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999996321206e+08).unwrap(),
+            1.784172596707312e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999999632120e+09).unwrap(),
+            2.002868541326992e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999999963213e+10).unwrap(),
+            2.222712273495755e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999999996321e+11).unwrap(),
+            2.443500440493456e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999999999633e+12).unwrap(),
+            2.665078750870219e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999999999962e+13).unwrap(),
+            2.887327487929930e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(9.999999999999996e+14).unwrap(),
+            3.110151971159478e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+16).unwrap(),
+            3.333476076844818e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+17).unwrap(),
+            3.557237716651325e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+18).unwrap(),
+            3.781385607558877e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+19).unwrap(),
+            4.005876916198432e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+20).unwrap(),
+            4.230675509173839e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+40).unwrap(),
+            8.763027715194720e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+80).unwrap(),
+            1.790193137415062e+02,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+120).unwrap(),
+            2.707091661024979e+02,
+            epsilon = 1e-4
+        );
+        assert_abs_diff_eq!(
+            lambert_w0_24(1.000000000000000e+160).unwrap(),
+            3.625205337614976e+02,
+            epsilon = 1e-4
+        );
+    }
+
+    #[test]
+    fn test_lambert_wm1_50() {
+        assert_abs_diff_eq!(
+            lambert_wm1_50(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-2.678794411714424e-01).unwrap(),
+            lambert_wm1_50(-2.678794411714424e-01).unwrap(),
             -2.020625228775403,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-01).unwrap(),
+            lambert_wm1_50(-1.000000000000000e-01).unwrap(),
             -3.577152063957297
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000000e-02).unwrap(),
+            lambert_wm1_50(-3.000000000000000e-02).unwrap(),
             -5.144482721515681
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-02).unwrap(),
+            lambert_wm1_50(-1.000000000000000e-02).unwrap(),
             -6.472775124394005,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000000e-03).unwrap(),
+            lambert_wm1_50(-3.000000000000000e-03).unwrap(),
             -7.872521380098709,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-03).unwrap(),
+            lambert_wm1_50(-1.000000000000000e-03).unwrap(),
             -9.118006470402742,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000001e-04).unwrap(),
+            lambert_wm1_50(-3.000000000000001e-04).unwrap(),
             -1.045921112040100e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-04).unwrap(),
+            lambert_wm1_50(-1.000000000000000e-04).unwrap(),
             -1.166711453256636e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000000e-05).unwrap(),
+            lambert_wm1_50(-3.000000000000000e-05).unwrap(),
             -1.297753279184081e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-05).unwrap(),
+            lambert_wm1_50(-1.000000000000000e-05).unwrap(),
             -1.416360081581018e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000004e-75).unwrap(),
+            lambert_wm1_50(-1.000000000000004e-75).unwrap(),
             -1.778749628219512e+02,
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000008e-145).unwrap(),
+            lambert_wm1_50(-1.000000000000008e-145).unwrap(),
             -3.397029099254290e+02
         );
     }
