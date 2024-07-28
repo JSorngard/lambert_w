@@ -12,8 +12,9 @@ use super::Z0;
 ///
 /// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///
-/// # Example
+/// # Examples
 ///
+/// Basic usage:
 /// ```
 /// use lambert_w::accurate::lambert_w_0;
 ///
@@ -24,6 +25,11 @@ use super::Z0;
 ///
 /// assert_abs_diff_eq!(w, 1.0736581947961492);
 /// ```
+/// Too small arguments result in `None`:
+/// ```
+/// # use lambert_w::accurate::lambert_w_0;
+/// assert_eq!(lambert_w_0(-1.0), None);
+/// ```
 pub fn lambert_w_0(z: f64) -> Option<f64> {
     dw0c(z - Z0)
 }
@@ -32,8 +38,9 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 ///
 /// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///
-/// # Example
+/// # Examples
 ///
+/// Basic usage:
 /// ```
 /// use lambert_w::accurate::lambert_w_m1;
 ///
@@ -43,6 +50,12 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 /// let w = lambert_w_m1(-1.0/PI).unwrap();
 ///
 /// assert_abs_diff_eq!(w,  -1.6385284199703634);
+/// ```
+/// Too small or positive arguments result in `None`:
+/// ```
+/// # use lambert_w::accurate::lambert_w_m1;
+/// assert_eq!(lambert_w_m1(-1.0), None);
+/// assert_eq!(lambert_w_m1(1.0), None);
 /// ```
 pub fn lambert_w_m1(z: f64) -> Option<f64> {
     dwm1c(z, z - Z0)

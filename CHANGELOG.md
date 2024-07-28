@@ -1,3 +1,7 @@
+# 0.2.3
+
+ - Documentation improvements.
+
 # 0.2.2
 
  - Minor documentation improvements.
