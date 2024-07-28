@@ -6,6 +6,7 @@ authors = ["Toshio Fukushima <Toshio.Fukushima@nao.ac.jp>, Johanna Sörngård <j
 categories = ["mathematics"]
 keywords = ["lambert_w", "product_log", "omega_function"]
 description = "Precise and fast computation of the Lambert W function."
+rust-version = "1.65.0"
 
 [dependencies]
 
