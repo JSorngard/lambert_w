@@ -2,7 +2,7 @@
 name = "lambert_w"
 version = "0.1.0"
 edition = "2021"
-authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
+authors = ["Toshio Fukushima <Toshio.Fukushima@nao.ac.jp>, Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics"]
 keywords = ["lambert_w", "product_log", "omega_function"]
 description = "Precise and fast computation of the Lambert W function."
