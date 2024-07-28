@@ -72,10 +72,10 @@ pub mod fast;
 pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 
 // -1/e
-pub(crate) const Z0: f64 = -0.367_879_441_171_442_33;
+const Z0: f64 = -0.367_879_441_171_442_33;
 
 // 1/sqrt(e)
-pub(crate) const X0: f64 = 0.606_530_659_712_633_4;
+const X0: f64 = 0.606_530_659_712_633_4;
 
 #[cfg(all(test, any(feature = "24", feature = "50")))]
 mod tets {
