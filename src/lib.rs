@@ -34,7 +34,7 @@
 //! # Ok::<(), LambertW0Error>(())
 //! ```
 //!
-//! ## Speed and accuracy trade-off
+//! ## Speed-accuracy trade-off
 //!
 //! The 50-bit accurate versions in the [`accurate`] module are more accurate, but slightly slower, than the 24-bit accurate versions in the [`fast`] module.
 //! [`fast::lambert_w_0`] is around 15% faster than [`accurate::lambert_w_0`] and [`fast::lambert_w_m1`] is around 41% faster than [`accurate::lambert_w_m1`].
