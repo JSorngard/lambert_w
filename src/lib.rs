@@ -4,8 +4,6 @@
 //!
 //! This method uses a piecewise minimax rational approximation of the function.
 //!
-//! This crate is a Rust port of the original Fortran 90 code by T. Fukushima.
-//!
 //! ## Examples
 //!
 //! Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
