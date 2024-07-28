@@ -52,7 +52,7 @@ pub struct LambertWm1Error {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-enum LambertWm1ErrorReason {
+pub enum LambertWm1ErrorReason {
     ArgumentOutOfRange,
     PositiveArgument,
 }
@@ -64,6 +64,11 @@ impl LambertWm1Error {
     /// see it for more information about how to make this display information when printed.
     pub fn backtrace(&self) -> &Backtrace {
         &self.backtrace
+    }
+
+    /// Returns the reason for the error.
+    pub fn reason(&self) -> LambertWm1ErrorReason {
+        self.reason
     }
 
     fn new(reason: LambertWm1ErrorReason) -> Self {
