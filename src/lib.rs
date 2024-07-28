@@ -1,12 +1,25 @@
+use core::fmt;
+use std::error::Error;
+
 // -1/e
 const Z0: f64 = -0.36787944117144232160;
 // sqrt(1/e)
 const X0: f64 = 0.60653065971263342360;
 
+/// The principal branch of the Lambert W function, W_0.
+///
+/// # Errors
+///
+/// Returns an error if `z` < -1/e.
 pub fn lambert_w0(z: f64) -> Result<f64, LambertW0Error> {
     dw0c(z - Z0)
 }
 
+/// The secondary branch of the Lambert W function, W_-1.
+///
+/// # Errors
+///
+/// Returns an error if `z` is positive or if `z` < -1/e.
 pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
@@ -14,11 +27,30 @@ pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LambertW0Error;
 
+impl fmt::Display for LambertW0Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "argument out of range")
+    }
+}
+
+impl Error for LambertW0Error {}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LambertWm1Error {
     ArgumentOutOfRange,
     PositiveArgument,
 }
+
+impl fmt::Display for LambertWm1Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::ArgumentOutOfRange => write!(f, "argument out of range"),
+            Self::PositiveArgument => write!(f, "positive argument"),
+        }
+    }
+}
+
+impl Error for LambertWm1Error {}
 
 /// 50-bit accuracy computation of principal branch of Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
