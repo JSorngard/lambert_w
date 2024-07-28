@@ -23,7 +23,7 @@ use swm1::swm1;
 ///
 /// assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 /// ```
-/// Too small arguments result in `None`:
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
 /// ```
 /// # use lambert_w::fast::lambert_w_0;
 /// assert_eq!(lambert_w_0(-1.0), None);
@@ -49,7 +49,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 ///
 /// assert_abs_diff_eq!(w, -1.6385284199703634, epsilon = 1e-7);
 /// ```
-/// Too small or positive arguments result in `None`:
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
 /// ```
 /// # use lambert_w::fast::lambert_w_m1;
 /// assert_eq!(lambert_w_m1(-1.0), None);
