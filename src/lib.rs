@@ -77,7 +77,7 @@ pub(crate) const Z0: f64 = -0.367_879_441_171_442_33;
 // 1/sqrt(e)
 pub(crate) const X0: f64 = 0.606_530_659_712_633_4;
 
-#[cfg(test)]
+#[cfg(all(test, any(feature = "24", feature = "50")))]
 mod tets {
     #[cfg(feature = "50")]
     use super::accurate::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50};
