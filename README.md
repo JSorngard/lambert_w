@@ -4,6 +4,8 @@ Fast evaluation of the principal and secondary branches of the [Lambert W functi
 
 This method uses a piecewise minimax rational approximation of the function.
 
+This crate is simply a Rust port of the original code by T. Fukushima.
+
 ## Examples
 
 Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
