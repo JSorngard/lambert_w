@@ -52,9 +52,9 @@ assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 //!
 //! You can disable one of these features to potentially save a little bit of binary size.
 //!
-//! `50` *(enabled by default)*: enables the function versions with 50-bits of accuracy.
+//! `50` *(enabled by default)*: enables the function versions with 50 bits of accuracy.
 //!
-//! `24` *(enabled by default)*: enables the function versions with 24-bits of accuracy.
+//! `24` *(enabled by default)*: enables the function versions with 24 bits of accuracy.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 

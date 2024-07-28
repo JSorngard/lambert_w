@@ -17,9 +17,9 @@ approx = "0.5.1"
 
 [features]
 default = ["24", "50"]
-# Enables the function versions with 50-bits of accuracy.
+# Enables the function versions with 50 bits of accuracy.
 50 = []
-# Enables the function versions with 24-bits of accuracy.
+# Enables the function versions with 24 bits of accuracy.
 24 = []
 
 # docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
