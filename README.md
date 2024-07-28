@@ -14,7 +14,7 @@ use lambert_w::accurate::lambert_w_0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w0(PI)?;
+let w = lambert_w_0(PI)?;
 
 assert_abs_diff_eq!(w, 1.0736581947961492);
 ```
@@ -25,7 +25,7 @@ use lambert_w::fast::lambert_w_0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w0(PI)?;
+let w = lambert_w_0(PI)?;
 
 assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 ```
