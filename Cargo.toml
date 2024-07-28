@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics"]
@@ -16,11 +16,11 @@ repository = "https://github.com/JSorngard/lambert_w"
 approx = "0.5.1"
 
 [features]
-default = ["24", "50"]
-# Enables the function versions with 50 bits of accuracy.
-50 = []
-# Enables the function versions with 24 bits of accuracy.
-24 = []
+default = ["24bits", "50bits"]
+# Enables the more accurate function versions with 50 bits of accuracy.
+50bits = []
+# Enables the faster function versions with 24 bits of accuracy.
+24bits = []
 
 # docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
 [package.metadata.docs.rs]

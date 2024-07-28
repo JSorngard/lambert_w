@@ -4,41 +4,36 @@
 //!
 //! This method uses a piecewise minimax rational approximation of the function.
 //!
-//! This crate is a Rust port of the original Fortran 90 code by T. Fukushima.
-//!
 //! ## Examples
 //!
 //! Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
 #![cfg_attr(
-    feature = "50",
+    feature = "50bits",
     doc = r##"
 ```
-# use lambert_w::LambertW0Error;
 use lambert_w::accurate::lambert_w_0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(PI)?;
+let w = lambert_w_0(PI).unwrap();
+
 assert_abs_diff_eq!(w, 1.0736581947961492);
-# Ok::<(), LambertW0Error>(())
 ```
 "##
 )]
 //!
 //! or to only 24 bits of accuracy, but with faster execution time:
 #![cfg_attr(
-    feature = "24",
+    feature = "24bits",
     doc = r##"
 ```
-# use lambert_w::LambertW0Error;
 use lambert_w::fast::lambert_w_0;
 use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(PI)?;
+let w = lambert_w_0(PI).unwrap();
 
 assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
-# Ok::<(), LambertW0Error>(())
 ```
 "##
 )]
@@ -52,24 +47,21 @@ assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 //!
 //! You can disable one of these feature flags to potentially save a little bit of binary size.
 //!
-//! `50` *(enabled by default)*: enables the function versions with 50 bits of accuracy.
+//! `50bits` *(enabled by default)*: enables the more accurate function versions with 50 bits of accuracy.
 //!
-//! `24` *(enabled by default)*: enables the function versions with 24 bits of accuracy.
+//! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
 //! It is a compile error to disable both features.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
-#[cfg(not(any(feature = "50", feature = "24")))]
-compile_error!("one or both of the '24' and '50' features must be enabled");
+#[cfg(not(any(feature = "50bits", feature = "24bits")))]
+compile_error!("one or both of the '24bits' and '50bits' features must be enabled");
 
-#[cfg(feature = "50")]
+#[cfg(feature = "50bits")]
 pub mod accurate;
-mod error;
-#[cfg(feature = "24")]
+#[cfg(feature = "24bits")]
 pub mod fast;
-
-pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
@@ -77,17 +69,19 @@ const Z0: f64 = -0.367_879_441_171_442_33;
 // 1/sqrt(e)
 const X0: f64 = 0.606_530_659_712_633_4;
 
-#[cfg(all(test, any(feature = "24", feature = "50")))]
+#[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod tets {
-    #[cfg(feature = "50")]
+    #[cfg(feature = "50bits")]
     use super::accurate::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50};
-    #[cfg(feature = "24")]
+    #[cfg(feature = "24bits")]
     use super::fast::{lambert_w_0 as lambert_w_0_24, lambert_w_m1 as lambert_w_m1_24};
     use approx::assert_abs_diff_eq;
+    use core::f64::consts::E;
 
-    #[cfg(feature = "50")]
+    #[cfg(feature = "50bits")]
     #[test]
     fn test_lambert_w_0_50() {
+        assert_eq!(lambert_w_0_50(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_0_50(-2.678794411714424e-01).unwrap(),
             -3.993824525397807e-01
@@ -207,9 +201,10 @@ mod tets {
         );
     }
 
-    #[cfg(feature = "24")]
+    #[cfg(feature = "24bits")]
     #[test]
     fn test_lambert_w_0_24() {
+        assert_eq!(lambert_w_0_24(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_0_24(-2.678794411714424e-01).unwrap(),
             -3.993824525397807e-01,
@@ -342,9 +337,10 @@ mod tets {
         );
     }
 
-    #[cfg(feature = "50")]
+    #[cfg(feature = "50bits")]
     #[test]
     fn test_lambert_w_m1_50() {
+        assert_eq!(lambert_w_m1_50(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_m1_50(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
@@ -407,11 +403,13 @@ mod tets {
             lambert_w_m1_50(-1.000000000000008e-145).unwrap(),
             -3.397029099254290e+02
         );
+        assert_eq!(lambert_w_m1_50(f64::EPSILON), None);
     }
 
-    #[cfg(feature = "24")]
+    #[cfg(feature = "24bits")]
     #[test]
     fn test_lambert_w_m1_24() {
+        assert_eq!(lambert_w_m1_24(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
             lambert_w_m1_24(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
@@ -477,5 +475,6 @@ mod tets {
             -3.397029099254290e+02,
             epsilon = 1e-4
         );
+        assert_eq!(lambert_w_m1_24(f64::EPSILON), None);
     }
 }

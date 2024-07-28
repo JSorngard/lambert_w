@@ -8,8 +8,6 @@ Fast evaluation of the principal and secondary branches of the [Lambert W functi
 
 This method uses a piecewise minimax rational approximation of the function.
 
-This crate is a Rust port of the original Fortran 90 code by T. Fukushima.
-
 ## Examples
 
 Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
@@ -33,3 +31,8 @@ let w = lambert_w_0(PI)?;
 
 assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 ```
+
+## Speed-accuracy trade-off
+
+The 50-bit accurate versions in the `accurate` module are more accurate, but slightly slower, than the 24-bit accurate versions in the `fast` module.
+`fast::lambert_w_0` is around 15% faster than `accurate::lambert_w_0` and `fast::lambert_w_m1` is around 41% faster than `accurate::lambert_w_m1`.

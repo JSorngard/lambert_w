@@ -1,7 +1,6 @@
 //! The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
 
 use super::super::{X0, Z0};
-use crate::{LambertWm1Error, LambertWm1ErrorReason};
 
 /// 50-bit accuracy computation of secondary branch of the Lambert W function, W_-1(z),
 /// by piecewise minimax rational function approximation
@@ -16,15 +15,13 @@ use crate::{LambertWm1Error, LambertWm1ErrorReason};
 ///   rational function approximation with variable transformation"
 // Formatting this function takes a lot of time, so I have ran `cargo fmt` on it once, and now no one else has to / Johanna.
 #[rustfmt::skip]
-pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
+pub fn dwm1c(z: f64, zc: f64) -> Option<f64> {
     if zc < 0.0 {
-        Err(LambertWm1Error::new(
-            LambertWm1ErrorReason::TooSmallArgument,
-        ))
+        None
     } else if z <= -0.3542913309442164 {
         // W >= -1.3, X_-1
         let x = zc.sqrt();
-        Ok((-1.0000000000000001110
+        Some((-1.0000000000000001110
             + x * (4.296_301_617_877_713
                 + x * (-4.099_140_792_400_746
                     + x * (-6.844_284_220_083_331
@@ -43,7 +40,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.188_726_882_822_894_35 {
         // W >= -2.637, Y_-1
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-8.225_315_526_444_685
+        Some((-8.225_315_526_444_685
             + x * (-813.207_067_320_014_9
                 + x * (-15_270.113_237_678_51
                     + x * (-79_971.585_089_674_15
@@ -61,7 +58,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.060_497_597_226_958_34 {
         // W >= -4.253, Y_-2
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-9.618_412_744_335_403
+        Some((-9.618_412_744_335_403
             + x * (-3_557.856_904_301_800_6
                 + x * (-254_015.593_112_843_8
                     + x * (-5.392_389_363_067_063_5e6
@@ -80,7 +77,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.017_105_334_740_676_01 {
         // W >= -5.832, Y_-3
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-11.038_489_462_297_466
+        Some((-11.038_489_462_297_466
             + x * (-15_575.812_882_656_619
                 + x * (-4.249_294_730_489_777e6
                     + x * (-3.517_024_593_880_342e8
@@ -99,7 +96,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.004_595_496_212_794_371 {
         // W >= -7.382, Y_-4
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-12.474_405_916_395_746
+        Some((-12.474_405_916_395_746
             + x * (-68_180.335_575_543_78
                 + x * (-7.184_659_984_562_01e7
                     + x * (-2.314_268_822_175_918_2e10
@@ -118,7 +115,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.001_200_161_067_219_772_4 {
         // W >= -8.913, Y_-5
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-13.921_651_376_890_072
+        Some((-13.921_651_376_890_072
             + x * (-298_789.564_823_880_7
                 + x * (-1.231_301_993_732_209_2e9
                     + x * (-1.555_614_908_189_951e12
@@ -137,7 +134,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.000_307_288_059_321_915 {
         // W >= -10.433, Y_-6
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-15.377_894_224_591_557
+        Some((-15.377_894_224_591_557
             + x * (-1.312_231_200_509_698e6
                 + x * (-2.140_815_702_211_173_6e10
                     + x * (-1.071_828_743_155_781_3e14
@@ -156,7 +153,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -0.000_077_447_159_838_062_18 {
         // W >= -11.946, Y_-7
         let x = -z / (X0 + (z - Z0).sqrt());
-        Ok((-16.841_701_411_264_98
+        Some((-16.841_701_411_264_98
             + x * (-5.779_082_325_757_714e6
                 + x * (-3.775_723_079_125_64e11
                     + x * (-7.571_213_374_258_986e15
@@ -175,7 +172,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -4.580_811_969_815_817_5e-17 {
         // W >= -41.344, V_-8
         let u = (-z).ln();
-        Ok((-2.083_626_038_401_644
+        Some((-2.083_626_038_401_644
             + u * (1.612_243_624_227_149_6
                 + u * (5.446_426_495_963_720_5
                     + u * (-3.088_633_112_831_716
@@ -194,7 +191,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z <= -6.107_367_223_659_479e-79 {
         // W >= -185.316, V_-9
         let u = (-z).ln();
-        Ok((0.160_453_837_665_705_42
+        Some((0.160_453_837_665_705_42
             + u * (2.221_418_252_446_151_4
                 + u * (-0.941_196_624_920_508_9
                     + u * (0.091_921_523_818_747_87
@@ -213,7 +210,7 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
     } else if z < 0.0 {
         // V_-10
         let u = (-z).ln();
-        Ok((-1.274_217_970_307_544
+        Some((-1.274_217_970_307_544
             + u * (1.369_665_880_542_138_4
                 + u * (-0.125_193_453_875_587_83
                     + u * (0.002_515_572_246_076_384_3
@@ -230,8 +227,6 @@ pub fn dwm1c(z: f64, zc: f64) -> Result<f64, LambertWm1Error> {
                                     + u * (4.641_976_809_305_971e-15
                                         + u * (-1.360_871_393_694_260_3e-23)))))))))
     } else {
-        Err(LambertWm1Error::new(
-            LambertWm1ErrorReason::PositiveArgument,
-        ))
+        None
     }
 }
