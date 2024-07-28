@@ -86,7 +86,7 @@ pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
 ///
 /// # Errors
 ///
-/// Returns an error if `z` < -1/e.
+/// Returns an error if `z` is positive or if `z` < -1/e.
 ///
 /// # Example
 ///
