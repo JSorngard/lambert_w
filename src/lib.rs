@@ -3,11 +3,11 @@ const Z0: f64 = -0.36787944117144232160;
 // sqrt(1/e)
 const X0: f64 = 0.60653065971263342360;
 
-pub fn lambertW0(z: f64) -> Result<f64, LambertW0Error> {
+pub fn lambert_w0(z: f64) -> Result<f64, LambertW0Error> {
     dw0c(z - Z0)
 }
 
-pub fn lambertWm1(z: f64) -> Result<f64, LambertWm1Error> {
+pub fn lambert_wm1(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
 
