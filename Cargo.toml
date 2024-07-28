@@ -17,9 +17,9 @@ approx = "0.5.1"
 
 [features]
 default = ["24bits", "50bits"]
-# Enables the function versions with 50 bits of accuracy.
+# Enables the more accurate function versions with 50 bits of accuracy.
 50bits = []
-# Enables the function versions with 24 bits of accuracy.
+# Enables the faster function versions with 24 bits of accuracy.
 24bits = []
 
 # docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
