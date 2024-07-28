@@ -1,4 +1,4 @@
-use super::Z0;
+use super::super::Z0;
 use crate::LambertW0Error;
 
 /// 24-bit accuracy computation of principal branch of Lambert W function, W_0(z),

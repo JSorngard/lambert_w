@@ -1,4 +1,4 @@
-use super::{X0, Z0};
+use super::super::{X0, Z0};
 use crate::{LambertWm1Error, LambertWm1ErrorReason};
 
 /// 50-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),

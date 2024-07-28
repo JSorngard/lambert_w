@@ -9,11 +9,11 @@
 //! Evaluate the principal branch of the Lambert W function to high precision:
 //! ```
 //! # use lambert_w::LambertW0Error;
-//! use lambert_w::lambert_w0_50;
+//! use lambert_w::accurate::lambert_w0;
 //! use core::f64::consts::PI;
 //! use approx::assert_abs_diff_eq;
 //!
-//! let w = lambert_w0_50(PI)?;
+//! let w = lambert_w0(PI)?;
 //!
 //! assert_abs_diff_eq!(w, 1.0736581947961492);
 //! # Ok::<(), LambertW0Error>(())
@@ -22,126 +22,34 @@
 //! or to lower precision, but with faster execution time:
 //! ```
 //! # use lambert_w::LambertW0Error;
-//! use lambert_w::lambert_w0_24;
+//! use lambert_w::fast::lambert_w0;
 //! use core::f64::consts::PI;
 //! use approx::assert_abs_diff_eq;
 //!
-//! let w = lambert_w0_24(PI)?;
+//! let w = lambert_w0(PI)?;
 //!
 //! assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
 //! # Ok::<(), LambertW0Error>(())
 //! ```
 
+pub mod accurate;
 mod error;
-mod fukushima;
-
-use fukushima::{dw0c, dwm1c, sw0, swm1, Z0};
+pub mod fast;
 
 pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 
-/// The principal branch of the Lambert W function, W_0(`z`), computed to 50 bits of accuracy.
-///
-/// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// # Errors
-///
-/// Returns an error if `z` is less than -1/e.
-///
-/// # Example
-///
-/// ```
-/// # use lambert_w::LambertW0Error;
-/// use lambert_w::lambert_w0_50;
-/// use approx::assert_abs_diff_eq;
-/// use core::f64::consts::PI;
-///
-/// let w = lambert_w0_50(PI)?;
-///
-/// assert_abs_diff_eq!(w, 1.0736581947961492);
-/// # Ok::<(), LambertW0Error >(())
-/// ```
-pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
-    dw0c(z - Z0)
-}
+// -1/e
+pub(crate) const Z0: f64 = -0.367_879_441_171_442_33;
 
-/// The secondary branch of the Lambert W function, W_-1(`z`), computed to 50 bits of accuracy.
-///
-/// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// # Errors
-///
-/// Returns an error if `z` is positive or less than -1/e.
-///
-/// # Example
-///
-/// ```
-/// # use lambert_w::LambertWm1Error;
-/// use lambert_w::lambert_wm1_50;
-/// use approx::assert_abs_diff_eq;
-/// use core::f64::consts::PI;
-///
-/// let w = lambert_wm1_50(-1.0/PI)?;
-///
-/// assert_abs_diff_eq!(w,  -1.6385284199703634);
-/// # Ok::<(), LambertWm1Error>(())
-/// ```
-pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
-    dwm1c(z, z - Z0)
-}
-
-/// The principal branch of the Lambert W function, W_0(`z`), computed to 24 bits of accuracy.
-///
-/// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// # Errors
-///
-/// Returns an error if `z` is less than -1/e.
-///
-/// # Example
-///
-/// ```
-/// # use lambert_w::LambertW0Error;
-/// use lambert_w::lambert_w0_24;
-/// use approx::assert_abs_diff_eq;
-/// use core::f64::consts::PI;
-///
-/// let w = lambert_w0_24(PI)?;
-///
-/// assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
-/// # Ok::<(), LambertW0Error>(())
-/// ```
-pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
-    sw0(z)
-}
-
-/// The secondary branch of the Lambert W function, W_-1(`z`), computed to 24 bits of accuracy.
-///
-/// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// # Errors
-///
-/// Returns an error if `z` is positive or less than -1/e.
-///
-/// # Example
-///
-/// ```
-/// # use lambert_w::LambertWm1Error;
-/// use lambert_w::lambert_wm1_24;
-/// use approx::assert_abs_diff_eq;
-/// use core::f64::consts::PI;
-///
-/// let w = lambert_wm1_24(-1.0/PI)?;
-///
-/// assert_abs_diff_eq!(w, -1.6385284199703634, epsilon = 1e-7);
-/// # Ok::<(), LambertWm1Error>(())
-/// ```
-pub fn lambert_wm1_24(z: f64) -> Result<f64, LambertWm1Error> {
-    swm1(z)
-}
+// 1/sqrt(e)
+pub(crate) const X0: f64 = 0.606_530_659_712_633_4;
 
 #[cfg(test)]
 mod tets {
-    use super::{lambert_w0_24, lambert_w0_50, lambert_wm1_24, lambert_wm1_50};
+    use super::{
+        accurate::{lambert_w0 as lambert_w0_50, lambert_wm1 as lambert_wm1_50},
+        fast::{lambert_w0 as lambert_w0_24, lambert_wm1 as lambert_wm1_24},
+    };
     use approx::assert_abs_diff_eq;
 
     #[test]
