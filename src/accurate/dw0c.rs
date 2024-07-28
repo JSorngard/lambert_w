@@ -5,7 +5,7 @@ use crate::LambertW0Error;
 /// 50-bit accuracy computation of principal branch of Lambert W function, W_0(z),
 /// by piecewise minimax rational function approximation
 ///
-/// NOTICE: Input arguement is NOT z but its complement defined as zc = z+1/e
+/// NOTICE: Input argument is NOT z but its complement defined as zc = z+1/e
 ///
 /// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
 /// ported to Rust by Johanna Sörngård <jsorngard@gmail.com>

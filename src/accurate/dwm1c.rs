@@ -6,7 +6,7 @@ use crate::{LambertWm1Error, LambertWm1ErrorReason};
 /// 50-bit accuracy computation of secondary branch of Lambert W function, W_-1(z),
 /// by piecewise minimax rational function approximation
 ///
-/// NOTICE: Required are two input arguements z and its complement defined as zc = z+1/e
+/// NOTICE: Required are two input arguments: z and its complement defined as zc = z+1/e
 ///
 /// Created by T. Fukushima <Toshio.Fukushima@nao.ac.jp>,
 /// ported to Rust by Johanna Sörngård
