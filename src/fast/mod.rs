@@ -1,7 +1,4 @@
 //! Calculate the Lambert W function to 24 bits of accuracy.
-//!
-//! The versions in this module are faster, but less accurate, than the 50 bit versions in the [`accurate`](crate::accurate) module.
-//! [`lambert_w_0`] is around 15% faster than [`accurate::lambert_w_0`](crate::accurate::lambert_w_0), and [`lambert_w_m1`] is around 41% faster than [`accurate::lambert_w_m1`](crate::accurate::lambert_w_m1).
 
 mod sw0;
 mod swm1;
