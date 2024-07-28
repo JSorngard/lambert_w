@@ -6,11 +6,9 @@ mod swm1;
 use sw0::sw0;
 use swm1::swm1;
 
-/// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy by piecewise minimax rational function approximation and variable transformations.
+/// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` > -1/e.
 ///
-/// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// Returns [`None`] if `z` is less than -1/e.
+/// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///
 /// # Example
 ///
@@ -27,11 +25,9 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
     sw0(z)
 }
 
-/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy by piecewise minimax rational function approximation and variable transformations.
+/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy, if -1/e < `z` <= 0.
 ///
-/// Uses the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-///
-/// Returns [`None`] if `z` is positive or less than -1/e.
+/// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///
 /// # Example
 ///
