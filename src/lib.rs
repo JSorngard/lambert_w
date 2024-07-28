@@ -1,5 +1,6 @@
-use core::fmt;
-use std::{backtrace::Backtrace, error::Error};
+mod error;
+
+pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
@@ -29,72 +30,6 @@ pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
     dwm1c(z, z - Z0)
 }
 
-#[derive(Debug)]
-pub struct LambertW0Error(Backtrace);
-
-impl LambertW0Error {
-    /// Returns a [`Backtrace`] to where the error was created.
-    ///
-    /// This backtrace was captured with [`Backtrace::capture`],
-    /// see it for more information about how to make this display information when printed.
-    pub fn backtrace(&self) -> &Backtrace {
-        &self.0
-    }
-}
-
-impl fmt::Display for LambertW0Error {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "argument out of range")
-    }
-}
-
-impl Error for LambertW0Error {}
-
-#[derive(Debug)]
-pub struct LambertWm1Error {
-    backtrace: Backtrace,
-    reason: LambertWm1ErrorReason,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum LambertWm1ErrorReason {
-    ArgumentOutOfRange,
-    PositiveArgument,
-}
-
-impl LambertWm1Error {
-    /// Returns a [`Backtrace`] to where the error was created.
-    ///
-    /// This backtrace was captured with [`Backtrace::capture`],
-    /// see it for more information about how to make this display information when printed.
-    pub fn backtrace(&self) -> &Backtrace {
-        &self.backtrace
-    }
-
-    /// Returns the reason for the error.
-    pub fn reason(&self) -> LambertWm1ErrorReason {
-        self.reason
-    }
-
-    fn new(reason: LambertWm1ErrorReason) -> Self {
-        Self {
-            backtrace: Backtrace::capture(),
-            reason,
-        }
-    }
-}
-
-impl fmt::Display for LambertWm1Error {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self.reason {
-            LambertWm1ErrorReason::ArgumentOutOfRange => write!(f, "argument out of range"),
-            LambertWm1ErrorReason::PositiveArgument => write!(f, "positive argument"),
-        }
-    }
-}
-
-impl Error for LambertWm1Error {}
-
 /// The principal branch of the Lambert W function, W_0.
 ///
 /// Calculated with 24 bits of precision with the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
@@ -104,7 +39,7 @@ impl Error for LambertWm1Error {}
 /// Returns an error if `z` < -1/e.
 pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
     if z < Z0 {
-        Err(LambertW0Error(Backtrace::capture()))
+        Err(LambertW0Error::new())
     } else if z <= 2.0082178115844726563 {
         // W <= 0.854, X_1
         let x = (z - Z0).sqrt();
@@ -294,7 +229,7 @@ pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
 #[rustfmt::skip]
 fn dw0c(zc: f64) -> Result<f64, LambertW0Error> {
     if zc < 0.0 {
-        Err(LambertW0Error(Backtrace::capture()))
+        Err(LambertW0Error::new())
     } else if zc <= 2.549_893_906_503_473_6 {
         // W <= 0.893, X_1
         let x = zc.sqrt();
