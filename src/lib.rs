@@ -3,7 +3,8 @@ use std::{backtrace::Backtrace, error::Error};
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
-// sqrt(1/e)
+
+// 1/sqrt(e)
 const X0: f64 = 0.606_530_659_712_633_4;
 
 /// The principal branch of the Lambert W function, W_0.
