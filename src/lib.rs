@@ -11,7 +11,7 @@ pub use error::{LambertW0Error, LambertWm1Error, LambertWm1ErrorReason};
 ///
 /// # Errors
 ///
-/// Returns an error if `z` < -1/e.
+/// Returns an error if `z` is less than -1/e.
 ///
 /// # Example
 ///
@@ -36,7 +36,7 @@ pub fn lambert_w0_50(z: f64) -> Result<f64, LambertW0Error> {
 ///
 /// # Errors
 ///
-/// Returns an error if `z` is positive or if `z` < -1/e.
+/// Returns an error if `z` is positive or less than -1/e.
 ///
 /// # Example
 ///
@@ -61,7 +61,7 @@ pub fn lambert_wm1_50(z: f64) -> Result<f64, LambertWm1Error> {
 ///
 /// # Errors
 ///
-/// Returns an error if `z` < -1/e.
+/// Returns an error if `z` is less than -1/e.
 ///
 /// # Example
 ///
@@ -86,7 +86,7 @@ pub fn lambert_w0_24(z: f64) -> Result<f64, LambertW0Error> {
 ///
 /// # Errors
 ///
-/// Returns an error if `z` is positive or if `z` < -1/e.
+/// Returns an error if `z` is positive or less than -1/e.
 ///
 /// # Example
 ///
