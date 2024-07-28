@@ -1,2 +1,3 @@
 /target
-/src/xlambw.f90
+/src/*.f90
+/src/*.pdf
