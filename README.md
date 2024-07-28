@@ -4,8 +4,6 @@ Fast evaluation of the principal and secondary branches of the [Lambert W functi
 
 This method uses a piecewise minimax rational approximation of the function.
 
-While the logarithm is the inverse of the function $f(w) = e^w$, the Lambert W function is the "inverse" of $f(w) = w*e^w$. Inverse in quotes because the Lambert W function in multi-valued.
-
 This crate is a Rust port of the original Fortran 90 code by T. Fukushima.
 
 ## Examples
