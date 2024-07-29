@@ -12,10 +12,10 @@
     feature = "50bits",
     doc = r##"
 ```
-use lambert_w::d_lambert_w_0;
+use lambert_w::w0;
 # use approx::assert_abs_diff_eq;
 
-let Ω = d_lambert_w_0(1.0).unwrap();
+let Ω = w0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838);
 ```
@@ -28,9 +28,9 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
     doc = r##"
 ```
 # use approx::assert_abs_diff_eq;
-use lambert_w::s_lambert_w_0;
+use lambert_w::sw0;
 
-let Ω = s_lambert_w_0(1.0).unwrap();
+let Ω = sw0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
@@ -56,22 +56,13 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 compile_error!("one or both of the '24bits' and '50bits' features must be enabled");
 
 #[cfg(feature = "50bits")]
-mod dw0c;
+mod fukushima_dw0c;
 #[cfg(feature = "50bits")]
-mod dwm1c;
+mod fukushima_dwm1c;
 #[cfg(feature = "24bits")]
-mod sw0;
+mod fukushima_sw0;
 #[cfg(feature = "24bits")]
-mod swm1;
-
-#[cfg(feature = "50bits")]
-use dw0c::dw0c;
-#[cfg(feature = "50bits")]
-use dwm1c::dwm1c;
-#[cfg(feature = "24bits")]
-use sw0::sw0;
-#[cfg(feature = "24bits")]
-use swm1::swm1;
+mod fukushima_swm1;
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
@@ -89,19 +80,19 @@ const X0: f64 = 0.606_530_659_712_633_4;
 /// Basic usage:
 /// ```
 /// # use approx::assert_abs_diff_eq;
-/// use lambert_w::s_lambert_w_0;
+/// use lambert_w::sw0;
 ///
-/// let Ω = s_lambert_w_0(1.0).unwrap();
+/// let Ω = sw0(1.0).unwrap();
 ///
 /// assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
 /// ```
-/// # use lambert_w::s_lambert_w_0;
-/// assert_eq!(s_lambert_w_0(-1.0), None);
+/// # use lambert_w::sw0;
+/// assert_eq!(sw0(-1.0), None);
 /// ```
-pub fn s_lambert_w_0(z: f64) -> Option<f64> {
-    sw0(z)
+pub fn sw0(z: f64) -> Option<f64> {
+    fukushima_sw0::sw0(z)
 }
 
 #[cfg(feature = "24bits")]
@@ -114,20 +105,20 @@ pub fn s_lambert_w_0(z: f64) -> Option<f64> {
 /// Basic usage:
 /// ```
 /// # use approx::assert_abs_diff_eq;
-/// use lambert_w::s_lambert_w_m1;
+/// use lambert_w::swm1;
 ///
-/// let mln4 = s_lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
+/// let mln4 = swm1(-f64::ln(2.0) / 2.0).unwrap();
 ///
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
 /// ```
-/// # use lambert_w::s_lambert_w_m1;
-/// assert_eq!(s_lambert_w_m1(-1.0), None);
-/// assert_eq!(s_lambert_w_m1(1.0), None);
+/// # use lambert_w::swm1;
+/// assert_eq!(swm1(-1.0), None);
+/// assert_eq!(swm1(1.0), None);
 /// ```
-pub fn s_lambert_w_m1(z: f64) -> Option<f64> {
-    swm1(z)
+pub fn swm1(z: f64) -> Option<f64> {
+    fukushima_swm1::swm1(z)
 }
 
 #[cfg(feature = "50bits")]
@@ -140,19 +131,19 @@ pub fn s_lambert_w_m1(z: f64) -> Option<f64> {
 /// Basic usage:
 /// ```
 /// # use approx::assert_abs_diff_eq;
-/// use lambert_w::d_lambert_w_0;
+/// use lambert_w::w0;
 ///
-/// let Ω = d_lambert_w_0(1.0).unwrap();
+/// let Ω = w0(1.0).unwrap();
 ///
 /// assert_abs_diff_eq!(Ω, 0.5671432904097838);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
 /// ```
-/// # use lambert_w::d_lambert_w_0;
-/// assert_eq!(d_lambert_w_0(-1.0), None);
+/// # use lambert_w::w0;
+/// assert_eq!(w0(-1.0), None);
 /// ```
-pub fn d_lambert_w_0(z: f64) -> Option<f64> {
-    dw0c(z - Z0)
+pub fn w0(z: f64) -> Option<f64> {
+    fukushima_dw0c::dw0c(z - Z0)
 }
 
 #[cfg(feature = "50bits")]
@@ -165,285 +156,246 @@ pub fn d_lambert_w_0(z: f64) -> Option<f64> {
 /// Basic usage:
 /// ```
 /// # use approx::assert_abs_diff_eq;
-/// use lambert_w::d_lambert_w_m1;
+/// use lambert_w::wm1;
 ///
-/// let mln4 = d_lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
+/// let mln4 = wm1(-f64::ln(2.0) / 2.0).unwrap();
 ///
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
 /// ```
-/// # use lambert_w::d_lambert_w_m1;
-/// assert_eq!(d_lambert_w_m1(-1.0), None);
-/// assert_eq!(d_lambert_w_m1(1.0), None);
+/// # use lambert_w::wm1;
+/// assert_eq!(wm1(-1.0), None);
+/// assert_eq!(wm1(1.0), None);
 /// ```
-pub fn d_lambert_w_m1(z: f64) -> Option<f64> {
-    dwm1c(z, z - Z0)
+pub fn wm1(z: f64) -> Option<f64> {
+    fukushima_dwm1c::dwm1c(z, z - Z0)
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod test {
-    #[cfg(feature = "50bits")]
-    use super::{d_lambert_w_0 as lambert_w_0_50, d_lambert_w_m1 as lambert_w_m1_50};
     #[cfg(feature = "24bits")]
-    use super::{s_lambert_w_0 as lambert_w_0_24, s_lambert_w_m1 as lambert_w_m1_24};
+    use super::{sw0, swm1};
+    #[cfg(feature = "50bits")]
+    use super::{w0, wm1};
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 
     #[cfg(feature = "50bits")]
     #[test]
-    fn test_lambert_w_0_50() {
-        assert_eq!(lambert_w_0_50(-1.0 / E - f64::EPSILON), None);
+    fn test_w0() {
+        assert_eq!(w0(-1.0 / E - f64::EPSILON), None);
+        assert_abs_diff_eq!(w0(-2.678794411714424e-01).unwrap(), -3.993824525397807e-01);
+        assert_abs_diff_eq!(w0(6.321205588285577e-01).unwrap(), 4.167039988177658e-01);
+        assert_abs_diff_eq!(w0(9.632120558828557).unwrap(), 1.721757710976171);
+        assert_abs_diff_eq!(w0(9.963212055882856e+01).unwrap(), 3.382785211058958);
+        assert_abs_diff_eq!(w0(9.996321205588285e+02).unwrap(), 5.249293782013269);
         assert_abs_diff_eq!(
-            lambert_w_0_50(-2.678794411714424e-01).unwrap(),
-            -3.993824525397807e-01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(6.321205588285577e-01).unwrap(),
-            4.167039988177658e-01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.632120558828557).unwrap(),
-            1.721757710976171
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.963212055882856e+01).unwrap(),
-            3.382785211058958
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.996321205588285e+02).unwrap(),
-            5.249293782013269
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.999632120558828e+03).unwrap(),
+            w0(9.999632120558828e+03).unwrap(),
             7.231813718542178,
             epsilon = 1e-14
         );
+        assert_abs_diff_eq!(w0(9.999963212055883e+04).unwrap(), 9.284568107521959);
+        assert_abs_diff_eq!(w0(9.999996321205589e+05).unwrap(), 1.138335774796812e+01);
+        assert_abs_diff_eq!(w0(9.999999632120559e+06).unwrap(), 1.351434397605273e+01);
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999963212055883e+04).unwrap(),
-            9.284568107521959
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.999996321205589e+05).unwrap(),
-            1.138335774796812e+01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999632120559e+06).unwrap(),
-            1.351434397605273e+01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999963212056e+07).unwrap(),
+            w0(9.999999963212056e+07).unwrap(),
             1.566899671199287e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999996321206e+08).unwrap(),
+            w0(9.999999996321206e+08).unwrap(),
             1.784172596707312e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999999632120e+09).unwrap(),
+            w0(9.999999999632120e+09).unwrap(),
             2.002868541326992e+01,
             epsilon = 1e-14
         );
+        assert_abs_diff_eq!(w0(9.999999999963213e+10).unwrap(), 2.222712273495755e+01);
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999999963213e+10).unwrap(),
-            2.222712273495755e+01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999999996321e+11).unwrap(),
+            w0(9.999999999996321e+11).unwrap(),
             2.443500440493456e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999999999633e+12).unwrap(),
+            w0(9.999999999999633e+12).unwrap(),
             2.665078750870219e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999999999962e+13).unwrap(),
+            w0(9.999999999999962e+13).unwrap(),
             2.887327487929930e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(9.999999999999996e+14).unwrap(),
+            w0(9.999999999999996e+14).unwrap(),
             3.110151971159478e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+16).unwrap(),
+            w0(1.000000000000000e+16).unwrap(),
             3.333476076844818e+01,
             epsilon = 1e-14
         );
+        assert_abs_diff_eq!(w0(1.000000000000000e+17).unwrap(), 3.557237716651325e+01);
         assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+17).unwrap(),
-            3.557237716651325e+01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+18).unwrap(),
+            w0(1.000000000000000e+18).unwrap(),
             3.781385607558877e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+19).unwrap(),
+            w0(1.000000000000000e+19).unwrap(),
             4.005876916198432e+01,
             epsilon = 1e-14
         );
+        assert_abs_diff_eq!(w0(1.000000000000000e+20).unwrap(), 4.230675509173839e+01);
+        assert_abs_diff_eq!(w0(1.000000000000000e+40).unwrap(), 8.763027715194720e+01);
         assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+20).unwrap(),
-            4.230675509173839e+01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+40).unwrap(),
-            8.763027715194720e+01
-        );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+80).unwrap(),
+            w0(1.000000000000000e+80).unwrap(),
             1.790193137415062e+02,
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+120).unwrap(),
+            w0(1.000000000000000e+120).unwrap(),
             2.707091661024979e+02,
             epsilon = 1e-13
         );
-        assert_abs_diff_eq!(
-            lambert_w_0_50(1.000000000000000e+160).unwrap(),
-            3.625205337614976e+02
-        );
+        assert_abs_diff_eq!(w0(1.000000000000000e+160).unwrap(), 3.625205337614976e+02);
     }
 
     #[cfg(feature = "24bits")]
     #[test]
-    fn test_lambert_w_0_24() {
-        assert_eq!(lambert_w_0_24(-1.0 / E - f64::EPSILON), None);
+    fn test_sw0() {
+        assert_eq!(sw0(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
-            lambert_w_0_24(-2.678794411714424e-01).unwrap(),
+            sw0(-2.678794411714424e-01).unwrap(),
             -3.993824525397807e-01,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(6.321205588285577e-01).unwrap(),
+            sw0(6.321205588285577e-01).unwrap(),
             4.167039988177658e-01,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.632120558828557).unwrap(),
+            sw0(9.632120558828557).unwrap(),
             1.721757710976171,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.963212055882856e+01).unwrap(),
+            sw0(9.963212055882856e+01).unwrap(),
             3.382785211058958,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.996321205588285e+02).unwrap(),
+            sw0(9.996321205588285e+02).unwrap(),
             5.249293782013269,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999632120558828e+03).unwrap(),
+            sw0(9.999632120558828e+03).unwrap(),
             7.231813718542178,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999963212055883e+04).unwrap(),
+            sw0(9.999963212055883e+04).unwrap(),
             9.284568107521959,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999996321205589e+05).unwrap(),
+            sw0(9.999996321205589e+05).unwrap(),
             1.138335774796812e+01,
             epsilon = 1e-8
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999632120559e+06).unwrap(),
+            sw0(9.999999632120559e+06).unwrap(),
             1.351434397605273e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999963212056e+07).unwrap(),
+            sw0(9.999999963212056e+07).unwrap(),
             1.566899671199287e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999996321206e+08).unwrap(),
+            sw0(9.999999996321206e+08).unwrap(),
             1.784172596707312e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999999632120e+09).unwrap(),
+            sw0(9.999999999632120e+09).unwrap(),
             2.002868541326992e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999999963213e+10).unwrap(),
+            sw0(9.999999999963213e+10).unwrap(),
             2.222712273495755e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999999996321e+11).unwrap(),
+            sw0(9.999999999996321e+11).unwrap(),
             2.443500440493456e+01,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999999999633e+12).unwrap(),
+            sw0(9.999999999999633e+12).unwrap(),
             2.665078750870219e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999999999962e+13).unwrap(),
+            sw0(9.999999999999962e+13).unwrap(),
             2.887327487929930e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(9.999999999999996e+14).unwrap(),
+            sw0(9.999999999999996e+14).unwrap(),
             3.110151971159478e+01,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+16).unwrap(),
+            sw0(1.000000000000000e+16).unwrap(),
             3.333476076844818e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+17).unwrap(),
+            sw0(1.000000000000000e+17).unwrap(),
             3.557237716651325e+01,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+18).unwrap(),
+            sw0(1.000000000000000e+18).unwrap(),
             3.781385607558877e+01,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+19).unwrap(),
+            sw0(1.000000000000000e+19).unwrap(),
             4.005876916198432e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+20).unwrap(),
+            sw0(1.000000000000000e+20).unwrap(),
             4.230675509173839e+01,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+40).unwrap(),
+            sw0(1.000000000000000e+40).unwrap(),
             8.763027715194720e+01,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+80).unwrap(),
+            sw0(1.000000000000000e+80).unwrap(),
             1.790193137415062e+02,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+120).unwrap(),
+            sw0(1.000000000000000e+120).unwrap(),
             2.707091661024979e+02,
             epsilon = 1e-4
         );
         assert_abs_diff_eq!(
-            lambert_w_0_24(1.000000000000000e+160).unwrap(),
+            sw0(1.000000000000000e+160).unwrap(),
             3.625205337614976e+02,
             epsilon = 1e-4
         );
@@ -451,142 +403,136 @@ mod test {
 
     #[cfg(feature = "50bits")]
     #[test]
-    fn test_lambert_w_m1_50() {
-        assert_eq!(lambert_w_m1_50(-1.0 / E - f64::EPSILON), None);
+    fn test_wm1() {
+        assert_eq!(wm1(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-3.578794411714423e-01).unwrap(),
+            wm1(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-2.678794411714424e-01).unwrap(),
+            wm1(-2.678794411714424e-01).unwrap(),
             -2.020625228775403,
             epsilon = 1e-14
         );
+        assert_abs_diff_eq!(wm1(-1.000000000000000e-01).unwrap(), -3.577152063957297);
+        assert_abs_diff_eq!(wm1(-3.000000000000000e-02).unwrap(), -5.144482721515681);
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000000e-01).unwrap(),
-            -3.577152063957297
-        );
-        assert_abs_diff_eq!(
-            lambert_w_m1_50(-3.000000000000000e-02).unwrap(),
-            -5.144482721515681
-        );
-        assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000000e-02).unwrap(),
+            wm1(-1.000000000000000e-02).unwrap(),
             -6.472775124394005,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-3.000000000000000e-03).unwrap(),
+            wm1(-3.000000000000000e-03).unwrap(),
             -7.872521380098709,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000000e-03).unwrap(),
+            wm1(-1.000000000000000e-03).unwrap(),
             -9.118006470402742,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-3.000000000000001e-04).unwrap(),
+            wm1(-3.000000000000001e-04).unwrap(),
             -1.045921112040100e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000000e-04).unwrap(),
+            wm1(-1.000000000000000e-04).unwrap(),
             -1.166711453256636e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-3.000000000000000e-05).unwrap(),
+            wm1(-3.000000000000000e-05).unwrap(),
             -1.297753279184081e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000000e-05).unwrap(),
+            wm1(-1.000000000000000e-05).unwrap(),
             -1.416360081581018e+01,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000004e-75).unwrap(),
+            wm1(-1.000000000000004e-75).unwrap(),
             -1.778749628219512e+02,
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_50(-1.000000000000008e-145).unwrap(),
+            wm1(-1.000000000000008e-145).unwrap(),
             -3.397029099254290e+02
         );
-        assert_eq!(lambert_w_m1_50(f64::EPSILON), None);
+        assert_eq!(wm1(f64::EPSILON), None);
     }
 
     #[cfg(feature = "24bits")]
     #[test]
-    fn test_lambert_w_m1_24() {
-        assert_eq!(lambert_w_m1_24(-1.0 / E - f64::EPSILON), None);
+    fn test_swm1() {
+        assert_eq!(swm1(-1.0 / E - f64::EPSILON), None);
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-3.578794411714423e-01).unwrap(),
+            swm1(-3.578794411714423e-01).unwrap(),
             -1.253493791367214,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-2.678794411714424e-01).unwrap(),
+            swm1(-2.678794411714424e-01).unwrap(),
             -2.020625228775403,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000000e-01).unwrap(),
+            swm1(-1.000000000000000e-01).unwrap(),
             -3.577152063957297,
             epsilon = 1e-9
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-3.000000000000000e-02).unwrap(),
+            swm1(-3.000000000000000e-02).unwrap(),
             -5.144482721515681,
             epsilon = 1e-9
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000000e-02).unwrap(),
+            swm1(-1.000000000000000e-02).unwrap(),
             -6.472775124394005,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-3.000000000000000e-03).unwrap(),
+            swm1(-3.000000000000000e-03).unwrap(),
             -7.872521380098709,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000000e-03).unwrap(),
+            swm1(-1.000000000000000e-03).unwrap(),
             -9.118006470402742,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-3.000000000000001e-04).unwrap(),
+            swm1(-3.000000000000001e-04).unwrap(),
             -1.045921112040100e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000000e-04).unwrap(),
+            swm1(-1.000000000000000e-04).unwrap(),
             -1.166711453256636e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-3.000000000000000e-05).unwrap(),
+            swm1(-3.000000000000000e-05).unwrap(),
             -1.297753279184081e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000000e-05).unwrap(),
+            swm1(-1.000000000000000e-05).unwrap(),
             -1.416360081581018e+01,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000004e-75).unwrap(),
+            swm1(-1.000000000000004e-75).unwrap(),
             -1.778749628219512e+02,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            lambert_w_m1_24(-1.000000000000008e-145).unwrap(),
+            swm1(-1.000000000000008e-145).unwrap(),
             -3.397029099254290e+02,
             epsilon = 1e-4
         );
-        assert_eq!(lambert_w_m1_24(f64::EPSILON), None);
+        assert_eq!(swm1(f64::EPSILON), None);
     }
 }
