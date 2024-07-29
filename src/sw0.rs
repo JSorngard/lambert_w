@@ -1,4 +1,4 @@
-use super::Z0;
+use super::NEG_INV_E as Z0;
 
 /// The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
 pub fn sw0(z: f64) -> Option<f64> {

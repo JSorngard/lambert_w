@@ -64,11 +64,14 @@ mod sw0;
 #[cfg(feature = "24bits")]
 mod swm1;
 
-// -1/e
-const Z0: f64 = -0.367_879_441_171_442_33;
+// -1/e. The smallest input value for which the Lambert W functions in this crate return a value.
+pub const NEG_INV_E: f64 = -0.367_879_441_171_442_33;
 
 // 1/sqrt(e)
-const X0: f64 = 0.606_530_659_712_633_4;
+const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
+
+/// The Omega constant. Fulfills the equation Ωe^Ω = 1.
+pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
 #[cfg(feature = "24bits")]
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` >= -1/e.
@@ -143,7 +146,7 @@ pub fn sp_lambert_w_m1(z: f64) -> Option<f64> {
 /// assert_eq!(lambert_w_0(-1.0), None);
 /// ```
 pub fn lambert_w_0(z: f64) -> Option<f64> {
-    dw0c::dw0c(z - Z0)
+    dw0c::dw0c(z - NEG_INV_E)
 }
 
 #[cfg(feature = "50bits")]
@@ -169,7 +172,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 /// assert_eq!(lambert_w_m1(1.0), None);
 /// ```
 pub fn lambert_w_m1(z: f64) -> Option<f64> {
-    dwm1c::dwm1c(z, z - Z0)
+    dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]

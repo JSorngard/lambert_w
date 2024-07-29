@@ -1,4 +1,4 @@
-use super::{X0, Z0};
+use super::{INV_SQRT_E as X0, NEG_INV_E as Z0};
 
 /// The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
 /// 
