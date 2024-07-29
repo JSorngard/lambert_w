@@ -10,8 +10,6 @@ rust-version = "1.65.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
 
-[dependencies]
-
 [dev-dependencies]
 approx = "0.5.1"
 criterion = { version = "0.5.1", features = ["html_reports"]}
