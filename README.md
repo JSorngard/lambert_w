@@ -27,7 +27,7 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
 
 or to only 24 bits of accuracy, but with faster execution time:
 ```rust
-use lambert_w::s_lambert_w_0;
+use lambert_w::sp_lambert_w_0;
 
 use approx::assert_abs_diff_eq;
 

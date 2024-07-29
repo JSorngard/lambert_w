@@ -28,9 +28,9 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
     doc = r##"
 ```
 # use approx::assert_abs_diff_eq;
-use lambert_w::s_lambert_w_0;
+use lambert_w::sp_lambert_w_0;
 
-let Ω = s_lambert_w_0(1.0).unwrap();
+let Ω = sp_lambert_w_0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
@@ -80,18 +80,18 @@ const X0: f64 = 0.606_530_659_712_633_4;
 /// Basic usage:
 /// ```
 /// # use approx::assert_abs_diff_eq;
-/// use lambert_w::s_lambert_w_0;
+/// use lambert_w::sp_lambert_w_0;
 ///
-/// let Ω = s_lambert_w_0(1.0).unwrap();
+/// let Ω = sp_lambert_w_0(1.0).unwrap();
 ///
 /// assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
 /// ```
-/// # use lambert_w::s_lambert_w_0;
-/// assert_eq!(s_lambert_w_0(-1.0), None);
+/// # use lambert_w::sp_lambert_w_0;
+/// assert_eq!(sp_lambert_w_0(-1.0), None);
 /// ```
-pub fn s_lambert_w_0(z: f64) -> Option<f64> {
+pub fn sp_lambert_w_0(z: f64) -> Option<f64> {
     sw0::sw0(z)
 }
 
@@ -105,19 +105,19 @@ pub fn s_lambert_w_0(z: f64) -> Option<f64> {
 /// Basic usage:
 /// ```
 /// # use approx::assert_abs_diff_eq;
-/// use lambert_w::s_lambert_w_m1;
+/// use lambert_w::sp_lambert_w_m1;
 ///
-/// let mln4 = s_lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
+/// let mln4 = sp_lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
 ///
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
 /// ```
-/// # use lambert_w::s_lambert_w_m1;
-/// assert_eq!(s_lambert_w_m1(-1.0), None);
-/// assert_eq!(s_lambert_w_m1(1.0), None);
+/// # use lambert_w::sp_lambert_w_m1;
+/// assert_eq!(sp_lambert_w_m1(-1.0), None);
+/// assert_eq!(sp_lambert_w_m1(1.0), None);
 /// ```
-pub fn s_lambert_w_m1(z: f64) -> Option<f64> {
+pub fn sp_lambert_w_m1(z: f64) -> Option<f64> {
     swm1::swm1(z)
 }
 
@@ -177,7 +177,7 @@ mod test {
     #[cfg(feature = "50bits")]
     use super::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50};
     #[cfg(feature = "24bits")]
-    use super::{s_lambert_w_0 as lambert_w_0_24, s_lambert_w_m1 as lambert_w_m1_24};
+    use super::{sp_lambert_w_0 as lambert_w_0_24, sp_lambert_w_m1 as lambert_w_m1_24};
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 
