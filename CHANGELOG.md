@@ -3,6 +3,7 @@ This file contains the changes to the crate since version 0.1.1.
 ## 0.3.1
 
  - Export the constants `NEG_INV_E` and `OMEGA`.
+ - Implement the derivative of the principal branch of the Lambert W function.
 
 ## 0.3.0
 
