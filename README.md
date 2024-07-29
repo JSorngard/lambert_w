@@ -20,9 +20,9 @@ use lambert_w::accurate::lambert_w_0;
 
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(1.0).unwrap();
+let Ω = lambert_w_0(1.0).unwrap();
 
-assert_abs_diff_eq!(w, 0.5671432904097838);
+assert_abs_diff_eq!(Ω, 0.5671432904097838);
 ```
 
 or to only 24 bits of accuracy, but with faster execution time:
@@ -31,9 +31,9 @@ use lambert_w::fast::lambert_w_0;
 
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(1.0).unwrap();
+let Ω = lambert_w_0(1.0).unwrap();
 
-assert_abs_diff_eq!(w, 0.5671432904097838, epsilon = 1e-7);
+assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
 
 ## License
