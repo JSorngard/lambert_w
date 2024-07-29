@@ -32,7 +32,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
     sw0(z)
 }
 
-/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy, if -1/e < `z` <= 0.
+/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy, if -1/e <= `z` <= 0.
 ///
 /// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///
