@@ -6,19 +6,18 @@
 //!
 //! ## Examples
 //!
-//! Evaluate the principal branch of the Lambert W function to 50 bits of accuracy:
+//! Evaluate the omega constant with the principal branch of the Lambert W function to 50 bits of accuracy:
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
 ```
 use lambert_w::accurate::lambert_w_0;
 
-use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(PI).unwrap();
+let w = lambert_w_0(1.0).unwrap();
 
-assert_abs_diff_eq!(w, 1.0736581947961492);
+assert_abs_diff_eq!(w, 0.5671432904097838);
 ```
 "##
 )]
@@ -30,12 +29,11 @@ assert_abs_diff_eq!(w, 1.0736581947961492);
 ```
 use lambert_w::fast::lambert_w_0;
 
-use core::f64::consts::PI;
 use approx::assert_abs_diff_eq;
 
-let w = lambert_w_0(PI).unwrap();
+let w = lambert_w_0(1.0).unwrap();
 
-assert_abs_diff_eq!(w, 1.0736581947961492, epsilon = 1e-7);
+assert_abs_diff_eq!(w, 0.5671432904097838, epsilon = 1e-7);
 ```
 "##
 )]
