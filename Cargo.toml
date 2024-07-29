@@ -34,6 +34,11 @@ all-features = true
 # Enable the docsrs configuration attribute on docs.rs
 rustdoc-args = ["--cfg", "docsrs"]
 
+[profile.release-lto]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
+
 [[bench]]
 name = "lambert_benches"
 harness = false
