@@ -43,9 +43,9 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::accurate::lambert_w_m1;
 ///
-/// let w = lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
+/// let mln4 = lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
 ///
-/// assert_abs_diff_eq!(w, -f64::ln(4.0));
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
 /// ```
