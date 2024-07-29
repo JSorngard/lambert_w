@@ -6,7 +6,7 @@
 //!
 //! ## Examples
 //!
-//! Evaluate the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function to 50 bits of accuracy:
+//! Compute the value of the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function to 50 bits of accuracy:
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
