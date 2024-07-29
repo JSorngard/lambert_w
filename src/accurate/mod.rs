@@ -10,7 +10,7 @@ use super::Z0;
 
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 50 bits of accuracy, if `z` >= -1/e.
 ///
-/// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
+/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -34,7 +34,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 50 bits of accuracy, if -1/e <= `z` <= 0.
 ///
-/// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
+/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
 ///
 /// # Examples
 ///

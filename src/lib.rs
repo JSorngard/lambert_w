@@ -34,10 +34,10 @@ assert_abs_diff_eq!(w, 0.5671432904097838, epsilon = 1e-7);
 ```
 "##
 )]
-//! 
+//!
 //! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
 //! It passes the assertion if the two supplied values are the same to within floating point error, or within an optional epsilon.
-//! 
+//!
 //! ## Speed-accuracy trade-off
 //!
 //! The 50-bit accurate versions in the [`accurate`] module are more accurate, but slightly slower, than the 24-bit accurate versions in the [`fast`] module.
