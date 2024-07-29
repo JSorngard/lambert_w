@@ -179,7 +179,7 @@ pub fn lambert_w_m1(z: f64) -> Option<f64> {
 ///
 /// Uses the version of the Lambert W function with 50 bits of accuracy during the evaluation.
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// # use approx::assert_abs_diff_eq;
@@ -190,6 +190,12 @@ pub fn lambert_w_m1(z: f64) -> Option<f64> {
 /// let dw = d_lambert_w_0(x).unwrap();
 ///
 /// assert_abs_diff_eq!(dw, 0.5 / (1.5 * x));
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// # use lambert_w::d_lambert_w_0;
+/// assert_eq!(d_lambert_w_0(-1.0), None);
 /// ```
 pub fn d_lambert_w_0(z: f64) -> Option<f64> {
     lambert_w_0(z).map(|w| {
@@ -217,6 +223,12 @@ pub fn d_lambert_w_0(z: f64) -> Option<f64> {
 /// let dw = sp_d_lambert_w_0(x).unwrap();
 ///
 /// assert_abs_diff_eq!(dw, 0.5 / (1.5 * x), epsilon = 1e-7);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// # use lambert_w::sp_d_lambert_w_0;
+/// assert_eq!(sp_d_lambert_w_0(-1.0), None);
 /// ```
 pub fn sp_d_lambert_w_0(z: f64) -> Option<f64> {
     sp_lambert_w_0(z).map(|w| {
