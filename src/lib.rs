@@ -12,10 +12,10 @@
     feature = "50bits",
     doc = r##"
 ```
-use lambert_w::accurate::lambert_w_0;
+use lambert_w::d_lambert_w_0;
 # use approx::assert_abs_diff_eq;
 
-let Ω = lambert_w_0(1.0).unwrap();
+let Ω = d_lambert_w_0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838);
 ```
@@ -28,9 +28,9 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
     doc = r##"
 ```
 # use approx::assert_abs_diff_eq;
-use lambert_w::fast::lambert_w_0;
+use lambert_w::s_lambert_w_0;
 
-let Ω = lambert_w_0(1.0).unwrap();
+let Ω = s_lambert_w_0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
@@ -56,9 +56,22 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 compile_error!("one or both of the '24bits' and '50bits' features must be enabled");
 
 #[cfg(feature = "50bits")]
-pub mod accurate;
+mod dw0c;
+#[cfg(feature = "50bits")]
+mod dwm1c;
 #[cfg(feature = "24bits")]
-pub mod fast;
+mod sw0;
+#[cfg(feature = "24bits")]
+mod swm1;
+
+#[cfg(feature = "50bits")]
+use dw0c::dw0c;
+#[cfg(feature = "50bits")]
+use dwm1c::dwm1c;
+#[cfg(feature = "24bits")]
+use sw0::sw0;
+#[cfg(feature = "24bits")]
+use swm1::swm1;
 
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
@@ -66,12 +79,114 @@ const Z0: f64 = -0.367_879_441_171_442_33;
 // 1/sqrt(e)
 const X0: f64 = 0.606_530_659_712_633_4;
 
+#[cfg(feature = "24bits")]
+/// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` >= -1/e.
+///
+/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::s_lambert_w_0;
+///
+/// let Ω = s_lambert_w_0(1.0).unwrap();
+///
+/// assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
+/// ```
+/// # use lambert_w::s_lambert_w_0;
+/// assert_eq!(s_lambert_w_0(-1.0), None);
+/// ```
+pub fn s_lambert_w_0(z: f64) -> Option<f64> {
+    sw0(z)
+}
+
+#[cfg(feature = "24bits")]
+/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy, if -1/e <= `z` <= 0.
+///
+/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::s_lambert_w_m1;
+///
+/// let mln4 = s_lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
+///
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
+/// ```
+/// # use lambert_w::s_lambert_w_m1;
+/// assert_eq!(s_lambert_w_m1(-1.0), None);
+/// assert_eq!(s_lambert_w_m1(1.0), None);
+/// ```
+pub fn s_lambert_w_m1(z: f64) -> Option<f64> {
+    swm1(z)
+}
+
+#[cfg(feature = "50bits")]
+/// Computes the principal branch of the Lambert W function, W_0(`z`), to 50 bits of accuracy, if `z` >= -1/e.
+///
+/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::d_lambert_w_0;
+///
+/// let Ω = d_lambert_w_0(1.0).unwrap();
+///
+/// assert_abs_diff_eq!(Ω, 0.5671432904097838);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
+/// ```
+/// # use lambert_w::d_lambert_w_0;
+/// assert_eq!(d_lambert_w_0(-1.0), None);
+/// ```
+pub fn d_lambert_w_0(z: f64) -> Option<f64> {
+    dw0c(z - Z0)
+}
+
+#[cfg(feature = "50bits")]
+/// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 50 bits of accuracy, if -1/e <= `z` <= 0.
+///
+/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::d_lambert_w_m1;
+///
+/// let mln4 = d_lambert_w_m1(-f64::ln(2.0) / 2.0).unwrap();
+///
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in `None`:
+/// ```
+/// # use lambert_w::d_lambert_w_m1;
+/// assert_eq!(d_lambert_w_m1(-1.0), None);
+/// assert_eq!(d_lambert_w_m1(1.0), None);
+/// ```
+pub fn d_lambert_w_m1(z: f64) -> Option<f64> {
+    dwm1c(z, z - Z0)
+}
+
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod tets {
     #[cfg(feature = "50bits")]
-    use super::accurate::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50};
+    use super::{d_lambert_w_0 as lambert_w_0_50, d_lambert_w_m1 as lambert_w_m1_50};
     #[cfg(feature = "24bits")]
-    use super::fast::{lambert_w_0 as lambert_w_0_24, lambert_w_m1 as lambert_w_m1_24};
+    use super::{s_lambert_w_0 as lambert_w_0_24, s_lambert_w_m1 as lambert_w_m1_24};
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 

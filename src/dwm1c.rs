@@ -1,6 +1,6 @@
 //! The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
 
-use super::super::{X0, Z0};
+use super::{X0, Z0};
 
 /// 50-bit accuracy computation of secondary branch of the Lambert W function, W_-1(z),
 /// by piecewise minimax rational function approximation

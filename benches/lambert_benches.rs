@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use lambert_w::accurate::lambert_w_0;
+use lambert_w::d_lambert_w_0;
 use std::hint::black_box;
 
 fn ln_vs_lambert_w_0(c: &mut Criterion) {
@@ -17,7 +17,7 @@ fn ln_vs_lambert_w_0(c: &mut Criterion) {
     for z in args {
         let mut group = c.benchmark_group(format!("{z}"));
         group.bench_function(&format!("ln"), |b| b.iter(|| black_box(z.ln())));
-        group.bench_function(&format!("W_0"), |b| b.iter(|| black_box(lambert_w_0(z))));
+        group.bench_function(&format!("W_0"), |b| b.iter(|| black_box(d_lambert_w_0(z))));
     }
 }
 
