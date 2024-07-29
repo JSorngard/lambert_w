@@ -10,7 +10,7 @@ Fast evaluation of the real valued parts of the principal and secondary branches
 This method uses a piecewise minimax rational function approximation with variable transformations.
 It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm and finished by a series of cumulative multiplies and additions by fixed constants.
 
-The functionss with 50 bits of accuracy use more switches for a finer split of the domain and more of the final multiplications and additions than the functions with 24 bits of accuracy.
+The functions with 50 bits of accuracy use more switches for a finer split of the domain and more of the final multiplications and additions than the functions with 24 bits of accuracy.
 
 ## Examples
 
