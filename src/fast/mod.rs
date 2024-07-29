@@ -6,7 +6,7 @@ mod swm1;
 use sw0::sw0;
 use swm1::swm1;
 
-/// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` > -1/e.
+/// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` >= -1/e.
 ///
 /// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///

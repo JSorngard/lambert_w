@@ -8,7 +8,7 @@ use dwm1c::dwm1c;
 
 use super::Z0;
 
-/// Computes the principal branch of the Lambert W function, W_0(`z`), to 50 bits of accuracy, if `z` is larger than -1/e.
+/// Computes the principal branch of the Lambert W function, W_0(`z`), to 50 bits of accuracy, if `z` >= -1/e.
 ///
 /// Uses the piecewise minimax rational function approximation method of Toshio Fukushima.
 ///
