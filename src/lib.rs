@@ -11,7 +11,9 @@
     doc = r##"
 ```
 use lambert_w::accurate::lambert_w_0;
-
+// This macro is used in the documentation examples of this crate.
+// It passes the assertion if the two supplied values are the same to within floating point error,
+// or within an optional epsilon.
 use approx::assert_abs_diff_eq;
 
 let w = lambert_w_0(1.0).unwrap();
