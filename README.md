@@ -31,7 +31,7 @@ use lambert_w::sp_lambert_w_0;
 
 use approx::assert_abs_diff_eq;
 
-let Ω = s_lambert_w_0(1.0).unwrap();
+let Ω = sp_lambert_w_0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
