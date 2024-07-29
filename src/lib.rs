@@ -182,7 +182,7 @@ pub fn d_lambert_w_m1(z: f64) -> Option<f64> {
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
-mod tets {
+mod test {
     #[cfg(feature = "50bits")]
     use super::{d_lambert_w_0 as lambert_w_0_50, d_lambert_w_m1 as lambert_w_m1_50};
     #[cfg(feature = "24bits")]
