@@ -16,22 +16,22 @@ The functions with 50 bits of accuracy use more switches for a finer split of th
 
 Compute the value of the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function to 50 bits of accuracy:
 ```rust
-use lambert_w::d_lambert_w_0;
+use lambert_w::w0;
 
 use approx::assert_abs_diff_eq;
 
-let Ω = d_lambert_w_0(1.0).unwrap();
+let Ω = w0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838);
 ```
 
 or to only 24 bits of accuracy, but with faster execution time:
 ```rust
-use lambert_w::s_lambert_w_0;
+use lambert_w::sw0;
 
 use approx::assert_abs_diff_eq;
 
-let Ω = s_lambert_w_0(1.0).unwrap();
+let Ω = sw0(1.0).unwrap();
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
