@@ -124,7 +124,7 @@ pub fn swm1(z: f64) -> Option<f64> {
 }
 
 #[cfg(feature = "fma")]
-// This is the same function as above, but the polynomials have been reduced to their third degree form.
+// This is the same function as above, but the polynomials have been simplified.
 pub fn swm1(z: f64) -> Option<f64> {
     if z < Z0 {
         None
