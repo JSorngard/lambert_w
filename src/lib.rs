@@ -65,6 +65,8 @@ mod sw0;
 mod swm1;
 
 /// -1/e = 0.6065306597126334.
+///
+/// The smallest input value for which the Lambert W functions in this crate return a value.
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_33;
 
 // 1/sqrt(e)
