@@ -1,7 +1,6 @@
-//! The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
-
 use super::{X0, Z0};
 
+/// The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
 pub fn swm1(z: f64) -> Option<f64> {
     if z < Z0 {
         None

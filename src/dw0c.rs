@@ -1,5 +1,5 @@
-//! The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
-
+/// The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
+/// 
 /// zc = z + 1/e
 // Formatting this function takes a lot of time, so I have ran `cargo fmt` on it once, and now no one else has to / Johanna.
 #[rustfmt::skip]
