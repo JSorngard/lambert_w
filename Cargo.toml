@@ -18,14 +18,14 @@ approx = "0.5.1"
 criterion = { version = "0.5.1", features = ["html_reports"]}
 
 [features]
-default = ["24bits", "50bits"]
+default = ["24bits", "50bits", "fma"]
 # Enables the more accurate function versions with 50 bits of accuracy.
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
 24bits = []
-# Exploit instruction-level parallelism and fused multiply add instructions to evaluate the functions faster.
+# Exploit instruction-level parallelism and fused multiply add instructions using the [`fast_polynomial`](https://crates.io/crates/fast_polynomial) crate to evaluate the functions faster.
 # Enabling this may reduce performance if your processor doesn't have fused multiply add instructions.
-ilp_fma = ["dep:fast_polynomial"]
+fma = ["dep:fast_polynomial"]
 
 # docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
 [package.metadata.docs.rs]
