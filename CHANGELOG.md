@@ -1,3 +1,10 @@
+## 0.3.0
+
+### Breaking changes
+
+ - Removed the `fast` and `accurate` modules and export the functions directly.
+ - Add s_* prefix to the 24 bit versions.
+
 ## 0.2.6
 
  - Minor documentation improvements.
