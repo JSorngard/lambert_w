@@ -64,15 +64,6 @@ mod sw0;
 #[cfg(feature = "24bits")]
 mod swm1;
 
-#[cfg(feature = "50bits")]
-use dw0c::dw0c;
-#[cfg(feature = "50bits")]
-use dwm1c::dwm1c;
-#[cfg(feature = "24bits")]
-use sw0::sw0;
-#[cfg(feature = "24bits")]
-use swm1::swm1;
-
 // -1/e
 const Z0: f64 = -0.367_879_441_171_442_33;
 
@@ -101,7 +92,7 @@ const X0: f64 = 0.606_530_659_712_633_4;
 /// assert_eq!(s_lambert_w_0(-1.0), None);
 /// ```
 pub fn s_lambert_w_0(z: f64) -> Option<f64> {
-    sw0(z)
+    sw0::sw0(z)
 }
 
 #[cfg(feature = "24bits")]
@@ -127,7 +118,7 @@ pub fn s_lambert_w_0(z: f64) -> Option<f64> {
 /// assert_eq!(s_lambert_w_m1(1.0), None);
 /// ```
 pub fn s_lambert_w_m1(z: f64) -> Option<f64> {
-    swm1(z)
+    swm1::swm1(z)
 }
 
 #[cfg(feature = "50bits")]
@@ -152,7 +143,7 @@ pub fn s_lambert_w_m1(z: f64) -> Option<f64> {
 /// assert_eq!(lambert_w_0(-1.0), None);
 /// ```
 pub fn lambert_w_0(z: f64) -> Option<f64> {
-    dw0c(z - Z0)
+    dw0c::dw0c(z - Z0)
 }
 
 #[cfg(feature = "50bits")]
@@ -178,7 +169,7 @@ pub fn lambert_w_0(z: f64) -> Option<f64> {
 /// assert_eq!(lambert_w_m1(1.0), None);
 /// ```
 pub fn lambert_w_m1(z: f64) -> Option<f64> {
-    dwm1c(z, z - Z0)
+    dwm1c::dwm1c(z, z - Z0)
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
