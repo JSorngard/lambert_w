@@ -11,7 +11,7 @@ This method uses a piecewise minimax rational function approximation.
 
 ## Examples
 
-Evaluate the Omega constant with the principal branch of the Lambert W function to 50 bits of accuracy:
+Evaluate the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function to 50 bits of accuracy:
 ```rust
 use lambert_w::accurate::lambert_w_0;
 
