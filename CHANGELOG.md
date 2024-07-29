@@ -1,6 +1,7 @@
 ## 0.2.5
 
  - Correct the domain bounds in the function documentation strings.
+ - Other minor documentation improvements.
 
 ## 0.2.2, 0.2.3, and 0.2.4
 
