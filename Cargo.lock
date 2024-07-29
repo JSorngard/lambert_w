@@ -234,7 +234,7 @@ dependencies = [
 
 [[package]]
 name = "lambert_w"
-version = "0.2.6"
+version = "0.3.0"
 dependencies = [
  "approx",
  "criterion",

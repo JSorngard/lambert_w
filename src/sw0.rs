@@ -1,16 +1,7 @@
 //! The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
 
-use super::super::Z0;
+use super::Z0;
 
-/// 24-bit accuracy computation of principal branch of the Lambert W function, W_0(z),
-/// by piecewise minimax rational function approximation
-///
-/// Created by T. Fukushima,
-/// ported to Rust by Johanna Sörngård
-///
-/// Reference: T. Fukushima (2020) to be submitted
-///  "Precise and fast computation of Lambert W-functions by piecewise
-///   rational function approximation with variable transformation"
 pub fn sw0(z: f64) -> Option<f64> {
     if z < Z0 {
         None

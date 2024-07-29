@@ -1,18 +1,8 @@
 //! The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 50 bits, ported to Rust.
 
-use super::super::{X0, Z0};
+use super::{X0, Z0};
 
-/// 50-bit accuracy computation of secondary branch of the Lambert W function, W_-1(z),
-/// by piecewise minimax rational function approximation
-///
-/// NOTICE: Required are two input arguments: z and its complement defined as zc = z+1/e
-///
-/// Created by T. Fukushima,
-/// ported to Rust by Johanna Sörngård
-///
-/// Reference: T. Fukushima (2020) to be submitted
-///  "Precise and fast computation of Lambert W-functions by piecewise
-///   rational function approximation with variable transformation"
+/// zc = z + 1/e
 // Formatting this function takes a lot of time, so I have ran `cargo fmt` on it once, and now no one else has to / Johanna.
 #[rustfmt::skip]
 pub fn dwm1c(z: f64, zc: f64) -> Option<f64> {

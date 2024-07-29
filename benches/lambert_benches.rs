@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use lambert_w::accurate::lambert_w_0;
+use lambert_w::lambert_w_0;
 use std::hint::black_box;
 
 fn ln_vs_lambert_w_0(c: &mut Criterion) {

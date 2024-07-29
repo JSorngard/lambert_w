@@ -1,17 +1,7 @@
 //! The original implementation of the secondary branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
 
-use super::super::{X0, Z0};
+use super::{X0, Z0};
 
-/// 24-bit accuracy computation of secondary branch of the Lambert W function, W_-1(z),
-/// defined as the solution of nonlinear equation, W exp(W) = z, when W < -1
-/// by piecewise minimax rational function approximation
-///
-/// Created by T. Fukushima,
-/// ported to Rust by Johanna Sörngård
-///
-/// Reference: T. Fukushima (2020) to be submitted
-///  "Precise and fast computation of Lambert W-functions by piecewise
-///   rational function approximation with variable transformation"
 pub fn swm1(z: f64) -> Option<f64> {
     if z < Z0 {
         None
