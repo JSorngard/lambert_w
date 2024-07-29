@@ -17,9 +17,9 @@ use swm1::swm1;
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::fast::lambert_w_0;
 ///
-/// let w = lambert_w_0(1.0).unwrap();
+/// let Ω = lambert_w_0(1.0).unwrap();
 ///
-/// assert_abs_diff_eq!(w, 0.5671432904097838, epsilon = 1e-7);
+/// assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
 /// ```
