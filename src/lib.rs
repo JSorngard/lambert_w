@@ -67,7 +67,7 @@ const Z0: f64 = -0.367_879_441_171_442_33;
 const X0: f64 = 0.606_530_659_712_633_4;
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
-mod tets {
+mod test {
     #[cfg(feature = "50bits")]
     use super::accurate::{lambert_w_0 as lambert_w_0_50, lambert_w_m1 as lambert_w_m1_50};
     #[cfg(feature = "24bits")]
