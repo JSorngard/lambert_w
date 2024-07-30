@@ -174,6 +174,72 @@ pub fn lambert_w_m1(z: f64) -> Option<f64> {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
+#[cfg(feature = "50bits")]
+/// Computes the derivative of the principal branch of the Lambert W function, if `z` >= -1/e.
+///
+/// Uses the version of the Lambert W function with 50 bits of accuracy during the evaluation.
+///
+/// # Examples
+///
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::lambert_w_0_prime;
+/// use core::f64::consts::E;
+///
+/// let x = 0.5 * E.sqrt();
+/// let dw = lambert_w_0_prime(x).unwrap();
+///
+/// assert_abs_diff_eq!(dw, 0.5 / (1.5 * x));
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// # use lambert_w::lambert_w_0_prime;
+/// assert_eq!(lambert_w_0_prime(-1.0), None);
+/// ```
+pub fn lambert_w_0_prime(z: f64) -> Option<f64> {
+    lambert_w_0(z).map(|w| {
+        if z.abs() <= 0.1 {
+            1.0 / ((1.0 + w) * w.exp())
+        } else {
+            w / (z * (1.0 + w))
+        }
+    })
+}
+
+#[cfg(feature = "24bits")]
+/// Computes the derivative of the principal branch of the Lambert W function, if `z` >= -1/e.
+///
+/// Uses the version of the Lambert W function with 24 bits of accuracy during the evaluation.
+///
+/// # Example
+///
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::sp_lambert_w_0_prime;
+/// use core::f64::consts::E;
+///
+/// let x = 0.5 * E.sqrt();
+/// let dw = sp_lambert_w_0_prime(x).unwrap();
+///
+/// assert_abs_diff_eq!(dw, 0.5 / (1.5 * x), epsilon = 1e-7);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in `None`:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// # use lambert_w::sp_lambert_w_0_prime;
+/// assert_eq!(sp_lambert_w_0_prime(-1.0), None);
+/// ```
+pub fn sp_lambert_w_0_prime(z: f64) -> Option<f64> {
+    sp_lambert_w_0(z).map(|w| {
+        if z.abs() <= 0.1 {
+            1.0 / ((1.0 + w) * w.exp())
+        } else {
+            w / (z * (1.0 + w))
+        }
+    })
+}
+
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod test {
     #[cfg(feature = "50bits")]
