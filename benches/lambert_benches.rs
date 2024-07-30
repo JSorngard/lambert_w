@@ -2,7 +2,7 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use lambert_w::{lambert_w_0, lambert_w_m1, sp_lambert_w_0, sp_lambert_w_m1};
 use std::hint::black_box;
 
-fn ln_vs_lambert_w_0(c: &mut Criterion) {
+fn bench(c: &mut Criterion) {
     let big_args = [
         -2.678794411714424e-01_f64,
         6.321205588285577e-01,
@@ -44,5 +44,5 @@ fn ln_vs_lambert_w_0(c: &mut Criterion) {
     }
 }
 
-criterion_group!(benches, ln_vs_lambert_w_0);
+criterion_group!(benches, bench);
 criterion_main!(benches);
