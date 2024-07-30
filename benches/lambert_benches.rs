@@ -1,9 +1,9 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use lambert_w::lambert_w_0;
+use lambert_w::{lambert_w_0, lambert_w_m1, sp_lambert_w_0, sp_lambert_w_m1};
 use std::hint::black_box;
 
 fn ln_vs_lambert_w_0(c: &mut Criterion) {
-    let args = [
+    let big_args = [
         -2.678794411714424e-01_f64,
         6.321205588285577e-01,
         9.632120558828557,
@@ -14,10 +14,25 @@ fn ln_vs_lambert_w_0(c: &mut Criterion) {
         1.000000000000000e+160,
     ];
 
-    for z in args {
-        let mut group = c.benchmark_group(format!("{z}"));
-        group.bench_function(&format!("ln"), |b| b.iter(|| black_box(z.ln())));
-        group.bench_function(&format!("W_0"), |b| b.iter(|| black_box(lambert_w_0(z))));
+    let small_args = [-0.2];
+
+    for z in big_args {
+        let mut group = c.benchmark_group(format!("W_0({z})"));
+        group.bench_function(&format!("50 bits"), |b| {
+            b.iter(|| black_box(lambert_w_0(z)))
+        });
+        group.bench_function(&format!("24 bits"), |b| {
+            b.iter(|| black_box(sp_lambert_w_0(z)))
+        });
+    }
+    for z in small_args {
+        let mut group = c.benchmark_group(format!("W_-1({z})"));
+        group.bench_function(&format!("50 bits"), |b| {
+            b.iter(|| black_box(lambert_w_m1(z)))
+        });
+        group.bench_function(&format!("24 bits"), |b| {
+            b.iter(|| black_box(sp_lambert_w_m1(z)))
+        });
     }
 }
 
