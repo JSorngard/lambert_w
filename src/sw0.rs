@@ -1,8 +1,5 @@
 use super::NEG_INV_E as Z0;
 
-#[cfg(feature = "fma")]
-use fast_polynomial::polynomials::poly_3;
-
 #[cfg(not(feature = "fma"))]
 /// The original implementation of the principal branch of the Lambert W function by Toshio Fukushima, accurate to 24 bits, ported to Rust.
 pub fn sw0(z: f64) -> Option<f64> {
@@ -224,21 +221,29 @@ pub fn sw0(z: f64) -> Option<f64> {
 #[cfg(feature = "fma")]
 // This is the same function as above but the polynomials have been simplified.
 pub fn sw0(z: f64) -> Option<f64> {
+    use crate::pade::pade_4_3;
+
     if z < Z0 {
         None
     } else if z <= 2.008_217_811_584_472_7 {
         // W <= 0.854, X_1
         let x = (z - Z0).sqrt();
+        let x2 = x * x;
+        let x4 = x2 * x2;
 
-        Some(
-            (-0.999_999_940_395_401_9
-                + x * (0.055_730_052_161_777_8
-                    + x * (2.126_973_249_105_317_3
-                        + x * (0.813_511_236_783_528_8 + x * 0.016_324_880_146_070_16))))
-                / (1.
-                    + x * (2.275_906_559_863_465
-                        + x * (1.367_597_013_868_904 + x * 0.186_158_234_528_316_23))),
-        )
+        Some(pade_4_3(
+            x,
+            x2,
+            x4,
+            [
+                -0.999999940395402,
+                0.0557300521617778,
+                2.12697324910532,
+                0.813511236783529,
+                0.0163248801460702,
+            ],
+            [1.0, 2.27590655986346, 1.3675970138689, 0.186158234528316],
+        ))
     } else if z <= 30.539_142_109_510_895 {
         // W <= 2.502, X_2
         let x = (z - Z0).sqrt();
