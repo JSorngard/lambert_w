@@ -13,6 +13,7 @@ repository = "https://github.com/JSorngard/lambert_w"
 [dev-dependencies]
 approx = "0.5.1"
 criterion = { version = "0.5.1", features = ["html_reports"]}
+rand = "0.8.5"
 
 [features]
 default = ["24bits", "50bits"]
