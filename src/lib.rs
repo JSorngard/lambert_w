@@ -62,7 +62,6 @@ compile_error!("one or both of the '24bits' and '50bits' features must be enable
 mod dw0c;
 #[cfg(feature = "50bits")]
 mod dwm1c;
-#[cfg(feature = "fma")]
 mod pade;
 #[cfg(feature = "24bits")]
 mod sw0;
