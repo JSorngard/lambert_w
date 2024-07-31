@@ -58,8 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@1.65.0
+    - uses: dtolnay/rust-toolchain@1.60.0
       with:
         components: clippy
-    - name: clippy_1.65
-      run: cargo +1.65.0 clippy --all-features -- -D warnings
+    - name: clippy_1.60
+      run: cargo +1.60.0 clippy --all-features -- -D warnings
