@@ -3,8 +3,11 @@
 
 #[cfg(feature = "24bits")]
 /// Padé approximant consisting of two third degree polynomials.
+///
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
+///
+/// If the `fma` feture is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it evaluates the polynomial "normally"
 #[inline(always)]
 pub(crate) fn pade_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "fma")]
@@ -22,8 +25,11 @@ pub(crate) fn pade_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64;
 
 #[cfg(feature = "24bits")]
 /// Padé approximant consisting of a fourth degree polynomial divided by a third degree polynomial.
+///
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
+///
+/// /// If the `fma` feture is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it evaluates the polynomial "normally"
 #[inline(always)]
 pub(crate) fn pade_4_3(x: f64, [n0, n1, n2, n3, n4]: [f64; 5], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "fma")]
@@ -42,8 +48,11 @@ pub(crate) fn pade_4_3(x: f64, [n0, n1, n2, n3, n4]: [f64; 5], [d0, d1, d2, d3]:
 
 #[cfg(feature = "50bits")]
 /// Padé approximant consisting of two seventh degree polynomials.
+///
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
+///
+/// /// If the `fma` feture is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it evaluates the polynomial "normally"
 #[inline(always)]
 pub(crate) fn pade_7(
     x: f64,
@@ -68,8 +77,11 @@ pub(crate) fn pade_7(
 
 #[cfg(feature = "50bits")]
 /// Padé approximant consisting of an eigth degree polynomial divided by a seventh degree polynomial.
+///
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
+///
+/// /// If the `fma` feture is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it evaluates the polynomial "normally"
 #[inline(always)]
 pub(crate) fn pade_8_7(
     x: f64,
