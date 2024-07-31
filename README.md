@@ -18,8 +18,6 @@ Compute the value of the [Omega constant](https://en.wikipedia.org/wiki/Omega_co
 ```rust
 use lambert_w::lambert_w_0;
 
-use approx::assert_abs_diff_eq;
-
 let Ω = lambert_w_0(1.0);
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838);
