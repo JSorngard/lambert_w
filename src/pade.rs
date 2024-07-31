@@ -1,3 +1,5 @@
+//! Padé approximants that use Estrin's scheme with fused multiply-add instructions for better performance, but with a slight reduction in accuracy.
+
 use fast_polynomial::polynomials::{poly_3, poly_4, poly_7};
 
 /// Padé approximant consisting of two third degree polynomials.

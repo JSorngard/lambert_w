@@ -431,7 +431,11 @@ mod test {
             -3.577152063957297,
             epsilon = 1e-14
         );
-        assert_abs_diff_eq!(lambert_w_m1(-3.000000000000000e-02), -5.144482721515681);
+        assert_abs_diff_eq!(
+            lambert_w_m1(-3.000000000000000e-02),
+            -5.144482721515681,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000000e-02),
             -6.472775124394005,
