@@ -1,5 +1,9 @@
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.4.1
+
+ - Add the optional `fma` feature that computes the Lambert W function up to 25% faster when the target cpu has fused multiply-add instructions.
+
 ## 0.4.0
 
 ### Breaking changes
