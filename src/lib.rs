@@ -38,7 +38,7 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 )]
 //!
 //! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
-//! It passes the assertion if the two supplied values are the same to within floating point error, or within an optional epsilon.
+//! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon.
 //!
 //! ## Feature flags
 //!
