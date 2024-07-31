@@ -1,7 +1,8 @@
+use core::f64::consts::E;
+use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
 use lambert_w::{lambert_w_0, lambert_w_m1, sp_lambert_w_0, sp_lambert_w_m1};
 use rand::{thread_rng, Rng};
-use std::hint::black_box;
 use std::time::Instant;
 
 fn bench(c: &mut Criterion) {
@@ -31,7 +32,9 @@ fn bench(c: &mut Criterion) {
         let mut rng = thread_rng();
         group.bench_function("W_0 50 bits", |b| {
             b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters).map(|_| rng.gen()).collect();
+                let datas: Vec<f64> = (0..iters)
+                    .map(|_| rng.gen_range(-1.0 / E..f64::MAX))
+                    .collect();
                 let start = Instant::now();
                 for &z in &datas {
                     black_box(lambert_w_0(z));
@@ -41,7 +44,9 @@ fn bench(c: &mut Criterion) {
         });
         group.bench_function("W_0 24 bits", |b| {
             b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters).map(|_| rng.gen()).collect();
+                let datas: Vec<f64> = (0..iters)
+                    .map(|_| rng.gen_range(-1.0 / E..f64::MAX))
+                    .collect();
                 let start = Instant::now();
                 for &z in &datas {
                     black_box(sp_lambert_w_0(z));
@@ -51,7 +56,7 @@ fn bench(c: &mut Criterion) {
         });
         group.bench_function("W_-1 50 bits", |b| {
             b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters).map(|_| rng.gen()).collect();
+                let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
                 let start = Instant::now();
                 for &z in &datas {
                     black_box(lambert_w_m1(z));
@@ -61,7 +66,7 @@ fn bench(c: &mut Criterion) {
         });
         group.bench_function("W_-1 24 bits", |b| {
             b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters).map(|_| rng.gen()).collect();
+                let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
                 let start = Instant::now();
                 for &z in &datas {
                     black_box(sp_lambert_w_m1(z));

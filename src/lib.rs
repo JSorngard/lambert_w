@@ -48,7 +48,10 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 //!
 //! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
-//! It is a compile error to disable both features.
+//! It is a compile error to disable both the `24bits` and `50bits` features.
+//!
+//! `fma`: Up to 25% increase in performance for ~1 bit lower accuracy.
+//! Only enable if the target CPU has support for fused multiply-add instructions.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
@@ -59,6 +62,7 @@ compile_error!("one or both of the '24bits' and '50bits' features must be enable
 mod dw0c;
 #[cfg(feature = "50bits")]
 mod dwm1c;
+mod pade;
 #[cfg(feature = "24bits")]
 mod sw0;
 #[cfg(feature = "24bits")]
@@ -166,7 +170,7 @@ pub fn lambert_w_0(z: f64) -> f64 {
 ///
 /// let mln4 = lambert_w_m1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-14);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
 /// ```
@@ -201,9 +205,30 @@ mod test {
             7.231813718542178,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999963212055883e+04), 9.284568107521959);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999963212055883e+04),
+            9.284568107521959,
+            epsilon = 1e-14
+        );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999996321205589e+05), 1.138335774796812e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999996321205589e+05),
+            1.138335774796812e+01,
+            epsilon = 1e-14
+        );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999999632120559e+06), 1.351434397605273e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999999632120559e+06),
+            1.351434397605273e+01,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_0(9.999999963212056e+07),
             1.566899671199287e+01,
@@ -219,7 +244,14 @@ mod test {
             2.002868541326992e+01,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999999999963213e+10), 2.222712273495755e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999999999963213e+10),
+            2.222712273495755e+01,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_0(9.999999999996321e+11),
             2.443500440493456e+01,
@@ -256,8 +288,22 @@ mod test {
             4.005876916198432e+01,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+20), 4.230675509173839e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(1.000000000000000e+20),
+            4.230675509173839e+01,
+            epsilon = 1e-14
+        );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+40), 8.763027715194720e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(1.000000000000000e+40),
+            8.763027715194720e+01,
+            epsilon = 1e-13
+        );
         assert_abs_diff_eq!(
             lambert_w_0(1.000000000000000e+80),
             1.790193137415062e+02,
@@ -422,7 +468,14 @@ mod test {
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(lambert_w_m1(-1.000000000000000e-01), -3.577152063957297);
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_m1(-3.000000000000000e-02), -5.144482721515681);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_m1(-3.000000000000000e-02),
+            -5.144482721515681,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000000e-02),
             -6.472775124394005,
@@ -463,9 +516,16 @@ mod test {
             -1.778749628219512e+02,
             epsilon = 1e-13
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000008e-145),
             -3.397029099254290e+02
+        );
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_m1(-1.000000000000008e-145),
+            -3.397029099254290e+02,
+            epsilon = 1e-12
         );
         assert!(lambert_w_m1(f64::EPSILON).is_nan());
     }

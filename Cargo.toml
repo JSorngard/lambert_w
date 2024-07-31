@@ -6,9 +6,12 @@ authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics"]
 keywords = ["lambert_w", "product_log", "omega_function"]
 description = "Fast and accurate evaluation of the Lambert W function by the method of T. Fukushima."
-rust-version = "1.65.0"
+rust-version = "1.60.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
+
+[dependencies]
+fast_polynomial = {version = "0.1.0", optional = true}
 
 [dev-dependencies]
 approx = "0.5.1"
@@ -21,6 +24,8 @@ default = ["24bits", "50bits"]
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
 24bits = []
+# Up to 25% increase in performance for ~1 bit lower accuracy. Only enable if the target CPU has support for fused multiply-add instructions.
+fma = ["dep:fast_polynomial"]
 
 # docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
 [package.metadata.docs.rs]
@@ -28,6 +33,11 @@ default = ["24bits", "50bits"]
 all-features = true
 # Enable the docsrs configuration attribute on docs.rs
 rustdoc-args = ["--cfg", "docsrs"]
+
+[profile.release-lto]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
 
 [[bench]]
 name = "lambert_benches"
