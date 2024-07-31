@@ -491,10 +491,17 @@ mod test {
             -1.416360081581018e+01,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000004e-75),
             -1.778749628219512e+02,
             epsilon = 1e-13
+        );
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_m1(-1.000000000000004e-75),
+            -1.778749628219512e+02,
+            epsilon = 1e-12
         );
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000008e-145),
