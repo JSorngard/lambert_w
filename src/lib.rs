@@ -50,7 +50,7 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 //!
 //! `fma`: Up to 25% increase in performance for ~1 bit lower accuracy.
 // When the next version of `fast_polynomial` is released I hope to remove this note about accuracy reduction.
-//! Only enable if the target CPU has support for fused multiply-add instructions.
+//! Only enable if the target CPU has support for fused multiply-add instructions, otherwise the performance will be degraded instead.
 //! Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) via the [`fast_polynomial`](https://docs.rs/fast_polynomial/latest/fast_polynomial/) crate for instruction level parallelism.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]

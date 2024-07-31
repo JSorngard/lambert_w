@@ -24,7 +24,7 @@ default = ["24bits", "50bits"]
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
 24bits = []
-# Up to 25% increase in performance for ~1 bit lower accuracy. Only enable if the target CPU has support for fused multiply-add instructions. Uses Estrin's scheme for instruction level parallelism.
+# Up to 25% increase in performance for ~1 bit lower accuracy. Only enable if the target CPU has support for fused multiply-add instructions, otherwise the performance will be degraded instead. Uses Estrin's scheme for instruction level parallelism.
 fma = ["dep:fast_polynomial"]
 
 [package.metadata.docs.rs]
