@@ -48,9 +48,8 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 //!
 //! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
-//! `fma`: Up to 25% increase in performance for ~1 bit lower accuracy.
-// When the next version of `fast_polynomial` is released I hope to remove this note about accuracy reduction.
-//! Only enable if the target CPU has support for fused multiply-add instructions, otherwise the performance will be degraded instead.
+//! `fma`: Up to 25% increase in performance.
+//! Only enable this if the target CPU has support for fused multiply-add instructions, otherwise the performance will be degraded instead.
 //! Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) via the [`fast_polynomial`](https://docs.rs/fast_polynomial/latest/fast_polynomial/) crate.
 //! While this results in more assembly instructions, they are mostly independent of each other, and this increases parallelism on modern hardware for a total performance gain.
 
