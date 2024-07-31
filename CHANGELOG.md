@@ -3,7 +3,7 @@ This file contains the changes to the crate since version 0.1.1.
 ## 0.3.1
 
  - Export the constants `NEG_INV_E` and `OMEGA`.
- - Implement the derivative of the principal branch of the Lambert W function.
+ - Make the Lambert W functions return `f64::NAN` when given inputs outside the domain. This is inline with how it is usually handled in the standard library.
 
 ## 0.3.0
 
