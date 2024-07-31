@@ -1,14 +1,14 @@
-use super::{INV_SQRT_E as X0, NEG_INV_E as Z0};
+use super::{INV_SQRT_E, NEG_INV_E};
 use crate::pade::pade_3;
 
 pub fn swm1(z: f64) -> f64 {
-    if z < Z0 {
+    if z < NEG_INV_E {
         f64::NAN
     } else if z <= -0.207_293_777_640_384_15 {
         // W >= -2.483, Y_-1
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -6.383_722_822_801_905,
                 -74.968_653_259_594_05,
@@ -26,7 +26,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -4.032, Y_-2
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -7.723_328_481_229_978,
                 -352.484_690_970_429_14,
@@ -44,7 +44,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -5.600, Y_-3
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -9.137_773_141_758_155,
                 -1_644.724_479_150_889,
@@ -62,7 +62,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -7.178, Y_-4
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -10.603_388_239_566_373,
                 -7_733.348_521_498_648,
@@ -80,7 +80,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -8.766, Y_-5
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -12.108_699_273_343_438,
                 -36_896.535_108_166_376,
@@ -98,7 +98,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -10.367, Y_-6
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -13.646_761_936_746_191,
                 -179_086.115_857_151_48,
@@ -116,7 +116,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -11.983, Y_-7
 
         pade_3(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -15.212_958_142_001_646,
                 -884_954.687_981_689_6,

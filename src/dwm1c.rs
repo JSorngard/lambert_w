@@ -1,4 +1,4 @@
-use super::{INV_SQRT_E as X0, NEG_INV_E as Z0};
+use super::{INV_SQRT_E, NEG_INV_E};
 
 /// zc = z + 1/e
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
@@ -35,7 +35,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -2.637, Y_-1
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -8.225_315_526_444_685,
                 -813.207_067_320_014_9,
@@ -61,7 +61,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -4.253, Y_-2
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -9.618_412_744_335_403,
                 -3_557.856_904_301_800_6,
@@ -87,7 +87,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -5.832, Y_-3
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -11.038_489_462_297_466,
                 -15_575.812_882_656_619,
@@ -113,7 +113,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -7.382, Y_-4
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -12.474_405_916_395_746,
                 -68_180.335_575_543_78,
@@ -139,7 +139,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -8.913, Y_-5
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -13.921_651_376_890_072,
                 -298_789.564_823_880_7,
@@ -165,7 +165,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -10.433, Y_-6
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -15.377_894_224_591_557,
                 -1.312_231_200_509_698e6,
@@ -191,7 +191,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
         // W >= -11.946, Y_-7
 
         pade_7(
-            -z / (X0 + (z - Z0).sqrt()),
+            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -16.841_701_411_264_98,
                 -5.779_082_325_757_714e6,
