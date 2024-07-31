@@ -1,5 +1,3 @@
-use crate::pade::pade_7;
-
 use super::{INV_SQRT_E as X0, NEG_INV_E as Z0};
 
 #[cfg(not(feature = "fma"))]
@@ -248,6 +246,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
 #[cfg(feature = "fma")]
 /// This function is the same as the above except the polynomials have been simplified.
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
+    use crate::pade::pade_7;
     if zc < 0.0 {
         f64::NAN
     } else if z <= -0.3542913309442164 {
