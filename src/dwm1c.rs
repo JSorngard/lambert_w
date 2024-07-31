@@ -1,7 +1,6 @@
 use super::{INV_SQRT_E as X0, NEG_INV_E as Z0};
 
 /// zc = z + 1/e
-// Formatting this function takes a lot of time, so I have ran `cargo fmt` on it once, and now no one else has to / Johanna.
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
     use crate::pade::pade_7;
     if zc < 0.0 {

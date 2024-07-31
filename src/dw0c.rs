@@ -1,5 +1,4 @@
 /// zc = z + 1/e
-// Formatting this function takes a lot of time, so I have ran `cargo fmt` on it once, and now no one else has to / Johanna.
 pub fn dw0c(zc: f64) -> f64 {
     use crate::pade::{pade_7, pade_8_7};
 
