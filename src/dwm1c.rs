@@ -244,7 +244,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
 }
 
 #[cfg(feature = "fma")]
-/// This function is the same as the above except evaluated with Estrin's scheme and fused multiply-adds.
+// This function is the same as the above except evaluated with Estrin's scheme and fused multiply-adds.
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
     use crate::pade::pade_7;
     if zc < 0.0 {
