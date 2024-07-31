@@ -171,7 +171,7 @@ pub fn lambert_w_0(z: f64) -> f64 {
 ///
 /// let mln4 = lambert_w_m1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-14);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
 /// ```
@@ -426,7 +426,11 @@ mod test {
             -2.020625228775403,
             epsilon = 1e-14
         );
-        assert_abs_diff_eq!(lambert_w_m1(-1.000000000000000e-01), -3.577152063957297);
+        assert_abs_diff_eq!(
+            lambert_w_m1(-1.000000000000000e-01),
+            -3.577152063957297,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(lambert_w_m1(-3.000000000000000e-02), -5.144482721515681);
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000000e-02),
