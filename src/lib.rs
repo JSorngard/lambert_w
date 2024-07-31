@@ -64,13 +64,17 @@ mod sw0;
 #[cfg(feature = "24bits")]
 mod swm1;
 
-/// -1/e = -0.36787944117144233. The smallest input value for which the Lambert W functions in this crate return a value.
+/// The negative inverse of e (-1/e).
+/// 
+/// This is the smallest input value for which the Lambert W functions in this crate return a value.
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_33;
 
 // 1/sqrt(e)
 const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 
-/// Ω = 0.5671432904097838. The Omega constant. Fulfills the equation Ω*e^Ω = 1.
+/// The Omega constant (Ω).
+/// 
+/// Fulfills the equation Ω*e^Ω = 1.
 pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 #[cfg(feature = "24bits")]
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` >= -1/e.
