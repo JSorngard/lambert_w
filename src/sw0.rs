@@ -219,7 +219,7 @@ pub fn sw0(z: f64) -> f64 {
 }
 
 #[cfg(feature = "fma")]
-// This is the same function as above but the polynomials have been simplified.
+// This is the same function as above but evaluated with Estrins scheme and fused multiply-adds.
 pub fn sw0(z: f64) -> f64 {
     use crate::pade::{pade_3, pade_4_3};
 
