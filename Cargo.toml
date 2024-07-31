@@ -27,12 +27,9 @@ default = ["24bits", "50bits"]
 # Up to 25% increase in performance for ~1 bit lower accuracy. Only enable if the target CPU has support for fused multiply-add instructions.
 fma = ["dep:fast_polynomial"]
 
-# docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.
 [package.metadata.docs.rs]
 # Document all features.
 all-features = true
-# Enable the docsrs configuration attribute on docs.rs
-rustdoc-args = ["--cfg", "docsrs"]
 
 [profile.release-lto]
 inherits = "release"
