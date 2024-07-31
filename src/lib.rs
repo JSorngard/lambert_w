@@ -70,7 +70,7 @@ mod swm1;
 /// This is the smallest input value for which the Lambert W functions in this crate return a value.
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_33;
 
-// 1/sqrt(e)
+/// 1/sqrt(e)
 const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 
 /// The Omega constant (Ω).
