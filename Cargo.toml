@@ -6,7 +6,7 @@ authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics"]
 keywords = ["lambert_w", "product_log", "omega_function"]
 description = "Fast and accurate evaluation of the Lambert W function by the method of T. Fukushima."
-rust-version = "1.65.0"
+rust-version = "1.60.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
 
