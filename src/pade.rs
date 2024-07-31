@@ -1,5 +1,5 @@
 //! Padé approximants that use Estrin's scheme with fused multiply-add instructions for better performance if the `fma` feature is enabled,
-//! and othersie it uses the normal .
+//! and otherwise it uses the more typical Horner's method.
 
 #[cfg(feature = "24bits")]
 /// Padé approximant consisting of two third degree polynomials.
