@@ -410,6 +410,7 @@ pub fn dw0c(zc: f64) -> f64 {
     }
 }
 
+#[rustfmt::skip]
 #[cfg(feature = "fma")]
 pub fn dw0c(zc: f64) -> f64 {
     use crate::pade::pade_8_7;
