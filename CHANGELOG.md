@@ -4,7 +4,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ### Breaking changes
 
- - Make the Lambert W functions return `f64::NAN` when given inputs outside their domain. This is inline with how it is usually handled in the standard library.
+ - Make the Lambert W functions return `f64::NAN` when given inputs outside their domain. This is in line with how it is usually handled in the standard library.
 
 ### Other changes
 
