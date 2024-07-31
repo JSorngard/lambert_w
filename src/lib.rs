@@ -48,17 +48,12 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 //!
 //! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
-//! It is a compile error to disable both the `24bits` and `50bits` features.
-//!
 //! `fma`: Up to 25% increase in performance for ~1 bit lower accuracy.
 // When the next version of `fast_polynomial` is released I hope to remove this note about accuracy reduction.
 //! Only enable if the target CPU has support for fused multiply-add instructions.
 //! Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) via the [`fast_polynomial`](https://docs.rs/fast_polynomial/latest/fast_polynomial/) crate for instruction level parallelism.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
-
-#[cfg(not(any(feature = "50bits", feature = "24bits")))]
-compile_error!("one or both of the '24bits' and '50bits' features must be enabled");
 
 #[cfg(feature = "50bits")]
 mod dw0c;
