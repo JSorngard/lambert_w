@@ -195,14 +195,7 @@ mod test {
     #[test]
     fn test_lambert_w_0() {
         assert!(lambert_w_0(-1.0 / E - f64::EPSILON).is_nan());
-        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(-2.678794411714424e-01), -3.993824525397807e-01);
-        #[cfg(feature = "fma")]
-        assert_abs_diff_eq!(
-            lambert_w_0(-2.678794411714424e-01),
-            -3.993824525397807e-01,
-            epsilon = 1e-15
-        );
         assert_abs_diff_eq!(lambert_w_0(6.321205588285577e-01), 4.167039988177658e-01);
         assert_abs_diff_eq!(lambert_w_0(9.632120558828557), 1.721757710976171);
         assert_abs_diff_eq!(lambert_w_0(9.963212055882856e+01), 3.382785211058958);
@@ -212,9 +205,30 @@ mod test {
             7.231813718542178,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999963212055883e+04), 9.284568107521959);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999963212055883e+04),
+            9.284568107521959,
+            epsilon = 1e-14
+        );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999996321205589e+05), 1.138335774796812e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999996321205589e+05),
+            1.138335774796812e+01,
+            epsilon = 1e-14
+        );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999999632120559e+06), 1.351434397605273e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999999632120559e+06),
+            1.351434397605273e+01,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_0(9.999999963212056e+07),
             1.566899671199287e+01,
@@ -230,7 +244,14 @@ mod test {
             2.002868541326992e+01,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(9.999999999963213e+10), 2.222712273495755e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(9.999999999963213e+10),
+            2.222712273495755e+01,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_0(9.999999999996321e+11),
             2.443500440493456e+01,
@@ -267,8 +288,22 @@ mod test {
             4.005876916198432e+01,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+20), 4.230675509173839e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(1.000000000000000e+20),
+            4.230675509173839e+01,
+            epsilon = 1e-14
+        );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+40), 8.763027715194720e+01);
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_0(1.000000000000000e+40),
+            8.763027715194720e+01,
+            epsilon = 1e-13
+        );
         assert_abs_diff_eq!(
             lambert_w_0(1.000000000000000e+80),
             1.790193137415062e+02,
@@ -432,14 +467,7 @@ mod test {
             -2.020625228775403,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_m1(-1.000000000000000e-01), -3.577152063957297);
-        #[cfg(feature = "fma")]
-        assert_abs_diff_eq!(
-            lambert_w_m1(-1.000000000000000e-01),
-            -3.577152063957297,
-            epsilon = 1e-14
-        );
         #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(lambert_w_m1(-3.000000000000000e-02), -5.144482721515681);
         #[cfg(feature = "fma")]
@@ -458,29 +486,15 @@ mod test {
             -7.872521380098709,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000000e-03),
             -9.118006470402742,
             epsilon = 1e-14
         );
-        #[cfg(feature = "fma")]
-        assert_abs_diff_eq!(
-            lambert_w_m1(-1.000000000000000e-03),
-            -9.118006470402742,
-            epsilon = 1e-13
-        );
-        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-3.000000000000001e-04),
             -1.045921112040100e+01,
             epsilon = 1e-14
-        );
-        #[cfg(feature = "fma")]
-        assert_abs_diff_eq!(
-            lambert_w_m1(-3.000000000000001e-04),
-            -1.045921112040100e+01,
-            epsilon = 1e-13
         );
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000000e-04),
@@ -497,17 +511,10 @@ mod test {
             -1.416360081581018e+01,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000004e-75),
             -1.778749628219512e+02,
             epsilon = 1e-13
-        );
-        #[cfg(feature = "fma")]
-        assert_abs_diff_eq!(
-            lambert_w_m1(-1.000000000000004e-75),
-            -1.778749628219512e+02,
-            epsilon = 1e-12
         );
         #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
