@@ -503,9 +503,16 @@ mod test {
             -1.778749628219512e+02,
             epsilon = 1e-12
         );
+        #[cfg(not(feature = "fma"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000008e-145),
             -3.397029099254290e+02
+        );
+        #[cfg(feature = "fma")]
+        assert_abs_diff_eq!(
+            lambert_w_m1(-1.000000000000008e-145),
+            -3.397029099254290e+02,
+            epsilon = 1e-12
         );
         assert!(lambert_w_m1(f64::EPSILON).is_nan());
     }
