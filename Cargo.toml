@@ -24,8 +24,7 @@ default = ["24bits", "50bits"]
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
 24bits = []
-# Exploit instruction-level parallelism and fused multiply add instructions using the [`fast_polynomial`](https://crates.io/crates/fast_polynomial) crate to evaluate the functions faster.
-# Enabling this may reduce performance if your processor doesn't have fused multiply add instructions.
+# Up to 25% increase in performance for ~1 bit lower accuracy. Only enable if the target CPU has support for fused multiply-add instructions.
 fma = ["dep:fast_polynomial"]
 
 # docs.rs-specific configuration. Taken from <https://stackoverflow.com/a/61417700/>.

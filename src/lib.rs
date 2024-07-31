@@ -48,10 +48,10 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 //!
 //! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
-//! `ilp_fma`: exploit instruction-level parallelism and fused multiply add instructions using the [`fast_polynomial`](https://docs.rs/fast_polynomial/0.1.0/fast_polynomial/) crate to evaluate the functions faster.
-//! Enabling this may reduce performance if your processor doesn't have fused multiply add instructions.
-//!
 //! It is a compile error to disable both the `24bits` and `50bits` features.
+//!
+//! `fma`: Up to 25% increase in performance for ~1 bit lower accuracy.
+//! Only enable if the target CPU has support for fused multiply-add instructions.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
