@@ -8,7 +8,7 @@ This file contains the changes to the crate since version 0.1.1.
  on modern hardware by using [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme)
  to evaluate the polynomials in the Padé approximants.
  May result in slight numerical instability, which can be mitigated if the target
- cpu has fused multiply-add instructions.
+ CPU has fused multiply-add instructions.
 - Lower the MSRV to 1.60.0.
 - No longer a forced `compile_error!` to disable both the `24bits` and `50bits` features.
 - Documentation improvements.
