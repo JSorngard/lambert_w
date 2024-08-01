@@ -1,4 +1,4 @@
-//! Padé approximants that use Estrin's scheme with fused multiply-add instructions for better performance if the `fma` feature is enabled,
+//! Padé approximants that use Estrin's scheme with fused multiply-add instructions for better performance if the `estrin` feature is enabled,
 //! and otherwise they use the more typical Horner's method.
 
 // The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
@@ -9,7 +9,7 @@
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 ///
-/// If the `fma` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
+/// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
 pub(crate) fn pade_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "estrin")]
@@ -31,7 +31,7 @@ pub(crate) fn pade_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64;
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 ///
-/// If the `fma` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
+/// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
 pub(crate) fn pade_4_3(x: f64, [n0, n1, n2, n3, n4]: [f64; 5], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "estrin")]
@@ -54,7 +54,7 @@ pub(crate) fn pade_4_3(x: f64, [n0, n1, n2, n3, n4]: [f64; 5], [d0, d1, d2, d3]:
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 ///
-/// If the `fma` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
+/// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
 pub(crate) fn pade_7(
     x: f64,
@@ -83,7 +83,7 @@ pub(crate) fn pade_7(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 ///
-/// If the `fma` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
+/// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
 pub(crate) fn pade_8_7(
     x: f64,
