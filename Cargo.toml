@@ -40,5 +40,9 @@ lto = "fat"
 codegen-units = 1
 
 [[bench]]
-name = "lambert_benches"
+name = "random"
+harness = false
+
+[[bench]]
+name = "fixed"
 harness = false
