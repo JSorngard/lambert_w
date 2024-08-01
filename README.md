@@ -18,7 +18,7 @@ either a square root (and possibly a division) or a logarithm and then a series
 of multiplications and additions by fixed constants and finished with a division.
 
 The functions with 50 bits of accuracy use higher degree Padé approximants,
-and thus more of the multiplications and additions
+and thus more of the multiplications and additions.
 
 ## Examples
 
