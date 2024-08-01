@@ -97,7 +97,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 #[cfg(feature = "24bits")]
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy, if `z` >= -1/e.
 ///
-/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -122,7 +122,7 @@ pub fn sp_lambert_w_0(z: f64) -> f64 {
 #[cfg(feature = "24bits")]
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy, if -1/e <= `z` <= 0.
 ///
-/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -148,7 +148,7 @@ pub fn sp_lambert_w_m1(z: f64) -> f64 {
 #[cfg(feature = "50bits")]
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 50 bits of accuracy, if `z` >= -1/e.
 ///
-/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -173,7 +173,7 @@ pub fn lambert_w_0(z: f64) -> f64 {
 #[cfg(feature = "50bits")]
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 50 bits of accuracy, if -1/e <= `z` <= 0.
 ///
-/// Uses the piecewise minimax rational function approximation with variable transformations method of Toshio Fukushima.
+/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
