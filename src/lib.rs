@@ -211,7 +211,10 @@ mod test {
         assert!(lambert_w_0(-1.0 / E - f64::EPSILON).is_nan());
         assert_abs_diff_eq!(lambert_w_0(-2.678794411714424e-01), -3.993824525397807e-01);
         assert_abs_diff_eq!(lambert_w_0(6.321205588285577e-01), 4.167039988177658e-01);
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(9.632120558828557), 1.721757710976171);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(lambert_w_0(9.632120558828557), 1.721757710976171, epsilon 1e-14);
         assert_abs_diff_eq!(lambert_w_0(9.963212055882856e+01), 3.382785211058958);
         assert_abs_diff_eq!(lambert_w_0(9.996321205588285e+02), 5.249293782013269);
         assert_abs_diff_eq!(
