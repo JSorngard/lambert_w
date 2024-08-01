@@ -38,7 +38,7 @@ use lambert_w::{lambert_w_m1, sp_lambert_w_m1};
 let z = -f64::ln(2.0) / 2.0;
 
 let mln4_50b = lambert_w_m1(z);
-let mln4_24b = lambert_w_m1(z);
+let mln4_24b = sp_lambert_w_m1(z);
 
 
 assert_abs_diff_eq!(mln4_50b, -f64::ln(4.0));
