@@ -2,7 +2,7 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
-## 0.4.2
+## 0.4.2 and 0.4.3
 
 - Correct mistake in doc information.
 
