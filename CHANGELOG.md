@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.4.2
+
+- Correct mistake in doc information.
+
 ## 0.4.1
 
 - Add the optional `estrin` feature that computes the Lambert W function faster
