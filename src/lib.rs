@@ -214,7 +214,11 @@ mod test {
         #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(9.632120558828557), 1.721757710976171);
         #[cfg(feature = "estrin")]
-        assert_abs_diff_eq!(lambert_w_0(9.632120558828557), 1.721757710976171, epsilon = 1e-14);
+        assert_abs_diff_eq!(
+            lambert_w_0(9.632120558828557),
+            1.721757710976171,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(lambert_w_0(9.963212055882856e+01), 3.382785211058958);
         assert_abs_diff_eq!(lambert_w_0(9.996321205588285e+02), 5.249293782013269);
         assert_abs_diff_eq!(
