@@ -193,7 +193,7 @@ pub fn lambert_w_0(z: f64) -> f64 {
 /// assert!(lambert_w_m1(1.0).is_nan());
 /// ```
 pub fn lambert_w_m1(z: f64) -> f64 {
-    dwm1c::dwm1c(z, z - NEG_INV_E)
+    dwm1c::dwm1c(z)
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
