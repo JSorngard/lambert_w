@@ -2,7 +2,7 @@
 //! using the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_anfast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 //! to either 24 or 50 bits of accuracy.
 //!
-//! This method works by splitting the domain of the function into subdomains, and on each subdomain it uses a [Padé approximant](https://en.wikipedia.org/wiki/Pad%C3%A9_approximant)
+//! This method works by splitting the domain of the function into subdomains, and on each subdomain it uses a rational function
 //! evaluated on a simple transformation of the input to describe the function.  
 //! It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm
 //! and then a series of multiplications and additions by fixed constants and finished with a division.
@@ -70,7 +70,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! You can disable one of the above feature flags to potentially save a little bit of binary size.
 //!
 //! `estrin`: uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) instead of [Horner's Method](https://en.wikipedia.org/wiki/Horner%27s_method)
-//! with the help of the [`fast_polynomial`](https://docs.rs/fast_polynomial/0.2.0/fast_polynomial/) crate to evaluate the polynomials in the Padé approximants.
+//! with the help of the [`fast_polynomial`](https://docs.rs/fast_polynomial/0.2.0/fast_polynomial/) crate to evaluate the polynomials in the rational functions.
 //! While this results in more assembly instructions, they are mostly independent of each other,
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be mitigated if the target CPU has fused multiply-add instructions.
