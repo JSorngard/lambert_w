@@ -6,7 +6,56 @@ use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg32;
 use std::time::Instant;
 
-fn bench(c: &mut Criterion) {
+fn random_benches(c: &mut Criterion) {
+    let mut group = c.benchmark_group("random inputs");
+    let mut rng = Pcg32::seed_from_u64(0);
+    group.bench_function("W_0 50 bits", |b| {
+        b.iter_custom(|iters| {
+            let datas: Vec<f64> = (0..iters)
+                .map(|_| rng.gen_range(-1.0 / E..f64::MAX))
+                .collect();
+            let start = Instant::now();
+            for &z in &datas {
+                black_box(lambert_w_0(z));
+            }
+            start.elapsed()
+        })
+    });
+    group.bench_function("W_0 24 bits", |b| {
+        b.iter_custom(|iters| {
+            let datas: Vec<f64> = (0..iters)
+                .map(|_| rng.gen_range(-1.0 / E..f64::MAX))
+                .collect();
+            let start = Instant::now();
+            for &z in &datas {
+                black_box(sp_lambert_w_0(z));
+            }
+            start.elapsed()
+        })
+    });
+    group.bench_function("W_-1 50 bits", |b| {
+        b.iter_custom(|iters| {
+            let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
+            let start = Instant::now();
+            for &z in &datas {
+                black_box(lambert_w_m1(z));
+            }
+            start.elapsed()
+        })
+    });
+    group.bench_function("W_-1 24 bits", |b| {
+        b.iter_custom(|iters| {
+            let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
+            let start = Instant::now();
+            for &z in &datas {
+                black_box(sp_lambert_w_m1(z));
+            }
+            start.elapsed()
+        })
+    });
+}
+
+fn fixed_benches(c: &mut Criterion) {
     let big_args = [
         -2.678794411714424e-01_f64,
         6.321205588285577e-01,
@@ -28,55 +77,6 @@ fn bench(c: &mut Criterion) {
         -1.000000000000008e-145,
     ];
 
-    {
-        let mut group = c.benchmark_group("random inputs");
-        let mut rng = Pcg32::seed_from_u64(0);
-        group.bench_function("W_0 50 bits", |b| {
-            b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters)
-                    .map(|_| rng.gen_range(-1.0 / E..f64::MAX))
-                    .collect();
-                let start = Instant::now();
-                for &z in &datas {
-                    black_box(lambert_w_0(z));
-                }
-                start.elapsed()
-            })
-        });
-        group.bench_function("W_0 24 bits", |b| {
-            b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters)
-                    .map(|_| rng.gen_range(-1.0 / E..f64::MAX))
-                    .collect();
-                let start = Instant::now();
-                for &z in &datas {
-                    black_box(sp_lambert_w_0(z));
-                }
-                start.elapsed()
-            })
-        });
-        group.bench_function("W_-1 50 bits", |b| {
-            b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
-                let start = Instant::now();
-                for &z in &datas {
-                    black_box(lambert_w_m1(z));
-                }
-                start.elapsed()
-            })
-        });
-        group.bench_function("W_-1 24 bits", |b| {
-            b.iter_custom(|iters| {
-                let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
-                let start = Instant::now();
-                for &z in &datas {
-                    black_box(sp_lambert_w_m1(z));
-                }
-                start.elapsed()
-            })
-        });
-    }
-
     for z in big_args {
         let mut group = c.benchmark_group(format!("W_0({z})"));
         group.bench_function(&format!("50 bits"), |b| {
@@ -93,5 +93,5 @@ fn bench(c: &mut Criterion) {
     }
 }
 
-criterion_group!(benches, bench);
+criterion_group!(benches, random_benches, fixed_benches);
 criterion_main!(benches);
