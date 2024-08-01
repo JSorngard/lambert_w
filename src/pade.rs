@@ -32,9 +32,10 @@ pub(crate) fn pade_4_4(
 pub(crate) fn pade_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        use fast_polynomial::polynomials::poly_3;
-        let x2 = x * x;
-        poly_3(x, x2, n0, n1, n2, n3) / poly_3(x, x2, d0, d1, d2, d3)
+        // use fast_polynomial::polynomials::poly_3;
+        // let x2 = x * x;
+        // poly_3(x, x2, n0, n1, n2, n3) / poly_3(x, x2, d0, d1, d2, d3)
+        fast_polynomial::rational_array(x, &[n0, n1, n2, n3], &[d0, d1, d2, d3])
     }
 
     #[cfg(not(feature = "estrin"))]
