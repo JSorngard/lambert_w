@@ -7,7 +7,7 @@ This file contains the changes to the crate since version 0.1.1.
 - Add the optional `estrin` feature that computes the Lambert W function up to
  25% faster by using
  [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) to evaluate
-  the polynomials in the Padé approximants.
+ the polynomials in the Padé approximants.
  This may result in numerical instability if the target cpu does not have fused
  multiply-add instructions.
 - Lower the MSRV to 1.60.0.
