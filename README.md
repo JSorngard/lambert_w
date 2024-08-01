@@ -8,7 +8,7 @@
 Fast evaluation of the real valued parts of the principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function) using the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation) to either 24 or 50 bits of accuracy.
 
 This method works by splitting the domain of the function into subdomains, and on each domain it is approximated by a [Padé approximant](https://en.wikipedia.org/wiki/Pad%C3%A9_approximant) evaluated on a simple transformation of the input.  
-It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm and finished by a series of multiplications and additions by fixed constants and lastly a division. 
+It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm and then a series of multiplications and additions by fixed constants and lastly a division. 
 
 The functions with 50 bits of accuracy use more switches for a finer split of the domain and more of the final multiplications and additions than the functions with 24 bits of accuracy.
 
