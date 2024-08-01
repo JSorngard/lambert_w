@@ -1,8 +1,8 @@
 use super::{INV_SQRT_E, NEG_INV_E};
+use crate::pade::pade_7;
 
 /// zc = z + 1/e
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
-    use crate::pade::pade_7;
     if zc < 0.0 {
         f64::NAN
     } else if z <= -0.354_291_330_944_216_4 {

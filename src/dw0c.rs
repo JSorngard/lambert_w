@@ -1,7 +1,7 @@
+use crate::pade::{pade_7, pade_8_7};
+
 /// zc = z + 1/e
 pub fn dw0c(zc: f64) -> f64 {
-    use crate::pade::{pade_7, pade_8_7};
-
     if zc < 0.0 {
         f64::NAN
     } else if zc <= 2.549_893_906_503_473_6 {

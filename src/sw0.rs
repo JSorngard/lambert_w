@@ -1,8 +1,7 @@
 use super::NEG_INV_E;
+use crate::pade::{pade_3, pade_4_3};
 
 pub fn sw0(z: f64) -> f64 {
-    use crate::pade::{pade_3, pade_4_3};
-
     if z < NEG_INV_E {
         f64::NAN
     } else if z <= 2.008_217_811_584_472_7 {
