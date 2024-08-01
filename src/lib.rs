@@ -38,7 +38,7 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 )]
 //! Evaluate the secondary branch of the Lambert W function at -ln(2)/2 to 50 and 24 bits of accuracy:
 #![cfg_attr(
-    feature = "50bits",
+    all(feature = "50bits", feature = "24bits"),
     doc = r##"
 ```
 # use approx::assert_abs_diff_eq;
