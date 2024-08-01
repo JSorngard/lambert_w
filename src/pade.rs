@@ -3,6 +3,24 @@
 
 // The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
 
+#[inline(always)]
+pub(crate) fn pade_4_4(
+    x: f64,
+    [n0, n1, n2, n3, n4]: [f64; 5],
+    [d0, d1, d2, d3, d4]: [f64; 5],
+) -> f64 {
+    #[cfg(feature = "estrin")]
+    {
+        fast_polynomial::rational_array(x, &[n0, n1, n2, n3, n4], &[d0, d1, d2, d3, d4])
+    }
+
+    #[cfg(not(feature = "estrin"))]
+    {
+        (n0 + x * (n1 + x * (n2 + x * (n3 + x * n4))))
+            / (d0 + x * (d1 + x * (d2 + x * (d3 + x * d4))))
+    }
+}
+
 #[cfg(feature = "24bits")]
 /// Padé approximant consisting of two third degree polynomials.
 ///
@@ -22,29 +40,6 @@ pub(crate) fn pade_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64;
     #[cfg(not(feature = "estrin"))]
     {
         (n0 + x * (n1 + x * (n2 + x * n3))) / (d0 + x * (d1 + x * (d2 + x * d3)))
-    }
-}
-
-#[cfg(feature = "24bits")]
-/// Padé approximant consisting of a fourth degree polynomial divided by a third degree polynomial.
-///
-/// The first set of coefficients are for the polynomial in the numerator
-/// and the second set are the coefficients of the polynomial in the denominator.
-///
-/// If the `fma` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
-#[inline(always)]
-pub(crate) fn pade_4_3(x: f64, [n0, n1, n2, n3, n4]: [f64; 5], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
-    #[cfg(feature = "estrin")]
-    {
-        use fast_polynomial::polynomials::{poly_3, poly_4};
-        let x2 = x * x;
-        let x4 = x2 * x2;
-        poly_4(x, x2, x4, n0, n1, n2, n3, n4) / poly_3(x, x2, d0, d1, d2, d3)
-    }
-
-    #[cfg(not(feature = "estrin"))]
-    {
-        (n0 + x * (n1 + x * (n2 + x * (n3 + x * n4)))) / (d0 + x * (d1 + x * (d2 + x * d3)))
     }
 }
 
