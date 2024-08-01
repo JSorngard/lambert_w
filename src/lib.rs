@@ -81,7 +81,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 mod dw0c;
 #[cfg(feature = "50bits")]
 mod dwm1c;
-mod pade;
+mod rational;
 #[cfg(feature = "24bits")]
 mod sw0;
 #[cfg(feature = "24bits")]

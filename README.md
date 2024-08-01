@@ -11,7 +11,7 @@ using the [method of Toshio Fukushima](https://www.researchgate.net/publication/
 to either 24 or 50 bits of accuracy.
 
 This method works by splitting the domain of the function into subdomains,
-and on each subdomain it uses a rational function 
+and on each subdomain it uses a rational function
 evaluated on a simple transformation of the input to describe the function.  
 It is implemented in code as conditional switches on the input value followed by
 either a square root (and possibly a division) or a logarithm and then a series

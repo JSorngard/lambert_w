@@ -1,5 +1,5 @@
 use super::{INV_SQRT_E, NEG_INV_E};
-use crate::pade::pade_7;
+use crate::rational::rational_7;
 
 /// zc = z + 1/e
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
@@ -8,7 +8,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.354_291_330_944_216_4 {
         // W >= -1.3, X_-1
 
-        pade_7(
+        rational_7(
             zc.sqrt(),
             [
                 -1.000_000_000_000_000_111_0,
@@ -34,7 +34,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.188_726_882_822_894_35 {
         // W >= -2.637, Y_-1
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -8.225_315_526_444_685,
@@ -60,7 +60,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.060_497_597_226_958_34 {
         // W >= -4.253, Y_-2
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -9.618_412_744_335_403,
@@ -86,7 +86,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.017_105_334_740_676_01 {
         // W >= -5.832, Y_-3
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -11.038_489_462_297_466,
@@ -112,7 +112,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.004_595_496_212_794_371 {
         // W >= -7.382, Y_-4
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -12.474_405_916_395_746,
@@ -138,7 +138,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.001_200_161_067_219_772_4 {
         // W >= -8.913, Y_-5
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -13.921_651_376_890_072,
@@ -164,7 +164,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.000_307_288_059_321_915 {
         // W >= -10.433, Y_-6
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -15.377_894_224_591_557,
@@ -190,7 +190,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -0.000_077_447_159_838_062_18 {
         // W >= -11.946, Y_-7
 
-        pade_7(
+        rational_7(
             -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
             [
                 -16.841_701_411_264_98,
@@ -216,7 +216,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -4.580_811_969_815_817_5e-17 {
         // W >= -41.344, V_-8
 
-        pade_7(
+        rational_7(
             (-z).ln(),
             [
                 -2.083_626_038_401_644,
@@ -242,7 +242,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z <= -6.107_367_223_659_479e-79 {
         // W >= -185.316, V_-9
 
-        pade_7(
+        rational_7(
             (-z).ln(),
             [
                 0.160_453_837_665_705_42,
@@ -268,7 +268,7 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
     } else if z < 0.0 {
         // V_-10
 
-        pade_7(
+        rational_7(
             (-z).ln(),
             [
                 -1.274_217_970_307_544,
