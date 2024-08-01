@@ -2,7 +2,8 @@ use core::f64::consts::E;
 use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
 use lambert_w::{lambert_w_0, lambert_w_m1, sp_lambert_w_0, sp_lambert_w_m1};
-use rand::{thread_rng, Rng};
+use rand::{Rng, SeedableRng};
+use rand_pcg::Pcg32;
 use std::time::Instant;
 
 fn bench(c: &mut Criterion) {
@@ -29,7 +30,7 @@ fn bench(c: &mut Criterion) {
 
     {
         let mut group = c.benchmark_group("random inputs");
-        let mut rng = thread_rng();
+        let mut rng = Pcg32::seed_from_u64(0);
         group.bench_function("W_0 50 bits", |b| {
             b.iter_custom(|iters| {
                 let datas: Vec<f64> = (0..iters)
