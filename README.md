@@ -31,7 +31,7 @@ let Ω = sp_lambert_w_0(1.0);
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
-Evaluate the secondary branch of the Lambert W function at -ln(2)/2 to 50 bits of accuracy:
+Evaluate the secondary branch of the Lambert W function at -ln(2)/2 to 50 and 24 bits of accuracy:
 ```rust
 use lambert_w::{lambert_w_m1, sp_lambert_w_m1};
 
