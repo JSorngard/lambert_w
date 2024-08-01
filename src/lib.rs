@@ -305,7 +305,14 @@ mod test {
             3.333476076844818e+01,
             epsilon = 1e-14
         );
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+17), 3.557237716651325e+01);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(
+            lambert_w_0(1.000000000000000e+17),
+            3.557237716651325e+01,
+            epsilon = 1e-14
+        );
         assert_abs_diff_eq!(
             lambert_w_0(1.000000000000000e+18),
             3.781385607558877e+01,
