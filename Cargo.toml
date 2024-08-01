@@ -28,7 +28,7 @@ default = ["24bits", "50bits"]
 # Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) instead of [Horner's Method](https://en.wikipedia.org/wiki/Horner%27s_method)
 # to evaluate the polynomials in the Padé approximants with the help of the [`fast_polynomial`](https://crates.io/crates/fast_polynomial/0.2.0) crate.
 # While this results in more assembly instructions, they are mostly independent of each other, 
-# and this increases instruction level parallelism on modern hardware for a total performance gain of up to ~25%.
+# and this increases instruction level parallelism on modern hardware for a total performance gain.
 # May result in slight numerical instability, which can be mitigated if the target cpu has fused multiply-add instructions.
 estrin = ["dep:fast_polynomial"]
 

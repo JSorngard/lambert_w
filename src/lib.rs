@@ -72,7 +72,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! `estrin`: uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) instead of [Horner's Method](https://en.wikipedia.org/wiki/Horner%27s_method)
 //! to evaluate the polynomials in the Padé approximants with the help of the [`fast_polynomial`](https://docs.rs/fast_polynomial/0.2.0/fast_polynomial/) crate.
 //! While this results in more assembly instructions, they are mostly independent of each other,
-//! and this increases instruction level parallelism on modern hardware for a total performance gain of up to ~25%.
+//! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be mitigated if the target cpu has fused multiply-add instructions.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
