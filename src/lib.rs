@@ -3,7 +3,7 @@
 //! This method works by splitting the domain of the function into subdomains, and on each domain it is approximated by a [Padé approximant](https://en.wikipedia.org/wiki/Pad%C3%A9_approximant) evaluated on a simple transformation of the input.  
 //! It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm and then a series of multiplications and additions by fixed constants and finished with a division.
 //!
-//! The functions with 50 bits of accuracy use more switches for a finer split of the domain and more of the final multiplications and additions than the functions with 24 bits of accuracy.
+//! The functions with 50 bits of accuracy use higher degree Padé approximants, and thus more of the multiplications and additions
 //!
 //! ## Examples
 //!
