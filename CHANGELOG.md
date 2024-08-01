@@ -2,7 +2,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 0.4.1
 
- - Add the optional `fma` feature that computes the Lambert W function up to 25% faster when the target cpu has fused multiply-add instructions.
+ - Add the optional `estrin` feature that computes the Lambert W function up to 25% faster by using [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) to evaluate the polynomials in the Padé approximants. This may result in numerical instability if the target cpu does not have fused multiply-add instructions.
  - Lower the MSRV to 1.60.0.
  - No longer a forced `compile_error!` to disable both the `24bits` and `50bits` features.
 
