@@ -58,12 +58,18 @@ pub(crate) fn pade_7(
 ) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        use fast_polynomial::polynomials::poly_7;
+        // use fast_polynomial::polynomials::poly_7;
 
-        let x2 = x * x;
-        let x4 = x2 * x2;
-        poly_7(x, x2, x4, n0, n1, n2, n3, n4, n5, n6, n7)
-            / poly_7(x, x2, x4, d0, d1, d2, d3, d4, d5, d6, d7)
+        // let x2 = x * x;
+        // let x4 = x2 * x2;
+        // poly_7(x, x2, x4, n0, n1, n2, n3, n4, n5, n6, n7)
+        //     / poly_7(x, x2, x4, d0, d1, d2, d3, d4, d5, d6, d7)
+
+        fast_polynomial::rational_array(
+            x,
+            &[n0, n1, n2, n3, n4, n5, n6, n7],
+            &[d0, d1, d2, d3, d4, d5, d6, d7],
+        )
     }
     #[cfg(not(feature = "estrin"))]
     {
