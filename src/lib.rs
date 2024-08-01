@@ -36,31 +36,21 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
 "##
 )]
-//! Evaluate the secondary branch of the Lambert W function at -ln(2)/2 to 50 bits of accuracy:
+//! Evaluate the secondary branch of the Lambert W function at -ln(2)/2 to 50 and 24 bits of accuracy:
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
 ```
 # use approx::assert_abs_diff_eq;
-use lambert_w::lambert_w_m1;
+use lambert_w::{lambert_w_m1, sp_lambert_w_m1};
 
-let mln4 = lambert_w_m1(-f64::ln(2.0) / 2.0);
+let z = -f64::ln(2.0) / 2.0;
 
-assert_abs_diff_eq!(mln4, -f64::ln(4.0));
-```
-"##
-)]
-//! or 24 bits:
-#![cfg_attr(
-    feature = "24bits",
-    doc = r##"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::sp_lambert_w_m1;
+let mln4_50b = lambert_w_m1(z);
+let mln4_24b = lambert_w_m1(z);
 
-let mln4 = sp_lambert_w_m1(-f64::ln(2.0) / 2.0);
-
-assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
+assert_abs_diff_eq!(mln4_50b, -f64::ln(4.0));
+assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 ```
 "##
 )]
