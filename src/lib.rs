@@ -12,8 +12,8 @@
     feature = "50bits",
     doc = r##"
 ```
-use lambert_w::lambert_w_0;
 # use approx::assert_abs_diff_eq;
+use lambert_w::lambert_w_0;
 
 let Ω = lambert_w_0(1.0);
 
@@ -47,29 +47,27 @@ use lambert_w::{lambert_w_m1, sp_lambert_w_m1};
 let z = -f64::ln(2.0) / 2.0;
 
 let mln4_50b = lambert_w_m1(z);
-let mln4_24b = lambert_w_m1(z);
+let mln4_24b = sp_lambert_w_m1(z);
 
 assert_abs_diff_eq!(mln4_50b, -f64::ln(4.0));
 assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 ```
 "##
 )]
-//!
 //! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
 //! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon.
 //!
 //! ## Feature flags
 //!
-//! You can disable one of these feature flags to potentially save a little bit of binary size.
-//!
 //! `50bits` *(enabled by default)*: enables the more accurate function versions with 50 bits of accuracy.
 //!
 //! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
-//! `fma`: Up to 25% increase in performance.
-//! Only enable this if the target CPU has support for fused multiply-add instructions, otherwise the performance will be degraded instead.
-//! Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) via the [`fast_polynomial`](https://docs.rs/fast_polynomial/latest/fast_polynomial/) crate.
-//! While this results in more assembly instructions, they are mostly independent of each other, and this increases parallelism on modern hardware for a total performance gain.
+//! You can disable one of the above feature flags to potentially save a little bit of binary size.
+//!
+//! `estrin`: uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) instead of [Horner's Method](https://en.wikipedia.org/wiki/Horner%27s_method) to evaluate the polynomials in the rational function approximations.
+//! While this results in more assembly instructions, they are mostly independent of each other, and this increases instruction level parallelism on modern hardware for a total performance gain of up to ~25%.
+//! May results in slight numerical instability if the target does not have fused multiply-add instructions.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
@@ -221,25 +219,25 @@ mod test {
             7.231813718542178,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(9.999963212055883e+04), 9.284568107521959);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_0(9.999963212055883e+04),
             9.284568107521959,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(9.999996321205589e+05), 1.138335774796812e+01);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_0(9.999996321205589e+05),
             1.138335774796812e+01,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(9.999999632120559e+06), 1.351434397605273e+01);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_0(9.999999632120559e+06),
             1.351434397605273e+01,
@@ -260,9 +258,9 @@ mod test {
             2.002868541326992e+01,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(9.999999999963213e+10), 2.222712273495755e+01);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_0(9.999999999963213e+10),
             2.222712273495755e+01,
@@ -304,17 +302,17 @@ mod test {
             4.005876916198432e+01,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+20), 4.230675509173839e+01);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_0(1.000000000000000e+20),
             4.230675509173839e+01,
             epsilon = 1e-14
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+40), 8.763027715194720e+01);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_0(1.000000000000000e+40),
             8.763027715194720e+01,
@@ -484,9 +482,9 @@ mod test {
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(lambert_w_m1(-1.000000000000000e-01), -3.577152063957297);
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w_m1(-3.000000000000000e-02), -5.144482721515681);
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_m1(-3.000000000000000e-02),
             -5.144482721515681,
@@ -532,12 +530,12 @@ mod test {
             -1.778749628219512e+02,
             epsilon = 1e-13
         );
-        #[cfg(not(feature = "fma"))]
+        #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000008e-145),
             -3.397029099254290e+02
         );
-        #[cfg(feature = "fma")]
+        #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w_m1(-1.000000000000008e-145),
             -3.397029099254290e+02,
