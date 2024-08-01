@@ -1,6 +1,8 @@
 //! Padé approximants that use Estrin's scheme with fused multiply-add instructions for better performance if the `fma` feature is enabled,
 //! and otherwise they use the more typical Horner's method.
 
+// The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
+
 #[cfg(feature = "24bits")]
 /// Padé approximant consisting of two third degree polynomials.
 ///
