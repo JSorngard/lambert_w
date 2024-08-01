@@ -11,7 +11,7 @@ using the [method of Toshio Fukushima](https://www.researchgate.net/publication/
 to either 24 or 50 bits of accuracy.
 
 This method works by splitting the domain of the function into subdomains, and
-on each domain it is approximated by a
+on each subdomain it is approximated by a
 [Padé approximant](https://en.wikipedia.org/wiki/Pad%C3%A9_approximant)
 evaluated on a simple transformation of the input.  
 It is implemented in code as conditional switches on the input value followed by
