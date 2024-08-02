@@ -29,7 +29,7 @@ default = ["24bits", "50bits"]
 # with the help of the [`fast_polynomial`](https://crates.io/crates/fast_polynomial/0.2.0) crate to evaluate the polynomials in the rational functions.
 # While this results in more assembly instructions, they are mostly independent of each other, 
 # and this increases instruction level parallelism on modern hardware for a total performance gain.
-# May result in slight numerical instability, which can be mitigated if the target CPU has fused multiply-add instructions.
+# May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 estrin = ["dep:fast_polynomial"]
 
 [package.metadata.docs.rs]
