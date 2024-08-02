@@ -73,7 +73,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! with the help of the [`fast_polynomial`](https://docs.rs/fast_polynomial/0.2.0/fast_polynomial/) crate to evaluate the polynomials in the rational functions.
 //! While this results in more assembly instructions, they are mostly independent of each other,
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
-//! May result in slight numerical instability, which can be mitigated if the target CPU has fused multiply-add instructions.
+//! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
