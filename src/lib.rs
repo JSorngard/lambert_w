@@ -358,6 +358,7 @@ mod test {
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(lambert_w_0(1.000000000000000e+160), 3.625205337614976e+02);
+        assert_abs_diff_eq!(lambert_w_0(f64::MAX), 703.2270331047702, epsilon = 1e-12);
     }
 
     #[cfg(feature = "24bits")]
@@ -494,6 +495,7 @@ mod test {
             3.625205337614976e+02,
             epsilon = 1e-4
         );
+        assert_abs_diff_eq!(sp_lambert_w_0(f64::MAX), 703.2270331047702, epsilon = 1e-4);
     }
 
     #[cfg(feature = "50bits")]
