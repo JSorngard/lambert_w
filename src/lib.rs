@@ -79,6 +79,8 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
+#[cfg(all(not(feature = "std"), not(feature = "libm")))]
+compile_error!("either the `std` or `libm` feature flags must be enabled");
 
 trait FlexSqrt {
     fn flex_sqrt(self) -> Self;
@@ -95,11 +97,6 @@ impl FlexSqrt for f64 {
         #[cfg(all(feature = "std", not(feature = "libm")))]
         {
             self.sqrt()
-        }
-
-        #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-        {
-            compile_error!("either the std or libm features must be enabled")
         }
     }
 }
@@ -119,11 +116,6 @@ impl FlexLn for f64 {
         #[cfg(all(feature = "std", not(feature = "libm")))]
         {
             self.ln()
-        }
-
-        #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-        {
-            compile_error!("either the std or libm features must be enabled")
         }
     }
 }
