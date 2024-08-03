@@ -3,6 +3,12 @@
 
 // The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
 
+#[cfg(all(feature = "24bits", feature = "estrin"))]
+use fast_polynomial::polynomials::{poly_3, poly_4};
+
+#[cfg(all(feature = "50bits", feature = "estrin"))]
+use fast_polynomial::polynomials::{poly_7, poly_8};
+
 #[cfg(feature = "24bits")]
 /// Rational function consisting of two third degree polynomials.
 ///
@@ -14,7 +20,6 @@
 pub(crate) fn rational_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        use fast_polynomial::polynomials::poly_3;
         let x2 = x * x;
         poly_3(x, x2, n0, n1, n2, n3) / poly_3(x, x2, d0, d1, d2, d3)
     }
@@ -40,7 +45,6 @@ pub(crate) fn rational_4_3(
 ) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        use fast_polynomial::polynomials::{poly_3, poly_4};
         let x2 = x * x;
         let x4 = x2 * x2;
         poly_4(x, x2, x4, n0, n1, n2, n3, n4) / poly_3(x, x2, d0, d1, d2, d3)
@@ -67,8 +71,6 @@ pub(crate) fn rational_7(
 ) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        use fast_polynomial::polynomials::poly_7;
-
         let x2 = x * x;
         let x4 = x2 * x2;
         poly_7(x, x2, x4, n0, n1, n2, n3, n4, n5, n6, n7)
@@ -96,8 +98,6 @@ pub(crate) fn rational_8_7(
 ) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        use fast_polynomial::polynomials::{poly_7, poly_8};
-
         let x2 = x * x;
         let x4 = x2 * x2;
         let x8 = x4 * x4;
