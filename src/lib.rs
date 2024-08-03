@@ -73,8 +73,60 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! While this results in more assembly instructions, they are mostly independent of each other,
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
+//!
+//! `libm`: use the [`libm`] crate to compute the logarithm and square root functions.
+//! Enabling the feature makes the crate `no_std`.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+trait FlexSqrt {
+    fn flex_sqrt(self) -> Self;
+}
+
+impl FlexSqrt for f64 {
+    /// Square root that calls the libm version if the `libm` feature is enabled and calls the standard library version if the `std` feature is enabled.
+    fn flex_sqrt(self) -> Self {
+        #[cfg(feature = "libm")]
+        {
+            libm::sqrt(self)
+        }
+
+        #[cfg(all(feature = "std", not(feature = "libm")))]
+        {
+            self.sqrt()
+        }
+
+        #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+        {
+            compile_error!("either the std or libm features must be enabled")
+        }
+    }
+}
+
+trait FlexLn {
+    fn flex_ln(self) -> Self;
+}
+
+impl FlexLn for f64 {
+    /// Natural logarithm function that calls the libm version if the `libm` feature is enabled and calls the standard library version if the `std` feature is enabled.
+    fn flex_ln(self) -> Self {
+        #[cfg(feature = "libm")]
+        {
+            libm::log(self)
+        }
+
+        #[cfg(all(feature = "std", not(feature = "libm")))]
+        {
+            self.ln()
+        }
+
+        #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+        {
+            compile_error!("either the std or libm features must be enabled")
+        }
+    }
+}
 
 #[cfg(feature = "50bits")]
 mod dw0c;

@@ -12,6 +12,7 @@ repository = "https://github.com/JSorngard/lambert_w"
 
 [dependencies]
 fast_polynomial = { version = "0.3.0", default-features = false, optional = true }
+libm = { version = "0.2.8", optional = true }
 
 [dev-dependencies]
 approx = "0.5.1"
@@ -20,7 +21,7 @@ rand = "0.8.5"
 rand_pcg = "0.3.1"
 
 [features]
-default = ["24bits", "50bits"]
+default = ["24bits", "50bits", "std"]
 # Enables the more accurate function versions with 50 bits of accuracy.
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
@@ -30,6 +31,10 @@ default = ["24bits", "50bits"]
 # and this increases instruction level parallelism on modern hardware for a total performance gain.
 # May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 estrin = ["dep:fast_polynomial"]
+# Computes logarithms and square roots through the [`libm`](https://crates.io/crates/libm) crate instead of the standard library. 
+libm = ["dep:libm", "fast_polynomial/libm"]
+# Disable this and enable the `libm` feature flag to use this crate in a `no_std` environment.
+std = ["fast_polynomial/std"]
 
 [package.metadata.docs.rs]
 # Document all features.
