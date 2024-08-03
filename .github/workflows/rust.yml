@@ -62,4 +62,4 @@ jobs:
       with:
         components: clippy
     - name: clippy_1.60
-      run: cargo +1.60.0 clippy --all-features -- -D warnings
+      run: cargo clippy && cargo +1.60.0 clippy --all-features -- -D warnings
