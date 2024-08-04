@@ -201,6 +201,74 @@ pub fn lambert_w_m1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
+/// The derivative of the principal branch of the Lambert W function.
+///
+/// Uses the implementation with 50 bits of accuracy during evaluation.
+///
+/// # Examples
+///
+/// ```
+/// # use lambert_w::lambert_w_0_prime;
+/// # use approx::assert_abs_diff_eq;
+/// let z = core::f64::consts::E.sqrt() / 2.0;
+/// let wp = lambert_w_0_prime(z);
+///
+/// assert_abs_diff_eq!(wp, 1.0 / (3.0 * z));
+/// ```
+/// If the given input is smaller than or equal to -1/e this returns [`NAN`](f64::NAN):
+/// ```
+/// # use lambert_w::lambert_w_0_prime;
+/// assert!(lambert_w_0_prime(-1.0/core::f64::consts::E).is_nan());
+/// ```
+pub fn lambert_w_0_prime(z: f64) -> f64 {
+    if z <= NEG_INV_E {
+        // W_0(z) is not differentiable for z = -1/e.
+        f64::NAN
+    } else if z.abs() > 0.1 {
+        // This formula is not valid when z is 0.
+        let w = lambert_w_0(z);
+        w / (z * (1.0 + w))
+    } else {
+        // This formula is valid when z is 0.
+        let w = lambert_w_0(z);
+        1.0 / (z + w.exp())
+    }
+}
+
+/// The derivative of the principal branch of the Lambert W function.
+///
+/// Uses the implementation with 24 bits of accuracy during evaluation.
+///
+/// # Examples
+///
+/// ```
+/// # use lambert_w::sp_lambert_w_0_prime;
+/// # use approx::assert_abs_diff_eq;
+/// let z = core::f64::consts::E.sqrt() / 2.0;
+/// let wp = sp_lambert_w_0_prime(z);
+///
+/// assert_abs_diff_eq!(wp, 1.0 / (3.0 * z), epsilon = 1e-7);
+/// ```
+/// If the given input is smaller than or equal to -1/e this returns [`NAN`](f64::NAN):
+/// ```
+/// # use lambert_w::sp_lambert_w_0_prime;
+/// assert!(sp_lambert_w_0_prime(-1.0/core::f64::consts::E).is_nan());
+/// ```
+pub fn sp_lambert_w_0_prime(z: f64) -> f64 {
+    if z <= NEG_INV_E {
+        // W_0(z) is not differentiable for z = -1/e.
+        f64::NAN
+    } else if z.abs() > 0.1 {
+        // This formula is not valid when z is 0.
+        let w = sp_lambert_w_0(z);
+        w / (z * (1.0 + w))
+    } else {
+        // This formula is valid when z is 0.
+        let w = sp_lambert_w_0(z);
+        1.0 / (z + w.exp())
+    }
+}
+
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod test {
     // A lot of these tests are less stringent when the `estrin` feature flag is activated.
