@@ -223,14 +223,16 @@ pub fn lambert_w_m1(z: f64) -> f64 {
 pub fn lambert_w_0_prime(z: f64) -> f64 {
     if z <= NEG_INV_E {
         // W_0(z) is not differentiable for z = -1/e.
-        f64::NAN
-    } else if z.abs() > 0.1 {
+        return f64::NAN;
+    }
+
+    let w = lambert_w_0(z);
+
+    if z.abs() > 0.1 {
         // This formula is not valid when z is 0.
-        let w = lambert_w_0(z);
         w / (z * (1.0 + w))
     } else {
         // This formula is valid when z is 0.
-        let w = lambert_w_0(z);
         1.0 / (z + w.exp())
     }
 }
@@ -722,12 +724,28 @@ mod test {
         assert!(lambert_w_0_prime(NEG_INV_E).is_nan());
         assert_abs_diff_eq!(lambert_w_0_prime(PI), 0.16480826909829888);
         assert_abs_diff_eq!(lambert_w_0_prime(1e75), 9.94067833121071e-76);
+        assert_abs_diff_eq!(lambert_w_0_prime(0.05), 0.9100614420901854);
+        assert_abs_diff_eq!(lambert_w_0_prime(0.11), 0.8232480347138468);
     }
 
     #[test]
     fn test_sp_lambert_w_0_prime() {
         assert!(sp_lambert_w_0_prime(NEG_INV_E).is_nan());
-        assert_abs_diff_eq!(sp_lambert_w_0_prime(PI), 0.16480826909829888, epsilon = 1e-8);
+        assert_abs_diff_eq!(
+            sp_lambert_w_0_prime(PI),
+            0.16480826909829888,
+            epsilon = 1e-8
+        );
         assert_abs_diff_eq!(sp_lambert_w_0_prime(1e75), 9.94067833121071e-76);
+        assert_abs_diff_eq!(
+            sp_lambert_w_0_prime(0.05),
+            0.9100614420901854,
+            epsilon = 1e-8
+        );
+        assert_abs_diff_eq!(
+            sp_lambert_w_0_prime(0.11),
+            0.8232480347138468,
+            epsilon = 1e-7
+        );
     }
 }
