@@ -233,7 +233,7 @@ pub fn lambert_w_0_prime(z: f64) -> f64 {
         w / (z * (1.0 + w))
     } else {
         // This formula is valid when z is 0.
-        1.0 / (z + w.exp())
+        1.0 / ((1.0 + w) * w.exp())
     }
 }
 
@@ -259,15 +259,17 @@ pub fn lambert_w_0_prime(z: f64) -> f64 {
 pub fn sp_lambert_w_0_prime(z: f64) -> f64 {
     if z <= NEG_INV_E {
         // W_0(z) is not differentiable for z = -1/e.
-        f64::NAN
-    } else if z.abs() > 0.1 {
+        return f64::NAN;
+    }
+
+    let w = sp_lambert_w_0(z);
+
+    if z.abs() > 0.1 {
         // This formula is not valid when z is 0.
-        let w = sp_lambert_w_0(z);
         w / (z * (1.0 + w))
     } else {
         // This formula is valid when z is 0.
-        let w = sp_lambert_w_0(z);
-        1.0 / (z + w.exp())
+        1.0 / ((1.0 + w) * w.exp())
     }
 }
 
