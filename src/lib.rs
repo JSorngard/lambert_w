@@ -274,12 +274,14 @@ mod test {
     // A lot of these tests are less stringent when the `estrin` feature flag is activated.
     // This is because CI may not have fused multiply-add instructions, which creates numerical instabillity.
 
+    use crate::{lambert_w_0_prime, sp_lambert_w_0_prime, NEG_INV_E};
+
     #[cfg(feature = "50bits")]
     use super::{lambert_w_0, lambert_w_m1};
     #[cfg(feature = "24bits")]
     use super::{sp_lambert_w_0, sp_lambert_w_m1};
     use approx::assert_abs_diff_eq;
-    use core::f64::consts::E;
+    use core::f64::consts::{E, PI};
 
     #[cfg(feature = "50bits")]
     #[test]
@@ -713,5 +715,19 @@ mod test {
             epsilon = 1e-4
         );
         assert!(sp_lambert_w_m1(f64::EPSILON).is_nan());
+    }
+
+    #[test]
+    fn test_lambert_w_0_prime() {
+        assert!(lambert_w_0_prime(NEG_INV_E).is_nan());
+        assert_abs_diff_eq!(lambert_w_0_prime(PI), 0.16480826909829888);
+        assert_abs_diff_eq!(lambert_w_0_prime(1e75), 9.94067833121071e-76);
+    }
+
+    #[test]
+    fn test_sp_lambert_w_0_prime() {
+        assert!(sp_lambert_w_0_prime(NEG_INV_E).is_nan());
+        assert_abs_diff_eq!(sp_lambert_w_0_prime(PI), 0.16480826909829888, epsilon = 1e-8);
+        assert_abs_diff_eq!(sp_lambert_w_0_prime(1e75), 9.94067833121071e-76);
     }
 }
