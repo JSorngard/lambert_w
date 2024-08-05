@@ -1,5 +1,8 @@
-//! Rational functions that use Estrin's scheme with fused multiply-add instructions for better performance if the `estrin` feature is enabled,
+//! Rational functions that use Estrin's scheme for better performance if the `estrin` feature is enabled,
 //! and otherwise they use the more typical Horner's method.
+//!
+//! If the `estrin` feature is enabled and the target CPU has the FMA feature these functions will
+//! use fused multiply-add instructions.
 
 // The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
 
