@@ -74,51 +74,15 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
-//! `libm`: use the [`libm`] crate to compute the logarithm and square root functions.
+//! `std`: use the standard library to compute square roots and logarithms. Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`] crate.
+//!
+//! `libm` *(enabled by default)*: if the `std` feature is disabled, this features uses the [`libm`] crate to compute logarithms and square roots instead of the standard library.
 //! Enabling the feature makes the crate `no_std`.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!("either the `std` or `libm` feature flags must be enabled");
-
-trait FlexSqrt {
-    fn flex_sqrt(self) -> Self;
-}
-
-impl FlexSqrt for f64 {
-    /// Square root that calls the libm version if the `libm` feature is enabled and calls the standard library version if the `std` feature is enabled.
-    fn flex_sqrt(self) -> Self {
-        #[cfg(feature = "libm")]
-        {
-            libm::sqrt(self)
-        }
-
-        #[cfg(all(feature = "std", not(feature = "libm")))]
-        {
-            self.sqrt()
-        }
-    }
-}
-
-trait FlexLn {
-    fn flex_ln(self) -> Self;
-}
-
-impl FlexLn for f64 {
-    /// Natural logarithm function that calls the libm version if the `libm` feature is enabled and calls the standard library version if the `std` feature is enabled.
-    fn flex_ln(self) -> Self {
-        #[cfg(feature = "libm")]
-        {
-            libm::log(self)
-        }
-
-        #[cfg(all(feature = "std", not(feature = "libm")))]
-        {
-            self.ln()
-        }
-    }
-}
 
 #[cfg(feature = "50bits")]
 mod dw0c;
@@ -129,6 +93,30 @@ mod rational;
 mod sw0;
 #[cfg(feature = "24bits")]
 mod swm1;
+
+fn sqrt(x: f64) -> f64 {
+    #[cfg(feature = "std")]
+    {
+        x.sqrt()
+    }
+
+    #[cfg(all(not(feature = "std"), feature = "libm"))]
+    {
+        libm::sqrt(x)
+    }
+}
+
+fn ln(x: f64) -> f64 {
+    #[cfg(feature = "std")]
+    {
+        x.ln()
+    }
+
+    #[cfg(all(not(feature = "std"), feature = "libm"))]
+    {
+        libm::log(x)
+    }
+}
 
 /// The negative inverse of e (-1/e).
 ///

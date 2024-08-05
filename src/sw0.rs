@@ -1,7 +1,8 @@
 use super::NEG_INV_E;
 use crate::{
+    ln,
     rational::{rational_3, rational_4_3},
-    FlexLn, FlexSqrt,
+    sqrt,
 };
 
 pub fn sw0(z: f64) -> f64 {
@@ -11,7 +12,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 0.854, X_1
 
         rational_4_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 -0.999_999_940_395_401_9,
                 0.055_730_052_161_777_8,
@@ -30,7 +31,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 2.502, X_2
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 -0.985_519_709_059_991,
                 1.077_497_573_381_351_7,
@@ -48,7 +49,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 4.430, X_3
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 -0.762_397_113_463_688_9,
                 1.231_773_161_336_359_6,
@@ -66,7 +67,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 6.574, X_4
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 0.085_801_247_434_391_38,
                 0.825_397_980_997_483_4,
@@ -84,7 +85,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 8.892, X_5
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 1.621_924_538_347_016_9,
                 0.388_691_451_325_166_64,
@@ -102,7 +103,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 11.351, X_6
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 3.621_899_608_569_592,
                 0.148_846_467_548_801_6,
@@ -120,7 +121,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 13.928, X_7
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 5.907_336_973_960_809,
                 0.050_053_653_594_737_11,
@@ -138,7 +139,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 16.605, X_8
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 8.382_600_584_819_551,
                 0.015_360_346_475_232_501,
@@ -156,7 +157,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 19.368, X_9
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 10.996_674_803_992_551,
                 0.004_394_213_889_867_383,
@@ -174,7 +175,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 22.207, X_10
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 13.719_833_802_350_86,
                 0.001_187_444_380_520_229_2,
@@ -192,7 +193,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 25.114, X_11
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 16.533_119_481_561_616,
                 0.000_305_831_257_519_080_4,
@@ -210,7 +211,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 28.082, X_12
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 19.423_519_260_478_578,
                 0.000_075_559_269_761_977_81,
@@ -228,7 +229,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 31.106, X_13
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 22.381_576_050_041_915,
                 0.000_017_994_724_029_162_553,
@@ -246,7 +247,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 34.182, X_14
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 25.400_105_417_092_067,
                 4.146_737_838_657_924e-6,
@@ -264,7 +265,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 37.306, X_15
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 28.473_455_626_379_916,
                 9.274_682_469_309_406e-7,
@@ -282,7 +283,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 40.475, X_16
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 31.597_055_437_846_36,
                 2.018_422_527_678_632_4e-7,
@@ -300,7 +301,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 43.687, X_17
 
         rational_3(
-            (z - NEG_INV_E).flex_sqrt(),
+            sqrt(z - NEG_INV_E),
             [
                 34.767_124_490_414_52,
                 4.283_079_924_069_894_4e-8,
@@ -318,7 +319,7 @@ pub fn sw0(z: f64) -> f64 {
         // W <= 319.673, U_18
 
         rational_3(
-            z.flex_ln(),
+            ln(z),
             [
                 -0.607_023_733_718_462,
                 0.698_287_163_225_269_8,
@@ -336,7 +337,7 @@ pub fn sw0(z: f64) -> f64 {
         //    U_19
 
         rational_3(
-            z.flex_ln(),
+            ln(z),
             [
                 -3.132_005_602_886_366,
                 0.948_894_657_265_326,
