@@ -1,7 +1,7 @@
 use core::f64::consts::E;
 use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
-use lambert_w::{lambert_w_0, lambert_w_m1, sp_lambert_w_0, sp_lambert_w_m1};
+use lambert_w::{lambert_w0, lambert_wm1, sp_lambert_w0, sp_lambert_wm1};
 use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg32;
 use std::time::Instant;
@@ -16,7 +16,7 @@ fn random_benches(c: &mut Criterion) {
                 .collect();
             let start = Instant::now();
             for &z in &datas {
-                black_box(lambert_w_0(z));
+                black_box(lambert_w0(z));
             }
             start.elapsed()
         })
@@ -28,7 +28,7 @@ fn random_benches(c: &mut Criterion) {
                 .collect();
             let start = Instant::now();
             for &z in &datas {
-                black_box(sp_lambert_w_0(z));
+                black_box(sp_lambert_w0(z));
             }
             start.elapsed()
         })
@@ -38,7 +38,7 @@ fn random_benches(c: &mut Criterion) {
             let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
             let start = Instant::now();
             for &z in &datas {
-                black_box(lambert_w_m1(z));
+                black_box(lambert_wm1(z));
             }
             start.elapsed()
         })
@@ -48,7 +48,7 @@ fn random_benches(c: &mut Criterion) {
             let datas: Vec<f64> = (0..iters).map(|_| rng.gen_range(-1.0 / E..=0.0)).collect();
             let start = Instant::now();
             for &z in &datas {
-                black_box(sp_lambert_w_m1(z));
+                black_box(sp_lambert_wm1(z));
             }
             start.elapsed()
         })

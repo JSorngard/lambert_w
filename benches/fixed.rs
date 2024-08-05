@@ -1,6 +1,6 @@
 use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
-use lambert_w::{lambert_w_0, lambert_w_m1, sp_lambert_w_0, sp_lambert_w_m1};
+use lambert_w::{lambert_w0, lambert_wm1, sp_lambert_w0, sp_lambert_wm1};
 
 fn fixed_benches(c: &mut Criterion) {
     let big_args = [
@@ -26,17 +26,15 @@ fn fixed_benches(c: &mut Criterion) {
 
     for z in big_args {
         let mut group = c.benchmark_group(format!("W_0({z})"));
-        group.bench_function(&format!("50 bits"), |b| {
-            b.iter(|| black_box(lambert_w_0(z)))
-        });
+        group.bench_function(&format!("50 bits"), |b| b.iter(|| black_box(lambert_w0(z))));
         group.bench_function(&format!("24 bits"), |b| {
-            b.iter(|| black_box(sp_lambert_w_0(z)))
+            b.iter(|| black_box(sp_lambert_w0(z)))
         });
     }
     for z in small_args {
         let mut group = c.benchmark_group(format!("W_-1({z})"));
-        group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_w_m1(z))));
-        group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_w_m1(z))));
+        group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_wm1(z))));
+        group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_wm1(z))));
     }
 }
 
