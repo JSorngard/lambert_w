@@ -2,6 +2,14 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.5.0
+
+### Breaking changes
+
+- Remove last underscore in function names. E.g. `lambert_w_0` is renamed to `lambert_w0`.
+ This makes them easier to type and the new names are similar to the names given
+ to these functions in libraries in other languages.
+
 ## 0.4.4
 
 - Documentation improvements.
