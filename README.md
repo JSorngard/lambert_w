@@ -27,9 +27,9 @@ Compute the value of the
 principal branch of the Lambert W function to 50 bits of accuracy:
 
 ```rust
-use lambert_w::lambert_w_0;
+use lambert_w::lambert_w0;
 
-let Ω = lambert_w_0(1.0);
+let Ω = lambert_w0(1.0);
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838);
 ```
@@ -37,9 +37,9 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
 or to only 24 bits of accuracy, but with faster execution time:
 
 ```rust
-use lambert_w::sp_lambert_w_0;
+use lambert_w::sp_lambert_w0;
 
-let Ω = sp_lambert_w_0(1.0);
+let Ω = sp_lambert_w0(1.0);
 
 assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
 ```
@@ -48,12 +48,12 @@ Evaluate the secondary branch of the Lambert W function at -ln(2)/2
 to 50 and 24 bits of accuracy:
 
 ```rust
-use lambert_w::{lambert_w_m1, sp_lambert_w_m1};
+use lambert_w::{lambert_wm1, sp_lambert_wm1};
 
 let z = -f64::ln(2.0) / 2.0;
 
-let mln4_50b = lambert_w_m1(z);
-let mln4_24b = sp_lambert_w_m1(z);
+let mln4_50b = lambert_wm1(z);
+let mln4_24b = sp_lambert_wm1(z);
 
 
 assert_abs_diff_eq!(mln4_50b, -f64::ln(4.0));
