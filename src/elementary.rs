@@ -2,6 +2,10 @@
 //! Uses the standard library versions if the `std` feature is enabled, otherwise uses the `libm` versions if the
 //! `std` feature is disabled and the `libm` feature is enabled. If both are disabled these functions panic.
 
+// #[inline(always)] is motivated by the fact that these functions are trivial, so just placing the call to the
+// correct sqrt/ln at the caller does not add extra code, but skips an axtra indirection.
+
+#[inline(always)]
 pub(crate) fn sqrt(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
@@ -19,6 +23,7 @@ pub(crate) fn sqrt(x: f64) -> f64 {
     }
 }
 
+#[inline(always)]
 pub(crate) fn ln(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
