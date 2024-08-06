@@ -20,6 +20,8 @@ of multiplications and additions by fixed constants and finished with a division
 The functions with 50 bits of accuracy use higher degree polynomials in the rational
 functions, and thus more of the multiplications and additions.
 
+`no_std` compatible.
+
 ## Examples
 
 Compute the value of the
