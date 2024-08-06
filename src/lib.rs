@@ -108,7 +108,7 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 
 /// The Omega constant (Ω).
 ///
-/// Fulfills the equation Ω*e^Ω = 1.
+/// Fulfills the equation Ωe^Ω = 1.
 pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
 #[cfg(feature = "24bits")]
