@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.5.2
+
+- Documentation improvements.
+
 ## 0.5.1
 
 - Add `std` and `libm` features to match the features on the optional
