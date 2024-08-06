@@ -114,8 +114,6 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 #[cfg(feature = "24bits")]
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 24 bits of accuracy.
 ///
-/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
-///
 /// # Examples
 ///
 /// Basic usage:
@@ -132,14 +130,16 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// # use lambert_w::sp_lambert_w0;
 /// assert!(sp_lambert_w0(-1.0).is_nan());
 /// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
 
 #[cfg(feature = "24bits")]
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 24 bits of accuracy.
-///
-/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -158,14 +158,16 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// assert!(sp_lambert_wm1(-1.0).is_nan());
 /// assert!(sp_lambert_wm1(1.0).is_nan());
 /// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn sp_lambert_wm1(z: f64) -> f64 {
     swm1::swm1(z)
 }
 
 #[cfg(feature = "50bits")]
 /// Computes the principal branch of the Lambert W function, W_0(`z`), to 50 bits of accuracy.
-///
-/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -183,14 +185,16 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// # use lambert_w::lambert_w0;
 /// assert!(lambert_w0(-1.0).is_nan());
 /// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
 
 #[cfg(feature = "50bits")]
 /// Computes the secondary branch of the Lambert W function, W_-1(`z`), to 50 bits of accuracy.
-///
-/// Uses the piecewise minimax rational function approximation with variable transformation method of Toshio Fukushima.
 ///
 /// # Examples
 ///
@@ -209,6 +213,10 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// assert!(lambert_wm1(-1.0).is_nan());
 /// assert!(lambert_wm1(1.0).is_nan());
 /// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
