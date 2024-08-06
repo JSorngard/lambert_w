@@ -12,7 +12,7 @@ pub(crate) fn sqrt(x: f64) -> f64 {
     {
         libm::sqrt(x)
     }
-    
+
     #[cfg(all(not(feature = "std"), not(feature = "libm")))]
     {
         panic!("computing sqrt({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
