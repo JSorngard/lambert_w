@@ -61,25 +61,25 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
 //! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon.
 //!
-//! ## Feature flags
+//! ## Features
 //!
 //! `50bits` *(enabled by default)*: enables the more accurate function versions with 50 bits of accuracy.
 //!
 //! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
 //!
-//! You can disable one of the above feature flags to potentially save a little bit of binary size.
+//! You can disable one of the above features to potentially save a little bit of binary size.
 //!
 //! `estrin`: uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) to evaluate the polynomials in the rational functions.
 //! While this results in more assembly instructions, they are mostly independent of each other,
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
-//! One of the below feature flags must be enabled:
+//! One of the below features must be enabled:
 //!
 //! `std` *(enabled by default)*: use the standard library to compute square roots and logarithms
-//! for a potential performance gain. When this feature flag is disabled the crate is `no_std`.
+//! for a potential performance gain. When this feature is disabled the crate is `no_std`.
 //!
-//! `libm`: if the `std` feature flag is disabled, this feature flag uses the [`libm`](https://docs.rs/libm/latest/libm/)
+//! `libm`: if the `std` feature is disabled, this feature uses the [`libm`](https://docs.rs/libm/latest/libm/)
 //! crate to compute square roots and logarithms instead of the standard library.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
