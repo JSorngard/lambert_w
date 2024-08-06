@@ -1,5 +1,8 @@
 use super::{INV_SQRT_E, NEG_INV_E};
-use crate::rational::rational_3;
+use crate::{
+    math::{ln, sqrt},
+    rational::rational_3,
+};
 
 pub fn swm1(z: f64) -> f64 {
     if z < NEG_INV_E {
@@ -8,7 +11,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -2.483, Y_-1
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -6.383_722_822_801_905,
                 -74.968_653_259_594_05,
@@ -26,7 +29,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -4.032, Y_-2
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -7.723_328_481_229_978,
                 -352.484_690_970_429_14,
@@ -44,7 +47,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -5.600, Y_-3
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -9.137_773_141_758_155,
                 -1_644.724_479_150_889,
@@ -62,7 +65,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -7.178, Y_-4
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -10.603_388_239_566_373,
                 -7_733.348_521_498_648,
@@ -80,7 +83,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -8.766, Y_-5
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -12.108_699_273_343_438,
                 -36_896.535_108_166_376,
@@ -98,7 +101,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -10.367, Y_-6
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -13.646_761_936_746_191,
                 -179_086.115_857_151_48,
@@ -116,7 +119,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -11.983, Y_-7
 
         rational_3(
-            -z / (INV_SQRT_E + (z - NEG_INV_E).sqrt()),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -15.212_958_142_001_646,
                 -884_954.687_981_689_6,
@@ -134,7 +137,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -47.518, V_-8
 
         rational_3(
-            (-z).ln(),
+            ln(-z),
             [
                 -0.032_401_163_177_791_084,
                 2.028_194_214_474_250_4,
@@ -152,7 +155,7 @@ pub fn swm1(z: f64) -> f64 {
         // W >= -317.993, V_-9
 
         rational_3(
-            (-z).ln(),
+            ln(-z),
             [
                 -1.441_124_659_581_209_7,
                 1.281_926_963_998_047_7,
@@ -170,7 +173,7 @@ pub fn swm1(z: f64) -> f64 {
         // V_-10
 
         rational_3(
-            (-z).ln(),
+            ln(-z),
             [
                 -3.310_876_091_171_045,
                 1.050_067_880_993_517_6,

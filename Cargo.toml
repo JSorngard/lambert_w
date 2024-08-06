@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics"]
@@ -11,7 +11,8 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
 
 [dependencies]
-fast_polynomial = { version = "0.3.0", optional = true }
+fast_polynomial = { version = "0.3.0", default-features = false, optional = true }
+libm = { version = "0.2.8", optional = true }
 
 [dev-dependencies]
 approx = "0.5.1"
@@ -20,7 +21,7 @@ rand = "0.8.5"
 rand_pcg = "0.3.1"
 
 [features]
-default = ["24bits", "50bits"]
+default = ["24bits", "50bits", "libm"]
 # Enables the more accurate function versions with 50 bits of accuracy.
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
@@ -30,6 +31,11 @@ default = ["24bits", "50bits"]
 # and this increases instruction level parallelism on modern hardware for a total performance gain.
 # May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 estrin = ["dep:fast_polynomial"]
+# If the `std` feature flag is disabled, this feature flag uses the [`libm`](https://crates.io/crates/libm) crate to compute logarithms and square roots instead of the standard library.
+libm = ["dep:libm", "fast_polynomial?/libm"]
+# Use the standard library to compute square roots and logarithms. Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`](https://crates.io/crates/libm) crate.
+# When this feature flag is disabled the crate is `no_std`.
+std = ["fast_polynomial?/std"]
 
 [package.metadata.docs.rs]
 # Document all features.
