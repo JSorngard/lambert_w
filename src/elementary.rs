@@ -1,5 +1,5 @@
 //! This module contains elementary math functions that exist in both the standard library and the [`libm`] crate.
-//! Uses the standard library versions if the `std` feature is enabled, and uses the `libm` versions if the
+//! Uses the standard library versions if the `std` feature is enabled, otherwise uses the `libm` versions if the
 //! `std` feature is disabled and the `libm` feature is enabled. If both are disabled these functions panic.
 
 pub(crate) fn sqrt(x: f64) -> f64 {
