@@ -76,12 +76,12 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //!
 //! One of the below feature flags must be enabled:
 //!
-//! `std`: use the standard library to compute square roots and logarithms.
-//! Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`] crate.
+//! `std`: use the standard library to compute square roots and logarithms for a potential performance gain.
 //! When this feature flag is disabled the crate is `no_std`.
 //!
-//! `libm` *(enabled by default)*: if the `std` feature  flag is disabled,
+//! `libm` *(enabled by default)*: if the `std` feature flag is disabled,
 //! this feature flag uses the [`libm`] crate to compute square roots and logarithms instead of the standard library.
+//! Disable this feature flag and enable the `std` feature flag to remove the dependency on the `libm` crate.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
