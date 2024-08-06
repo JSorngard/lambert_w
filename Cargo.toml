@@ -21,7 +21,7 @@ rand = "0.8.5"
 rand_pcg = "0.3.1"
 
 [features]
-default = ["24bits", "50bits", "libm"]
+default = ["24bits", "50bits", "std"]
 # Enables the more accurate function versions with 50 bits of accuracy.
 50bits = []
 # Enables the faster function versions with 24 bits of accuracy.
@@ -33,7 +33,6 @@ default = ["24bits", "50bits", "libm"]
 estrin = ["dep:fast_polynomial"]
 # If the `std` feature flag is disabled, this feature flag uses the [`libm`](https://crates.io/crates/libm) crate
 # to compute square roots and logarithms instead of the standard library.
-# Disable this feature flag and enable the `std` feature flag to remove the dependency on the `libm` crate.
 libm = ["dep:libm", "fast_polynomial?/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature flag is disabled the crate is `no_std`.
