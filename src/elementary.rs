@@ -3,7 +3,7 @@
 //! `std` feature is disabled and the `libm` feature is enabled. If both are disabled these functions panic.
 
 // #[inline(always)] is motivated by the fact that these functions are trivial, so just placing the call to the
-// correct sqrt/ln at the caller does not add extra code, but skips an axtra indirection.
+// correct sqrt/ln at the caller does not add extra code, but skips an extra indirection.
 
 #[inline(always)]
 pub(crate) fn sqrt(x: f64) -> f64 {
