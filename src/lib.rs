@@ -74,10 +74,12 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
+//! One of the below feature flags must be enabled:
+//! 
 //! `std`: use the standard library to compute square roots and logarithms. Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`] crate.
+//! When this feature flag is disabled the crate is `no_std`.
 //!
-//! `libm` *(enabled by default)*: if the `std` feature is disabled, this features uses the [`libm`] crate to compute logarithms and square roots instead of the standard library.
-//! Enabling the feature makes the crate `no_std`.
+//! `libm` *(enabled by default)*: if the `std` feature  flag is disabled, this feature flag uses the [`libm`] crate to compute logarithms and square roots instead of the standard library.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
