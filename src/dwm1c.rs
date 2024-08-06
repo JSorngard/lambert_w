@@ -1,5 +1,8 @@
 use super::{INV_SQRT_E, NEG_INV_E};
-use crate::{ln, rational::rational_7, sqrt};
+use crate::{
+    math::{ln, sqrt},
+    rational::rational_7,
+};
 
 /// zc = z + 1/e
 pub fn dwm1c(z: f64, zc: f64) -> f64 {

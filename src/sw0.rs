@@ -1,8 +1,7 @@
 use super::NEG_INV_E;
 use crate::{
-    ln,
+    math::{ln, sqrt},
     rational::{rational_3, rational_4_3},
-    sqrt,
 };
 
 pub fn sw0(z: f64) -> f64 {

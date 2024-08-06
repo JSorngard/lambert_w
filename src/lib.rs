@@ -84,20 +84,18 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-compile_error!("either the `std` or `libm` feature flags must be enabled");
+compile_error!("at least one of the `std` or `libm` feature flags must be enabled");
 
 #[cfg(feature = "50bits")]
 mod dw0c;
 #[cfg(feature = "50bits")]
 mod dwm1c;
+mod math;
 mod rational;
 #[cfg(feature = "24bits")]
 mod sw0;
 #[cfg(feature = "24bits")]
 mod swm1;
-mod math;
-
-use math::{sqrt, ln};
 
 /// The negative inverse of e (-1/e).
 ///

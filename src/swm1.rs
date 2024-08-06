@@ -1,5 +1,8 @@
 use super::{INV_SQRT_E, NEG_INV_E};
-use crate::{ln, rational::rational_3, sqrt};
+use crate::{
+    math::{ln, sqrt},
+    rational::rational_3,
+};
 
 pub fn swm1(z: f64) -> f64 {
     if z < NEG_INV_E {

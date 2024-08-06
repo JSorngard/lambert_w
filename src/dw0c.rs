@@ -1,7 +1,6 @@
 use crate::{
-    ln,
+    math::{ln, sqrt},
     rational::{rational_7, rational_8_7},
-    sqrt,
 };
 
 /// zc = z + 1/e
