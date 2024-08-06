@@ -33,8 +33,9 @@ default = ["24bits", "50bits", "libm"]
 estrin = ["dep:fast_polynomial"]
 # If the `std` feature flag is disabled, this feature flag uses the [`libm`](https://crates.io/crates/libm) crate to compute logarithms and square roots instead of the standard library.
 libm = ["dep:libm", "fast_polynomial?/libm"]
-# Use the standard library to compute square roots and logarithms. Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`](https://crates.io/crates/libm) crate.
+# Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature flag is disabled the crate is `no_std`.
+# Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`](https://crates.io/crates/libm) crate.
 std = ["fast_polynomial?/std"]
 
 [package.metadata.docs.rs]
