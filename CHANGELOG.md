@@ -4,7 +4,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 0.5.1
 
-- Add a `std` and a `libm` feature flag to match the features on the optional
+- Add `std` and `libm` feature flags to match the features on the optional
  dependency on `fast_polynomial`.
 - Make crate `no_std` by default with a dependency on [`libm`](https://crates.io/crates/libm)
  by having the default feature flag state be `std` disabled and `libm` enabled.
