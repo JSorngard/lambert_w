@@ -75,7 +75,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
 //! One of the below feature flags must be enabled:
-//! 
+//!
 //! `std`: use the standard library to compute square roots and logarithms. Enable this feature and disable the `libm` feature to remove the dependency on the [`libm`] crate.
 //! When this feature flag is disabled the crate is `no_std`.
 //!
@@ -106,6 +106,13 @@ fn sqrt(x: f64) -> f64 {
     {
         libm::sqrt(x)
     }
+
+    // This block makes the error when both features are disabled clearer,
+    // since the compiler only complains about the compile_error! above.
+    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+    {
+        x
+    }
 }
 
 fn ln(x: f64) -> f64 {
@@ -117,6 +124,11 @@ fn ln(x: f64) -> f64 {
     #[cfg(all(not(feature = "std"), feature = "libm"))]
     {
         libm::log(x)
+    }
+
+    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+    {
+        x
     }
 }
 
