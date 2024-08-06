@@ -7,7 +7,9 @@ This file contains the changes to the crate since version 0.1.1.
 - Add `std` and `libm` features to match the features on the optional
  dependency `fast_polynomial`.
 - Make the crate `no_std` with a dependency on [`libm`](https://crates.io/crates/libm)
- by default. The crate can be made to depend on the standard library instead of `libm` by disabling default features and enabling the `std` feature. This can result in a performance gain.
+ by default. The crate can be made to depend on the standard library instead of
+ `libm` by disabling default features and enabling the `std` feature. This can
+ result in a performance gain.
 
 ## 0.5.0
 
