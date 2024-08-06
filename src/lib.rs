@@ -91,7 +91,7 @@ compile_error!("at least one of the `std` or `libm` feature flags must be enable
 mod dw0c;
 #[cfg(feature = "50bits")]
 mod dwm1c;
-mod math;
+mod elementary;
 mod rational;
 #[cfg(feature = "24bits")]
 mod sw0;

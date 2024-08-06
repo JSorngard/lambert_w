@@ -1,5 +1,5 @@
 use crate::{
-    math::{ln, sqrt},
+    elementary::{ln, sqrt},
     rational::{rational_7, rational_8_7},
 };
 

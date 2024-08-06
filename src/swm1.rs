@@ -1,6 +1,6 @@
 use super::{INV_SQRT_E, NEG_INV_E};
 use crate::{
-    math::{ln, sqrt},
+    elementary::{ln, sqrt},
     rational::rational_3,
 };
 
