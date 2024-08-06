@@ -95,42 +95,9 @@ mod rational;
 mod sw0;
 #[cfg(feature = "24bits")]
 mod swm1;
+mod math;
 
-fn sqrt(x: f64) -> f64 {
-    #[cfg(feature = "std")]
-    {
-        x.sqrt()
-    }
-
-    #[cfg(all(not(feature = "std"), feature = "libm"))]
-    {
-        libm::sqrt(x)
-    }
-
-    // This block makes the error when both features are disabled clearer,
-    // since the compiler only complains about the compile_error! above.
-    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-    {
-        x
-    }
-}
-
-fn ln(x: f64) -> f64 {
-    #[cfg(feature = "std")]
-    {
-        x.ln()
-    }
-
-    #[cfg(all(not(feature = "std"), feature = "libm"))]
-    {
-        libm::log(x)
-    }
-
-    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-    {
-        x
-    }
-}
+use math::{sqrt, ln};
 
 /// The negative inverse of e (-1/e).
 ///
