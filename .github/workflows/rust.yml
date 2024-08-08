@@ -64,3 +64,11 @@ jobs:
         components: clippy
     - name: clippy_1.60
       run: cargo +1.60.0 clippy --all-features -- -D warnings
+
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: bench
+      run: cargo bench random && cargo bench random --no-default-features -F std,24bits,50bits && cargo bench random --no-default-features -F std,24bits,50bits,estrin
