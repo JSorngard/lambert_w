@@ -34,6 +34,27 @@ pub(crate) fn rational_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [
 }
 
 #[cfg(feature = "24bits")]
+/// Rational function consisting of two third degree polynomials.
+///
+/// The first set of coefficients are for the polynomial in the numerator
+/// and the second set are the coefficients of the polynomial in the denominator.
+///
+/// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
+#[inline(always)]
+pub(crate) fn rational_3f(x: f32, [n0, n1, n2, n3]: [f32; 4], [d0, d1, d2, d3]: [f32; 4]) -> f32 {
+    #[cfg(feature = "estrin")]
+    {
+        let x2 = x * x;
+        poly_3(x, x2, n0, n1, n2, n3) / poly_3(x, x2, d0, d1, d2, d3)
+    }
+
+    #[cfg(not(feature = "estrin"))]
+    {
+        (n0 + x * (n1 + x * (n2 + x * n3))) / (d0 + x * (d1 + x * (d2 + x * d3)))
+    }
+}
+
+#[cfg(feature = "24bits")]
 /// Rational function consisting of a fourth degree polynomial divided by a third degree polynomial.
 ///
 /// The first set of coefficients are for the polynomial in the numerator
@@ -46,6 +67,32 @@ pub(crate) fn rational_4_3(
     [n0, n1, n2, n3, n4]: [f64; 5],
     [d0, d1, d2, d3]: [f64; 4],
 ) -> f64 {
+    #[cfg(feature = "estrin")]
+    {
+        let x2 = x * x;
+        let x4 = x2 * x2;
+        poly_4(x, x2, x4, n0, n1, n2, n3, n4) / poly_3(x, x2, d0, d1, d2, d3)
+    }
+
+    #[cfg(not(feature = "estrin"))]
+    {
+        (n0 + x * (n1 + x * (n2 + x * (n3 + x * n4)))) / (d0 + x * (d1 + x * (d2 + x * d3)))
+    }
+}
+
+#[cfg(feature = "24bits")]
+/// Rational function consisting of a fourth degree polynomial divided by a third degree polynomial.
+///
+/// The first set of coefficients are for the polynomial in the numerator
+/// and the second set are the coefficients of the polynomial in the denominator.
+///
+/// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
+#[inline(always)]
+pub(crate) fn rational_4_3f(
+    x: f32,
+    [n0, n1, n2, n3, n4]: [f32; 5],
+    [d0, d1, d2, d3]: [f32; 4],
+) -> f32 {
     #[cfg(feature = "estrin")]
     {
         let x2 = x * x;

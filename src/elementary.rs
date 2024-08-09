@@ -24,6 +24,24 @@ pub(crate) fn sqrt(x: f64) -> f64 {
 }
 
 #[inline(always)]
+pub(crate) fn sqrtf(x: f32) -> f32 {
+    #[cfg(feature = "std")]
+    {
+        x.sqrt()
+    }
+
+    #[cfg(all(not(feature = "std"), feature = "libm"))]
+    {
+        libm::sqrtf(x)
+    }
+
+    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+    {
+        panic!("computing sqrtf({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
+    }
+}
+
+#[inline(always)]
 pub(crate) fn ln(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
@@ -38,5 +56,23 @@ pub(crate) fn ln(x: f64) -> f64 {
     #[cfg(all(not(feature = "std"), not(feature = "libm")))]
     {
         panic!("computing ln({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
+    }
+}
+
+#[inline(always)]
+pub(crate) fn lnf(x: f32) -> f32 {
+    #[cfg(feature = "std")]
+    {
+        x.ln()
+    }
+
+    #[cfg(all(not(feature = "std"), feature = "libm"))]
+    {
+        libm::logf(x)
+    }
+
+    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+    {
+        panic!("computing lnf({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
     }
 }
