@@ -7,7 +7,7 @@
 
 Fast evaluation of the real valued parts of the principal and secondary branches
 of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
-using the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+using the [method of Toshio Fukushima][1]
 to either 24 or 50 bits of accuracy.
 
 This method works by splitting the domain of the function into subdomains,
@@ -78,3 +78,5 @@ at your option.
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
+
+[1]: https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation
