@@ -20,7 +20,11 @@ use fast_polynomial::polynomials::{poly_7, poly_8};
 ///
 /// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
-pub(crate) fn rational_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
+pub(crate) fn rational_3_over_3(
+    x: f64,
+    [n0, n1, n2, n3]: [f64; 4],
+    [d0, d1, d2, d3]: [f64; 4],
+) -> f64 {
     #[cfg(feature = "estrin")]
     {
         let x2 = x * x;
@@ -41,7 +45,7 @@ pub(crate) fn rational_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [
 ///
 /// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
-pub(crate) fn rational_4_3(
+pub(crate) fn rational_4_over_3(
     x: f64,
     [n0, n1, n2, n3, n4]: [f64; 5],
     [d0, d1, d2, d3]: [f64; 4],
@@ -67,7 +71,7 @@ pub(crate) fn rational_4_3(
 ///
 /// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
-pub(crate) fn rational_7(
+pub(crate) fn rational_7_over_7(
     x: f64,
     [n0, n1, n2, n3, n4, n5, n6, n7]: [f64; 8],
     [d0, d1, d2, d3, d4, d5, d6, d7]: [f64; 8],
@@ -94,7 +98,7 @@ pub(crate) fn rational_7(
 ///
 /// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
-pub(crate) fn rational_8_7(
+pub(crate) fn rational_8_over_7(
     x: f64,
     [n0, n1, n2, n3, n4, n5, n6, n7, n8]: [f64; 9],
     [d0, d1, d2, d3, d4, d5, d6, d7]: [f64; 8],
