@@ -57,7 +57,6 @@ let z = -f64::ln(2.0) / 2.0;
 let mln4_50b = lambert_wm1(z);
 let mln4_24b = sp_lambert_wm1(z);
 
-
 assert_abs_diff_eq!(mln4_50b, -f64::ln(4.0));
 assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 ```
