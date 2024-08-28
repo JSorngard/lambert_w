@@ -81,7 +81,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! `std`: use the standard library to compute square roots and logarithms
 //! for a potential performance gain. When this feature is disabled the crate is `no_std`.
 //!
-//! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`](https://docs.rs/libm/latest/libm/)
+//! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]
 //! crate to compute square roots and logarithms instead of the standard library.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
