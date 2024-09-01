@@ -23,6 +23,7 @@ pub(crate) fn sqrt(x: f64) -> f64 {
     }
 }
 
+#[cfg(feature = "24bits")]
 #[inline(always)]
 pub(crate) fn sqrtf(x: f32) -> f32 {
     #[cfg(feature = "std")]
@@ -59,6 +60,7 @@ pub(crate) fn ln(x: f64) -> f64 {
     }
 }
 
+#[cfg(feature = "24bits")]
 #[inline(always)]
 pub(crate) fn lnf(x: f32) -> f32 {
     #[cfg(feature = "std")]

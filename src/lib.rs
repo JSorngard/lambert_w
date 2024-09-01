@@ -199,6 +199,7 @@ pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
 
+#[cfg(feature = "24bits")]
 pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
@@ -231,6 +232,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
+#[cfg(feature = "24bits")]
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }
@@ -241,9 +243,9 @@ mod test {
     // This is because CI may not have fused multiply-add instructions, which creates numerical instabillity.
 
     #[cfg(feature = "50bits")]
-    use super::{lambert_w0, lambert_w0f, lambert_wm1};
+    use super::{lambert_w0, lambert_wm1};
     #[cfg(feature = "24bits")]
-    use super::{sp_lambert_w0, sp_lambert_wm1};
+    use super::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 
@@ -641,5 +643,47 @@ mod test {
             epsilon = 1e-4
         );
         assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
+    }
+
+    #[cfg(feature = "24bits")]
+    #[test]
+    fn test_lambert_wm1f() {
+        assert!(lambert_wm1f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
+        assert_abs_diff_eq!(
+            lambert_wm1f(-3.578_794_411_714_423e-1),
+            -1.253493791367214,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-2.678_794_411_714_424e-1),
+            -2.020625228775403,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(lambert_wm1f(-1e-1), -3.577152063957297, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-2), -5.144482721515681, epsilon = 1e-9);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-2), -6.472775124394005, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-3), -7.872521380098709, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-3), -9.118006470402742, epsilon = 1e-6);
+        assert_abs_diff_eq!(
+            lambert_wm1f(-3.000_000_000_000_001e-4),
+            -1.045_921_112_040_1e1,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-1e-4),
+            -1.166_711_453_256_636e1,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-3e-5),
+            -1.297_753_279_184_081e1,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-1e-5),
+            -1.416_360_081_581_018e1,
+            epsilon = 1e-6
+        );
+        assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 }
