@@ -241,7 +241,7 @@ mod test {
     // This is because CI may not have fused multiply-add instructions, which creates numerical instabillity.
 
     #[cfg(feature = "50bits")]
-    use super::{lambert_w0, lambert_wm1};
+    use super::{lambert_w0, lambert_w0f, lambert_wm1};
     #[cfg(feature = "24bits")]
     use super::{sp_lambert_w0, sp_lambert_wm1};
     use approx::assert_abs_diff_eq;
@@ -530,6 +530,127 @@ mod test {
             epsilon = 1e-4
         );
         assert_abs_diff_eq!(sp_lambert_w0(f64::MAX), 703.2270331047702, epsilon = 1e-4);
+    }
+
+    #[cfg(feature = "24bits")]
+    #[test]
+    fn test_lambert_w0f() {
+        assert!(lambert_w0f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
+        assert_abs_diff_eq!(
+            lambert_w0f(-2.678794411714424e-01),
+            -3.993824525397807e-01,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(6.321205588285577e-01),
+            4.167039988177658e-01,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.632120558828557),
+            1.721757710976171,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.963212055882856e+01),
+            3.382785211058958,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.996321205588285e+02),
+            5.249293782013269,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999632120558828e+03),
+            7.231813718542178,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999963212055883e+04),
+            9.284568107521959,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999996321205589e+05),
+            1.138335774796812e+01,
+            epsilon = 1e-8
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999632120559e+06),
+            1.351434397605273e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999963212056e+07),
+            1.566899671199287e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999996321206e+08),
+            1.784172596707312e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999999632120e+09),
+            2.002868541326992e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999999963213e+10),
+            2.222712273495755e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999999996321e+11),
+            2.443500440493456e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999999999633e+12),
+            2.665078750870219e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999999999962e+13),
+            2.887327487929930e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(9.999999999999996e+14),
+            3.110151971159478e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(1.000000000000000e+16),
+            3.333476076844818e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(1.000000000000000e+17),
+            3.557237716651325e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(1.000000000000000e+18),
+            3.781385607558877e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(1.000000000000000e+19),
+            4.005876916198432e+01,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(1.000000000000000e+20),
+            4.230675509173839e+01,
+            epsilon = 1e-5
+        );
+        assert_abs_diff_eq!(
+            lambert_w0f(f32::MAX),
+            84.288592526071026256313129136549672920194591158600491263275600567,
+            epsilon = 1e-1
+        );
     }
 
     #[cfg(feature = "50bits")]
