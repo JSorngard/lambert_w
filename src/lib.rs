@@ -98,7 +98,11 @@ mod rational;
 #[cfg(feature = "24bits")]
 mod sw0;
 #[cfg(feature = "24bits")]
+mod sw0f;
+#[cfg(feature = "24bits")]
 mod swm1;
+#[cfg(feature = "24bits")]
+mod swm1f;
 
 /// The negative inverse of e (-1/e).
 ///
@@ -195,6 +199,36 @@ pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
 
+#[cfg(feature = "24bits")]
+/// The principal branch of the Lambert W function, computed on `f32`.
+///
+/// Uses the same approximations as [`sp_lambert_w0`] but using `f32`
+/// results in slightly reduced accuracy.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::lambert_w0f;
+///
+/// let Ω = lambert_w0f(1.0);
+///
+/// assert_abs_diff_eq!(Ω, 0.56714326);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787945) result in [`NAN`](f32::NAN):
+/// ```
+/// # use lambert_w::lambert_w0f;
+/// assert!(lambert_w0f(-1.0).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+pub fn lambert_w0f(z: f32) -> f32 {
+    sw0f::sw0f(z)
+}
+
 #[cfg(feature = "50bits")]
 /// The secondary branch of the Lambert W function computed to 50 bits of accuracy.
 ///
@@ -223,6 +257,37 @@ pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
+#[cfg(feature = "24bits")]
+/// The secondary branch of the Lambert W function, computed on `f32`.
+///
+/// Uses the same approximations as [`sp_lambert_wm1`] but using `f32`
+/// results in slightly reduced accuracy.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::lambert_wm1f;
+///
+/// let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
+///
+/// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787945) or larger than 0 result in [`NAN`](f32::NAN):
+/// ```
+/// # use lambert_w::lambert_wm1f;
+/// assert!(lambert_wm1f(-1.0).is_nan());
+/// assert!(lambert_wm1f(1.0).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+pub fn lambert_wm1f(z: f32) -> f32 {
+    swm1f::swm1f(z)
+}
+
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod test {
     // A lot of these tests are less stringent when the `estrin` feature flag is activated.
@@ -231,7 +296,7 @@ mod test {
     #[cfg(feature = "50bits")]
     use super::{lambert_w0, lambert_wm1};
     #[cfg(feature = "24bits")]
-    use super::{sp_lambert_w0, sp_lambert_wm1};
+    use super::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 
@@ -239,8 +304,14 @@ mod test {
     #[test]
     fn test_lambert_w0() {
         assert!(lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
-        assert_abs_diff_eq!(lambert_w0(-2.678794411714424e-01), -3.993824525397807e-01);
-        assert_abs_diff_eq!(lambert_w0(6.321205588285577e-01), 4.167039988177658e-01);
+        assert_abs_diff_eq!(
+            lambert_w0(-2.678_794_411_714_424e-1),
+            -3.993_824_525_397_807e-1
+        );
+        assert_abs_diff_eq!(
+            lambert_w0(6.321_205_588_285_577e-1),
+            4.167_039_988_177_658e-1
+        );
         #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(lambert_w0(9.632120558828557), 1.721757710976171);
         #[cfg(feature = "estrin")]
@@ -249,15 +320,15 @@ mod test {
             1.721757710976171,
             epsilon = 1e-14
         );
-        assert_abs_diff_eq!(lambert_w0(9.963212055882856e+01), 3.382785211058958);
-        assert_abs_diff_eq!(lambert_w0(9.996321205588285e+02), 5.249293782013269);
+        assert_abs_diff_eq!(lambert_w0(9.963_212_055_882_856e1), 3.382785211058958);
+        assert_abs_diff_eq!(lambert_w0(9.996_321_205_588_285e2), 5.249293782013269);
         assert_abs_diff_eq!(
-            lambert_w0(9.999632120558828e+03),
+            lambert_w0(9.999_632_120_558_828e3),
             7.231813718542178,
             epsilon = 1e-14
         );
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(9.999963212055883e+04), 9.284568107521959);
+        assert_abs_diff_eq!(lambert_w0(9.999_963_212_055_883e4), 9.284_568_107_521_96);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(9.999963212055883e+04),
@@ -265,7 +336,7 @@ mod test {
             epsilon = 1e-14
         );
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(9.999996321205589e+05), 1.138335774796812e+01);
+        assert_abs_diff_eq!(lambert_w0(9.999_996_321_205_589e5), 1.138_335_774_796_812e1);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(9.999996321205589e+05),
@@ -273,7 +344,7 @@ mod test {
             epsilon = 1e-14
         );
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(9.999999632120559e+06), 1.351434397605273e+01);
+        assert_abs_diff_eq!(lambert_w0(9.999_999_632_120_559e6), 1.351_434_397_605_273e1);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(9.999999632120559e+06),
@@ -281,22 +352,25 @@ mod test {
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999963212056e+07),
-            1.566899671199287e+01,
+            lambert_w0(9.999_999_963_212_056e7),
+            1.566_899_671_199_287e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999996321206e+08),
-            1.784172596707312e+01,
+            lambert_w0(9.999_999_996_321_206e8),
+            1.784_172_596_707_312e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999632120e+09),
-            2.002868541326992e+01,
+            lambert_w0(9.999_999_999_632_12e9),
+            2.002_868_541_326_992e1,
             epsilon = 1e-14
         );
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(9.999999999963213e+10), 2.222712273495755e+01);
+        assert_abs_diff_eq!(
+            lambert_w0(9.999_999_999_963_213e10),
+            2.222_712_273_495_755e1
+        );
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(9.999999999963213e+10),
@@ -304,14 +378,14 @@ mod test {
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999996321e+11),
-            2.443500440493456e+01,
+            lambert_w0(9.999_999_999_996_321e11),
+            2.443_500_440_493_456e1,
             epsilon = 1e-14
         );
         #[cfg(not(feature = "estrin"))]
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999999633e+12),
-            2.665078750870219e+01,
+            lambert_w0(9.999_999_999_999_633e12),
+            2.665_078_750_870_219e1,
             epsilon = 1e-14
         );
         #[cfg(feature = "estrin")]
@@ -321,40 +395,28 @@ mod test {
             epsilon = 1e-13
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999999962e+13),
-            2.887327487929930e+01,
+            lambert_w0(9.999_999_999_999_963e13),
+            2.887_327_487_929_93e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_w0(9.999999999999996e+14),
-            3.110151971159478e+01,
+            lambert_w0(9.999_999_999_999_996e14),
+            3.110_151_971_159_478e1,
             epsilon = 1e-14
         );
-        assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+16),
-            3.333476076844818e+01,
-            epsilon = 1e-14
-        );
+        assert_abs_diff_eq!(lambert_w0(1e16), 3.333_476_076_844_818e1, epsilon = 1e-14);
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(1.000000000000000e+17), 3.557237716651325e+01);
+        assert_abs_diff_eq!(lambert_w0(1e17), 3.557_237_716_651_325e1);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(1.000000000000000e+17),
             3.557237716651325e+01,
             epsilon = 1e-14
         );
-        assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+18),
-            3.781385607558877e+01,
-            epsilon = 1e-14
-        );
-        assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+19),
-            4.005876916198432e+01,
-            epsilon = 1e-14
-        );
+        assert_abs_diff_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1, epsilon = 1e-14);
+        assert_abs_diff_eq!(lambert_w0(1e19), 4.005_876_916_198_432e1, epsilon = 1e-14);
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(1.000000000000000e+20), 4.230675509173839e+01);
+        assert_abs_diff_eq!(lambert_w0(1e20), 4.230_675_509_173_839e1);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(1.000000000000000e+20),
@@ -362,24 +424,16 @@ mod test {
             epsilon = 1e-14
         );
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_w0(1.000000000000000e+40), 8.763027715194720e+01);
+        assert_abs_diff_eq!(lambert_w0(1e40), 8.763_027_715_194_72e1);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_w0(1.000000000000000e+40),
             8.763027715194720e+01,
             epsilon = 1e-13
         );
-        assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+80),
-            1.790193137415062e+02,
-            epsilon = 1e-13
-        );
-        assert_abs_diff_eq!(
-            lambert_w0(1.000000000000000e+120),
-            2.707091661024979e+02,
-            epsilon = 1e-13
-        );
-        assert_abs_diff_eq!(lambert_w0(1.000000000000000e+160), 3.625205337614976e+02);
+        assert_abs_diff_eq!(lambert_w0(1e80), 1.790_193_137_415_062e2, epsilon = 1e-13);
+        assert_abs_diff_eq!(lambert_w0(1e120), 2.707_091_661_024_979e2, epsilon = 1e-13);
+        assert_abs_diff_eq!(lambert_w0(1e160), 3.625_205_337_614_976e2);
         assert_abs_diff_eq!(lambert_w0(f64::MAX), 703.2270331047702, epsilon = 1e-12);
     }
 
@@ -388,13 +442,13 @@ mod test {
     fn test_sp_lambert_w0() {
         assert!(sp_lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
         assert_abs_diff_eq!(
-            sp_lambert_w0(-2.678794411714424e-01),
-            -3.993824525397807e-01,
+            sp_lambert_w0(-2.678_794_411_714_424e-1),
+            -3.993_824_525_397_807e-1,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(6.321205588285577e-01),
-            4.167039988177658e-01,
+            sp_lambert_w0(6.321_205_588_285_577e-1),
+            4.167_039_988_177_658e-1,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
@@ -403,121 +457,141 @@ mod test {
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.963212055882856e+01),
+            sp_lambert_w0(9.963_212_055_882_856e1),
             3.382785211058958,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.996321205588285e+02),
+            sp_lambert_w0(9.996_321_205_588_285e2),
             5.249293782013269,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999632120558828e+03),
+            sp_lambert_w0(9.999_632_120_558_828e3),
             7.231813718542178,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999963212055883e+04),
-            9.284568107521959,
+            sp_lambert_w0(9.999_963_212_055_883e4),
+            9.284_568_107_521_96,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999996321205589e+05),
-            1.138335774796812e+01,
+            sp_lambert_w0(9.999_996_321_205_589e5),
+            1.138_335_774_796_812e1,
             epsilon = 1e-8
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999632120559e+06),
-            1.351434397605273e+01,
+            sp_lambert_w0(9.999_999_632_120_559e6),
+            1.351_434_397_605_273e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999963212056e+07),
-            1.566899671199287e+01,
+            sp_lambert_w0(9.999_999_963_212_056e7),
+            1.566_899_671_199_287e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999996321206e+08),
-            1.784172596707312e+01,
+            sp_lambert_w0(9.999_999_996_321_206e8),
+            1.784_172_596_707_312e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999999632120e+09),
-            2.002868541326992e+01,
+            sp_lambert_w0(9.999_999_999_632_12e9),
+            2.002_868_541_326_992e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999999963213e+10),
-            2.222712273495755e+01,
+            sp_lambert_w0(9.999_999_999_963_213e10),
+            2.222_712_273_495_755e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999999996321e+11),
-            2.443500440493456e+01,
+            sp_lambert_w0(9.999_999_999_996_321e11),
+            2.443_500_440_493_456e1,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999999999633e+12),
-            2.665078750870219e+01,
+            sp_lambert_w0(9.999_999_999_999_633e12),
+            2.665_078_750_870_219e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999999999962e+13),
-            2.887327487929930e+01,
+            sp_lambert_w0(9.999_999_999_999_963e13),
+            2.887_327_487_929_93e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(9.999999999999996e+14),
-            3.110151971159478e+01,
+            sp_lambert_w0(9.999_999_999_999_996e14),
+            3.110_151_971_159_478e1,
             epsilon = 1e-5
         );
+        assert_abs_diff_eq!(sp_lambert_w0(1e16), 3.333_476_076_844_818e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(sp_lambert_w0(1e17), 3.557_237_716_651_325e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(sp_lambert_w0(1e18), 3.781_385_607_558_877e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(sp_lambert_w0(1e19), 4.005_876_916_198_432e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(sp_lambert_w0(1e20), 4.230_675_509_173_839e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(sp_lambert_w0(1e40), 8.763_027_715_194_72e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(sp_lambert_w0(1e80), 1.790_193_137_415_062e2, epsilon = 1e-5);
         assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+16),
-            3.333476076844818e+01,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+17),
-            3.557237716651325e+01,
-            epsilon = 1e-5
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+18),
-            3.781385607558877e+01,
-            epsilon = 1e-5
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+19),
-            4.005876916198432e+01,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+20),
-            4.230675509173839e+01,
-            epsilon = 1e-5
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+40),
-            8.763027715194720e+01,
-            epsilon = 1e-5
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+80),
-            1.790193137415062e+02,
-            epsilon = 1e-5
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+120),
-            2.707091661024979e+02,
+            sp_lambert_w0(1e120),
+            2.707_091_661_024_979e2,
             epsilon = 1e-4
         );
         assert_abs_diff_eq!(
-            sp_lambert_w0(1.000000000000000e+160),
-            3.625205337614976e+02,
+            sp_lambert_w0(1e160),
+            3.625_205_337_614_976e2,
             epsilon = 1e-4
         );
         assert_abs_diff_eq!(sp_lambert_w0(f64::MAX), 703.2270331047702, epsilon = 1e-4);
+    }
+
+    #[cfg(feature = "24bits")]
+    #[test]
+    fn test_lambert_w0f() {
+        assert!(lambert_w0f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
+        assert_abs_diff_eq!(
+            lambert_w0f(-2.678_794_3e-1),
+            -3.993_824_4e-1,
+            epsilon = 1e-7
+        );
+        assert_abs_diff_eq!(lambert_w0f(6.321_205_5e-1), 4.167_04e-1, epsilon = 1e-7);
+        assert_abs_diff_eq!(lambert_w0f(9.632_12), 1.721_757_8, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_w0f(9.963_212e1), 3.382_785_3, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_w0f(9.996_321_4e2), 5.249_294, epsilon = 1e-6);
+        #[cfg(not(feature = "estrin"))]
+        assert_abs_diff_eq!(lambert_w0f(9.999_632e3), 7.231_814, epsilon = 1e-7);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(lambert_w0f(9.999_632e3), 7.231_814, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_w0f(9.999_963e4), 9.284_568, epsilon = 1e-6);
+        #[cfg(not(feature = "estrin"))]
+        assert_abs_diff_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1, epsilon = 1e-8);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_w0f(1e7), 1.351_434_4e1, epsilon = 1e-6);
+        #[cfg(not(feature = "estrin"))]
+        assert_abs_diff_eq!(lambert_w0f(1e8), 1.566_899_7e1, epsilon = 1e-6);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(lambert_w0f(1e8), 1.566_899_7e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e9), 1.784_172_6e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_w0f(1e10), 2.002_868_5e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e11), 2.222_712_3e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e12), 2.443_500_5e1, epsilon = 1e-5);
+        #[cfg(not(feature = "estrin"))]
+        assert_abs_diff_eq!(lambert_w0f(1e13), 2.665_078_7e1, epsilon = 1e-6);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(lambert_w0f(1e13), 2.665_078_7e1, epsilon = 1e-5);
+        #[cfg(not(feature = "estrin"))]
+        assert_abs_diff_eq!(lambert_w0f(1e14), 2.887_327_6e1, epsilon = 1e-6);
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(lambert_w0f(1e14), 2.887_327_6e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e15), 3.110_152e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e16), 3.333_476_3e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e17), 3.557_237_6e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e18), 3.781_385_4e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(1e19), 4.005_877e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_w0f(1e20), 4.230_675_5e1, epsilon = 1e-5);
+        assert_abs_diff_eq!(lambert_w0f(f32::MAX), 84.288_59, epsilon = 1e-1);
     }
 
     #[cfg(feature = "50bits")]
@@ -525,66 +599,57 @@ mod test {
     fn test_lambert_wm1() {
         assert!(lambert_wm1(-1.0 / E - f64::EPSILON).is_nan());
         assert_abs_diff_eq!(
-            lambert_wm1(-3.578794411714423e-01),
+            lambert_wm1(-3.578_794_411_714_423e-1),
             -1.253493791367214,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-2.678794411714424e-01),
+            lambert_wm1(-2.678_794_411_714_424e-1),
             -2.020625228775403,
             epsilon = 1e-14
         );
-        assert_abs_diff_eq!(lambert_wm1(-1.000000000000000e-01), -3.577152063957297);
+        assert_abs_diff_eq!(lambert_wm1(-1e-1), -3.577152063957297);
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_wm1(-3.000000000000000e-02), -5.144482721515681);
+        assert_abs_diff_eq!(lambert_wm1(-3e-2), -5.144482721515681);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_wm1(-3.000000000000000e-02),
             -5.144482721515681,
             epsilon = 1e-14
         );
+        assert_abs_diff_eq!(lambert_wm1(-1e-2), -6.472775124394005, epsilon = 1e-14);
+        assert_abs_diff_eq!(lambert_wm1(-3e-3), -7.872521380098709, epsilon = 1e-14);
+        assert_abs_diff_eq!(lambert_wm1(-1e-3), -9.118006470402742, epsilon = 1e-14);
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-02),
-            -6.472775124394005,
+            lambert_wm1(-3.000_000_000_000_001e-4),
+            -1.045_921_112_040_1e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000000e-03),
-            -7.872521380098709,
+            lambert_wm1(-1e-4),
+            -1.166_711_453_256_636e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-03),
-            -9.118006470402742,
+            lambert_wm1(-3e-5),
+            -1.297_753_279_184_081e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000001e-04),
-            -1.045921112040100e+01,
-            epsilon = 1e-14
-        );
-        assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-04),
-            -1.166711453256636e+01,
-            epsilon = 1e-14
-        );
-        assert_abs_diff_eq!(
-            lambert_wm1(-3.000000000000000e-05),
-            -1.297753279184081e+01,
-            epsilon = 1e-14
-        );
-        assert_abs_diff_eq!(
-            lambert_wm1(-1.000000000000000e-05),
-            -1.416360081581018e+01,
+            lambert_wm1(-1e-5),
+            -1.416_360_081_581_018e1,
             epsilon = 1e-14
         );
         assert_abs_diff_eq!(
             lambert_wm1(-1.000000000000004e-75),
-            -1.778749628219512e+02,
+            -1.778_749_628_219_512e2,
             epsilon = 1e-13
         );
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(lambert_wm1(-1.000000000000008e-145), -3.397029099254290e+02);
+        assert_abs_diff_eq!(
+            lambert_wm1(-1.000000000000008e-145),
+            -3.397_029_099_254_29e2
+        );
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_wm1(-1.000000000000008e-145),
@@ -599,70 +664,99 @@ mod test {
     fn test_sp_lambert_wm1() {
         assert!(sp_lambert_wm1(-1.0 / E - f64::EPSILON).is_nan());
         assert_abs_diff_eq!(
-            sp_lambert_wm1(-3.578794411714423e-01),
+            sp_lambert_wm1(-3.578_794_411_714_423e-1),
             -1.253493791367214,
             epsilon = 1e-7
         );
         assert_abs_diff_eq!(
-            sp_lambert_wm1(-2.678794411714424e-01),
+            sp_lambert_wm1(-2.678_794_411_714_424e-1),
             -2.020625228775403,
             epsilon = 1e-7
         );
+        assert_abs_diff_eq!(sp_lambert_wm1(-1e-1), -3.577152063957297, epsilon = 1e-9);
+        assert_abs_diff_eq!(sp_lambert_wm1(-3e-2), -5.144482721515681, epsilon = 1e-9);
+        assert_abs_diff_eq!(sp_lambert_wm1(-1e-2), -6.472775124394005, epsilon = 1e-6);
+        assert_abs_diff_eq!(sp_lambert_wm1(-3e-3), -7.872521380098709, epsilon = 1e-6);
+        assert_abs_diff_eq!(sp_lambert_wm1(-1e-3), -9.118006470402742, epsilon = 1e-6);
         assert_abs_diff_eq!(
-            sp_lambert_wm1(-1.000000000000000e-01),
-            -3.577152063957297,
-            epsilon = 1e-9
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_wm1(-3.000000000000000e-02),
-            -5.144482721515681,
-            epsilon = 1e-9
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_wm1(-1.000000000000000e-02),
-            -6.472775124394005,
+            sp_lambert_wm1(-3.000_000_000_000_001e-4),
+            -1.045_921_112_040_1e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_wm1(-3.000000000000000e-03),
-            -7.872521380098709,
+            sp_lambert_wm1(-1e-4),
+            -1.166_711_453_256_636e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_wm1(-1.000000000000000e-03),
-            -9.118006470402742,
+            sp_lambert_wm1(-3e-5),
+            -1.297_753_279_184_081e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
-            sp_lambert_wm1(-3.000000000000001e-04),
-            -1.045921112040100e+01,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_wm1(-1.000000000000000e-04),
-            -1.166711453256636e+01,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_wm1(-3.000000000000000e-05),
-            -1.297753279184081e+01,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            sp_lambert_wm1(-1.000000000000000e-05),
-            -1.416360081581018e+01,
+            sp_lambert_wm1(-1e-5),
+            -1.416_360_081_581_018e1,
             epsilon = 1e-6
         );
         assert_abs_diff_eq!(
             sp_lambert_wm1(-1.000000000000004e-75),
-            -1.778749628219512e+02,
+            -1.778_749_628_219_512e2,
             epsilon = 1e-5
         );
         assert_abs_diff_eq!(
             sp_lambert_wm1(-1.000000000000008e-145),
-            -3.397029099254290e+02,
+            -3.397_029_099_254_29e2,
             epsilon = 1e-4
         );
         assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
+    }
+
+    #[cfg(feature = "24bits")]
+    #[test]
+    fn test_lambert_wm1f() {
+        assert!(lambert_wm1f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
+        assert_abs_diff_eq!(
+            lambert_wm1f(-3.578_794_411_714_423e-1),
+            -1.253493791367214,
+            epsilon = 1e-6
+        );
+        #[cfg(not(feature = "estrin"))]
+        assert_abs_diff_eq!(
+            lambert_wm1f(-2.678_794_411_714_424e-1),
+            -2.020625228775403,
+            epsilon = 1e-7
+        );
+        #[cfg(feature = "estrin")]
+        assert_abs_diff_eq!(
+            lambert_wm1f(-2.678_794_411_714_424e-1),
+            -2.020625228775403,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(lambert_wm1f(-1e-1), -3.577152063957297, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-2), -5.144482721515681, epsilon = 1e-9);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-2), -6.472775124394005, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-3), -7.872521380098709, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-3), -9.118006470402742, epsilon = 1e-6);
+        assert_abs_diff_eq!(
+            lambert_wm1f(-3.000_000_000_000_001e-4),
+            -1.045_921_112_040_1e1,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-1e-4),
+            -1.166_711_453_256_636e1,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-3e-5),
+            -1.297_753_279_184_081e1,
+            epsilon = 1e-6
+        );
+        assert_abs_diff_eq!(
+            lambert_wm1f(-1e-5),
+            -1.416_360_081_581_018e1,
+            epsilon = 1e-6
+        );
+        assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 }
