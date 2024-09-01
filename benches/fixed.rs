@@ -4,30 +4,30 @@ use lambert_w::{lambert_w0, lambert_wm1, sp_lambert_w0, sp_lambert_wm1};
 
 fn fixed_benches(c: &mut Criterion) {
     let big_args = [
-        -2.678794411714424e-01_f64,
-        6.321205588285577e-01,
+        -2.678_794_411_714_424e-1_f64,
+        6.321_205_588_285_577e-1,
         9.632120558828557,
-        9.999632120558828e+03,
-        9.999999996321206e+08,
-        9.999999999999633e+12,
-        1.000000000000000e+18,
-        1.000000000000000e+160,
+        9.999_632_120_558_828e3,
+        9.999_999_996_321_206e8,
+        9.999_999_999_999_633e12,
+        1e18,
+        1e160,
     ];
 
     let small_args = [
-        -3.578794411714423e-01_f64,
-        -3.000000000000000e-02,
-        -3.000000000000000e-03,
-        -1.000000000000000e-04,
-        -3.000000000000000e-05,
+        -3.578_794_411_714_423e-1_f64,
+        -3e-2,
+        -3e-3,
+        -1e-4,
+        -3e-5,
         -1.000000000000004e-75,
         -1.000000000000008e-145,
     ];
 
     for z in big_args {
         let mut group = c.benchmark_group(format!("W_0({z})"));
-        group.bench_function(&format!("50 bits"), |b| b.iter(|| black_box(lambert_w0(z))));
-        group.bench_function(&format!("24 bits"), |b| {
+        group.bench_function(&"50 bits".to_string(), |b| b.iter(|| black_box(lambert_w0(z))));
+        group.bench_function(&"24 bits".to_string(), |b| {
             b.iter(|| black_box(sp_lambert_w0(z)))
         });
     }
