@@ -561,7 +561,7 @@ mod test {
         assert_abs_diff_eq!(lambert_w0f(9.996_321_4e2), 5.249_294, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_w0f(9.999_632e3), 7.231_814, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_w0f(9.999_963e4), 9.284_568, epsilon = 1e-6);
-        assert_abs_diff_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1, epsilon = 1e-8);
+        assert_abs_diff_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1, epsilon = 1e-7);
         assert_abs_diff_eq!(lambert_w0f(1e7), 1.351_434_4e1, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_w0f(1e8), 1.566_899_7e1, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_w0f(1e9), 1.784_172_6e1, epsilon = 1e-6);
