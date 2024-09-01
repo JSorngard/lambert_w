@@ -204,6 +204,27 @@ pub fn lambert_w0(z: f64) -> f64 {
 ///
 /// Uses the same approximations as [`sp_lambert_w0`] but using `f32`
 /// results in slightly reduced accuracy.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::lambert_w0f;
+///
+/// let Ω = lambert_w0f(1.0);
+///
+/// assert_abs_diff_eq!(Ω, 0.56714326);
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787945) result in [`NAN`](f32::NAN):
+/// ```
+/// # use lambert_w::lambert_w0f;
+/// assert!(lambert_w0f(-1.0).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
@@ -241,6 +262,28 @@ pub fn lambert_wm1(z: f64) -> f64 {
 ///
 /// Uses the same approximations as [`sp_lambert_wm1`] but using `f32`
 /// results in slightly reduced accuracy.
+///
+/// # Examples
+///
+/// Basic usage:
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::lambert_wm1f;
+///
+/// let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
+///
+/// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+/// ```
+/// Arguments smaller than -1/e (≈ -0.36787945) or larger than 0 result in [`NAN`](f32::NAN):
+/// ```
+/// # use lambert_w::lambert_wm1f;
+/// assert!(lambert_wm1f(-1.0).is_nan());
+/// assert!(lambert_wm1f(1.0).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }
