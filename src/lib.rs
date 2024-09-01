@@ -97,9 +97,12 @@ mod elementary;
 mod rational;
 #[cfg(feature = "24bits")]
 mod sw0;
+#[cfg(feature = "24bits")]
 mod sw0f;
 #[cfg(feature = "24bits")]
 mod swm1;
+#[cfg(feature = "24bits")]
+mod swm1f;
 
 /// The negative inverse of e (-1/e).
 ///
@@ -139,10 +142,6 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
-}
-
-pub fn sp_lambert_w0f(z: f32) -> f32 {
-    sw0f::sw0f(z)
 }
 
 #[cfg(feature = "24bits")]
@@ -200,6 +199,10 @@ pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
 
+pub fn lambert_w0f(z: f32) -> f32 {
+    sw0f::sw0f(z)
+}
+
 #[cfg(feature = "50bits")]
 /// The secondary branch of the Lambert W function computed to 50 bits of accuracy.
 ///
@@ -226,6 +229,10 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
 pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
+}
+
+pub fn lambert_wm1f(z: f32) -> f32 {
+    swm1f::swm1f(z)
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
