@@ -1,10 +1,10 @@
 [package]
 name = "lambert_w"
-version = "0.5.2"
+version = "0.5.3"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics", "no-std::no-alloc"]
-keywords = ["lambert_w", "product_log", "omega_function"]
+keywords = ["lambert-w", "product-log", "omega-function"]
 description = "Fast and accurate evaluation of the Lambert W function by the method of T. Fukushima."
 rust-version = "1.60.0"
 license = "MIT OR Apache-2.0"

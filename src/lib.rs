@@ -9,7 +9,7 @@
 //!
 //! The functions with 50 bits of accuracy use higher degree polynomials in the rational functions, and thus more of the multiplications and additions by constants.
 //!
-//! `#![no_std]` compatible.
+//! `#![no_std]` compatible, but can optionally depend on the standard library through features for a potential performance gain.
 //!
 //! ## Examples
 //!
@@ -81,7 +81,7 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //! `std`: use the standard library to compute square roots and logarithms
 //! for a potential performance gain. When this feature is disabled the crate is `no_std`.
 //!
-//! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`](https://docs.rs/libm/latest/libm/)
+//! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]
 //! crate to compute square roots and logarithms instead of the standard library.
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
@@ -139,7 +139,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
@@ -167,7 +167,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 pub fn sp_lambert_wm1(z: f64) -> f64 {
     swm1::swm1(z)
 }
@@ -194,7 +194,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
@@ -252,7 +252,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
