@@ -26,10 +26,8 @@ fn fixed_benches(c: &mut Criterion) {
 
     for z in big_args {
         let mut group = c.benchmark_group(format!("W_0({z})"));
-        group.bench_function(&"50 bits".to_string(), |b| b.iter(|| black_box(lambert_w0(z))));
-        group.bench_function(&"24 bits".to_string(), |b| {
-            b.iter(|| black_box(sp_lambert_w0(z)))
-        });
+        group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_w0(z))));
+        group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_w0(z))));
     }
     for z in small_args {
         let mut group = c.benchmark_group(format!("W_-1({z})"));
