@@ -118,7 +118,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// let Ω = sp_lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
+/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
 /// ```
@@ -173,7 +173,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 ///
 /// let Ω = lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097838);
+/// assert_abs_diff_eq!(Ω, 0.5671432904097839);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
 /// ```
