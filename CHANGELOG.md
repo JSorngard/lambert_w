@@ -2,6 +2,11 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.5.4
+
+- Add `lambert_w0f` and `lambert_wm1f` that evaluate the 24-bit accurate
+ approximation on 32-bit floats.
+
 ## 0.5.2 and 0.5.3
 
 - Documentation improvements.
