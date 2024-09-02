@@ -23,10 +23,11 @@ and thus more of the multiplications and additions by constants.
 
 While the approximation with 24 bits of accuracy is defined on 64 bit floats in
 the paper, this crate can also evaluate it on 32 bit floats for a slight
-reduction in accuracy.
+reduction in accuracy. This reduction in accuracy has not been quantified by the
+author.
 
-`#![no_std]` compatible, but can optionally depend on the standard library through
-features for a potential performance gain.
+The crate is `no_std`, but can optionally depend on the standard
+library through features for a potential performance gain.
 
 ## Examples
 
