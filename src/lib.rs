@@ -192,7 +192,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 #[cfg(feature = "24bits")]
 /// The principal branch of the Lambert W function, computed on `f32`.
 ///
-/// Uses the same approximation as [`sp_lambert_w0`] but evaluating it on `f32`
+/// Uses the same approximation as [`sp_lambert_w0`] but computing it with `f32`
 /// results in slightly reduced accuracy.
 ///
 /// # Examples
@@ -248,9 +248,9 @@ pub fn lambert_wm1(z: f64) -> f64 {
 }
 
 #[cfg(feature = "24bits")]
-/// The secondary branch of the Lambert W function, computed on `f32`.
+/// The secondary branch of the Lambert W function, computed with `f32`.
 ///
-/// Uses the same approximation as [`sp_lambert_wm1`] but evaluating it on `f32`
+/// Uses the same approximation as [`sp_lambert_wm1`] but computing it with `f32`
 /// results in slightly reduced accuracy.
 ///
 /// # Examples
