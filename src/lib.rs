@@ -103,7 +103,7 @@ pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
 //         Rounded from 0.606_530_659_712_633_423
 const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 
-/// The Omega constant (Ω).
+/// The omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1.
 //        Rounded from 0.567_143_290_409_783_87 to the closest `f64` value.
