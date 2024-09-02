@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.5.5
+
+- Documentation improvements.
+
 ## 0.5.4
 
 - Add `lambert_w0f` and `lambert_wm1f` functions that evaluate the 24-bit accurate
