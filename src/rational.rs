@@ -45,7 +45,11 @@ pub(crate) fn rational_3_over_3(
 ///
 /// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
-pub(crate) fn rational_3f(x: f32, [n0, n1, n2, n3]: [f32; 4], [d0, d1, d2, d3]: [f32; 4]) -> f32 {
+pub(crate) fn rational_3_over_3f(
+    x: f32,
+    [n0, n1, n2, n3]: [f32; 4],
+    [d0, d1, d2, d3]: [f32; 4],
+) -> f32 {
     #[cfg(feature = "estrin")]
     {
         let x2 = x * x;
@@ -92,7 +96,7 @@ pub(crate) fn rational_4_over_3(
 ///
 /// If the `estrin` feature is enabled this uses Estrin's scheme and fused multiply-add instructions, otherwise it uses the more typical Horner's method.
 #[inline(always)]
-pub(crate) fn rational_4_3f(
+pub(crate) fn rational_4_over_3f(
     x: f32,
     [n0, n1, n2, n3, n4]: [f32; 5],
     [d0, d1, d2, d3]: [f32; 4],
