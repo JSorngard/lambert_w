@@ -216,7 +216,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 ///
 /// assert_abs_diff_eq!(Ω, 0.56714329);
 /// ```
-/// Arguments smaller than -1/e (≈ -0.36787945) result in [`NAN`](f32::NAN):
+/// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN):
 /// ```
 /// # use lambert_w::lambert_w0f;
 /// assert!(lambert_w0f(-1.0).is_nan());
@@ -274,7 +274,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 ///
 /// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 /// ```
-/// Arguments smaller than -1/e (≈ -0.36787945) or larger than 0 result in [`NAN`](f32::NAN):
+/// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN):
 /// ```
 /// # use lambert_w::lambert_wm1f;
 /// assert!(lambert_wm1f(-1.0).is_nan());
