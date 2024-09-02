@@ -214,7 +214,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 ///
 /// let Ω = lambert_w0f(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.56714326);
+/// assert_abs_diff_eq!(Ω, 0.56714329);
 /// ```
 /// Arguments smaller than -1/e (≈ -0.36787945) result in [`NAN`](f32::NAN):
 /// ```
