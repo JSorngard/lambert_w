@@ -78,7 +78,7 @@ One of the below features must be enabled:
 for a potential performance gain. When this feature is disabled the crate is `no_std`.
 
 `libm` *(enabled by default)*: if the `std` feature is disabled, this feature
-uses the [`libm`](https://docs.rs/libm/latest/libm/)
+uses the [`libm`](https://crates.io/crates/libm)
 crate to compute square roots and logarithms instead of the standard library.
 
 ## License
