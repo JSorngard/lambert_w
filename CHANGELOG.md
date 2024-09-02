@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.5.6
+
+- Correct link to `libm` crate in `README.md`.
+
 ## 0.5.5
 
 - Documentation improvements.
