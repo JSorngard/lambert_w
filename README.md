@@ -32,7 +32,7 @@ library through features for a potential performance gain.
 ## Examples
 
 Compute the value of the
-[Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the
+[omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the
 principal branch of the Lambert W function:
 
 ```rust
