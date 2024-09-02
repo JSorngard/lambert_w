@@ -108,7 +108,7 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
 #[cfg(feature = "24bits")]
-/// The principal branch of the Lambert W function computed to 24 bits of accuracy.
+/// The principal branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
 /// # Examples
 ///
@@ -135,7 +135,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 }
 
 #[cfg(feature = "24bits")]
-/// The secondary branch of the Lambert W function computed to 24 bits of accuracy.
+/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
 /// # Examples
 ///
@@ -190,10 +190,11 @@ pub fn lambert_w0(z: f64) -> f64 {
 }
 
 #[cfg(feature = "24bits")]
-/// The principal branch of the Lambert W function, computed on `f32`.
+/// The principal branch of the Lambert W function, computed with `f32`s.
 ///
-/// Uses the same approximation as [`sp_lambert_w0`] but computing it with `f32`
-/// results in slightly reduced accuracy.
+/// Uses the same approximation as [`sp_lambert_w0`] but computing it with 32 bit floats
+/// results in slightly reduced accuracy.  
+/// This accuracy reduction has not been quantified by the author.
 ///
 /// # Examples
 ///
@@ -248,10 +249,11 @@ pub fn lambert_wm1(z: f64) -> f64 {
 }
 
 #[cfg(feature = "24bits")]
-/// The secondary branch of the Lambert W function, computed with `f32`.
+/// The secondary branch of the Lambert W function, computed with `f32`s.
 ///
-/// Uses the same approximation as [`sp_lambert_wm1`] but computing it with `f32`
-/// results in slightly reduced accuracy.
+/// Uses the same approximation as [`sp_lambert_wm1`] but computing it with 32 bit floats
+/// results in slightly reduced accuracy.  
+/// This accuracy reduction has not been quantified by the author.
 ///
 /// # Examples
 ///
