@@ -715,48 +715,24 @@ mod test {
     #[test]
     fn test_lambert_wm1f() {
         assert!(lambert_wm1f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
-        assert_abs_diff_eq!(
-            lambert_wm1f(-3.578_794_411_714_423e-1),
-            -1.253493791367214,
-            epsilon = 1e-6
-        );
+        assert_abs_diff_eq!(lambert_wm1f(-3.578_794_3e-1), -1.253_493_8, epsilon = 1e-6);
         #[cfg(not(feature = "estrin"))]
-        assert_abs_diff_eq!(
-            lambert_wm1f(-2.678_794_411_714_424e-1),
-            -2.020625228775403,
-            epsilon = 1e-7
-        );
+        assert_abs_diff_eq!(lambert_wm1f(-2.678_794_3e-1), -2.020_625, epsilon = 1e-7);
         #[cfg(feature = "estrin")]
         assert_abs_diff_eq!(
             lambert_wm1f(-2.678_794_411_714_424e-1),
             -2.020625228775403,
             epsilon = 1e-6
         );
-        assert_abs_diff_eq!(lambert_wm1f(-1e-1), -3.577152063957297, epsilon = 1e-6);
-        assert_abs_diff_eq!(lambert_wm1f(-3e-2), -5.144482721515681, epsilon = 1e-9);
-        assert_abs_diff_eq!(lambert_wm1f(-1e-2), -6.472775124394005, epsilon = 1e-6);
-        assert_abs_diff_eq!(lambert_wm1f(-3e-3), -7.872521380098709, epsilon = 1e-6);
-        assert_abs_diff_eq!(lambert_wm1f(-1e-3), -9.118006470402742, epsilon = 1e-6);
-        assert_abs_diff_eq!(
-            lambert_wm1f(-3.000_000_000_000_001e-4),
-            -1.045_921_112_040_1e1,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            lambert_wm1f(-1e-4),
-            -1.166_711_453_256_636e1,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            lambert_wm1f(-3e-5),
-            -1.297_753_279_184_081e1,
-            epsilon = 1e-6
-        );
-        assert_abs_diff_eq!(
-            lambert_wm1f(-1e-5),
-            -1.416_360_081_581_018e1,
-            epsilon = 1e-6
-        );
+        assert_abs_diff_eq!(lambert_wm1f(-1e-1), -3.577_152, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-2), -5.144_482_6, epsilon = 1e-9);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-2), -6.472_775, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-3), -7.872_521_4, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-3), -9.118_007, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-4), -1.045_921_1e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-4), -1.166_711_4e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1, epsilon = 1e-6);
         assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 }
