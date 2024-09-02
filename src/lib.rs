@@ -40,9 +40,7 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
 # use approx::assert_abs_diff_eq;
 use lambert_w::lambert_wm1;
 
-let z = -f64::ln(2.0) / 2.0;
-
-let mln4 = lambert_wm1(z);
+let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
 assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 ```
