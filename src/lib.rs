@@ -291,7 +291,8 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
 mod test {
     // A lot of these tests are less stringent when the `estrin` feature flag is activated.
-    // This is because CI may not have fused multiply-add instructions, which creates numerical instabillity.
+    // This is because Estrin's scheme is less numerically stable,
+    // and CI may also not have fused multiply-add instructions to reduce the instabillity.
 
     #[cfg(feature = "50bits")]
     use super::{lambert_w0, lambert_wm1};
