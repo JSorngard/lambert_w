@@ -22,9 +22,9 @@ rand_pcg = "0.3.1"
 
 [features]
 default = ["24bits", "50bits", "libm"]
-# Enables the more accurate function versions with 50 bits of accuracy.
+# Enables the function versions with 50 bits of accuracy on 64 bit floats.
 50bits = []
-# Enables the faster function versions with 24 bits of accuracy.
+# Enables the function versions with 24 bits of accuracy on 64 bit floats, as well as the implementation on 32 bit floats.
 24bits = []
 # Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) to evaluate the polynomials in the rational functions.
 # While this results in more assembly instructions, they are mostly independent of each other, 

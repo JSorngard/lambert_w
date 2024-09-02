@@ -1,19 +1,23 @@
-//! Fast evaluation of the real valued parts of the principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
-//! using the [method of Toshio Fukushima](https://www.researchgate.net/publication/346309410_Precise_anfast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation)
-//! to either 24 or 50 bits of accuracy.
+//! Fast and accurate evaluation of the real valued parts of the principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
+//! with the [method of Toshio Fukushima][1].
 //!
 //! This method works by splitting the domain of the function into subdomains, and on each subdomain it uses a rational function
 //! evaluated on a simple transformation of the input to describe the function.  
 //! It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm
 //! and then a series of multiplications and additions by fixed constants and finished with a division.
 //!
-//! The functions with 50 bits of accuracy use higher degree polynomials in the rational functions, and thus more of the multiplications and additions by constants.
+//! The crate provides two approximations of each branch, one with 50 bits of accuracy and one with 24 bits.
+//! The one with 50 bits of accuracy uses higher degree polynomials in the rational functions compared to the one with only 24 bits,
+//! and thus more of the multiplications and additions by constants.
+//!
+//! While the approximation with 24 bits of accuracy is defined on 64 bit floats in the paper,
+//! this crate can also evaluate it on 32 bit floats for a slight reduction in accuracy.
 //!
 //! `#![no_std]` compatible, but can optionally depend on the standard library through features for a potential performance gain.
 //!
 //! ## Examples
 //!
-//! Compute the value of the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function to 50 bits of accuracy:
+//! Compute the value of the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
@@ -27,36 +31,19 @@ assert_abs_diff_eq!(Ω, 0.5671432904097838);
 ```
 "##
 )]
-//!
-//! or to only 24 bits of accuracy, but with faster execution time:
+//! Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 #![cfg_attr(
-    feature = "24bits",
+    feature = "50bits",
     doc = r##"
 ```
 # use approx::assert_abs_diff_eq;
-use lambert_w::sp_lambert_w0;
-
-let Ω = sp_lambert_w0(1.0);
-
-assert_abs_diff_eq!(Ω, 0.5671432904097838, epsilon = 1e-7);
-```
-"##
-)]
-//! Evaluate the secondary branch of the Lambert W function at -ln(2)/2 to 50 and 24 bits of accuracy:
-#![cfg_attr(
-    all(feature = "50bits", feature = "24bits"),
-    doc = r##"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::{lambert_wm1, sp_lambert_wm1};
+use lambert_w::lambert_wm1;
 
 let z = -f64::ln(2.0) / 2.0;
 
-let mln4_50b = lambert_wm1(z);
-let mln4_24b = sp_lambert_wm1(z);
+let mln4 = lambert_wm1(z);
 
-assert_abs_diff_eq!(mln4_50b, -f64::ln(4.0));
-assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
+assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 ```
 "##
 )]
@@ -65,9 +52,10 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //!
 //! ## Features
 //!
-//! `50bits` *(enabled by default)*: enables the more accurate function versions with 50 bits of accuracy.
+//! `50bits` *(enabled by default)*: enables the function versions with 50 bits of accuracy on 64 bit floats.
 //!
-//! `24bits` *(enabled by default)*: enables the faster function versions with 24 bits of accuracy.
+//! `24bits` *(enabled by default)*: enables the function versions with 24 bits of accuracy on 64 bit floats,
+//! as well as the implementation on 32 bit floats.
 //!
 //! You can disable one of the above features to potentially save a little bit of binary size.
 //!
@@ -83,6 +71,8 @@ assert_abs_diff_eq!(mln4_24b, -f64::ln(4.0), epsilon = 1e-9);
 //!
 //! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]
 //! crate to compute square roots and logarithms instead of the standard library.
+//!
+//! [1]: https://www.researchgate.net/publication/346309410_Precise_anfast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -202,7 +192,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 #[cfg(feature = "24bits")]
 /// The principal branch of the Lambert W function, computed on `f32`.
 ///
-/// Uses the same approximations as [`sp_lambert_w0`] but using `f32`
+/// Uses the same 24-bit accurate approximations as [`sp_lambert_w0`] but using `f32`
 /// results in slightly reduced accuracy.
 ///
 /// # Examples
@@ -260,7 +250,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 #[cfg(feature = "24bits")]
 /// The secondary branch of the Lambert W function, computed on `f32`.
 ///
-/// Uses the same approximations as [`sp_lambert_wm1`] but using `f32`
+/// Uses the same 24-bit accurate approximations as [`sp_lambert_wm1`] but using `f32`
 /// results in slightly reduced accuracy.
 ///
 /// # Examples
