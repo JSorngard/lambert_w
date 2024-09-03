@@ -3,15 +3,14 @@ use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use lambert_w::{
     lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
 };
-use rand::{Rng, SeedableRng};
-use rand_pcg::Pcg32;
+use rand::{Rng, SeedableRng, rngs::StdRng};
 use std::time::Instant;
 
 const E32: f32 = E as f32;
 
 fn random_benches(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs");
-    let mut rng = Pcg32::seed_from_u64(0);
+    let mut rng = StdRng::seed_from_u64(0);
     group.bench_function("W_0 50 bits", |b| {
         b.iter_custom(|iters| {
             let datas: Vec<f64> = (0..iters)
