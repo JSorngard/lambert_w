@@ -29,7 +29,7 @@ This file contains the changes to the crate since version 0.1.1.
  `libm` by disabling default features and enabling the `std` feature. This can
  result in a performance gain.
 
-## 0.5.0 
+## 0.5.0
 
 Yanked because 0.5.1 adds a default feature that hides previously included
 behavior.
