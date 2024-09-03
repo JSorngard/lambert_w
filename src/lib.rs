@@ -106,7 +106,9 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 /// The omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1.
-//        Rounded from 0.567_143_290_409_783_87 to the closest `f64` value.
+///
+/// Has been rounded to the closest available `f64` value.
+//        Rounded from 0.567_143_290_409_783_87
 pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
 #[cfg(feature = "24bits")]
