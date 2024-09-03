@@ -54,34 +54,6 @@ let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 ```
 
-## Features
-
-`50bits` *(enabled by default)*: enables the function versions
-with 50 bits of accuracy on 64 bit floats.
-
-`24bits` *(enabled by default)*: enables the function versions
-with 24 bits of accuracy on 64 bit floats,
-as well as the implementation on 32 bit floats.
-
-You can disable one of the above features to potentially save a little bit
-of binary size.
-
-`estrin`: uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme)
-to evaluate the polynomials in the rational functions.
-While this results in more assembly instructions, they are mostly independent
-of each other, and this increases instruction level parallelism on modern
-hardware for a total performance gain. May result in slight numerical instability,
-which can be reduced if the target CPU has fused multiply-add instructions.
-
-One of the below features must be enabled:
-
-`std`: use the standard library to compute square roots and logarithms
-for a potential performance gain. When this feature is disabled the crate is `no_std`.
-
-`libm` *(enabled by default)*: if the `std` feature is disabled, this feature
-uses the [`libm`](https://crates.io/crates/libm)
-crate to compute square roots and logarithms instead of the standard library.
-
 ## License
 
 Licensed under either of
