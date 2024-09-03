@@ -1,4 +1,4 @@
-use core::f64::consts::E;
+use core::{f32::consts::E as E32, f64::consts::E as E64, ops::RangeBounds, time::Duration};
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use lambert_w::{
     lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
@@ -8,12 +8,7 @@ use rand::{
     rngs::SmallRng,
     Rng, SeedableRng,
 };
-use std::{
-    ops::RangeBounds,
-    time::{Duration, Instant},
-};
-
-const E32: f32 = core::f32::consts::E;
+use std::time::Instant;
 
 fn init_vec_of_rng_and_bench<R, T, F>(f: F, range: R, iters: u64, rng: &mut SmallRng) -> Duration
 where
@@ -36,12 +31,12 @@ fn random_benches(c: &mut Criterion) {
     let mut rng = SmallRng::seed_from_u64(0b1010101010101);
     group.bench_function("W_0 50 bits", |b| {
         b.iter_custom(|iters| {
-            init_vec_of_rng_and_bench(lambert_w0, -1.0 / E..f64::MAX, iters, &mut rng)
+            init_vec_of_rng_and_bench(lambert_w0, -1.0 / E64..f64::MAX, iters, &mut rng)
         })
     });
     group.bench_function("W_0 24 bits", |b| {
         b.iter_custom(|iters| {
-            init_vec_of_rng_and_bench(sp_lambert_w0, -1.0 / E..f64::MAX, iters, &mut rng)
+            init_vec_of_rng_and_bench(sp_lambert_w0, -1.0 / E64..f64::MAX, iters, &mut rng)
         })
     });
     group.bench_function("W_0 24 bits on f32", |b| {
@@ -51,12 +46,12 @@ fn random_benches(c: &mut Criterion) {
     });
     group.bench_function("W_-1 50 bits", |b| {
         b.iter_custom(|iters| {
-            init_vec_of_rng_and_bench(lambert_wm1, -1.0 / E..=0.0, iters, &mut rng)
+            init_vec_of_rng_and_bench(lambert_wm1, -1.0 / E64..=0.0, iters, &mut rng)
         })
     });
     group.bench_function("W_-1 24 bits", |b| {
         b.iter_custom(|iters| {
-            init_vec_of_rng_and_bench(sp_lambert_wm1, -1.0 / E..=0.0, iters, &mut rng)
+            init_vec_of_rng_and_bench(sp_lambert_wm1, -1.0 / E64..=0.0, iters, &mut rng)
         })
     });
     group.bench_function("W_-1 24 bits on f32", |b| {
