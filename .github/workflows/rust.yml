@@ -71,7 +71,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
     - name: bench
-      run: cargo bench random && cargo bench random --no-default-features -F std,24bits,50bits && cargo bench random --no-default-features -F std,24bits,50bits,estrin
+      run: cargo bench random
 
   coverage:
     runs-on: ubuntu-latest
