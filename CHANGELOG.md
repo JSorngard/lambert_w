@@ -31,7 +31,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 0.5.0
 
-Yanked because 0.5.1 adds a default feature that hides previously included
+⚠️ Yanked because 0.5.1 adds a default feature that hides previously included
 behavior.
 Therefore upgrading from 0.5.0 to 0.5.1 was a breaking change.
 By yanking this version the breaking change happens when upgrading from
