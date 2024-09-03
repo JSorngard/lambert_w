@@ -17,7 +17,7 @@ libm = { version = "0.2.8", optional = true }
 [dev-dependencies]
 approx = "0.5.1"
 criterion = { version = "0.5.1", features = ["html_reports"] }
-rand = { version = "0.8.5", features = ["small_rng"] }
+rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 
 [features]
 default = ["24bits", "50bits", "libm"]
