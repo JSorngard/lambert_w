@@ -24,8 +24,8 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, Prng>(
     range: R,
     rng: &mut Prng,
 ) where
-    R: RangeBounds<T> + Clone + SampleRange<T>,
-    T: SampleUniform + Copy + PartialOrd,
+    R: Clone + RangeBounds<T> + SampleRange<T>,
+    T: Copy + PartialOrd + SampleUniform,
     F: Fn(T) -> T,
     Prng: Rng,
 {
