@@ -27,7 +27,7 @@ the paper, this crate can also evaluate it on 32 bit floats for a slight
 reduction in accuracy. This reduction in accuracy has not been quantified by the
 author of this crate.
 
-The crate is `no_std`, but can optionally depend on the standard
+The crate is `no_std` compatible, but can optionally depend on the standard
 library through features for a potential performance gain.
 
 ## Examples
