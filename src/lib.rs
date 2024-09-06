@@ -71,10 +71,10 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //!
 //! ## Features
 //!
-//! `50bits` *(enabled by default)*: enables the function versions with 50 bits of accuracy on 64 bit floats.
+//! `50bits` *(enabled by default)*: enables the function versions with 50 bits of accuracy on 64-bit floats.
 //!
-//! `24bits` *(enabled by default)*: enables the function versions with 24 bits of accuracy on 64 bit floats,
-//! as well as the implementation on 32 bit floats.
+//! `24bits` *(enabled by default)*: enables the function versions with 24 bits of accuracy on 64-bit floats,
+//! as well as the implementation on 32-bit floats.
 //!
 //! You can disable one of the above features to potentially save a little bit of binary size.
 //!
