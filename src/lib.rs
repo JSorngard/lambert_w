@@ -10,9 +10,10 @@
 //! The one with 50 bits of accuracy uses higher degree polynomials in the rational functions compared to the one with only 24 bits,
 //! and thus more of the multiplications and additions by constants.
 //!
-//! While the approximation with 24 bits of accuracy is defined on 64 bit floats in the paper,
-//! this crate can also evaluate it on 32 bit floats for a slight reduction in accuracy.
-//! This reduction in accuracy has not been quantified by the author of this crate.
+//! This crate can also evaluate the approximation with 24 bits of accuracy on 32
+//! bit floats, even though it is defined on 64 bit floats in the paper.
+//! This may result in a reduction in the accuracy to less than 24 bits,
+//! but this reduction has not been quantified by the author of this crate.
 //!
 //! The crate is `no_std` compatible, but can optionally depend on the standard library through features for a potential performance gain.
 //!
