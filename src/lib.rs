@@ -19,7 +19,7 @@
 //!
 //! ## Examples
 //!
-//! Compute the value of the [Omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
+//! Compute the value of the [omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
