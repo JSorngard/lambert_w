@@ -86,7 +86,7 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! One of the below features must be enabled:
 //!
 //! `std`: use the standard library to compute square roots and logarithms
-//! for a potential performance gain. When this feature is disabled the crate is `no_std`.
+//! for a potential performance gain. When this feature is disabled the crate is `no_std` compatible.
 //!
 //! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]
 //! crate to compute square roots and logarithms instead of the standard library.
