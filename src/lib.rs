@@ -10,8 +10,8 @@
 //! The one with 50 bits of accuracy uses higher degree polynomials in the rational functions compared to the one with only 24 bits,
 //! and thus more of the multiplications and additions by constants.
 //!
-//! This crate can also evaluate the approximation with 24 bits of accuracy on 32
-//! bit floats, even though it is defined on 64 bit floats in the paper.
+//! This crate can also evaluate the approximation with 24 bits of accuracy on
+//! 32-bit floats, even though it is defined on 64-bit floats in the paper.
 //! This may result in a reduction in the accuracy to less than 24 bits,
 //! but this reduction has not been quantified by the author of this crate.
 //!
@@ -47,6 +47,25 @@ assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 ```
 "##
 )]
+//!
+//! Do it on 32-bit floats:
+//!
+#![cfg_attr(
+    feature = "24bits",
+    doc = r##"
+```
+# use approx::assert_abs_diff_eq;
+use lambert_w::{lambert_w0f, lambert_wm1f};
+
+let Ω = lambert_w0f(1.0);
+let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
+
+assert_abs_diff_eq!(Ω, 0.56714329);
+assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+```
+"##
+)]
+//!
 //! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
 //! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon.
 //!

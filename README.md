@@ -1,8 +1,8 @@
 # lambert_w
 
-[![Static Badge](https://img.shields.io/badge/github-lambert__w-8da0cb?logo=github)](https://github.com/JSorngard/lambert_w)
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
 [![docs.rs](https://img.shields.io/docsrs/lambert_w?logo=docs.rs)](https://docs.rs/lambert_w/latest/lambert_w/)
+[![Static Badge](https://img.shields.io/badge/github-lambert__w-8da0cb?logo=github)](https://github.com/JSorngard/lambert_w)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/JSorngard/lambert_w/rust.yml?logo=github&label=CI)](https://github.com/JSorngard/lambert_w/actions/workflows/rust.yml)
 [![codecov](https://codecov.io/gh/JSorngard/lambert_w/graph/badge.svg?token=F61FO63ZKW)](https://codecov.io/gh/JSorngard/lambert_w)
 
@@ -22,8 +22,8 @@ accuracy and one with 24 bits. The one with 50 bits of accuracy uses higher
 degree polynomials in the rational functions compared to the one with only 24 bits,
 and thus more of the multiplications and additions by constants.
 
-This crate can also evaluate the approximation with 24 bits of accuracy on 32
-bit floats, even though it is defined on 64 bit floats in the paper.
+This crate can also evaluate the approximation with 24 bits of accuracy on
+32-bit floats, even though it is defined on 64-bit floats in the paper.
 This may result in a reduction in the accuracy to less than 24 bits,
 but this reduction has not been quantified by the author of this crate.
 
@@ -52,6 +52,18 @@ use lambert_w::lambert_wm1;
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
 assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+```
+
+Do it on 32-bit floats:
+
+```rust
+use lambert_w::{lambert_w0f, lambert_wm1f};
+
+let Ω = lambert_w0f(1.0);
+let mln4 = lambert_wm1(-f32::ln(2.0) / 2.0);
+
+assert_abs_diff_eq!(Ω, 0.56714329);
+assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 ```
 
 ## License
