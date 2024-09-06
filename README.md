@@ -24,8 +24,8 @@ and thus more of the multiplications and additions by constants.
 
 This crate can also evaluate the approximation with 24 bits of accuracy on 32
 bit floats, even though it is defined on 64 bit floats in the paper.
-This may result in a reduction in the accuracy to less than 24 bits, but this reduction
-has not been quantified by the author of this crate.
+This may result in a reduction in the accuracy to less than 24 bits,
+but this reduction has not been quantified by the author of this crate.
 
 The crate is `no_std` compatible, but can optionally depend on the standard
 library through features for a potential performance gain.
