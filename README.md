@@ -64,7 +64,7 @@ Do it on 32-bit floats:
 use lambert_w::{lambert_w0f, lambert_wm1f};
 
 let Ω = lambert_w0f(1.0);
-let mln4 = lambert_wm1(-f32::ln(2.0) / 2.0);
+let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
 
 assert_abs_diff_eq!(Ω, 0.56714329);
 assert_abs_diff_eq!(mln4, -f32::ln(4.0));
