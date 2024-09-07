@@ -17,7 +17,7 @@
 //!
 //! The crate is `no_std` compatible, but can optionally depend on the standard library through features for a potential performance gain.
 //!
-//! The API of the crate is stable and the only reason it's not at version `1.0.0` is because it's dependencies are not.
+//! The API of the crate is stable and the only reason it's not at version `1.0.0` is because its dependencies are not.
 //!
 //! ## Examples
 //!
