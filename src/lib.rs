@@ -17,6 +17,8 @@
 //!
 //! The crate is `no_std` compatible, but can optionally depend on the standard library through features for a potential performance gain.
 //!
+//! The API of the crate is stable and the only reason it's not at version `1.0.0` is because its dependencies are not.
+//!
 //! ## Examples
 //!
 //! Compute the value of the [omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
@@ -752,6 +754,7 @@ mod test {
         assert_abs_diff_eq!(lambert_wm1f(-1e-4), -1.166_711_4e1, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1, epsilon = 1e-6);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-20), -49.962_986);
         assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 }
