@@ -30,6 +30,10 @@ but this reduction has not been quantified by the author of this crate.
 The crate is `no_std` compatible, but can optionally depend on the standard
 library through features for a potential performance gain.
 
+The API of the crate is stable and the only
+reason it's not `v1.0.0` is because it's
+dependencies are not.
+
 ## Examples
 
 Compute the value of the
