@@ -1,7 +1,13 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use lambert_w::{
-    lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
-};
+#[cfg(feature = "50bits")]
+use lambert_w::{lambert_w0, lambert_wm1};
+#[cfg(feature = "24bits")]
+use lambert_w::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
+
+#[cfg(all(not(feature = "24bits"), not(feature = "50bits")))]
+compile_error!("at least one of the features '24bits' and '50bits' must be active to benchmark anything.");
+#[cfg(all(not(feature = "std"), not(feature = "libm")))]
+compile_error!("at least one of the features 'std' and 'libm' must be active to benchmark anything.");
 
 fn fixed_benches(c: &mut Criterion) {
     let big_args = [
@@ -22,22 +28,32 @@ fn fixed_benches(c: &mut Criterion) {
 
     for z in big_args {
         let mut group = c.benchmark_group(format!("fixed W_0 at {z}"));
+        #[cfg(feature = "50bits")]
         group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_w0(z))));
+        #[cfg(feature = "24bits")]
         group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_w0(z))));
-        let z32 = z as f32;
-        if z32 < f32::INFINITY {
-            group.bench_function("24 bits on f32", |b| b.iter(|| black_box(lambert_w0f(z32))));
+        #[cfg(feature = "24bits")]
+        {
+            let z32 = z as f32;
+            if z32 < f32::INFINITY {
+                group.bench_function("24 bits on f32", |b| b.iter(|| black_box(lambert_w0f(z32))));
+            }
         }
     }
     for z in small_args {
         let mut group = c.benchmark_group(format!("fixed W_-1 at {z}"));
+        #[cfg(feature = "50bits")]
         group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_wm1(z))));
+        #[cfg(feature = "24bits")]
         group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_wm1(z))));
-        let z32 = z as f32;
-        if z32 < 0.0 {
-            group.bench_function("24 bits on f32", |b| {
-                b.iter(|| black_box(lambert_wm1f(z32)))
-            });
+        #[cfg(feature = "24bits")]
+        {
+            let z32 = z as f32;
+            if z32 < 0.0 {
+                group.bench_function("24 bits on f32", |b| {
+                    b.iter(|| black_box(lambert_wm1f(z32)))
+                });
+            }
         }
     }
 }
