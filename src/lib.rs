@@ -754,7 +754,7 @@ mod test {
         assert_abs_diff_eq!(lambert_wm1f(-1e-4), -1.166_711_4e1, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1, epsilon = 1e-6);
-        assert_abs_diff_eq!(lambert_wm1f(-1e-20), -49.962984277);
+        assert_abs_diff_eq!(lambert_wm1f(-1e-20), -49.962_986);
         assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 }
