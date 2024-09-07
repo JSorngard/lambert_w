@@ -9,6 +9,7 @@ description = "Fast and accurate evaluation of the Lambert W function by the met
 rust-version = "1.60.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
+documentation = "https://docs.rs/lambert_w"
 
 [dependencies]
 fast_polynomial = { version = "0.3.0", default-features = false, optional = true }
