@@ -18,9 +18,13 @@ use rand::{
 use std::time::Instant;
 
 #[cfg(all(not(feature = "24bits"), not(feature = "50bits")))]
-compile_error!("at least one of the features '24bits' and '50bits' must be active to benchmark anything.");
+compile_error!(
+    "at least one of the features '24bits' and '50bits' must be active to benchmark anything."
+);
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-compile_error!("at least one of the features 'std' and 'libm' must be active to benchmark anything.");
+compile_error!(
+    "at least one of the features 'std' and 'libm' must be active to benchmark anything."
+);
 
 /// Generates a vec of random values in the given range and benchmarks the given function
 /// on those values.
