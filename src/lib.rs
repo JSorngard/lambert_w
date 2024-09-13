@@ -22,7 +22,7 @@
 //! ## Examples
 //!
 //! Compute the value of the [omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
-//! 
+//!
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
@@ -36,9 +36,9 @@ assert_abs_diff_eq!(Ω, 0.5671432904097839);
 ```
 "##
 )]
-//! 
+//!
 //! Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
-//! 
+//!
 #![cfg_attr(
     feature = "50bits",
     doc = r##"
@@ -144,7 +144,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// # Examples
 ///
 /// Basic usage:
-/// 
+///
 /// ```
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::sp_lambert_w0;
@@ -153,9 +153,9 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
 /// ```
-/// 
+///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
-/// 
+///
 /// ```
 /// # use lambert_w::sp_lambert_w0;
 /// assert!(sp_lambert_w0(-1.0).is_nan());
@@ -174,7 +174,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// # Examples
 ///
 /// Basic usage:
-/// 
+///
 /// ```
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::sp_lambert_wm1;
@@ -183,9 +183,9 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
 /// ```
-/// 
+///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
-/// 
+///
 /// ```
 /// # use lambert_w::sp_lambert_wm1;
 /// assert!(sp_lambert_wm1(-1.0).is_nan());
@@ -205,7 +205,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// # Examples
 ///
 /// Basic usage:
-/// 
+///
 /// ```
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_w0;
@@ -214,9 +214,9 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 ///
 /// assert_abs_diff_eq!(Ω, 0.5671432904097839);
 /// ```
-/// 
+///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
-/// 
+///
 /// ```
 /// # use lambert_w::lambert_w0;
 /// assert!(lambert_w0(-1.0).is_nan());
@@ -239,7 +239,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// # Examples
 ///
 /// Basic usage:
-/// 
+///
 /// ```
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_w0f;
@@ -248,9 +248,9 @@ pub fn lambert_w0(z: f64) -> f64 {
 ///
 /// assert_abs_diff_eq!(Ω, 0.56714329);
 /// ```
-/// 
+///
 /// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN):
-/// 
+///
 /// ```
 /// # use lambert_w::lambert_w0f;
 /// assert!(lambert_w0f(-1.0).is_nan());
@@ -269,7 +269,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 /// # Examples
 ///
 /// Basic usage:
-/// 
+///
 /// ```
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_wm1;
@@ -278,9 +278,9 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-14);
 /// ```
-/// 
+///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
-/// 
+///
 /// ```
 /// # use lambert_w::lambert_wm1;
 /// assert!(lambert_wm1(-1.0).is_nan());
@@ -304,7 +304,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// # Examples
 ///
 /// Basic usage:
-/// 
+///
 /// ```
 /// # use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_wm1f;
@@ -313,9 +313,9 @@ pub fn lambert_wm1(z: f64) -> f64 {
 ///
 /// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 /// ```
-/// 
+///
 /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN):
-/// 
+///
 /// ```
 /// # use lambert_w::lambert_wm1f;
 /// assert!(lambert_wm1f(-1.0).is_nan());
