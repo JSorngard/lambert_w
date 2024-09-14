@@ -100,6 +100,8 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
+#![forbid(unsafe_code)]
+
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` feature flags must be enabled");
 
