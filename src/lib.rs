@@ -88,7 +88,7 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
-//! `trait`: expose the [`LambertW0`] and [`LambertWm1`] traits and their implementations.
+//! `traits`: expose the [`LambertW0`] and [`LambertWm1`] traits and their implementations.
 //!
 //! One of the below features must be enabled:
 //!
@@ -121,6 +121,11 @@ mod sw0f;
 mod swm1;
 #[cfg(feature = "24bits")]
 mod swm1f;
+#[cfg(feature = "traits")]
+mod traits;
+
+#[cfg(feature = "traits")]
+pub use traits::{LambertW0, LambertWm1};
 
 /// The negative inverse of e (-1/e).
 ///
@@ -331,61 +336,6 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
-}
-
-#[cfg(feature = "trait")]
-pub use traits::{LambertW0, LambertWm1};
-#[cfg(feature = "trait")]
-mod traits {
-    #[cfg(feature = "50bits")]
-    use super::{lambert_w0, lambert_wm1};
-    #[cfg(feature = "24bits")]
-    use super::{lambert_w0f, lambert_wm1f};
-    use num_traits::Float;
-
-    /// Compute the principal branch of the Lambert W function.
-    pub trait LambertW0: Float {
-        /// The principal branch of the Lambert W funciton.
-        fn lambert_w0(self) -> Self;
-    }
-
-    /// Compute the secondary branch of the Lambert W function.
-    pub trait LambertWm1: Float {
-        /// The secondary branch of the Lambert W funciton.
-        fn lambert_wm1(self) -> Self;
-    }
-
-    #[cfg(feature = "24bits")]
-    impl LambertW0 for f32 {
-        #[inline]
-        fn lambert_w0(self) -> Self {
-            lambert_w0f(self)
-        }
-    }
-
-    #[cfg(feature = "24bits")]
-    impl LambertWm1 for f32 {
-        #[inline]
-        fn lambert_wm1(self) -> Self {
-            lambert_wm1f(self)
-        }
-    }
-
-    #[cfg(feature = "50bits")]
-    impl LambertW0 for f64 {
-        #[inline]
-        fn lambert_w0(self) -> Self {
-            lambert_w0(self)
-        }
-    }
-
-    #[cfg(feature = "50bits")]
-    impl LambertWm1 for f64 {
-        #[inline]
-        fn lambert_wm1(self) -> Self {
-            lambert_wm1(self)
-        }
-    }
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
@@ -841,7 +791,7 @@ mod test {
         assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 
-    #[cfg(all(feature = "trait", feature = "50bits"))]
+    #[cfg(all(feature = "traits", feature = "50bits"))]
     #[test]
     fn test_lambert_w0_trait_50() {
         use super::LambertW0;
@@ -851,14 +801,14 @@ mod test {
         );
     }
 
-    #[cfg(all(feature = "trait", feature = "24bits"))]
+    #[cfg(all(feature = "traits", feature = "24bits"))]
     #[test]
     fn test_lambert_w0_trait_24() {
         use super::LambertW0;
         assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1, epsilon = 1e-7);
     }
 
-    #[cfg(all(feature = "trait", feature = "50bits"))]
+    #[cfg(all(feature = "traits", feature = "50bits"))]
     #[test]
     fn test_lambert_wm1_trait_50() {
         use super::LambertWm1;
@@ -869,7 +819,7 @@ mod test {
         );
     }
 
-    #[cfg(all(feature = "trait", feature = "24bits"))]
+    #[cfg(all(feature = "traits", feature = "24bits"))]
     #[test]
     fn test_lambert_wm1_trait_24() {
         use super::LambertWm1;
