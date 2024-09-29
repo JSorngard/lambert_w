@@ -1,7 +1,3 @@
-#[cfg(feature = "50bits")]
-use super::{lambert_w0, lambert_wm1};
-#[cfg(feature = "24bits")]
-use super::{lambert_w0f, lambert_wm1f};
 use num_traits::Float;
 
 /// Compute the principal branch of the Lambert W function.
@@ -20,7 +16,7 @@ pub trait LambertWm1: Float {
 impl LambertW0 for f32 {
     #[inline]
     fn lambert_w0(self) -> Self {
-        lambert_w0f(self)
+        super::lambert_w0f(self)
     }
 }
 
@@ -28,7 +24,7 @@ impl LambertW0 for f32 {
 impl LambertWm1 for f32 {
     #[inline]
     fn lambert_wm1(self) -> Self {
-        lambert_wm1f(self)
+        super::lambert_wm1f(self)
     }
 }
 
@@ -36,7 +32,7 @@ impl LambertWm1 for f32 {
 impl LambertW0 for f64 {
     #[inline]
     fn lambert_w0(self) -> Self {
-        lambert_w0(self)
+        super::lambert_w0(self)
     }
 }
 
@@ -44,6 +40,6 @@ impl LambertW0 for f64 {
 impl LambertWm1 for f64 {
     #[inline]
     fn lambert_wm1(self) -> Self {
-        lambert_wm1(self)
+        super::lambert_wm1(self)
     }
 }
