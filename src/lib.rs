@@ -337,10 +337,10 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 pub use r#trait::{LambertW0, LambertWm1};
 #[cfg(feature = "trait")]
 mod r#trait {
-    #[cfg(feature = "24bits")]
-    use super::{lambert_w0f, lambert_wm1f};
     #[cfg(feature = "50bits")]
     use super::{lambert_w0, lambert_wm1};
+    #[cfg(feature = "24bits")]
+    use super::{lambert_w0f, lambert_wm1f};
     use num_traits::Float;
 
     pub trait LambertW0: Float {
