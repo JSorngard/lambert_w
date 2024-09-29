@@ -346,23 +346,11 @@ mod r#trait {
     pub trait LambertW0: Float {
         /// The principal branch of the Lambert W funciton.
         fn lambert_w0(&self) -> Self;
-        /// The derivative of the principal branch of the Lambert W function.
-        fn d_lambert_w0(&self) -> Self {
-            let w = self.lambert_w0();
-            let one = Self::one();
-            one / ((one + w) * w.exp())
-        }
     }
 
     pub trait LambertWm1: Float {
         /// The secondary branch of the Lambert W funciton.
         fn lambert_wm1(&self) -> Self;
-        /// The derivative of the secondary branch of the Lambert W function.
-        fn d_lambert_wm1(&self) -> Self {
-            let w = self.lambert_wm1();
-            let one = Self::one();
-            one / ((one + w) * w.exp())
-        }
     }
 
     #[cfg(feature = "24bits")]
