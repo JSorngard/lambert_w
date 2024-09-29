@@ -47,7 +47,7 @@ impl LambertWm1 for f64 {
 #[cfg(test)]
 mod test {
     use approx::assert_abs_diff_eq;
-    
+
     #[cfg(all(feature = "traits", feature = "50bits"))]
     #[test]
     fn test_lambert_w0_trait_50() {
