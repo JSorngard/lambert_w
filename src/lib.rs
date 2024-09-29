@@ -88,7 +88,7 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
-//! `trait`: expose the [`LambertW`] trait and its implementations.
+//! `trait`: expose the [`LambertW0`] and [`LambertWm1`] traits and their implementations.
 //!
 //! One of the below features must be enabled:
 //!
@@ -334,20 +334,22 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 }
 
 #[cfg(feature = "trait")]
-pub use r#trait::{LambertW0, LambertWm1};
+pub use traits::{LambertW0, LambertWm1};
 #[cfg(feature = "trait")]
-mod r#trait {
+mod traits {
     #[cfg(feature = "50bits")]
     use super::{lambert_w0, lambert_wm1};
     #[cfg(feature = "24bits")]
     use super::{lambert_w0f, lambert_wm1f};
     use num_traits::Float;
 
+    /// Compute the principal branch of the Lambert W function.
     pub trait LambertW0: Float {
         /// The principal branch of the Lambert W funciton.
         fn lambert_w0(self) -> Self;
     }
 
+    /// Compute the secondary branch of the Lambert W function.
     pub trait LambertWm1: Float {
         /// The secondary branch of the Lambert W funciton.
         fn lambert_wm1(self) -> Self;
