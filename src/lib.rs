@@ -88,6 +88,8 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
+//! `trait`: expose the [`LambertW`] trait and its implementations.
+//!
 //! One of the below features must be enabled:
 //!
 //! `std`: use the standard library to compute square roots and logarithms
@@ -329,6 +331,67 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
+}
+
+#[cfg(feature = "trait")]
+pub use r#trait::{LambertW0, LambertWm1};
+#[cfg(feature = "trait")]
+mod r#trait {
+    #[cfg(feature = "24bits")]
+    use super::{lambert_w0f, lambert_wm1f};
+    #[cfg(feature = "50bits")]
+    use super::{lambert_w0, lambert_wm1};
+    use num_traits::Float;
+
+    pub trait LambertW0: Float {
+        /// The principal branch of the Lambert W funciton.
+        fn lambert_w0(&self) -> Self;
+        /// The derivative of the principal branch of the Lambert W function.
+        fn d_lambert_w0(&self) -> Self {
+            let w = self.lambert_w0();
+            let one = Self::one();
+            one / ((one + w) * w.exp())
+        }
+    }
+
+    pub trait LambertWm1: Float {
+        /// The secondary branch of the Lambert W funciton.
+        fn lambert_wm1(&self) -> Self;
+        /// The derivative of the secondary branch of the Lambert W function.
+        fn d_lambert_wm1(&self) -> Self {
+            let w = self.lambert_wm1();
+            let one = Self::one();
+            one / ((one + w) * w.exp())
+        }
+    }
+
+    #[cfg(feature = "24bits")]
+    impl LambertW0 for f32 {
+        fn lambert_w0(&self) -> Self {
+            lambert_w0f(*self)
+        }
+    }
+
+    #[cfg(feature = "24bits")]
+    impl LambertWm1 for f32 {
+        fn lambert_wm1(&self) -> Self {
+            lambert_wm1f(*self)
+        }
+    }
+
+    #[cfg(feature = "50bits")]
+    impl LambertW0 for f64 {
+        fn lambert_w0(&self) -> Self {
+            lambert_w0(*self)
+        }
+    }
+
+    #[cfg(feature = "50bits")]
+    impl LambertWm1 for f64 {
+        fn lambert_wm1(&self) -> Self {
+            lambert_wm1(*self)
+        }
+    }
 }
 
 #[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
