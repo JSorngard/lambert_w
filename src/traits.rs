@@ -1,4 +1,3 @@
-
 #[cfg(feature = "50bits")]
 use super::{lambert_w0, lambert_wm1};
 #[cfg(feature = "24bits")]
