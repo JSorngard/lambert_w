@@ -1,4 +1,4 @@
-/// Compute the principal branch of the Lambert W function.
+/// Compute principal and secondary branches of the Lambert W function.
 pub trait LambertW {
     /// The principal branch of the Lambert W funciton.
     fn lambert_w0(self) -> Self;
