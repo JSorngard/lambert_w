@@ -71,8 +71,24 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 "##
 )]
 //!
-//! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
-//! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon.
+//! The implementation can handle massive inputs just as well:
+//!
+#![cfg_attr(
+    feature = "50bits",
+    doc = r#"
+```
+# use approx::assert_relative_eq;
+use lambert_w::lambert_w0;
+
+let big = lambert_w0(f64::MAX);
+
+assert_relative_eq!(big, 703.2270331047702, max_relative = 1e-15);
+```
+"#
+)]
+//!
+//! The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and are used in the documentation examples of this crate.
+//! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon or relative difference.
 //!
 //! ## Features
 //!
