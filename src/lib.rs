@@ -88,7 +88,7 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
-//! `traits`: expose the [`LambertW0`] and [`LambertWm1`] traits and their implementations.
+//! `traits`: expose the [`LambertW`] trait and its implementations.
 //!
 //! One of the below features must be enabled:
 //!
