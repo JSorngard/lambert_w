@@ -70,6 +70,16 @@ assert_abs_diff_eq!(Ω, 0.56714329);
 assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 ```
 
+The implementation can handle massive inputs just as well:
+
+```rust
+use lambert_w::lambert_w0;
+
+let big = lambert_w0(f64::MAX);
+
+assert_relative_eq!(big, 703.2270331047702, max_relative = 1e-15);
+```
+
 ## License
 
 Licensed under either of
