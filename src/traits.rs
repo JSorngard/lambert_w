@@ -1,13 +1,11 @@
-use num_traits::Float;
-
 /// Compute the principal branch of the Lambert W function.
-pub trait LambertW0: Float {
+pub trait LambertW0 {
     /// The principal branch of the Lambert W funciton.
     fn lambert_w0(self) -> Self;
 }
 
 /// Compute the secondary branch of the Lambert W function.
-pub trait LambertWm1: Float {
+pub trait LambertWm1 {
     /// The secondary branch of the Lambert W funciton.
     fn lambert_wm1(self) -> Self;
 }

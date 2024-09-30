@@ -249,7 +249,6 @@ dependencies = [
  "criterion",
  "fast_polynomial",
  "libm",
- "num-traits",
  "rand",
 ]
 
