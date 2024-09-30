@@ -121,11 +121,11 @@ mod sw0f;
 mod swm1;
 #[cfg(feature = "24bits")]
 mod swm1f;
-#[cfg(feature = "traits")]
-mod traits;
+#[cfg(feature = "trait")]
+mod r#trait;
 
-#[cfg(feature = "traits")]
-pub use traits::{LambertW0, LambertWm1};
+#[cfg(feature = "trait")]
+pub use r#trait::LambertW;
 
 /// The negative inverse of e (-1/e).
 ///

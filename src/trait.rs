@@ -1,25 +1,17 @@
 /// Compute the principal branch of the Lambert W function.
-pub trait LambertW0 {
+pub trait LambertW {
     /// The principal branch of the Lambert W funciton.
     fn lambert_w0(self) -> Self;
-}
-
-/// Compute the secondary branch of the Lambert W function.
-pub trait LambertWm1 {
     /// The secondary branch of the Lambert W funciton.
     fn lambert_wm1(self) -> Self;
 }
 
 #[cfg(feature = "24bits")]
-impl LambertW0 for f32 {
+impl LambertW for f32 {
     #[inline]
     fn lambert_w0(self) -> Self {
         super::lambert_w0f(self)
     }
-}
-
-#[cfg(feature = "24bits")]
-impl LambertWm1 for f32 {
     #[inline]
     fn lambert_wm1(self) -> Self {
         super::lambert_wm1f(self)
@@ -27,15 +19,11 @@ impl LambertWm1 for f32 {
 }
 
 #[cfg(feature = "50bits")]
-impl LambertW0 for f64 {
+impl LambertW for f64 {
     #[inline]
     fn lambert_w0(self) -> Self {
         super::lambert_w0(self)
     }
-}
-
-#[cfg(feature = "50bits")]
-impl LambertWm1 for f64 {
     #[inline]
     fn lambert_wm1(self) -> Self {
         super::lambert_wm1(self)
@@ -44,29 +32,16 @@ impl LambertWm1 for f64 {
 
 #[cfg(test)]
 mod test {
+    use super::LambertW;
     use approx::assert_abs_diff_eq;
 
-    #[cfg(all(feature = "traits", feature = "50bits"))]
+    #[cfg(all(feature = "trait", feature = "50bits"))]
     #[test]
-    fn test_lambert_w0_trait_50() {
-        use super::LambertW0;
+    fn test_trait_impl_on_f64() {
         assert_abs_diff_eq!(
             (-2.678_794_411_714_424e-1_f64).lambert_w0(),
             -3.993_824_525_397_807e-1
         );
-    }
-
-    #[cfg(all(feature = "traits", feature = "24bits"))]
-    #[test]
-    fn test_lambert_w0_trait_24() {
-        use super::LambertW0;
-        assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1, epsilon = 1e-7);
-    }
-
-    #[cfg(all(feature = "traits", feature = "50bits"))]
-    #[test]
-    fn test_lambert_wm1_trait_50() {
-        use super::LambertWm1;
         assert_abs_diff_eq!(
             (-3.578_794_411_714_423e-1_f64).lambert_wm1(),
             -1.253493791367214,
@@ -74,10 +49,10 @@ mod test {
         );
     }
 
-    #[cfg(all(feature = "traits", feature = "24bits"))]
+    #[cfg(all(feature = "trait", feature = "24bits"))]
     #[test]
-    fn test_lambert_wm1_trait_24() {
-        use super::LambertWm1;
+    fn test_trait_impl_on_f32() {
+        assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1, epsilon = 1e-7);
         assert_abs_diff_eq!(
             (-3.578_794_3e-1_f32).lambert_wm1(),
             -1.253_493_8,
