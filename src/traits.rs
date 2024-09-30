@@ -53,7 +53,7 @@ mod test {
     fn test_lambert_w0_trait_50() {
         use super::LambertW0;
         assert_abs_diff_eq!(
-            -2.678_794_411_714_424e-1_f64.lambert_w0(),
+            (-2.678_794_411_714_424e-1_f64).lambert_w0(),
             -3.993_824_525_397_807e-1
         );
     }
@@ -70,7 +70,7 @@ mod test {
     fn test_lambert_wm1_trait_50() {
         use super::LambertWm1;
         assert_abs_diff_eq!(
-            -3.578_794_411_714_423e-1_f64.lambert_wm1(),
+            (-3.578_794_411_714_423e-1_f64).lambert_wm1(),
             -1.253493791367214,
             epsilon = 1e-14
         );
@@ -81,7 +81,7 @@ mod test {
     fn test_lambert_wm1_trait_24() {
         use super::LambertWm1;
         assert_abs_diff_eq!(
-            -3.578_794_3e-1_f32.lambert_wm1(),
+            (-3.578_794_3e-1_f32).lambert_wm1(),
             -1.253_493_8,
             epsilon = 1e-6
         );
