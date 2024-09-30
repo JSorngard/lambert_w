@@ -42,6 +42,9 @@ std = ["fast_polynomial?/std"]
 # Document all features.
 all-features = true
 
+[package.metadata.cargo-all-features]
+always_include_features = ["libm"]
+
 [profile.release-lto]
 inherits = "release"
 lto = "fat"
