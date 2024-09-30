@@ -35,7 +35,7 @@ mod test {
     use super::LambertW;
     use approx::assert_abs_diff_eq;
 
-    #[cfg(all(feature = "trait", feature = "50bits"))]
+    #[cfg(feature = "50bits")]
     #[test]
     fn test_trait_impl_on_f64() {
         assert_abs_diff_eq!(
@@ -49,7 +49,7 @@ mod test {
         );
     }
 
-    #[cfg(all(feature = "trait", feature = "24bits"))]
+    #[cfg(feature = "24bits")]
     #[test]
     fn test_trait_impl_on_f32() {
         assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1, epsilon = 1e-7);

@@ -31,8 +31,6 @@ default = ["24bits", "50bits", "libm"]
 # and this increases instruction level parallelism on modern hardware for a total performance gain.
 # May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 estrin = ["dep:fast_polynomial"]
-# Expose the `LambertW` trait and its implementations.
-trait = []
 # If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
 # to compute square roots and logarithms instead of the standard library.
 libm = ["dep:libm", "fast_polynomial?/libm"]

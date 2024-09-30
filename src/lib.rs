@@ -88,8 +88,6 @@ assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! and this increases instruction level parallelism on modern hardware for a total performance gain.
 //! May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
 //!
-//! `traits`: expose the [`LambertW`] trait and its implementations.
-//!
 //! One of the below features must be enabled:
 //!
 //! `std`: use the standard library to compute square roots and logarithms
@@ -121,10 +119,8 @@ mod sw0f;
 mod swm1;
 #[cfg(feature = "24bits")]
 mod swm1f;
-#[cfg(feature = "trait")]
 mod r#trait;
 
-#[cfg(feature = "trait")]
 pub use r#trait::LambertW;
 
 /// The negative inverse of e (-1/e).
