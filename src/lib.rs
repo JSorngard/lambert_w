@@ -83,8 +83,8 @@ use lambert_w::{lambert_w0, lambert_wm1};
 let big = lambert_w0(f64::MAX);
 let tiny = lambert_wm1(-1e-308);
 
-assert_relative_eq!(big, 703.2270331047702, max_relative = 1e-15);
-assert_relative_eq!(tiny, -715.7695669234213, max_relative = 1e-15);
+assert_relative_eq!(big, 703.2270331047702, max_relative = 4e-16);
+assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
 ```
 "#
 )]
