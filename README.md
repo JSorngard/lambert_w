@@ -87,6 +87,7 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 use lambert_w::LambertW;
 
 let z = 2.0 * f64::ln(2.0);
+
 assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 ```
 
