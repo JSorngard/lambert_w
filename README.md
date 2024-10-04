@@ -82,7 +82,7 @@ assert_relative_eq!(big, 703.2270331047702, max_relative = 4e-16);
 assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
 ```
 
-Importing the `LambertW` trait lets you call the functions with postfix notations:
+Importing the `LambertW` trait lets you call the functions with postfix notation:
 ```rust
 use lambert_w::LambertW;
 
