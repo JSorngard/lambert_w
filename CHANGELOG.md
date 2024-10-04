@@ -2,6 +2,11 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 0.5.9
+
+- Add the `LambertW` trait that lets the user call the Lambert W functions
+ with postfix notation.
+
 ## 0.5.5 - 0.5.8
 
 - Documentation improvements.
