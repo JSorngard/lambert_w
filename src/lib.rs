@@ -90,13 +90,16 @@ assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
 )]
 //!
 //! Importing the [`LambertW`] trait lets you call the functions with postfix notations:
-#![cfg_attr(feature = "50bits"), doc = r#"
+#![cfg_attr(
+    feature = "50bits",
+    doc = r#"
 use lambert_w::LambertW;
 
 let z = 2.0 * f64::ln(2.0);
 
 assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
-"#]
+"#
+)]
 //!
 //! The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and are used in the documentation examples of this crate.
 //! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon or relative difference.
