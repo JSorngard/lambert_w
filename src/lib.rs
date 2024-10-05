@@ -365,34 +365,88 @@ pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }
 
-/// Compute principal and secondary branches of the Lambert W function.
+/// Enables evaluation of the principal and secondary branches of the Lambert W function with the types that implement this trait.
+///
+/// # Examples
+///
+#[cfg_attr(
+    feature = "24bits",
+    doc = r#"
+```
+# use approx::assert_abs_diff_eq;
+use lambert_w::LambertW;
+use core::f32::consts::LN_10;
+
+let z = 10.0 * LN_10;
+
+assert_abs_diff_eq!(z.lambert_w0, LN_10);
+```
+"#
+)]
+///
+#[cfg_attr(
+    feature = "50bits",
+    doc = r#"
+```
+# use approx::assert_abs_diff_eq;
+use lambert_w::LambertW;
+use core::f64::consts::E;
+
+let z = E.powf(1.0 + E);
+
+assert_abs_diff_eq!(z.lambert_w0(), E);
+```
+"#
+)]
 pub trait LambertW {
-    /// The principal branch of the Lambert W funciton.
-    fn lambert_w0(self) -> Self;
-    /// The secondary branch of the Lambert W funciton.
-    fn lambert_wm1(self) -> Self;
+    /// The type returned by the Lambert W functions when acting on a value of type `Self`.
+    type Output;
+
+    /// The principal branch of the Lambert W function.
+    fn lambert_w0(self) -> Self::Output;
+
+    /// The secondary branch of the Lambert W function.
+    fn lambert_wm1(self) -> Self::Output;
 }
 
 #[cfg(feature = "24bits")]
 impl LambertW for f32 {
+    type Output = Self;
+    /// The principal branch of the Lambert W function.
+    ///
+    /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
+    ///
+    /// Delegates to the [`lambert_w0f`] function.
     #[inline]
-    fn lambert_w0(self) -> Self {
+    fn lambert_w0(self) -> Self::Output {
         lambert_w0f(self)
     }
+    /// The secondary branch of the Lambert W function.
+    ///
+    /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
+    ///
+    /// Delegates to the [`lambert_wm1f`] function.
     #[inline]
-    fn lambert_wm1(self) -> Self {
+    fn lambert_wm1(self) -> Self::Output {
         lambert_wm1f(self)
     }
 }
 
 #[cfg(feature = "50bits")]
 impl LambertW for f64 {
+    type Output = Self;
+    /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
+    ///
+    /// Delegates to the [`lambert_w0`] function.
     #[inline]
-    fn lambert_w0(self) -> Self {
+    fn lambert_w0(self) -> Self::Output {
         lambert_w0(self)
     }
+    /// The secondary branch of the Lambert W function evaluated to 50 bits of accuracy.
+    ///
+    /// Delegates to the [`lambert_wm1`] function.
     #[inline]
-    fn lambert_wm1(self) -> Self {
+    fn lambert_wm1(self) -> Self::Output {
         lambert_wm1(self)
     }
 }
