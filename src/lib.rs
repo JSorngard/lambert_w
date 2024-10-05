@@ -365,7 +365,8 @@ pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }
 
-/// Enables evaluation of the principal and secondary branches of the Lambert W function with the types that implement this trait.
+/// Enables evaluation of the principal and secondary branches of the Lambert W function
+/// with the types that implement this trait.
 pub trait LambertW {
     /// The type returned by the Lambert W functions when acting on a value of type `Self`.
     type Output;
@@ -387,7 +388,7 @@ impl LambertW for f32 {
     /// Delegates to the [`lambert_w0f`] function.
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     /// # use approx::assert_abs_diff_eq;
     /// use lambert_w::LambertW;
