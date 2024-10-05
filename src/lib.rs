@@ -385,6 +385,8 @@ impl LambertW for f32 {
     ///
     /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
     ///
+    /// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN).
+    ///
     /// Delegates to the [`lambert_w0f`] function.
     ///
     /// # Example
@@ -405,6 +407,8 @@ impl LambertW for f32 {
     /// The secondary branch of the Lambert W function.
     ///
     /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
+    ///
+    /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN).
     ///
     /// Delegates to the [`lambert_wm1f`] function.
     ///
@@ -427,6 +431,8 @@ impl LambertW for f64 {
     type Output = Self;
     /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
     ///
+    /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN).
+    ///
     /// Delegates to the [`lambert_w0`] function.
     ///
     /// # Example
@@ -445,6 +451,8 @@ impl LambertW for f64 {
         lambert_w0(self)
     }
     /// The secondary branch of the Lambert W function evaluated to 50 bits of accuracy.
+    ///
+    /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN).
     ///
     /// Delegates to the [`lambert_wm1`] function.
     ///
