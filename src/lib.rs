@@ -378,6 +378,10 @@ pub trait LambertW {
     fn lambert_wm1(self) -> Self::Output;
 }
 
+// The large epsilon in the examples in the below impl blocks
+// is set to let the tests pass when the `estrin` feature is enabled,
+// since the CI runner may not have fused multiply-add instructions.
+
 #[cfg(feature = "24bits")]
 impl LambertW for f32 {
     type Output = Self;
@@ -414,8 +418,6 @@ impl LambertW for f32 {
     /// # use approx::assert_abs_diff_eq;
     /// use lambert_w::LambertW;
     ///
-    // The large epsilon is set to let this test pass when the `estrin` feature is enabled,
-    // since the CI may not have fused multiply-add instructions.
     /// assert_abs_diff_eq!((-1e-30).lambert_wm1(), -73.37311, epsilon = 1e-4);
     /// ```
     #[inline]
@@ -455,8 +457,7 @@ impl LambertW for f64 {
     /// ```
     /// # use approx::assert_abs_diff_eq;
     /// use lambert_w::LambertW;
-    // The large epsilon is set to let this test pass when the `estrin` feature is enabled,
-    // since the CI may not have fused multiply-add instructions.
+    ///
     /// assert_abs_diff_eq!((-1e-30).lambert_wm1(), -73.37311031382298, epsilon = 1e-13);
     /// ```
     #[inline]
