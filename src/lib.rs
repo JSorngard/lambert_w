@@ -418,7 +418,7 @@ impl LambertW for f32 {
     /// # use approx::assert_abs_diff_eq;
     /// use lambert_w::LambertW;
     ///
-    /// assert_abs_diff_eq!((-1e-30).lambert_wm1(), -73.37311, epsilon = 1e-4);
+    /// assert_abs_diff_eq!((-0.25_f32).lambert_wm1(), -2.1532924, epsilon = 1e-6);
     /// ```
     #[inline]
     fn lambert_wm1(self) -> Self::Output {
@@ -458,7 +458,7 @@ impl LambertW for f64 {
     /// # use approx::assert_abs_diff_eq;
     /// use lambert_w::LambertW;
     ///
-    /// assert_abs_diff_eq!((-1e-30).lambert_wm1(), -73.37311031382298, epsilon = 1e-13);
+    /// assert_abs_diff_eq!((-0.25_f64).lambert_wm1(), -2.15329236411035, epsilon = 1e-15);
     /// ```
     #[inline]
     fn lambert_wm1(self) -> Self::Output {
