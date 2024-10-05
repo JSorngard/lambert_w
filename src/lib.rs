@@ -379,7 +379,7 @@ use core::f32::consts::LN_10;
 
 let z = 10.0 * LN_10;
 
-assert_abs_diff_eq!(z.lambert_w0, LN_10);
+assert_abs_diff_eq!(z.lambert_w0(), LN_10, epsilon = 1e-6);
 ```
 "#
 )]
