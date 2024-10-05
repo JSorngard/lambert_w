@@ -366,38 +366,6 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 }
 
 /// Enables evaluation of the principal and secondary branches of the Lambert W function with the types that implement this trait.
-///
-/// # Examples
-///
-#[cfg_attr(
-    feature = "24bits",
-    doc = r#"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::LambertW;
-use core::f32::consts::LN_10;
-
-let z = 10.0 * LN_10;
-
-assert_abs_diff_eq!(z.lambert_w0(), LN_10, epsilon = 1e-6);
-```
-"#
-)]
-///
-#[cfg_attr(
-    feature = "50bits",
-    doc = r#"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::LambertW;
-use core::f64::consts::E;
-
-let z = E.powf(1.0 + E);
-
-assert_abs_diff_eq!(z.lambert_w0(), E);
-```
-"#
-)]
 pub trait LambertW {
     /// The type returned by the Lambert W functions when acting on a value of type `Self`.
     type Output;
@@ -417,6 +385,17 @@ impl LambertW for f32 {
     /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
     ///
     /// Delegates to the [`lambert_w0f`] function.
+    ///
+    /// # Example
+    /// ```
+    /// # use approx::assert_abs_diff_eq;
+    /// use lambert_w::LambertW;
+    /// use core::f32::consts::LN_10;
+    ///
+    /// let z = 10.0 * LN_10;
+    ///
+    /// assert_abs_diff_eq!(z.lambert_w0(), LN_10, epsilon = 1e-6);
+    /// ```
     #[inline]
     fn lambert_w0(self) -> Self::Output {
         lambert_w0f(self)
@@ -438,6 +417,18 @@ impl LambertW for f64 {
     /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
     ///
     /// Delegates to the [`lambert_w0`] function.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use approx::assert_abs_diff_eq;
+    /// use lambert_w::LambertW;
+    /// use core::f64::consts::E;
+    ///
+    /// let z = E.powf(1.0 + E);
+    ///
+    /// assert_abs_diff_eq!(z.lambert_w0(), E, epsilon = 1e-15);
+    /// ```
     #[inline]
     fn lambert_w0(self) -> Self::Output {
         lambert_w0(self)
