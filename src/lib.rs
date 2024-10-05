@@ -407,6 +407,15 @@ impl LambertW for f32 {
     /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
     ///
     /// Delegates to the [`lambert_wm1f`] function.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use approx::assert_abs_diff_eq;
+    /// use lambert_w::LambertW;
+    ///
+    /// assert_abs_diff_eq!((-1e-30).lambert_wm1(), -73.373110313822977);
+    /// ```
     #[inline]
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1f(self)
