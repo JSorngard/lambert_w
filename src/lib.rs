@@ -378,10 +378,6 @@ pub trait LambertW {
     fn lambert_wm1(self) -> Self::Output;
 }
 
-// The large epsilon in the examples in the below impl blocks
-// is set to let the tests pass when the `estrin` feature is enabled,
-// since the CI runner may not have fused multiply-add instructions.
-
 #[cfg(feature = "24bits")]
 impl LambertW for f32 {
     type Output = Self;
