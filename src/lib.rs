@@ -387,6 +387,7 @@ impl LambertW for f32 {
     /// Delegates to the [`lambert_w0f`] function.
     ///
     /// # Example
+    /// 
     /// ```
     /// # use approx::assert_abs_diff_eq;
     /// use lambert_w::LambertW;
