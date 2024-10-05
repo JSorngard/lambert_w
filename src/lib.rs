@@ -388,18 +388,6 @@ impl LambertW for f32 {
     /// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN).
     ///
     /// Delegates to the [`lambert_w0f`] function.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// # use approx::assert_abs_diff_eq;
-    /// use lambert_w::LambertW;
-    /// use core::f32::consts::LN_10;
-    ///
-    /// let z = 10.0 * LN_10;
-    ///
-    /// assert_abs_diff_eq!(z.lambert_w0(), LN_10, epsilon = 1e-6);
-    /// ```
     #[inline]
     fn lambert_w0(self) -> Self::Output {
         lambert_w0f(self)
@@ -411,15 +399,6 @@ impl LambertW for f32 {
     /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN).
     ///
     /// Delegates to the [`lambert_wm1f`] function.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// # use approx::assert_abs_diff_eq;
-    /// use lambert_w::LambertW;
-    ///
-    /// assert_abs_diff_eq!((-0.25_f32).lambert_wm1(), -2.1532924, epsilon = 1e-6);
-    /// ```
     #[inline]
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1f(self)
@@ -434,18 +413,6 @@ impl LambertW for f64 {
     /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN).
     ///
     /// Delegates to the [`lambert_w0`] function.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// # use approx::assert_abs_diff_eq;
-    /// use lambert_w::LambertW;
-    /// use core::f64::consts::E;
-    ///
-    /// let z = E.powf(1.0 + E);
-    ///
-    /// assert_abs_diff_eq!(z.lambert_w0(), E, epsilon = 1e-15);
-    /// ```
     #[inline]
     fn lambert_w0(self) -> Self::Output {
         lambert_w0(self)
@@ -455,15 +422,6 @@ impl LambertW for f64 {
     /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN).
     ///
     /// Delegates to the [`lambert_wm1`] function.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// # use approx::assert_abs_diff_eq;
-    /// use lambert_w::LambertW;
-    ///
-    /// assert_abs_diff_eq!((-0.25_f64).lambert_wm1(), -2.15329236411035, epsilon = 1e-15);
-    /// ```
     #[inline]
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1(self)
