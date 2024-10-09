@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "0.5.9"
+version = "1.0.0"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics", "no-std::no-alloc"]
@@ -12,7 +12,6 @@ repository = "https://github.com/JSorngard/lambert_w"
 documentation = "https://docs.rs/lambert_w"
 
 [dependencies]
-fast_polynomial = { version = "0.3.0", default-features = false, optional = true }
 libm = { version = "0.2.8", optional = true }
 
 [dev-dependencies]
@@ -26,17 +25,12 @@ default = ["24bits", "50bits", "libm"]
 50bits = []
 # Enables the function versions with 24 bits of accuracy on 64-bit floats, as well as the implementation on 32-bit floats.
 24bits = []
-# Uses [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme) to evaluate the polynomials in the rational functions.
-# While this results in more assembly instructions, they are mostly independent of each other, 
-# and this increases instruction level parallelism on modern hardware for a total performance gain.
-# May result in slight numerical instability, which can be reduced if the target CPU has fused multiply-add instructions.
-estrin = ["dep:fast_polynomial"]
 # If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
 # to compute square roots and logarithms instead of the standard library.
-libm = ["dep:libm", "fast_polynomial?/libm"]
+libm = ["dep:libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
-std = ["fast_polynomial?/std"]
+std = []
 
 [package.metadata.docs.rs]
 # Document all features.

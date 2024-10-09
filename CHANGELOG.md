@@ -2,6 +2,13 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.0
+
+- Remove `estrin` feature.
+ If it was activated anywhere in the dependency tree the crate became less
+ accurate for all users (as the compiler assumes that features are additive),
+ without them being able to do anything about it.
+
 ## 0.5.9
 
 - Add the `LambertW` trait that lets the user call the Lambert W functions
