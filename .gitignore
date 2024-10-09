@@ -4,3 +4,4 @@
 /mutants.out
 /mutants.out.old
 /.vs
+.markdownlint.json
