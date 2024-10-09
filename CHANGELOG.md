@@ -2,7 +2,7 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
-## 1.0.0
+## Unreleased
 
 - Remove `estrin` feature.
  If it was activated anywhere in the dependency tree the crate became less
