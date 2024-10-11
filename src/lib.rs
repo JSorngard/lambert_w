@@ -85,11 +85,12 @@
 //!
 //! One of the below features must be enabled:
 //!
+//! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]
+//! crate to compute square roots and logarithms during function evaluation instead of the standard library.
+//!
 //! `std`: use the standard library to compute square roots and logarithms
 //! for a potential performance gain. When this feature is disabled the crate is `no_std` compatible.
 //!
-//! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]
-//! crate to compute square roots and logarithms instead of the standard library.
 //!
 //! [1]: https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation
 
