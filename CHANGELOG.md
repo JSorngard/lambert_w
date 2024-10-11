@@ -6,8 +6,8 @@ This file contains the changes to the crate since version 0.1.1.
 
 - Removed the `estrin` feature.
  If it was activated anywhere in the dependency tree the crate became less
- accurate for all users (as the compiler assumes that features are additive),
- without them being able to do anything about it.
+ accurate for all users without them being able to do anything about it
+ (as the compiler assumes that features are additive).
 - Removed the `24bits` and `50bits` features. Their only use was to reduce binary
  size and speed up compile time by letting the user skip compilation of parts
  of the crate if they didn't use them. However, the crate is small and very quick
