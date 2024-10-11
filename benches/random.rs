@@ -15,7 +15,7 @@ use std::time::Instant;
 
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!(
-    "at least one of the features 'std' and 'libm' must be active to benchmark anything."
+    "at least one of the features 'std' and 'libm' must be active to benchmark anything"
 );
 
 /// Generates a vec of random values in the given range and benchmarks the given function

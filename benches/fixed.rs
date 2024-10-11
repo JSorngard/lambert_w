@@ -4,7 +4,7 @@ use lambert_w::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
 
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!(
-    "at least one of the features 'std' and 'libm' must be active to benchmark anything."
+    "at least one of the features 'std' and 'libm' must be active to benchmark anything"
 );
 
 fn fixed_benches(c: &mut Criterion) {
