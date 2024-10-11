@@ -94,7 +94,6 @@
 //!
 //! [1]: https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation
 
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![forbid(unsafe_code)]
 
