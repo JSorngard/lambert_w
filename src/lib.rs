@@ -129,6 +129,7 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 // If we round the last two digits (87) to 9 rustc sets the constant to
 //                     0.567_143_290_409_784
+// which is further away from the true value than what we get if we round them to 8.
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
