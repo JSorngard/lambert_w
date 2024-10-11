@@ -8,6 +8,10 @@ This file contains the changes to the crate since version 0.1.1.
  If it was activated anywhere in the dependency tree the crate became less
  accurate for all users (as the compiler assumes that features are additive),
  without them being able to do anything about it.
+- The crate can now compile with no features enabled,
+ in which case it just exposes the trait and the constants.
+ It is only a compile error if one of the `24bits` or `50bits` features
+ are enabled while neither the `std` nor the `libm` features are.
 
 ## 0.5.9
 
