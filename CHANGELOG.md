@@ -9,9 +9,9 @@ This file contains the changes to the crate since version 0.1.1.
  accurate for all users (as the compiler assumes that features are additive),
  without them being able to do anything about it.
 - Removed the `24bits` and `50bits` features. Their only use was to reduce binary
- size by letting the user skip compilation of parts of the crate if they don't
- use them. However, the crate is very quick to compile, and the unused code
- should be removed during dead code elimination anyway.
+ size and speed up compile time by letting the user skip compilation of parts
+ of the crate if they didn't use them. However, the crate is small and very quick
+ to compile, and the unused code should be removed during dead code elimination anyway.
 
 ## 0.5.9
 
