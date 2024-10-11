@@ -113,8 +113,10 @@ mod swm1f;
 /// The negative inverse of e (-1/e).
 ///
 /// This is the smallest input value for which the Lambert W functions in this crate return a value.
+///
+/// Has been rounded to the closest available `f64` value.
 //            Rounded from -0.367_879_441_171_442_322
-pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
+pub const NEG_INV_E: f64 = -0.367_879_441_171_442_33;
 
 /// 1/sqrt(e)
 //         Rounded from 0.606_530_659_712_633_423
