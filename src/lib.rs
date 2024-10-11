@@ -138,6 +138,7 @@ mod dw0c;
 mod dwm1c;
 #[cfg(any(feature = "24bits", feature = "50bits"))]
 mod elementary;
+#[cfg(any(feature = "24bits", feature = "50bits"))]
 mod rational;
 #[cfg(feature = "24bits")]
 mod sw0;
