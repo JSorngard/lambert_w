@@ -88,6 +88,17 @@ let z = 2.0 * f64::ln(2.0);
 assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 ```
 
+## Features
+
+One of the below features must be enabled:
+
+`libm` *(enabled by default)*: if the `std` feature is disabled,
+this feature uses the [`libm`](https://crates.io/crates/libm) crate to compute
+square roots and logarithms during function evaluation instead of the standard library.
+
+`std`: use the standard library to compute square roots and logarithms for a
+potential performance gain. When this feature is disabled the crate is `no_std` compatible.
+
 ## License
 
 Licensed under either of
