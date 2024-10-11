@@ -115,7 +115,7 @@ assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 //!
 //! You can disable one of the above features to potentially save a little bit of binary size.
 //!
-//! One of the below features must be enabled:
+//! If one of the above features are enabled, one of the below features must be enabled:
 //!
 //! `std`: use the standard library to compute square roots and logarithms
 //! for a potential performance gain. When this feature is disabled the crate is `no_std` compatible.
@@ -129,8 +129,9 @@ assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 #![cfg_attr(not(feature = "std"), no_std)]
 #![forbid(unsafe_code)]
 
+#[cfg(any(feature = "24bits", feature = "50bits"))]
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-compile_error!("at least one of the `std` or `libm` feature flags must be enabled");
+compile_error!("at least one of the `std` and `libm` feature flags must be enabled if one of the `24bits` and `50bits` features are enabled");
 
 #[cfg(feature = "50bits")]
 mod dw0c;
