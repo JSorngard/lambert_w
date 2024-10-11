@@ -98,7 +98,7 @@
 #![forbid(unsafe_code)]
 
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-compile_error!("at least one of the `std` and `libm` feature flags must be enabled if one of the `24bits` and `50bits` features are enabled");
+compile_error!("at least one of the `std` or `libm` feature flags must be enabled");
 
 mod dw0c;
 mod dwm1c;
