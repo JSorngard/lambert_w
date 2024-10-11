@@ -2,7 +2,6 @@
 
 // The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
 
-#[cfg(feature = "24bits")]
 /// Rational function consisting of two third degree polynomials.
 ///
 /// The first set of coefficients are for the polynomial in the numerator
@@ -16,7 +15,6 @@ pub(crate) fn rational_3_over_3(
     (n0 + x * (n1 + x * (n2 + x * n3))) / (d0 + x * (d1 + x * (d2 + x * d3)))
 }
 
-#[cfg(feature = "24bits")]
 /// Rational function consisting of two third degree polynomials.
 ///
 /// The first set of coefficients are for the polynomial in the numerator
@@ -30,7 +28,6 @@ pub(crate) fn rational_3_over_3f(
     (n0 + x * (n1 + x * (n2 + x * n3))) / (d0 + x * (d1 + x * (d2 + x * d3)))
 }
 
-#[cfg(feature = "24bits")]
 /// Rational function consisting of a fourth degree polynomial divided by a third degree polynomial.
 ///
 /// The first set of coefficients are for the polynomial in the numerator
@@ -44,7 +41,6 @@ pub(crate) fn rational_4_over_3(
     (n0 + x * (n1 + x * (n2 + x * (n3 + x * n4)))) / (d0 + x * (d1 + x * (d2 + x * d3)))
 }
 
-#[cfg(feature = "24bits")]
 /// Rational function consisting of a fourth degree polynomial divided by a third degree polynomial.
 ///
 /// The first set of coefficients are for the polynomial in the numerator
@@ -58,7 +54,6 @@ pub(crate) fn rational_4_over_3f(
     (n0 + x * (n1 + x * (n2 + x * (n3 + x * n4)))) / (d0 + x * (d1 + x * (d2 + x * d3)))
 }
 
-#[cfg(feature = "50bits")]
 /// Rational function consisting of two seventh degree polynomials.
 ///
 /// The first set of coefficients are for the polynomial in the numerator
@@ -73,7 +68,6 @@ pub(crate) fn rational_7_over_7(
         / (d0 + x * (d1 + x * (d2 + x * (d3 + x * (d4 + x * (d5 + x * (d6 + x * d7)))))))
 }
 
-#[cfg(feature = "50bits")]
 /// Rational function consisting of an eigth degree polynomial divided by a seventh degree polynomial.
 ///
 /// The first set of coefficients are for the polynomial in the numerator

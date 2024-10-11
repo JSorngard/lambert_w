@@ -1,14 +1,10 @@
-#[cfg(feature = "24bits")]
 use core::f32::consts::E as E32;
-#[cfg(feature = "50bits")]
 use core::f64::consts::E as E64;
 use core::ops::RangeBounds;
 use criterion::{
     black_box, criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
-#[cfg(feature = "50bits")]
 use lambert_w::{lambert_w0, lambert_wm1};
-#[cfg(feature = "24bits")]
 use lambert_w::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
 use rand::{
     distributions::uniform::{SampleRange, SampleUniform},
@@ -17,10 +13,6 @@ use rand::{
 };
 use std::time::Instant;
 
-#[cfg(all(not(feature = "24bits"), not(feature = "50bits")))]
-compile_error!(
-    "at least one of the features '24bits' and '50bits' must be active to benchmark anything."
-);
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!(
     "at least one of the features 'std' and 'libm' must be active to benchmark anything."
@@ -61,7 +53,6 @@ fn random_benches(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs");
     let mut rng = SmallRng::seed_from_u64(0b1010101010101);
 
-    #[cfg(feature = "50bits")]
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_0 50 bits",
@@ -69,7 +60,7 @@ fn random_benches(c: &mut Criterion) {
         -1.0 / E64..f64::MAX,
         &mut rng,
     );
-    #[cfg(feature = "24bits")]
+
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_0 24 bits",
@@ -77,7 +68,7 @@ fn random_benches(c: &mut Criterion) {
         -1.0 / E64..f64::MAX,
         &mut rng,
     );
-    #[cfg(feature = "24bits")]
+
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_0 24 bits on f32",
@@ -85,7 +76,7 @@ fn random_benches(c: &mut Criterion) {
         -1.0 / E32..f32::MAX,
         &mut rng,
     );
-    #[cfg(feature = "50bits")]
+
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_-1 50 bits",
@@ -93,7 +84,7 @@ fn random_benches(c: &mut Criterion) {
         -1.0 / E64..=0.0,
         &mut rng,
     );
-    #[cfg(feature = "24bits")]
+
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_-1 24 bits",
@@ -101,7 +92,7 @@ fn random_benches(c: &mut Criterion) {
         -1.0 / E64..=0.0,
         &mut rng,
     );
-    #[cfg(feature = "24bits")]
+
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_-1 24 bits on f32",

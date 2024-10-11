@@ -21,101 +21,69 @@
 //!
 //! Compute the value of the [omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
 //!
-#![cfg_attr(
-    feature = "50bits",
-    doc = r##"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::lambert_w0;
-
-let Ω = lambert_w0(1.0);
-
-assert_abs_diff_eq!(Ω, 0.5671432904097839);
-```
-"##
-)]
+//! ```
+//! # use approx::assert_abs_diff_eq;
+//! use lambert_w::lambert_w0;
+//!
+//! let Ω = lambert_w0(1.0);
+//!
+//! assert_abs_diff_eq!(Ω, 0.5671432904097839);
+//! ```
 //!
 //! Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 //!
-#![cfg_attr(
-    feature = "50bits",
-    doc = r##"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::lambert_wm1;
-
-let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
-
-assert_abs_diff_eq!(mln4, -f64::ln(4.0));
-```
-"##
-)]
+//! ```
+//! # use approx::assert_abs_diff_eq;
+//! use lambert_w::lambert_wm1;
+//!
+//! let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
+//!
+//! assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+//! ```
 //!
 //! Do it on 32-bit floats:
 //!
-#![cfg_attr(
-    feature = "24bits",
-    doc = r##"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::{lambert_w0f, lambert_wm1f};
-
-let Ω = lambert_w0f(1.0);
-let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
-
-assert_abs_diff_eq!(Ω, 0.56714329);
-assert_abs_diff_eq!(mln4, -f32::ln(4.0));
-```
-"##
-)]
+//!```
+//!# use approx::assert_abs_diff_eq;
+//! use lambert_w::{lambert_w0f, lambert_wm1f};
+//!
+//! let Ω = lambert_w0f(1.0);
+//! let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
+//!
+//! assert_abs_diff_eq!(Ω, 0.56714329);
+//! assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+//! ```
 //!
 //! The implementation can handle extreme inputs just as well:
 //!
-#![cfg_attr(
-    feature = "50bits",
-    doc = r#"
-```
-# use approx::assert_relative_eq;
-use lambert_w::{lambert_w0, lambert_wm1};
-
-let big = lambert_w0(f64::MAX);
-let tiny = lambert_wm1(-1e-308);
-
-assert_relative_eq!(big, 703.2270331047702, max_relative = 4e-16);
-assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
-```
-"#
-)]
+//! ```
+//! # use approx::assert_relative_eq;
+//! use lambert_w::{lambert_w0, lambert_wm1};
+//!
+//! let big = lambert_w0(f64::MAX);
+//! let tiny = lambert_wm1(-1e-308);
+//!
+//! assert_relative_eq!(big, 703.2270331047702, max_relative = 4e-16);
+//! assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
+//! ```
 //!
 //! Importing the [`LambertW`] trait lets you call the functions with postfix notation:
 //!
-#![cfg_attr(
-    feature = "50bits",
-    doc = r#"
-```
-# use approx::assert_abs_diff_eq;
-use lambert_w::LambertW;
-
-let z = 2.0 * f64::ln(2.0);
-
-assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
-```
-"#
-)]
+//! ```
+//! # use approx::assert_abs_diff_eq;
+//! use lambert_w::LambertW;
+//!
+//! let z = 2.0 * f64::ln(2.0);
+//!
+//! assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
+//! ```
 //!
 //! The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and are used in the documentation examples of this crate.
 //! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon or relative difference.
 //!
 //! ## Features
 //!
-//! `50bits` *(enabled by default)*: enables the function versions with 50 bits of accuracy on 64-bit floats.
-//!
-//! `24bits` *(enabled by default)*: enables the function versions with 24 bits of accuracy on 64-bit floats,
-//! as well as the implementation on 32-bit floats.
-//!
-//! You can disable one of the above features to potentially save a little bit of binary size.
-//!
-//! If one of the above features are enabled, one of the below features must be enabled:
+//! One of the below features must be enabled:
 //!
 //! `std`: use the standard library to compute square roots and logarithms
 //! for a potential performance gain. When this feature is disabled the crate is `no_std` compatible.
@@ -129,25 +97,16 @@ assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 #![cfg_attr(not(feature = "std"), no_std)]
 #![forbid(unsafe_code)]
 
-#[cfg(any(feature = "24bits", feature = "50bits"))]
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!("at least one of the `std` and `libm` feature flags must be enabled if one of the `24bits` and `50bits` features are enabled");
 
-#[cfg(feature = "50bits")]
 mod dw0c;
-#[cfg(feature = "50bits")]
 mod dwm1c;
-#[cfg(any(feature = "24bits", feature = "50bits"))]
 mod elementary;
-#[cfg(any(feature = "24bits", feature = "50bits"))]
 mod rational;
-#[cfg(feature = "24bits")]
 mod sw0;
-#[cfg(feature = "24bits")]
 mod sw0f;
-#[cfg(feature = "24bits")]
 mod swm1;
-#[cfg(feature = "24bits")]
 mod swm1f;
 
 /// The negative inverse of e (-1/e).
@@ -156,7 +115,6 @@ mod swm1f;
 //            Rounded from -0.367_879_441_171_442_322
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
 
-#[cfg(any(feature = "24bits", feature = "50bits"))]
 /// 1/sqrt(e)
 //         Rounded from 0.606_530_659_712_633_423
 const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
@@ -171,7 +129,6 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 //        Rounded from 0.567_143_290_409_783_87
 pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
-#[cfg(feature = "24bits")]
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
 /// # Examples
@@ -201,7 +158,6 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
 
-#[cfg(feature = "24bits")]
 /// The secondary branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
 /// # Examples
@@ -232,7 +188,6 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
     swm1::swm1(z)
 }
 
-#[cfg(feature = "50bits")]
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy.
 ///
 /// # Examples
@@ -262,7 +217,6 @@ pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
 
-#[cfg(feature = "24bits")]
 /// The principal branch of the Lambert W function, computed with `f32`s.
 ///
 /// Uses the same approximation as [`sp_lambert_w0`] but computing it with 32-bit floats
@@ -296,7 +250,6 @@ pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
 
-#[cfg(feature = "50bits")]
 /// The secondary branch of the Lambert W function computed to 50 bits of accuracy.
 ///
 /// # Examples
@@ -327,7 +280,6 @@ pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
-#[cfg(feature = "24bits")]
 /// The secondary branch of the Lambert W function, computed with `f32`s.
 ///
 /// Uses the same approximation as [`sp_lambert_wm1`] but computing it with 32-bit floats
@@ -375,7 +327,6 @@ pub trait LambertW {
     fn lambert_wm1(self) -> Self::Output;
 }
 
-#[cfg(feature = "24bits")]
 impl LambertW for f32 {
     type Output = Self;
     /// The principal branch of the Lambert W function.
@@ -402,7 +353,6 @@ impl LambertW for f32 {
     }
 }
 
-#[cfg(feature = "50bits")]
 impl LambertW for f64 {
     type Output = Self;
     /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
@@ -425,17 +375,16 @@ impl LambertW for f64 {
     }
 }
 
-#[cfg(all(test, any(feature = "24bits", feature = "50bits")))]
+#[cfg(test)]
 mod test {
     use super::LambertW;
-    #[cfg(feature = "50bits")]
+
     use super::{lambert_w0, lambert_wm1};
-    #[cfg(feature = "24bits")]
+
     use super::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 
-    #[cfg(feature = "50bits")]
     #[test]
     fn test_lambert_w0() {
         assert!(lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
@@ -509,7 +458,6 @@ mod test {
         assert_abs_diff_eq!(lambert_w0(f64::MAX), 703.2270331047702, epsilon = 1e-12);
     }
 
-    #[cfg(feature = "24bits")]
     #[test]
     fn test_sp_lambert_w0() {
         assert!(sp_lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
@@ -618,7 +566,6 @@ mod test {
         assert_abs_diff_eq!(sp_lambert_w0(f64::MAX), 703.2270331047702, epsilon = 1e-4);
     }
 
-    #[cfg(feature = "24bits")]
     #[test]
     fn test_lambert_w0f() {
         assert!(lambert_w0f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
@@ -651,7 +598,6 @@ mod test {
         assert_abs_diff_eq!(lambert_w0f(f32::MAX), 84.288_59, epsilon = 1e-5);
     }
 
-    #[cfg(feature = "50bits")]
     #[test]
     fn test_lambert_wm1() {
         assert!(lambert_wm1(-1.0 / E - f64::EPSILON).is_nan());
@@ -702,7 +648,6 @@ mod test {
         assert!(lambert_wm1(f64::EPSILON).is_nan());
     }
 
-    #[cfg(feature = "24bits")]
     #[test]
     fn test_sp_lambert_wm1() {
         assert!(sp_lambert_wm1(-1.0 / E - f64::EPSILON).is_nan());
@@ -754,7 +699,6 @@ mod test {
         assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
     }
 
-    #[cfg(feature = "24bits")]
     #[test]
     fn test_lambert_wm1f() {
         assert!(lambert_wm1f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
@@ -773,7 +717,6 @@ mod test {
         assert!(lambert_wm1f(f32::EPSILON).is_nan());
     }
 
-    #[cfg(feature = "50bits")]
     #[test]
     fn test_trait_impl_on_f64() {
         assert_abs_diff_eq!(
@@ -787,7 +730,6 @@ mod test {
         );
     }
 
-    #[cfg(feature = "24bits")]
     #[test]
     fn test_trait_impl_on_f32() {
         assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1, epsilon = 1e-7);

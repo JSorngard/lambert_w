@@ -4,18 +4,18 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 1.0.0
 
-- Remove `estrin` feature.
+- Removed the `estrin` feature.
  If it was activated anywhere in the dependency tree the crate became less
  accurate for all users (as the compiler assumes that features are additive),
  without them being able to do anything about it.
-- The crate can now compile with no features enabled,
- in which case it just exposes the trait and the constants.
- It is only a compile error if one of the `24bits` or `50bits` features
- are enabled while neither the `std` nor the `libm` features are.
+- Removed the `24bits` and `50bits` features. Their only use was to reduce binary
+ size by letting the user skip compilation of parts of the crate if they don't
+ use them. However, the crate is very quick to compile, and the unused code
+ should be removed during dead code elimination anyway.
 
 ## 0.5.9
 
-- Add the `LambertW` trait that lets the user call the Lambert W functions
+- Added the `LambertW` trait that lets the user call the Lambert W functions
  with postfix notation.
 
 ## 0.5.5 - 0.5.8
@@ -24,7 +24,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 0.5.4
 
-- Add `lambert_w0f` and `lambert_wm1f` functions that evaluate the 24-bit accurate
+- Added `lambert_w0f` and `lambert_wm1f` functions that evaluate the 24-bit accurate
  approximation on 32-bit floats (though the approximation is expected to be
  slightly less accurate then).
 
@@ -34,9 +34,9 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 0.5.1
 
-- Add `std` and `libm` features to match the features on the optional
+- Added `std` and `libm` features to match the features on the optional
  dependency `fast_polynomial`.
-- Make the crate `no_std` with a dependency on [`libm`](https://crates.io/crates/libm)
+- Made the crate `no_std` with a dependency on [`libm`](https://crates.io/crates/libm)
  by default. The crate can be made to depend on the standard library instead of
  `libm` by disabling default features and enabling the `std` feature. This can
  result in a performance gain.
@@ -52,40 +52,41 @@ choice by the user, and wont happen automatically with `cargo update` as before.
 
 ### Breaking changes
 
-- Remove last underscore in function names. E.g. `lambert_w_0` is renamed to `lambert_w0`.
- This makes them easier to type and the new names are similar to the names given
- to these functions in libraries in other languages.
+- Removed the last underscore in function names. E.g. `lambert_w_0` is renamed
+ to `lambert_w0`. This makes them easier to type and the new names are similar
+ to the names given to these functions in libraries in other languages.
 
 ## 0.4.4
 
 - Documentation improvements.
-- Update the optional `fast_polynomial` dependency.
+- Updated the optional `fast_polynomial` dependency.
 
 ## 0.4.2 and 0.4.3
 
-- Correct mistake in doc information.
+- Corrected a mistake in doc information.
 
 ## 0.4.1
 
-- Add the optional `estrin` feature that computes the Lambert W function faster
+- Added the optional `estrin` feature that computes the Lambert W function faster
  on modern hardware by using [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme)
  to evaluate the polynomials in the rational functions.
  May result in slight numerical instability, which can be reduced if the target
  CPU has fused multiply-add instructions.
-- Lower the MSRV to 1.60.0.
-- No longer a forced `compile_error!` to disable both the `24bits` and `50bits` features.
+- Lowered the MSRV to 1.60.0.
+- It is no longer a forced `compile_error!` to disable both the `24bits` and
+ `50bits` features.
 - Documentation improvements.
 
 ## 0.4.0
 
 ### Breaking changes
 
-- Make the Lambert W functions return `f64::NAN` when given inputs outside their
+- Makde the Lambert W functions return `f64::NAN` when given inputs outside their
  domain. This is in line with how it is usually handled in the standard library.
 
 ### Other changes
 
-- Export the constants `NEG_INV_E` and `OMEGA`.
+- Now exports the constants `NEG_INV_E` and `OMEGA`.
 
 ## 0.3.0
 
@@ -100,7 +101,7 @@ choice by the user, and wont happen automatically with `cargo update` as before.
 
 ## 0.2.5
 
-- Correct the domain bounds in the function documentation strings.
+- Corrected the domain bounds in the function documentation strings.
 - Other minor documentation improvements.
 
 ## 0.2.2, 0.2.3, and 0.2.4
@@ -109,13 +110,13 @@ choice by the user, and wont happen automatically with `cargo update` as before.
 
 ## 0.2.1
 
-- Add github repository badge to `README.md`.
+- Added github repository badge to `README.md`.
 
 ## 0.2.0
 
 ### Breaking changes
 
-- Lambert W functions now return an `Option` instead of a `Result`
+- The Lambert W functions now return an `Option` instead of a `Result`
  with custom error types.
 
 ### Other changes
