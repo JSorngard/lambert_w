@@ -6,12 +6,13 @@
 //! It is implemented in code as conditional switches on the input value followed by either a square root (and possibly a division) or a logarithm
 //! and then a series of multiplications and additions by fixed constants and finished with a division.
 //!
-//! The crate provides two approximations of each branch, one with 50 bits of accuracy and one with 24 bits.
-//! The one with 50 bits of accuracy uses higher degree polynomials in the rational functions compared to the one with only 24 bits,
+//! The crate provides two approximations of each branch, one with 50 bits of accuracy (implemented on 64-bit floats) and one with 24 bits
+//! (implemented on 32- and 64-bit floats). The one with 50 bits of accuracy uses higher degree polynomials
+//! in the rational functions compared to the one with only 24 bits,
 //! and thus more of the multiplications and additions by constants.
 //!
-//! This crate can also evaluate the approximation with 24 bits of accuracy on
-//! 32-bit floats, even though it is defined on 64-bit floats in the paper.
+//! This crate can evaluate the approximation with 24 bits of accuracy on
+//! 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
 //! This may result in a reduction in the accuracy to less than 24 bits,
 //! but this reduction has not been quantified by the author of this crate.
 //!
