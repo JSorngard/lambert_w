@@ -136,6 +136,7 @@ compile_error!("at least one of the `std` or `libm` feature flags must be enable
 mod dw0c;
 #[cfg(feature = "50bits")]
 mod dwm1c;
+#[cfg(any(feature = "24bits", feature = "50bits"))]
 mod elementary;
 mod rational;
 #[cfg(feature = "24bits")]
@@ -153,6 +154,7 @@ mod swm1f;
 //            Rounded from -0.367_879_441_171_442_322
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
 
+#[cfg(any(feature = "24bits", feature = "50bits"))]
 /// 1/sqrt(e)
 //         Rounded from 0.606_530_659_712_633_423
 const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
