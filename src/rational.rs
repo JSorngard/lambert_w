@@ -7,7 +7,7 @@
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-pub(crate) fn rational_3_over_3(
+pub(crate) const fn rational_3_over_3(
     x: f64,
     [n0, n1, n2, n3]: [f64; 4],
     [d0, d1, d2, d3]: [f64; 4],
@@ -20,7 +20,7 @@ pub(crate) fn rational_3_over_3(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-pub(crate) fn rational_3_over_3f(
+pub(crate) const fn rational_3_over_3f(
     x: f32,
     [n0, n1, n2, n3]: [f32; 4],
     [d0, d1, d2, d3]: [f32; 4],
@@ -33,7 +33,7 @@ pub(crate) fn rational_3_over_3f(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-pub(crate) fn rational_4_over_3(
+pub(crate) const fn rational_4_over_3(
     x: f64,
     [n0, n1, n2, n3, n4]: [f64; 5],
     [d0, d1, d2, d3]: [f64; 4],
@@ -46,7 +46,7 @@ pub(crate) fn rational_4_over_3(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-pub(crate) fn rational_4_over_3f(
+pub(crate) const fn rational_4_over_3f(
     x: f32,
     [n0, n1, n2, n3, n4]: [f32; 5],
     [d0, d1, d2, d3]: [f32; 4],
@@ -59,7 +59,7 @@ pub(crate) fn rational_4_over_3f(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-pub(crate) fn rational_7_over_7(
+pub(crate) const fn rational_7_over_7(
     x: f64,
     [n0, n1, n2, n3, n4, n5, n6, n7]: [f64; 8],
     [d0, d1, d2, d3, d4, d5, d6, d7]: [f64; 8],
@@ -73,7 +73,7 @@ pub(crate) fn rational_7_over_7(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-pub(crate) fn rational_8_over_7(
+pub(crate) const fn rational_8_over_7(
     x: f64,
     [n0, n1, n2, n3, n4, n5, n6, n7, n8]: [f64; 9],
     [d0, d1, d2, d3, d4, d5, d6, d7]: [f64; 8],
