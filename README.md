@@ -100,6 +100,8 @@ square roots and logarithms during function evaluation instead of the standard l
 `std`: use the standard library to compute square roots and logarithms for a
 potential performance gain. When this feature is disabled the crate is `no_std` compatible.
 
+---
+
 ### License and contribution
 
 <sup>
