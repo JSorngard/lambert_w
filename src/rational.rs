@@ -1,4 +1,4 @@
-//! Rational functions.
+//! Rational functions evaluated with Horner's method.
 
 // The #[inline(always)] annotations are motivated by benchmarks, especially of the 50 bit functions.
 
