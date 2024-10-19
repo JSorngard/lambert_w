@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## Unreleased
+
+- Shortened license section in README.
+
 ## 1.0.0
 
 - Removed the `estrin` feature.
