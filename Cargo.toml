@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics", "no-std::no-alloc"]
@@ -12,7 +12,7 @@ repository = "https://github.com/JSorngard/lambert_w"
 documentation = "https://docs.rs/lambert_w"
 
 [dependencies]
-libm = { version = "0.2.8", optional = true }
+libm = { version = "0.2.9", optional = true }
 
 [dev-dependencies]
 approx = { version = "0.5.1", default-features = false }
