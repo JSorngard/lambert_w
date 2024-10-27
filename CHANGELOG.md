@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.2
+
+- Update `libm` dependency.
+
 ## 1.0.1
 
 - Documentation improvements.
