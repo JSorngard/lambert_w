@@ -59,11 +59,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@1.60.0
+    - uses: dtolnay/rust-toolchain@1.63.0
       with:
         components: clippy
-    - name: clippy_1.60
-      run: cargo +1.60.0 clippy --all-features -- -D warnings
+    - name: clippy_1.63
+      run: cargo +1.63.0 clippy --all-features -- -D warnings
 
   coverage:
     runs-on: ubuntu-latest
