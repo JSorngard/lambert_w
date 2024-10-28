@@ -4,7 +4,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## 1.0.3
 
-- Updated `libm` dependency.
+- Clarify that we do not depend on a specific `libm` patch version.
 - Changed the `rust-version` field in `Cargo.toml` to 1.63
  since that is now the MSRV of `libm`.
 
