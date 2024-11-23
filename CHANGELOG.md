@@ -4,7 +4,7 @@ This file contains the changes to the crate since version 0.1.1.
 
 ## Unreleased
 
-- Add the No standard library category to the crate.
+- Add the "No standard library" category to the crate.
 
 ## 1.0.3
 
