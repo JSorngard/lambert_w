@@ -99,7 +99,7 @@ choice by the user, and wont happen automatically with `cargo update` as before.
 
 ### Breaking changes
 
-- Makde the Lambert W functions return `f64::NAN` when given inputs outside their
+- Made the Lambert W functions return `f64::NAN` when given inputs outside their
  domain. This is in line with how it is usually handled in the standard library.
 
 ### Other changes
