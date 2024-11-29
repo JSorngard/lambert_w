@@ -44,6 +44,14 @@ jobs:
       run: cargo test --no-default-features -F libm && cargo test --no-default-features -F std && cargo test --no-default-features -F libm,std
       #run: cargo install cargo-all-features && cargo test-all-features
 
+  cargo-all-features:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: cargo-all-features
+      run: cargo install cargo-all-features && cargo check-all-features && cargo-test-all-features
+
   doc:
     runs-on: ubuntu-latest
     env:
