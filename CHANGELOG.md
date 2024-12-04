@@ -2,13 +2,19 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.5
+
+- Added a "References" section to the readme and docs.
+- Added a "⬆️ Back to top" link to the end of the readme and docs, just after
+ the references section.
+
 ## 1.0.4
 
-- Add the "No standard library" category to the crate.
+- Added the "No standard library" category to the crate.
 
 ## 1.0.3
 
-- Clarify that we do not depend on a specific `libm` patch version.
+- Clarified that we do not depend on a specific `libm` patch version.
 - Changed the `rust-version` field in `Cargo.toml` to 1.63
  since that is now the MSRV of `libm`.
 
