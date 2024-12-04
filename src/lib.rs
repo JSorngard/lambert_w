@@ -1,5 +1,5 @@
 //! Fast and accurate evaluation of the real valued parts of the principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
-//! with the [method of Toshio Fukushima][1].
+//! with the method of Toshio Fukushima \[[1](#references)\].
 //!
 //! This method works by splitting the domain of the function into subdomains, and on each subdomain it uses a rational function
 //! evaluated on a simple transformation of the input to describe the function.  
@@ -93,7 +93,12 @@
 //! When this feature is disabled the crate is `no_std` compatible.
 //!
 //!
-//! [1]: https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation
+//! ### References
+//! \[1\]: Toshio Fukushima.
+//! **Precise and fast computation of Lambert W function by piecewise minimax
+//! rational function approximation with variable transformation**.
+//! DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128).
+//! November 2020.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 #![forbid(unsafe_code)]
