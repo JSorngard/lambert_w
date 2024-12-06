@@ -91,4 +91,3 @@ jobs:
     - uses: dtolnay/rust-toolchain@nightly
     - uses: obi1kenobi/cargo-semver-checks-action@v2.6
     - name: cargo-semver-checks
-      run: cargo semver-checks
