@@ -54,7 +54,7 @@ jobs:
     - name: document
       run: cargo +nightly doc --all-features
 
-  clippy_lowest_msrv:
+  check_lowest_msrv:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -62,7 +62,9 @@ jobs:
       with:
         components: clippy
     - name: clippy_1.63
-      run: cargo +1.63.0 clippy --all-features -- -D warnings && cargo +1.63.0 build --all-features
+      run: cargo +1.63.0 clippy --all-features -- -D warnings
+    - name: build_1.63
+      run: cargo +1.63.0 build --all-features
 
   coverage:
     runs-on: ubuntu-latest
