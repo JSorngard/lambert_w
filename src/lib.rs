@@ -402,7 +402,7 @@ mod test {
     fn test_lambert_w0() {
         assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
         assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
-        assert_abs_diff_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.999999965255797585943031);
+        assert_abs_diff_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.9999999652557976);
         assert_abs_diff_eq!(
             lambert_w0(-2.678_794_411_714_424e-1),
             -3.993_824_525_397_807e-1
