@@ -388,17 +388,18 @@ impl LambertW for f64 {
 
 #[cfg(test)]
 mod test {
-    use super::LambertW;
+    use super::{
+        lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1, LambertW,
+    };
+    use crate::NEG_INV_E;
 
-    use super::{lambert_w0, lambert_wm1};
-
-    use super::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
     use approx::assert_abs_diff_eq;
-    use core::f64::consts::E;
 
     #[test]
     fn test_lambert_w0() {
-        assert!(lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
+        assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+        assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
+        assert_abs_diff_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.9999999652557976);
         assert_abs_diff_eq!(
             lambert_w0(-2.678_794_411_714_424e-1),
             -3.993_824_525_397_807e-1
@@ -471,7 +472,8 @@ mod test {
 
     #[test]
     fn test_sp_lambert_w0() {
-        assert!(sp_lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
+        assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+        assert_abs_diff_eq!(sp_lambert_w0(NEG_INV_E), -1.0, epsilon = 1e-7);
         assert_abs_diff_eq!(
             sp_lambert_w0(-2.678_794_411_714_424e-1),
             -3.993_824_525_397_807e-1,
@@ -580,6 +582,7 @@ mod test {
     #[test]
     fn test_lambert_w0f() {
         assert!(lambert_w0f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
+        assert_abs_diff_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
         assert_abs_diff_eq!(
             lambert_w0f(-2.678_794_3e-1),
             -3.993_824_4e-1,
@@ -611,7 +614,8 @@ mod test {
 
     #[test]
     fn test_lambert_wm1() {
-        assert!(lambert_wm1(-1.0 / E - f64::EPSILON).is_nan());
+        assert!(lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+        assert_abs_diff_eq!(lambert_wm1(NEG_INV_E), -1.0);
         assert_abs_diff_eq!(
             lambert_wm1(-3.578_794_411_714_423e-1),
             -1.253493791367214,
@@ -661,7 +665,8 @@ mod test {
 
     #[test]
     fn test_sp_lambert_wm1() {
-        assert!(sp_lambert_wm1(-1.0 / E - f64::EPSILON).is_nan());
+        assert!(sp_lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+        assert_abs_diff_eq!(sp_lambert_wm1(NEG_INV_E), -1.0, epsilon = 1e-7);
         assert_abs_diff_eq!(
             sp_lambert_wm1(-3.578_794_411_714_423e-1),
             -1.253493791367214,
@@ -712,7 +717,8 @@ mod test {
 
     #[test]
     fn test_lambert_wm1f() {
-        assert!(lambert_wm1f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
+        assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+        assert_abs_diff_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
         assert_abs_diff_eq!(lambert_wm1f(-3.578_794_3e-1), -1.253_493_8, epsilon = 1e-6);
         assert_abs_diff_eq!(lambert_wm1f(-2.678_794_3e-1), -2.020_625, epsilon = 1e-7);
         assert_abs_diff_eq!(lambert_wm1f(-1e-1), -3.577_152, epsilon = 1e-6);
