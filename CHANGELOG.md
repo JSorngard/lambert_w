@@ -2,6 +2,11 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.6
+
+- Added more unit tests that verify and showcase the accuracy of the
+ functions also at the branch point.
+
 ## 1.0.5
 
 - Added a "References" section to the readme and docs.
