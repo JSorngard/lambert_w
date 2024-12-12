@@ -388,15 +388,14 @@ impl LambertW for f64 {
 
 #[cfg(test)]
 mod test {
+    use super::{
+        lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1, LambertW,
+    };
     use crate::NEG_INV_E;
 
-    use super::LambertW;
-
-    use super::{
-        lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
-    };
-    use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
+
+    use approx::assert_abs_diff_eq;
 
     #[test]
     fn test_lambert_w0() {
