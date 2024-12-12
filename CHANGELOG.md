@@ -6,7 +6,8 @@ This file contains the changes to the crate since version 0.1.1.
 
 - Added more unit tests that verify and showcase the accuracy of the
  functions also at the branch point.
-- Made the CI verify the MSRV using `cargo-msrv`.
+- Verify the MSRV in CI using `cargo-msrv`.
+- Check semver compatibility in CI using `cargo-semver-checks`.
 
 ## 1.0.5
 
