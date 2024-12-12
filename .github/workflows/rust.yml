@@ -58,7 +58,7 @@ jobs:
     - name: document
       run: cargo +nightly doc --all-features
 
-  check_lowest_msrv:
+  verify_rust_version:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
