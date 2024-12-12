@@ -94,7 +94,6 @@
 //! `std`: use the standard library to compute square roots and logarithms for a potential performance gain.
 //! When this feature is disabled the crate is `no_std` compatible.
 //!
-//!
 //! ## References
 //!
 //! \[1\]: Toshio Fukushima.
