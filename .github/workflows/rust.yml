@@ -62,13 +62,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@1.63.0
+    - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
-    - name: clippy_1.63
-      run: cargo +1.63.0 clippy --all-features -- -D warnings
-    - name: build_1.63
-      run: cargo +1.63.0 build --all-features
+    - name: install cargo-msrv
+      run: cargo install cargo-msrv
+    - name: verify msrv
+      run: cargo msrv verify
 
   coverage:
     runs-on: ubuntu-latest
