@@ -2,9 +2,9 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
-## 1.0.7
+## Unreleased
 
-- Improve the description of the method that the crate uses.
+- Added details to the description of the method that the crate uses.
 
 ## 1.0.6
 
