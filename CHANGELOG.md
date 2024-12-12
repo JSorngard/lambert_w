@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.7
+
+- Improve the description of the method that the crate uses.
+
 ## 1.0.6
 
 - Added more unit tests that verify and showcase the accuracy of the
