@@ -19,7 +19,7 @@ and on each subdomain it uses a rational function
 evaluated on a simple transformation of the input to describe the function.  
 It is implemented in code as conditional switches on the input value followed by
 either a square root (and possibly a division) or a logarithm, then a series
-of multiplications and additions by fixed constants, and finally finished with a division.
+of multiplications and additions by fixed constants from a look-up table, and finally finished with a division.
 
 The crate provides two approximations of each branch, one with 50 bits of
 accuracy (implemented on 64-bit floats) and one with 24 bits
