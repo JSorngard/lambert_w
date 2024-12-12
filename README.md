@@ -10,12 +10,16 @@ Fast and accurate evaluation of the real valued parts of the principal and
 secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
 with the method of Toshio Fukushima \[[1](#references)\].
 
-This method works by splitting the domain of the function into subdomains,
+This method uses no recursion, loops, memory allocation,
+or any kind of iterative procedure other than what might
+already exist in the logarithm, square root or division
+implementations on your platform.  
+Instead it works by splitting the domain of the function into subdomains,
 and on each subdomain it uses a rational function
 evaluated on a simple transformation of the input to describe the function.  
 It is implemented in code as conditional switches on the input value followed by
-either a square root (and possibly a division) or a logarithm and then a series
-of multiplications and additions by fixed constants and finished with a division.
+either a square root (and possibly a division) or a logarithm, then a series
+of multiplications and additions by fixed constants, and finally finished with a division.
 
 The crate provides two approximations of each branch, one with 50 bits of
 accuracy (implemented on 64-bit floats) and one with 24 bits
