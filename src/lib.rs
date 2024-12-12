@@ -388,17 +388,23 @@ impl LambertW for f64 {
 
 #[cfg(test)]
 mod test {
+    use crate::NEG_INV_E;
+
     use super::LambertW;
 
-    use super::{lambert_w0, lambert_wm1};
-
-    use super::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
+    use super::{
+        lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
+    };
     use approx::assert_abs_diff_eq;
     use core::f64::consts::E;
 
     #[test]
     fn test_lambert_w0() {
-        assert!(lambert_w0(-1.0 / E - f64::EPSILON).is_nan());
+        assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+        assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
+        // TODO: Find out why this tiny step in z-value results in such a large
+        // decrease in accuracy.
+        assert_abs_diff_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -1.0, epsilon = 1e-7);
         assert_abs_diff_eq!(
             lambert_w0(-2.678_794_411_714_424e-1),
             -3.993_824_525_397_807e-1
