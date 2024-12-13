@@ -4,7 +4,7 @@
 //! with the method of Toshio Fukushima \[[1](#references)\].
 //!
 //! This method is not iterative, and it doesn't allocate memory or use recursion or loops,
-//! except for what might already be included in your platform's built-in implementations of the logarithm, square root, and division.
+//! except for what might already be included in the implementations of the logarithm and square root functions.
 //!
 //! Instead it works by dividing the function’s domain into subdomains. For each one,
 //! it uses a simple transformation of the input inserted into a rational function to approximate the function's value.
