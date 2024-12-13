@@ -3,9 +3,9 @@
 //! Fast and accurate evaluation of the real valued parts of the principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
 //! with the method of Toshio Fukushima \[[1](#references)\].
 //!
-//! This method works by dividing the function's domain into subdomains. For each one,
-//! it uses a simple transformation of the input inserted into a rational function
-//! to approximate the function's value.
+//! This method works by dividing the function's domain into subdomains.
+//! On each one, it uses a simple transformation of the input inserted
+//! into a rational function to approximate the function's value.
 //!
 //! The method is not iterative, it doesn't allocate memory, and it doesn't use
 //! recursion or loops except for what might already be included in the
