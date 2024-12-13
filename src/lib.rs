@@ -4,14 +4,14 @@
 //! with the method of Toshio Fukushima \[[1](#references)\].
 //!
 //! This method is not iterative, and it doesn't allocate memory or use recursion or loops,
-//! except for what might already be included in your platform's built-in
-//! implementations of the logarithm, square root, and division.  
-//! Instead it works by splitting the domain of the function into subdomains,
-//! and on each subdomain it uses a rational function evaluated on a simple transformation of
-//! the input to describe the function.  
-//! It is implemented in code as conditional switches on the input value followed by
-//! either a square root (and possibly a division) or a logarithm, then a series
-//! of multiplications and additions by fixed constants from a look-up table, and finally finished with a division.
+//! except for what might already be included in your platform's built-in implementations of the logarithm, square root, and division.
+//!
+//! Instead it works by dividing the function’s domain into subdomains. For each one,
+//! it uses a simple transformation of the input inserted into a rational function to approximate the function's value.
+//!
+//! The implementation uses conditional switches on the input value to select the appropriate subdomain,
+//! followed by either a square root (and possibly a division) or a logarithm.
+//! Then it performs a series of multiplications and additions using constants from a look-up table, and finishes the calculation with a division.
 //!
 //! The crate provides two approximations of each branch, one with 50 bits of accuracy (implemented on 64-bit floats) and one with 24 bits
 //! (implemented on 32- and 64-bit floats). The one with 50 bits of accuracy uses higher degree polynomials
