@@ -1,4 +1,4 @@
-//! # `lambert_w`
+//! # lambert_w
 //!
 //! Fast and accurate evaluation of the real valued parts of the principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
 //! with the method of Toshio Fukushima \[[1](#references)\].
