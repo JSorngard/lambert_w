@@ -1,4 +1,4 @@
-# lambert_w
+# `lambert_w`
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
 [![docs.rs](https://img.shields.io/docsrs/lambert_w?logo=docs.rs)](https://docs.rs/lambert_w/latest/lambert_w/)
@@ -10,18 +10,18 @@ Fast and accurate evaluation of the real valued parts of the principal and
 secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
 with the method of Toshio Fukushima \[[1](#references)\].
 
-This method is not iterative, it doesn't allocate memory, and it doesn't use recursion or loops
-except for what might already be included in the implementations of
-the logarithm and square root functions.
+This method is not iterative, it doesn't allocate memory, and it doesn't use
+recursion or loops except for what might already be included in the
+implementations of the logarithm and square root functions.
 
 Instead it works by dividing the function’s domain into subdomains. For each one,
 it uses a simple transformation of the input inserted into a rational function
 to approximate the function's value.
 
-The implementation uses conditional switches on the input value to select the appropriate subdomain,
-followed by either a square root (and possibly a division) or a logarithm.
-Then it performs a series of multiplications and additions using constants from a look-up table,
-and finishes the calculation with a division.
+The implementation uses conditional switches on the input value to select the
+appropriate subdomain, followed by either a square root (and possibly a division)
+or a logarithm. Then it performs a series of multiplications and additions
+using constants from a look-up table, and finishes the calculation with a division.
 
 The crate provides two approximations of each branch, one with 50 bits of
 accuracy (implemented on 64-bit floats) and one with 24 bits
