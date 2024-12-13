@@ -4,12 +4,8 @@
 //! with the method of Toshio Fukushima \[[1](#references)\].
 //!
 //! This method works by dividing the function's domain into subdomains.
-//! On each one, it uses a simple transformation of the input inserted
-//! into a rational function to approximate the function's value.
-//!
-//! The method is not iterative, it doesn't allocate memory, and it doesn't use
-//! recursion or loops except for what might already be included in the
-//! implementations of the logarithm and square root functions.
+//! On each one, it uses a simple transformation of the input inserted into
+//! a rational function to approximate the function's value.
 //!
 //! The implementation uses conditional switches on the input value
 //! to select the appropriate subdomain, followed by either a square root
