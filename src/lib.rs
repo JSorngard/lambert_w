@@ -10,7 +10,7 @@
 //! The implementation uses conditional switches on the input value
 //! to select the appropriate subdomain, followed by either a square root
 //! (and possibly a division) or a logarithm. Then it performs a series of
-//! multiplications and additions using constants from a look-up table,
+//! additions and multiplications by constants from a look-up table,
 //! and finishes the calculation with a division.
 //!
 //! The crate provides two approximations of each branch, one with 50 bits of accuracy
