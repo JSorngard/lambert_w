@@ -171,6 +171,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
@@ -201,6 +202,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_wm1(z: f64) -> f64 {
     swm1::swm1(z)
 }
@@ -230,6 +232,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
@@ -263,6 +266,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
@@ -293,6 +297,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
@@ -327,6 +332,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }
@@ -354,6 +360,7 @@ impl LambertW for f32 {
     ///
     /// Delegates to the [`lambert_w0f`] function.
     #[inline]
+    #[must_use = "this is a pure function that only returns a value and has no side effects"]
     fn lambert_w0(self) -> Self::Output {
         lambert_w0f(self)
     }
@@ -365,6 +372,7 @@ impl LambertW for f32 {
     ///
     /// Delegates to the [`lambert_wm1f`] function.
     #[inline]
+    #[must_use = "this is a pure function that only returns a value and has no side effects"]
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1f(self)
     }
@@ -378,6 +386,7 @@ impl LambertW for f64 {
     ///
     /// Delegates to the [`lambert_w0`] function.
     #[inline]
+    #[must_use = "this is a pure function that only returns a value and has no side effects"]
     fn lambert_w0(self) -> Self::Output {
         lambert_w0(self)
     }
@@ -387,6 +396,7 @@ impl LambertW for f64 {
     ///
     /// Delegates to the [`lambert_wm1`] function.
     #[inline]
+    #[must_use = "this is a pure function that only returns a value and has no side effects"]
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1(self)
     }
