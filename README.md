@@ -45,7 +45,7 @@ use lambert_w::lambert_w0;
 
 let Ω = lambert_w0(1.0);
 
-assert_abs_diff_eq!(Ω, 0.5671432904097839);
+assert_relative_eq!(Ω, 0.5671432904097839);
 ```
 
 Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
@@ -55,7 +55,7 @@ use lambert_w::lambert_wm1;
 
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
-assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+assert_relative_eq!(mln4, -f64::ln(4.0));
 ```
 
 Do it on 32-bit floats:
@@ -66,8 +66,8 @@ use lambert_w::{lambert_w0f, lambert_wm1f};
 let Ω = lambert_w0f(1.0);
 let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
 
-assert_abs_diff_eq!(Ω, 0.56714329);
-assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+assert_relative_eq!(Ω, 0.56714329);
+assert_relative_eq!(mln4, -f32::ln(4.0));
 ```
 
 The implementation can handle extreme inputs just as well:
@@ -89,7 +89,7 @@ use lambert_w::LambertW;
 
 let z = 2.0 * f64::ln(2.0);
 
-assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
+assert_relative_eq!(z.lambert_w0(), f64::ln(2.0));
 ```
 
 ## Features
