@@ -206,33 +206,29 @@ fn test_sp_lambert_w0() {
 fn test_lambert_w0f() {
     assert!(lambert_w0f(-1.0 / core::f32::consts::E - f32::EPSILON).is_nan());
     assert_relative_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
-    assert_relative_eq!(
-        lambert_w0f(-2.678_794_3e-1),
-        -3.993_824_4e-1,
-        epsilon = 1e-7
-    );
-    assert_relative_eq!(lambert_w0f(6.321_205_5e-1), 4.167_04e-1, epsilon = 1e-7);
-    assert_relative_eq!(lambert_w0f(9.632_12), 1.721_757_8, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(9.963_212e1), 3.382_785_3, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(9.996_321_4e2), 5.249_294, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(9.999_632e3), 7.231_814, epsilon = 1e-7);
-    assert_relative_eq!(lambert_w0f(9.999_963e4), 9.284_568, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1, epsilon = 1e-8);
-    assert_relative_eq!(lambert_w0f(1e7), 1.351_434_4e1, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(1e8), 1.566_899_7e1, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(1e9), 1.784_172_6e1, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(1e10), 2.002_868_5e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e11), 2.222_712_3e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e12), 2.443_500_5e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e13), 2.665_078_7e1, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(1e14), 2.887_327_6e1, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(1e15), 3.110_152e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e16), 3.333_476_3e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e17), 3.557_237_6e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e18), 3.781_385_4e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(1e19), 4.005_877e1, epsilon = 1e-6);
-    assert_relative_eq!(lambert_w0f(1e20), 4.230_675_5e1, epsilon = 1e-5);
-    assert_relative_eq!(lambert_w0f(f32::MAX), 84.288_59, epsilon = 1e-5);
+    assert_relative_eq!(lambert_w0f(-2.678_794_3e-1), -3.993_824_4e-1,);
+    assert_relative_eq!(lambert_w0f(6.321_205_5e-1), 4.167_04e-1);
+    assert_relative_eq!(lambert_w0f(9.632_12), 1.721_757_8);
+    assert_relative_eq!(lambert_w0f(9.963_212e1), 3.382_785_3, max_relative = 1e-6);
+    assert_relative_eq!(lambert_w0f(9.996_321_4e2), 5.249_294);
+    assert_relative_eq!(lambert_w0f(9.999_632e3), 7.231_814);
+    assert_relative_eq!(lambert_w0f(9.999_963e4), 9.284_568);
+    assert_relative_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1);
+    assert_relative_eq!(lambert_w0f(1e7), 1.351_434_4e1);
+    assert_relative_eq!(lambert_w0f(1e8), 1.566_899_7e1);
+    assert_relative_eq!(lambert_w0f(1e9), 1.784_172_6e1);
+    assert_relative_eq!(lambert_w0f(1e10), 2.002_868_5e1);
+    assert_relative_eq!(lambert_w0f(1e11), 2.222_712_3e1);
+    assert_relative_eq!(lambert_w0f(1e12), 2.443_500_5e1, max_relative = 1e-6);
+    assert_relative_eq!(lambert_w0f(1e13), 2.665_078_7e1);
+    assert_relative_eq!(lambert_w0f(1e14), 2.887_327_6e1);
+    assert_relative_eq!(lambert_w0f(1e15), 3.110_152e1);
+    assert_relative_eq!(lambert_w0f(1e16), 3.333_476_3e1);
+    assert_relative_eq!(lambert_w0f(1e17), 3.557_237_6e1);
+    assert_relative_eq!(lambert_w0f(1e18), 3.781_385_4e1);
+    assert_relative_eq!(lambert_w0f(1e19), 4.005_877e1);
+    assert_relative_eq!(lambert_w0f(1e20), 4.230_675_5e1);
+    assert_relative_eq!(lambert_w0f(f32::MAX), 84.288_59);
 }
 
 #[test]
