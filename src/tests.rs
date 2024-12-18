@@ -238,42 +238,37 @@ fn test_lambert_wm1() {
     assert_relative_eq!(
         lambert_wm1(-3.578_794_411_714_423e-1),
         -1.253493791367214,
-        epsilon = 1e-14
+        max_relative = 4e-16
     );
-    assert_relative_eq!(
-        lambert_wm1(-2.678_794_411_714_424e-1),
-        -2.020625228775403,
-        epsilon = 1e-14
-    );
+    assert_relative_eq!(lambert_wm1(-2.678_794_411_714_424e-1), -2.020625228775403,);
     assert_relative_eq!(lambert_wm1(-1e-1), -3.577152063957297);
     assert_relative_eq!(lambert_wm1(-3e-2), -5.144482721515681);
-    assert_relative_eq!(lambert_wm1(-1e-2), -6.472775124394005, epsilon = 1e-14);
-    assert_relative_eq!(lambert_wm1(-3e-3), -7.872521380098709, epsilon = 1e-14);
-    assert_relative_eq!(lambert_wm1(-1e-3), -9.118006470402742, epsilon = 1e-14);
+    assert_relative_eq!(lambert_wm1(-1e-2), -6.472775124394005, max_relative = 5e-16);
+    assert_relative_eq!(lambert_wm1(-3e-3), -7.872521380098709, max_relative = 5e-16);
+    assert_relative_eq!(lambert_wm1(-1e-3), -9.118006470402742);
     assert_relative_eq!(
         lambert_wm1(-3.000_000_000_000_001e-4),
         -1.045_921_112_040_1e1,
-        epsilon = 1e-14
+        max_relative = 5e-16
     );
     assert_relative_eq!(
         lambert_wm1(-1e-4),
         -1.166_711_453_256_636e1,
-        epsilon = 1e-14
+        max_relative = 5e-16
     );
     assert_relative_eq!(
         lambert_wm1(-3e-5),
         -1.297_753_279_184_081e1,
-        epsilon = 1e-14
+        max_relative = 5e-16
     );
     assert_relative_eq!(
         lambert_wm1(-1e-5),
         -1.416_360_081_581_018e1,
-        epsilon = 1e-14
+        max_relative = 5e-16
     );
     assert_relative_eq!(
         lambert_wm1(-1.000000000000004e-75),
         -1.778_749_628_219_512e2,
-        epsilon = 1e-13
     );
     assert_relative_eq!(
         lambert_wm1(-1.000000000000008e-145),
