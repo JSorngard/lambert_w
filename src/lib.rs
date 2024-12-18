@@ -32,36 +32,36 @@
 //! Compute the value of the [omega constant](https://en.wikipedia.org/wiki/Omega_constant) with the principal branch of the Lambert W function:
 //!
 //! ```
-//! # use approx::assert_relative_eq;
+//! # use approx::assert_abs_diff_eq;
 //! use lambert_w::lambert_w0;
 //!
 //! let Ω = lambert_w0(1.0);
 //!
-//! assert_relative_eq!(Ω, 0.5671432904097839);
+//! assert_abs_diff_eq!(Ω, 0.5671432904097839);
 //! ```
 //!
 //! Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 //!
 //! ```
-//! # use approx::assert_relative_eq;
+//! # use approx::assert_abs_diff_eq;
 //! use lambert_w::lambert_wm1;
 //!
 //! let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 //!
-//! assert_relative_eq!(mln4, -f64::ln(4.0));
+//! assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 //! ```
 //!
 //! Do it on 32-bit floats:
 //!
 //!```
-//!# use approx::assert_relative_eq;
+//!# use approx::assert_abs_diff_eq;
 //! use lambert_w::{lambert_w0f, lambert_wm1f};
 //!
 //! let Ω = lambert_w0f(1.0);
 //! let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
 //!
-//! assert_relative_eq!(Ω, 0.56714329);
-//! assert_relative_eq!(mln4, -f32::ln(4.0));
+//! assert_abs_diff_eq!(Ω, 0.56714329);
+//! assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 //! ```
 //!
 //! The implementation can handle extreme inputs just as well:
@@ -80,16 +80,16 @@
 //! Importing the [`LambertW`] trait lets you call the functions with postfix notation:
 //!
 //! ```
-//! # use approx::assert_relative_eq;
+//! # use approx::assert_abs_diff_eq;
 //! use lambert_w::LambertW;
 //!
 //! let z = 2.0 * f64::ln(2.0);
 //!
-//! assert_relative_eq!(z.lambert_w0(), f64::ln(2.0));
+//! assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 //! ```
 //!
-//! The macro is from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and is used in the documentation examples of this crate.
-//! The assertion passes if the two supplied values have a relative difference smaller than either the floating point epsilon or an optional value.
+//! The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and are used in the documentation examples of this crate.
+//! The assertion passes if the two supplied values are the same to within floating point error, or within an optional epsilon or relative difference.
 //!
 //! ## Features
 //!
