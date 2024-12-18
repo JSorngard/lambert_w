@@ -3,81 +3,62 @@ use super::{
     NEG_INV_E,
 };
 
-use approx::assert_abs_diff_eq;
+use approx::{assert_abs_diff_eq, assert_relative_eq};
 
 #[test]
 fn test_lambert_w0() {
     assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
-    assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
-    assert_abs_diff_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.9999999652557976);
-    assert_abs_diff_eq!(
+    assert_relative_eq!(lambert_w0(NEG_INV_E), -1.0);
+    assert_relative_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.9999999652557976);
+    assert_relative_eq!(
         lambert_w0(-2.678_794_411_714_424e-1),
         -3.993_824_525_397_807e-1
     );
-    assert_abs_diff_eq!(
+    assert_relative_eq!(
         lambert_w0(6.321_205_588_285_577e-1),
         4.167_039_988_177_658e-1
     );
-    assert_abs_diff_eq!(lambert_w0(9.632120558828557), 1.721757710976171);
-    assert_abs_diff_eq!(lambert_w0(9.963_212_055_882_856e1), 3.382785211058958);
-    assert_abs_diff_eq!(lambert_w0(9.996_321_205_588_285e2), 5.249293782013269);
-    assert_abs_diff_eq!(
-        lambert_w0(9.999_632_120_558_828e3),
-        7.231813718542178,
-        epsilon = 1e-14
-    );
-    assert_abs_diff_eq!(lambert_w0(9.999_963_212_055_883e4), 9.284_568_107_521_96);
-    assert_abs_diff_eq!(lambert_w0(9.999_996_321_205_589e5), 1.138_335_774_796_812e1);
-    assert_abs_diff_eq!(lambert_w0(9.999_999_632_120_559e6), 1.351_434_397_605_273e1);
-    assert_abs_diff_eq!(
-        lambert_w0(9.999_999_963_212_056e7),
-        1.566_899_671_199_287e1,
-        epsilon = 1e-14
-    );
-    assert_abs_diff_eq!(
-        lambert_w0(9.999_999_996_321_206e8),
-        1.784_172_596_707_312e1,
-        epsilon = 1e-14
-    );
-    assert_abs_diff_eq!(
-        lambert_w0(9.999_999_999_632_12e9),
-        2.002_868_541_326_992e1,
-        epsilon = 1e-14
-    );
-    assert_abs_diff_eq!(
+    assert_relative_eq!(lambert_w0(9.632120558828557), 1.721757710976171);
+    assert_relative_eq!(lambert_w0(9.963_212_055_882_856e1), 3.382785211058958);
+    assert_relative_eq!(lambert_w0(9.996_321_205_588_285e2), 5.249293782013269);
+    assert_relative_eq!(lambert_w0(9.999_632_120_558_828e3), 7.231813718542178);
+    assert_relative_eq!(lambert_w0(9.999_963_212_055_883e4), 9.284_568_107_521_96);
+    assert_relative_eq!(lambert_w0(9.999_996_321_205_589e5), 1.138_335_774_796_812e1);
+    assert_relative_eq!(lambert_w0(9.999_999_632_120_559e6), 1.351_434_397_605_273e1);
+    assert_relative_eq!(lambert_w0(9.999_999_963_212_056e7), 1.566_899_671_199_287e1);
+    assert_relative_eq!(lambert_w0(9.999_999_996_321_206e8), 1.784_172_596_707_312e1);
+    assert_relative_eq!(lambert_w0(9.999_999_999_632_12e9), 2.002_868_541_326_992e1);
+    assert_relative_eq!(
         lambert_w0(9.999_999_999_963_213e10),
         2.222_712_273_495_755e1
     );
-    assert_abs_diff_eq!(
+    assert_relative_eq!(
         lambert_w0(9.999_999_999_996_321e11),
-        2.443_500_440_493_456e1,
-        epsilon = 1e-14
+        2.443_500_440_493_456e1
     );
-    assert_abs_diff_eq!(
+    assert_relative_eq!(
         lambert_w0(9.999_999_999_999_633e12),
-        2.665_078_750_870_219e1,
-        epsilon = 1e-14
+        2.665_078_750_870_219e1
     );
-    assert_abs_diff_eq!(
-        lambert_w0(9.999_999_999_999_963e13),
-        2.887_327_487_929_93e1,
-        epsilon = 1e-14
-    );
-    assert_abs_diff_eq!(
+    assert_relative_eq!(lambert_w0(9.999_999_999_999_963e13), 2.887_327_487_929_93e1);
+    assert_relative_eq!(
         lambert_w0(9.999_999_999_999_996e14),
-        3.110_151_971_159_478e1,
-        epsilon = 1e-14
+        3.110_151_971_159_478e1
     );
-    assert_abs_diff_eq!(lambert_w0(1e16), 3.333_476_076_844_818e1, epsilon = 1e-14);
-    assert_abs_diff_eq!(lambert_w0(1e17), 3.557_237_716_651_325e1);
-    assert_abs_diff_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1, epsilon = 1e-14);
-    assert_abs_diff_eq!(lambert_w0(1e19), 4.005_876_916_198_432e1, epsilon = 1e-14);
-    assert_abs_diff_eq!(lambert_w0(1e20), 4.230_675_509_173_839e1);
-    assert_abs_diff_eq!(lambert_w0(1e40), 8.763_027_715_194_72e1);
-    assert_abs_diff_eq!(lambert_w0(1e80), 1.790_193_137_415_062e2, epsilon = 1e-13);
-    assert_abs_diff_eq!(lambert_w0(1e120), 2.707_091_661_024_979e2, epsilon = 1e-13);
-    assert_abs_diff_eq!(lambert_w0(1e160), 3.625_205_337_614_976e2);
-    assert_abs_diff_eq!(lambert_w0(f64::MAX), 703.2270331047702, epsilon = 1e-12);
+    assert_relative_eq!(lambert_w0(1e16), 3.333_476_076_844_818e1);
+    assert_relative_eq!(lambert_w0(1e17), 3.557_237_716_651_325e1);
+    assert_relative_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1);
+    assert_relative_eq!(lambert_w0(1e19), 4.005_876_916_198_432e1);
+    assert_relative_eq!(lambert_w0(1e20), 4.230_675_509_173_839e1);
+    assert_relative_eq!(lambert_w0(1e40), 8.763_027_715_194_72e1);
+    assert_relative_eq!(lambert_w0(1e80), 1.790_193_137_415_062e2);
+    assert_relative_eq!(lambert_w0(1e120), 2.707_091_661_024_979e2);
+    assert_relative_eq!(lambert_w0(1e160), 3.625_205_337_614_976e2);
+    assert_relative_eq!(
+        lambert_w0(f64::MAX),
+        703.2270331047702,
+        max_relative = 4e-16
+    );
 }
 
 #[test]
