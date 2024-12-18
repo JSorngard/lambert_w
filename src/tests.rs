@@ -280,51 +280,71 @@ fn test_lambert_wm1() {
 #[test]
 fn test_sp_lambert_wm1() {
     assert!(sp_lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
-    assert_relative_eq!(sp_lambert_wm1(NEG_INV_E), -1.0, epsilon = 1e-7);
+    assert_relative_eq!(sp_lambert_wm1(NEG_INV_E), -1.0, max_relative = 1e-7);
     assert_relative_eq!(
         sp_lambert_wm1(-3.578_794_411_714_423e-1),
         -1.253493791367214,
-        epsilon = 1e-7
+        max_relative = 1e-7
     );
     assert_relative_eq!(
         sp_lambert_wm1(-2.678_794_411_714_424e-1),
         -2.020625228775403,
-        epsilon = 1e-7
+        max_relative = 1e-7,
     );
-    assert_relative_eq!(sp_lambert_wm1(-1e-1), -3.577152063957297, epsilon = 1e-9);
-    assert_relative_eq!(sp_lambert_wm1(-3e-2), -5.144482721515681, epsilon = 1e-9);
-    assert_relative_eq!(sp_lambert_wm1(-1e-2), -6.472775124394005, epsilon = 1e-6);
-    assert_relative_eq!(sp_lambert_wm1(-3e-3), -7.872521380098709, epsilon = 1e-6);
-    assert_relative_eq!(sp_lambert_wm1(-1e-3), -9.118006470402742, epsilon = 1e-6);
+    assert_relative_eq!(
+        sp_lambert_wm1(-1e-1),
+        -3.577152063957297,
+        max_relative = 1e-9
+    );
+    assert_relative_eq!(
+        sp_lambert_wm1(-3e-2),
+        -5.144482721515681,
+        max_relative = 1e-9
+    );
+    assert_relative_eq!(
+        sp_lambert_wm1(-1e-2),
+        -6.472775124394005,
+        max_relative = 1e-7
+    );
+    assert_relative_eq!(
+        sp_lambert_wm1(-3e-3),
+        -7.872521380098709,
+        max_relative = 1e-7
+    );
+    assert_relative_eq!(
+        sp_lambert_wm1(-1e-3),
+        -9.118006470402742,
+        max_relative = 1e-7
+    );
     assert_relative_eq!(
         sp_lambert_wm1(-3.000_000_000_000_001e-4),
         -1.045_921_112_040_1e1,
-        epsilon = 1e-6
+        max_relative = 1e-7
     );
     assert_relative_eq!(
         sp_lambert_wm1(-1e-4),
         -1.166_711_453_256_636e1,
-        epsilon = 1e-6
+        max_relative = 1e-7
     );
     assert_relative_eq!(
         sp_lambert_wm1(-3e-5),
         -1.297_753_279_184_081e1,
-        epsilon = 1e-6
+        max_relative = 1e-7
     );
     assert_relative_eq!(
         sp_lambert_wm1(-1e-5),
         -1.416_360_081_581_018e1,
-        epsilon = 1e-6
+        max_relative = 1e-7
     );
     assert_relative_eq!(
         sp_lambert_wm1(-1.000000000000004e-75),
         -1.778_749_628_219_512e2,
-        epsilon = 1e-5
+        max_relative = 1e-7
     );
     assert_relative_eq!(
         sp_lambert_wm1(-1.000000000000008e-145),
         -3.397_029_099_254_29e2,
-        epsilon = 1e-4
+        max_relative = 1e-7
     );
     assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
 }
