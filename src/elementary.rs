@@ -6,7 +6,7 @@
 // correct sqrt/ln at the caller does not add extra code, but skips an extra indirection.
 
 #[inline(always)]
-pub(crate) fn sqrt(x: f64) -> f64 {
+pub fn sqrt(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
         x.sqrt()
@@ -24,7 +24,7 @@ pub(crate) fn sqrt(x: f64) -> f64 {
 }
 
 #[inline(always)]
-pub(crate) fn sqrtf(x: f32) -> f32 {
+pub fn sqrtf(x: f32) -> f32 {
     #[cfg(feature = "std")]
     {
         x.sqrt()
@@ -42,7 +42,7 @@ pub(crate) fn sqrtf(x: f32) -> f32 {
 }
 
 #[inline(always)]
-pub(crate) fn ln(x: f64) -> f64 {
+pub fn ln(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
         x.ln()
@@ -60,7 +60,7 @@ pub(crate) fn ln(x: f64) -> f64 {
 }
 
 #[inline(always)]
-pub(crate) fn lnf(x: f32) -> f32 {
+pub fn lnf(x: f32) -> f32 {
     #[cfg(feature = "std")]
     {
         x.ln()
