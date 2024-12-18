@@ -5,6 +5,7 @@ This file contains the changes to the crate since version 0.1.1.
 ## Unreleased
 
 - Added details to the description of the method that the crate uses.
+- Moved tests to their own file.
 
 ## 1.0.6
 
