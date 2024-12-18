@@ -381,16 +381,16 @@ fn test_trait_impl_on_f64() {
     assert_relative_eq!(
         (-3.578_794_411_714_423e-1_f64).lambert_wm1(),
         -1.253493791367214,
-        epsilon = 1e-14
+        max_relative = 4e-16
     );
 }
 
 #[test]
 fn test_trait_impl_on_f32() {
-    assert_relative_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1, epsilon = 1e-7);
+    assert_relative_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1);
     assert_relative_eq!(
         (-3.578_794_3e-1_f32).lambert_wm1(),
         -1.253_493_8,
-        epsilon = 1e-6
+        max_relative = 1e-6
     );
 }
