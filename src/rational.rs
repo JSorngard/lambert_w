@@ -81,7 +81,7 @@ mod test {
     use approx::assert_abs_diff_eq;
 
     #[test]
-    fn test_rational_3_over_3() {
+    fn sanity_check_rational_3_over_3() {
         let n = [1.0, 2.0, 3.0, 4.0];
         let d = [5.0, 6.0, 7.0, 8.0];
         let x = 1.0;
@@ -90,7 +90,7 @@ mod test {
     }
 
     #[test]
-    fn test_rational_3_over_3f() {
+    fn sanity_check_rational_3_over_3f() {
         let n = [1.0, 2.0, 3.0, 4.0];
         let d = [5.0, 6.0, 7.0, 8.0];
         let x = 1.0;
@@ -99,7 +99,7 @@ mod test {
     }
 
     #[test]
-    fn test_rational_4_over_3() {
+    fn sanity_check_rational_4_over_3() {
         let n = [1.0, 2.0, 3.0, 4.0, 5.0];
         let d = [6.0, 7.0, 8.0, 9.0];
         let x = 1.0;
@@ -108,7 +108,7 @@ mod test {
     }
 
     #[test]
-    fn test_rational_4_over_3f() {
+    fn sanity_check_rational_4_over_3f() {
         let n = [1.0, 2.0, 3.0, 4.0, 5.0];
         let d = [6.0, 7.0, 8.0, 9.0];
         let x = 1.0;
@@ -117,7 +117,7 @@ mod test {
     }
 
     #[test]
-    fn test_rational_7_over_7() {
+    fn sanity_check_rational_7_over_7() {
         let n = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0];
         let d = [9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0];
         let x = 1.0;
@@ -127,7 +127,7 @@ mod test {
     }
 
     #[test]
-    fn test_rational_8_over_7() {
+    fn sanity_check_rational_8_over_7() {
         let n = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0];
         let d = [10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0];
         let x = 1.0;
