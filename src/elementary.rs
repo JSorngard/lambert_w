@@ -88,7 +88,7 @@ mod test {
         assert!(ln(-1.0).is_nan());
         assert_abs_diff_eq!(ln(1.0), 0.0);
         assert_abs_diff_eq!(ln(2.0), core::f64::consts::LN_2);
-        assert_abs_diff_eq!(ln(f64::MAX), 709.782712893384);
+        assert_abs_diff_eq!(ln(f64::MAX), 709.782_712_893_384);
     }
 
     #[test]
@@ -96,7 +96,7 @@ mod test {
         assert!(lnf(-1.0).is_nan());
         assert_abs_diff_eq!(lnf(1.0), 0.0);
         assert_abs_diff_eq!(lnf(2.0), core::f32::consts::LN_2);
-        assert_abs_diff_eq!(lnf(f32::MAX), 88.722839);
+        assert_abs_diff_eq!(lnf(f32::MAX), 88.722_839);
     }
 
     #[test]
@@ -104,9 +104,9 @@ mod test {
         assert!(sqrt(-1.0).is_nan());
         assert_abs_diff_eq!(sqrt(0.0), 0.0);
         assert_abs_diff_eq!(sqrt(1.0), 1.0);
-        assert_abs_diff_eq!(sqrt(2.0), 1.4142135623730951);
+        assert_abs_diff_eq!(sqrt(2.0), 1.414_213_562_373_095_1);
         assert_abs_diff_eq!(sqrt(4.0), 2.0);
-        assert_abs_diff_eq!(sqrt(f64::MAX), 1.3407807929942596e154);
+        assert_abs_diff_eq!(sqrt(f64::MAX), 1.340_780_792_994_259_6e154);
     }
 
     #[test]
@@ -114,8 +114,8 @@ mod test {
         assert!(sqrtf(-1.0).is_nan());
         assert_abs_diff_eq!(sqrtf(0.0), 0.0);
         assert_abs_diff_eq!(sqrtf(1.0), 1.0);
-        assert_abs_diff_eq!(sqrtf(2.0), 1.4142135);
+        assert_abs_diff_eq!(sqrtf(2.0), 1.414_213_5);
         assert_abs_diff_eq!(sqrtf(4.0), 2.0);
-        assert_relative_eq!(sqrtf(f32::MAX), 1.8446744e19);
+        assert_relative_eq!(sqrtf(f32::MAX), 1.844_674_4e19);
     }
 }
