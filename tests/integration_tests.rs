@@ -1,4 +1,6 @@
-use super::{
+//! This file contains tests of the public API of the crate.
+
+use lambert_w::{
     lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1, LambertW,
     NEG_INV_E,
 };

@@ -73,3 +73,48 @@ pub fn rational_8_over_7(
     (n0 + x * (n1 + x * (n2 + x * (n3 + x * (n4 + x * (n5 + x * (n6 + x * (n7 + x * n8))))))))
         / (d0 + x * (d1 + x * (d2 + x * (d3 + x * (d4 + x * (d5 + x * (d6 + x * d7)))))))
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    use approx::assert_abs_diff_eq;
+
+    #[test]
+    fn test_rational_3_over_3() {
+        let n = [1.0, 2.0, 3.0, 4.0];
+        let d = [5.0, 6.0, 7.0, 8.0];
+        let x = 1.0;
+        let expected = (1.0 + 2.0 + 3.0 + 4.0) / (5.0 + 6.0 + 7.0 + 8.0);
+        assert_abs_diff_eq!(rational_3_over_3(x, n, d), expected);
+    }
+
+    #[test]
+    fn test_rational_4_over_3() {
+        let n = [1.0, 2.0, 3.0, 4.0, 5.0];
+        let d = [6.0, 7.0, 8.0, 9.0];
+        let x = 1.0;
+        let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0) / (6.0 + 7.0 + 8.0 + 9.0);
+        assert_abs_diff_eq!(rational_4_over_3(x, n, d), expected);
+    }
+
+    #[test]
+    fn test_rational_7_over_7() {
+        let n = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0];
+        let d = [9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0];
+        let x = 1.0;
+        let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 6.0 + 7.0 + 8.0)
+            / (9.0 + 10.0 + 11.0 + 12.0 + 13.0 + 14.0 + 15.0 + 16.0);
+        assert_abs_diff_eq!(rational_7_over_7(x, n, d), expected);
+    }
+
+    #[test]
+    fn test_rational_8_over_7() {
+        let n = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0];
+        let d = [10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0];
+        let x = 1.0;
+        let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 6.0 + 7.0 + 8.0 + 9.0)
+            / (10.0 + 11.0 + 12.0 + 13.0 + 14.0 + 15.0 + 16.0 + 17.0);
+        assert_abs_diff_eq!(rational_8_over_7(x, n, d), expected);
+    }
+}

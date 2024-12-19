@@ -76,3 +76,28 @@ pub fn lnf(x: f32) -> f32 {
         panic!("computing lnf({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
     }
 }
+
+#[cfg(test)]
+mod test {
+    use approx::assert_abs_diff_eq;
+
+    use super::*;
+
+    #[test]
+    fn test_log() {
+        assert!(ln(-1.0).is_nan());
+        assert_abs_diff_eq!(ln(1.0), 0.0);
+        assert_abs_diff_eq!(ln(2.0), core::f64::consts::LN_2);
+        assert_abs_diff_eq!(ln(f64::MAX), 709.782712893384);
+    }
+
+    #[test]
+    fn test_sqrt() {
+        assert!(sqrt(-1.0).is_nan());
+        assert_abs_diff_eq!(sqrt(0.0), 0.0);
+        assert_abs_diff_eq!(sqrt(1.0), 1.0);
+        assert_abs_diff_eq!(sqrt(2.0), 1.4142135623730951);
+        assert_abs_diff_eq!(sqrt(4.0), 2.0);
+        assert_abs_diff_eq!(sqrt(f64::MAX), 1.3407807929942596e154);
+    }
+}
