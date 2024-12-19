@@ -5,8 +5,7 @@
 //!
 //! This method works by dividing the function's domain into subdomains.
 //! On each one, it uses a simple transformation of the input inserted into
-//! a rational function to approximate the function's value.
-//!
+//! a rational function to approximate the function's value.  
 //! The implementation uses conditional switches on the input value
 //! to select the appropriate subdomain, followed by either a square root
 //! (and possibly a division) or a logarithm. Then it performs a series of
