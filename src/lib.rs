@@ -124,8 +124,6 @@ mod sw0;
 mod sw0f;
 mod swm1;
 mod swm1f;
-#[cfg(test)]
-mod tests;
 
 /// The negative inverse of e (-1/e).
 ///
