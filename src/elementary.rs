@@ -84,7 +84,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_log() {
+    fn sanity_check_log() {
         assert!(ln(-1.0).is_nan());
         assert_abs_diff_eq!(ln(1.0), 0.0);
         assert_abs_diff_eq!(ln(2.0), core::f64::consts::LN_2);
@@ -92,7 +92,7 @@ mod test {
     }
 
     #[test]
-    fn test_logf() {
+    fn sanity_check_logf() {
         assert!(lnf(-1.0).is_nan());
         assert_abs_diff_eq!(lnf(1.0), 0.0);
         assert_abs_diff_eq!(lnf(2.0), core::f32::consts::LN_2);
@@ -100,7 +100,7 @@ mod test {
     }
 
     #[test]
-    fn test_sqrt() {
+    fn sanity_check_sqrt() {
         assert!(sqrt(-1.0).is_nan());
         assert_abs_diff_eq!(sqrt(0.0), 0.0);
         assert_abs_diff_eq!(sqrt(1.0), 1.0);
@@ -110,7 +110,7 @@ mod test {
     }
 
     #[test]
-    fn test_sqrtf() {
+    fn sanity_check_sqrtf() {
         assert!(sqrtf(-1.0).is_nan());
         assert_abs_diff_eq!(sqrtf(0.0), 0.0);
         assert_abs_diff_eq!(sqrtf(1.0), 1.0);
