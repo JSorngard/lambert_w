@@ -90,12 +90,30 @@ mod test {
     }
 
     #[test]
+    fn test_rational_3_over_3f() {
+        let n = [1.0, 2.0, 3.0, 4.0];
+        let d = [5.0, 6.0, 7.0, 8.0];
+        let x = 1.0;
+        let expected = (1.0 + 2.0 + 3.0 + 4.0) / (5.0 + 6.0 + 7.0 + 8.0);
+        assert_abs_diff_eq!(rational_3_over_3f(x, n, d), expected);
+    }
+
+    #[test]
     fn test_rational_4_over_3() {
         let n = [1.0, 2.0, 3.0, 4.0, 5.0];
         let d = [6.0, 7.0, 8.0, 9.0];
         let x = 1.0;
         let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0) / (6.0 + 7.0 + 8.0 + 9.0);
         assert_abs_diff_eq!(rational_4_over_3(x, n, d), expected);
+    }
+
+    #[test]
+    fn test_rational_4_over_3f() {
+        let n = [1.0, 2.0, 3.0, 4.0, 5.0];
+        let d = [6.0, 7.0, 8.0, 9.0];
+        let x = 1.0;
+        let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0) / (6.0 + 7.0 + 8.0 + 9.0);
+        assert_abs_diff_eq!(rational_4_over_3f(x, n, d), expected);
     }
 
     #[test]
