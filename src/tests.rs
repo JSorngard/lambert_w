@@ -3,24 +3,24 @@ use super::{
     NEG_INV_E,
 };
 
-use approx::assert_relative_eq;
+use approx::{assert_abs_diff_eq, assert_relative_eq};
 
 #[test]
 fn test_lambert_w0() {
     assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
-    assert_relative_eq!(lambert_w0(NEG_INV_E), -1.0);
-    assert_relative_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.9999999652557976);
-    assert_relative_eq!(
+    assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
+    assert_abs_diff_eq!(lambert_w0(NEG_INV_E + f64::EPSILON), -0.9999999652557976);
+    assert_abs_diff_eq!(
         lambert_w0(-2.678_794_411_714_424e-1),
         -3.993_824_525_397_807e-1
     );
-    assert_relative_eq!(
+    assert_abs_diff_eq!(
         lambert_w0(6.321_205_588_285_577e-1),
         4.167_039_988_177_658e-1
     );
-    assert_relative_eq!(lambert_w0(9.632120558828557), 1.721757710976171);
-    assert_relative_eq!(lambert_w0(9.963_212_055_882_856e1), 3.382785211058958);
-    assert_relative_eq!(lambert_w0(9.996_321_205_588_285e2), 5.249293782013269);
+    assert_abs_diff_eq!(lambert_w0(9.632120558828557), 1.721757710976171);
+    assert_abs_diff_eq!(lambert_w0(9.963_212_055_882_856e1), 3.382785211058958);
+    assert_abs_diff_eq!(lambert_w0(9.996_321_205_588_285e2), 5.249293782013269);
     assert_relative_eq!(lambert_w0(9.999_632_120_558_828e3), 7.231813718542178);
     assert_relative_eq!(lambert_w0(9.999_963_212_055_883e4), 9.284_568_107_521_96);
     assert_relative_eq!(lambert_w0(9.999_996_321_205_589e5), 1.138_335_774_796_812e1);
@@ -64,26 +64,26 @@ fn test_lambert_w0() {
 #[test]
 fn test_sp_lambert_w0() {
     assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
-    assert_relative_eq!(sp_lambert_w0(NEG_INV_E), -1.0, epsilon = 1e-7);
-    assert_relative_eq!(
+    assert_abs_diff_eq!(sp_lambert_w0(NEG_INV_E), -1.0, epsilon = 1e-7);
+    assert_abs_diff_eq!(
         sp_lambert_w0(-2.678_794_411_714_424e-1),
         -3.993_824_525_397_807e-1,
-        max_relative = 1e-7,
+        epsilon = 1e-7
     );
-    assert_relative_eq!(
+    assert_abs_diff_eq!(
         sp_lambert_w0(6.321_205_588_285_577e-1),
         4.167_039_988_177_658e-1,
-        max_relative = 1e-7,
+        epsilon = 1e-7,
     );
-    assert_relative_eq!(
+    assert_abs_diff_eq!(
         sp_lambert_w0(9.632120558828557),
         1.721757710976171,
-        max_relative = 1e-7,
+        epsilon = 1e-7,
     );
-    assert_relative_eq!(
+    assert_abs_diff_eq!(
         sp_lambert_w0(9.963_212_055_882_856e1),
         3.382785211058958,
-        max_relative = 1e-7,
+        epsilon = 1e-7,
     );
     assert_relative_eq!(
         sp_lambert_w0(9.996_321_205_588_285e2),
@@ -205,10 +205,10 @@ fn test_sp_lambert_w0() {
 #[test]
 fn test_lambert_w0f() {
     assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
-    assert_relative_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
-    assert_relative_eq!(lambert_w0f(-2.678_794_3e-1), -3.993_824_4e-1,);
-    assert_relative_eq!(lambert_w0f(6.321_205_5e-1), 4.167_04e-1);
-    assert_relative_eq!(lambert_w0f(9.632_12), 1.721_757_8);
+    assert_abs_diff_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
+    assert_abs_diff_eq!(lambert_w0f(-2.678_794_3e-1), -3.993_824_4e-1,);
+    assert_abs_diff_eq!(lambert_w0f(6.321_205_5e-1), 4.167_04e-1);
+    assert_abs_diff_eq!(lambert_w0f(9.632_12), 1.721_757_8);
     assert_relative_eq!(lambert_w0f(9.963_212e1), 3.382_785_3, max_relative = 1e-6);
     assert_relative_eq!(lambert_w0f(9.996_321_4e2), 5.249_294);
     assert_relative_eq!(lambert_w0f(9.999_632e3), 7.231_814);
@@ -234,7 +234,7 @@ fn test_lambert_w0f() {
 #[test]
 fn test_lambert_wm1() {
     assert!(lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
-    assert_relative_eq!(lambert_wm1(NEG_INV_E), -1.0);
+    assert_abs_diff_eq!(lambert_wm1(NEG_INV_E), -1.0);
     assert_relative_eq!(
         lambert_wm1(-3.578_794_411_714_423e-1),
         -1.253493791367214,
@@ -352,7 +352,7 @@ fn test_sp_lambert_wm1() {
 #[test]
 fn test_lambert_wm1f() {
     assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
-    assert_relative_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
+    assert_abs_diff_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
     assert_relative_eq!(
         lambert_wm1f(-3.578_794_3e-1),
         -1.253_493_8,
@@ -374,7 +374,7 @@ fn test_lambert_wm1f() {
 
 #[test]
 fn test_trait_impl_on_f64() {
-    assert_relative_eq!(
+    assert_abs_diff_eq!(
         (-2.678_794_411_714_424e-1_f64).lambert_w0(),
         -3.993_824_525_397_807e-1
     );
@@ -387,7 +387,7 @@ fn test_trait_impl_on_f64() {
 
 #[test]
 fn test_trait_impl_on_f32() {
-    assert_relative_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1);
+    assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1);
     assert_relative_eq!(
         (-3.578_794_3e-1_f32).lambert_wm1(),
         -1.253_493_8,
