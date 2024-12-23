@@ -7,7 +7,6 @@ use crate::{
 const INV_SQRT_E: f32 = X0 as f32;
 const NEG_INV_E: f32 = Z0 as f32;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum Operation {
     Sqrt,
     Ln,
@@ -89,18 +88,18 @@ const LOOKUP_TABLE: [(f32, Operation, ([f32; 4], [f32; 4])); 9] = [
 ];
 
 pub fn swm1f(z: f32) -> f32 {
-    if z < NEG_INV_E {
-        f32::NAN
-    } else {
-        LOOKUP_TABLE
-            .into_iter()
-            .find(|(threshold, _, _)| z <= *threshold)
-            .map(|(_, operation, (num, den))| match operation {
-                Operation::Sqrt => {
-                    rational_3_over_3f(-z / (INV_SQRT_E + sqrtf(z - NEG_INV_E)), num, den)
-                }
-                Operation::Ln => rational_3_over_3f(lnf(-z), num, den),
-            })
-            .unwrap_or(f32::NAN)
-    }
+    LOOKUP_TABLE
+        .into_iter()
+        .find(|(threshold, _, _)| z <= *threshold)
+        .map(|(_, operation, (num, den))| {
+            rational_3_over_3f(
+                match operation {
+                    Operation::Sqrt => -z / (INV_SQRT_E + sqrtf(z - NEG_INV_E)),
+                    Operation::Ln => lnf(-z),
+                },
+                num,
+                den,
+            )
+        })
+        .unwrap_or(f32::NAN)
 }
