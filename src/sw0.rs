@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub fn sw0(z: f64) -> f64 {
-    if z < NEG_INV_E {
+    if z < NEG_INV_E || z.is_nan() {
         f64::NAN
     } else if z <= 2.008_217_811_584_472_7 {
         // W <= 0.854, X_1
@@ -332,7 +332,7 @@ pub fn sw0(z: f64) -> f64 {
                 -4.243_840_393_198_107e-10,
             ],
         )
-    } else {
+    } else if z < f64::INFINITY {
         //    U_19
 
         rational_3_over_3(
@@ -350,5 +350,7 @@ pub fn sw0(z: f64) -> f64 {
                 -3.748_153_583_315_12e-14,
             ],
         )
+    } else {
+        f64::INFINITY
     }
 }
