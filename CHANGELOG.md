@@ -2,6 +2,11 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.8
+
+- Fixed a bug where the principal branch functions would return NaN when given
+ infinite input.
+
 ## 1.0.7
 
 - Moved tests to their own file.
