@@ -5,7 +5,7 @@ use crate::{
 
 /// zc = z + 1/e
 pub fn dw0c(zc: f64) -> f64 {
-    if zc < 0.0 {
+    if zc < 0.0 || zc.is_nan() {
         f64::NAN
     } else if zc <= 2.549_893_906_503_473_6 {
         // W <= 0.893, X_1
@@ -476,7 +476,7 @@ pub fn dw0c(zc: f64) -> f64 {
                 -4.205_783_627_010_972e-19,
             ],
         )
-    } else {
+    } else if zc < f64::INFINITY {
         //   U_19
 
         rational_7_over_7(
@@ -502,5 +502,7 @@ pub fn dw0c(zc: f64) -> f64 {
                 -1.596_014_725_260_605_6e-24,
             ],
         )
+    } else {
+        f64::INFINITY
     }
 }
