@@ -69,8 +69,10 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
+    - name: Install cargo-binstall
+      uses: cargo-bins/cargo-binstall@v1.10.17
     - name: install cargo-msrv
-      run: cargo install cargo-msrv
+      run: cargo binstall cargo-msrv
     - name: verify msrv
       run: cargo msrv verify
 
