@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: format
+    - name: Format
       run: cargo fmt --check
 
   check:
@@ -24,9 +24,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: install
-      run: cargo install cargo-all-features
-    - name: check
+    - name: Install cargo-binstall
+      uses: cargo-bins/cargo-binstall@v1.10.17
+    - name: Install
+      run: cargo binstall cargo-all-features
+    - name: Check
       run: cargo check-all-features
 
   clippy:
@@ -34,7 +36,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: clippy
+    - name: Clippy
       run: cargo clippy --all-features -- -D warnings
       
   test:
@@ -42,9 +44,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: install
-      run: cargo install cargo-all-features
-    - name: test
+    - name: Install cargo-binstall
+      uses: cargo-bins/cargo-binstall@v1.10.17
+    - name: Install cargo-all-features
+      run: cargo binstall cargo-all-features
+    - name: Test
       run: cargo test-all-features
       
   doc:
@@ -55,7 +59,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@nightly
-    - name: document
+    - name: Document
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
@@ -65,9 +69,11 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
-    - name: install cargo-msrv
-      run: cargo install cargo-msrv
-    - name: verify msrv
+    - name: Install cargo-binstall
+      uses: cargo-bins/cargo-binstall@v1.10.17
+    - name: Install cargo-msrv
+      run: cargo binstall cargo-msrv
+    - name: Verify msrv
       run: cargo msrv verify
 
   coverage:
@@ -77,12 +83,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
-      - name: cargo install cargo-llvm-cov
+      - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
-      - name: cargo generate-lockfile
+      - name: Generate lockfile
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
-      - name: cargo llvm-cov
+      - name: Create coverage report
         run: cargo llvm-cov --locked --all-features --lcov --output-path lcov.info
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
