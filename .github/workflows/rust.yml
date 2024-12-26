@@ -24,8 +24,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - name: Install cargo-binstall
+      uses: cargo-bins/cargo-binstall@v1.10.17
     - name: install
-      run: cargo install cargo-all-features
+      run: cargo binstall cargo-all-features
     - name: check
       run: cargo check-all-features
 
@@ -42,9 +44,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: install
-      run: cargo install cargo-all-features
-    - name: test
+    - name: Install cargo-binstall
+      uses: cargo-bins/cargo-binstall@v1.10.17
+    - name: Install cargo-all-features
+      run: cargo binstall cargo-all-features
+    - name: Test
       run: cargo test-all-features
       
   doc:
