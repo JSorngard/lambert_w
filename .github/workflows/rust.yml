@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: format
+    - name: Format
       run: cargo fmt --check
 
   check:
@@ -26,9 +26,9 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - name: Install cargo-binstall
       uses: cargo-bins/cargo-binstall@v1.10.17
-    - name: install
+    - name: Install
       run: cargo binstall cargo-all-features
-    - name: check
+    - name: Check
       run: cargo check-all-features
 
   clippy:
@@ -36,7 +36,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: clippy
+    - name: Clippy
       run: cargo clippy --all-features -- -D warnings
       
   test:
@@ -59,7 +59,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@nightly
-    - name: document
+    - name: Document
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
@@ -71,9 +71,9 @@ jobs:
         components: clippy
     - name: Install cargo-binstall
       uses: cargo-bins/cargo-binstall@v1.10.17
-    - name: install cargo-msrv
+    - name: Install cargo-msrv
       run: cargo binstall cargo-msrv
-    - name: verify msrv
+    - name: Verify msrv
       run: cargo msrv verify
 
   coverage:
