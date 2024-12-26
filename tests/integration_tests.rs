@@ -1,6 +1,6 @@
 //! This file contains tests of the public API of the crate.
 //!
-//! Every test function ustilizes [`assert_abs_diff_eq!`] for as long as possible,
+//! Every test function utilizes [`assert_abs_diff_eq!`] for as long as possible,
 //! and then switches to [`assert_relative_eq!`] when the first assertion would fail.
 
 use lambert_w::{
