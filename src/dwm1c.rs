@@ -9,7 +9,6 @@ use crate::{
 // with 50 bits of accuracy from Fukushima's paper.
 // It returns f64::NAN if the `zc` input is negative,
 // or if the `z` input is NAN, or larger than or equal to 0.
-// It returns f64::INFINITY if the input is positive infinity.
 
 /// zc = z + 1/e
 pub fn dwm1c(z: f64, zc: f64) -> f64 {

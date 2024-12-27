@@ -11,7 +11,6 @@ const NEG_INV_E: f32 = Z0 as f32;
 // branch of the Lambert W function
 // with 24 bits of accuracy from Fukushima's paper.
 // It returns f32::NAN if the input is negative, NAN, or larger than or equal to 0.
-// It returns f32::INFINITY if the input is positive infinity.
 
 pub fn swm1f(z: f32) -> f32 {
     if z < NEG_INV_E {
