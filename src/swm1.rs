@@ -4,6 +4,12 @@ use crate::{
     rational::rational_3_over_3,
 };
 
+// This is an implementation of the approximation of the secondary
+// branch of the Lambert W function
+// with 24 bits of accuracy from Fukushima's paper.
+// It returns f64::NAN if the input is negative, NAN, or larger than or equal to 0.
+// It returns f64::INFINITY if the input is positive infinity.
+
 pub fn swm1(z: f64) -> f64 {
     if z < NEG_INV_E {
         f64::NAN

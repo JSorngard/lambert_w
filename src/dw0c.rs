@@ -3,6 +3,12 @@ use crate::{
     rational::{rational_7_over_7, rational_8_over_7},
 };
 
+// This is an implementation of the approximation of the principal
+// branch of the Lambert W function
+// with 50 bits of accuracy from Fukushima's paper.
+// It returns f64::NAN if the input is negative or NAN,
+// and f64::INFINITY if the input is positive infinity.
+
 /// zc = z + 1/e
 pub fn dw0c(zc: f64) -> f64 {
     if zc < 0.0 || zc.is_nan() {
