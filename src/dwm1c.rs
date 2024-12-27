@@ -12,7 +12,9 @@ use crate::{
 
 /// zc = z + 1/e
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
-    if zc < 0.0 {
+    debug_assert!(z - NEG_INV_E == zc || z.is_nan() || zc.is_nan());
+
+    if zc < 0.0 || z.is_nan() {
         f64::NAN
     } else if z <= -0.354_291_330_944_216_4 {
         // W >= -1.3, X_-1
