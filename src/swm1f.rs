@@ -1,11 +1,10 @@
-use super::{INV_SQRT_E as X0, NEG_INV_E as Z0};
 use crate::{
     elementary::{lnf, sqrtf},
     rational::rational_3_over_3f,
 };
 
-const INV_SQRT_E: f32 = X0 as f32;
-const NEG_INV_E: f32 = Z0 as f32;
+const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
+const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 // This is an implementation of the approximation of the secondary
 // branch of the Lambert W function

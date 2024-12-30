@@ -1,10 +1,9 @@
-use super::NEG_INV_E as Z0;
 use crate::{
     elementary::{lnf, sqrtf},
     rational::{rational_3_over_3f, rational_4_over_3f},
 };
 
-const NEG_INV_E: f32 = Z0 as f32;
+const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 // This is an implementation of the approximation of the principal
 // branch of the Lambert W function
