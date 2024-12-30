@@ -92,6 +92,11 @@
 //!
 //! ## Features
 //!
+//! `estrin`: evaluate the polynomials in the rational functions with [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin%27s_scheme).
+//! This speeds up evaluation of some of the polynomials if the target architecture
+//! has fused multiplu-add instructions. If the target architechture does not have
+//! fused multiply-add instructions, this feature may slow down the evaluation and reduce accuracy.
+//!
 //! One of the below features must be enabled:
 //!
 //! `libm` *(enabled by default)*: if the `std` feature is disabled, this feature uses the [`libm`]

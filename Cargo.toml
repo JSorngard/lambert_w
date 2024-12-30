@@ -21,14 +21,16 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 
 [features]
-default = ["libm", "estrin"]
+default = ["libm"]
 # If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
 # to compute square roots and logarithms during function evaluation instead of the standard library.
 libm = ["dep:libm", "fast_polynomial?/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
 std = ["fast_polynomial?/std"]
-
+# Evaluate the polynomials in the rational functions with [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin%27s_scheme).
+# This speeds up evaluation of some of the polynomials if the target architecture has fused multiplu-add instructions.
+# If the target architechture does not have fused multiply-add instructions, this feature may slow down the evaluation and reduce accuracy.
 estrin = ["dep:fast_polynomial"]
 
 [package.metadata.docs.rs]
