@@ -69,7 +69,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - uses: dtolnay/rust-toolchain@1.63.0
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-msrv
