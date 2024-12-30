@@ -7,7 +7,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 // This is an implementation of the approximation of the principal
 // branch of the Lambert W function
-// with 25 bits of accuracy from Fukushima's paper.
+// with 24 bits of accuracy from Fukushima's paper.
 // It returns f32::NAN if the input is negative or NAN,
 // and f32::INFINITY if the input is positive infinity.
 
