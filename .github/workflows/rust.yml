@@ -24,8 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: Install cargo-all-features
-      uses: taiki-e/install-action@v2
+    - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
     - name: Check
@@ -44,8 +43,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: Install cargo-all-features
-      uses: taiki-e/install-action@v2
+    - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
     - name: Test
@@ -69,8 +67,7 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
-    - name: Install cargo-msrv
-      uses: taiki-e/install-action@v2
+    - uses: taiki-e/install-action@v2
       with:
         tool: cargo-msrv
     - name: Verify msrv
