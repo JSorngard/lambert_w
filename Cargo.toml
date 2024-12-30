@@ -13,6 +13,7 @@ documentation = "https://docs.rs/lambert_w"
 
 [dependencies]
 libm = { version = "0.2", optional = true }
+fast_polynomial = { version = "0.3", optional = true }
 
 [dev-dependencies]
 approx = { version = "0.5.1", default-features = false }
@@ -20,13 +21,15 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 
 [features]
-default = ["libm"]
+default = ["libm", "estrin"]
 # If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
 # to compute square roots and logarithms during function evaluation instead of the standard library.
-libm = ["dep:libm"]
+libm = ["dep:libm", "fast_polynomial?/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
-std = []
+std = ["fast_polynomial?/std"]
+
+estrin = ["dep:fast_polynomial"]
 
 [package.metadata.docs.rs]
 # Document all features.
