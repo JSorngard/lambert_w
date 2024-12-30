@@ -73,7 +73,7 @@ jobs:
       with:
         tool: cargo-msrv
     - name: Verify msrv
-      run: cargo msrv verify
+      run: cargo msrv --output-format minimal verify
 
   coverage:
     runs-on: ubuntu-latest
