@@ -2,7 +2,7 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
-## 1.0.9
+## Unreleased
 
 - Switched the way the crate depends on the standard library such that the prelude is always the same.
 
