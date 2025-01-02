@@ -2,6 +2,10 @@
 
 This file contains the changes to the crate since version 0.1.1.
 
+## 1.0.9
+
+- Switched the way the crate depends on the standard library such that the prelude is always the same.
+
 ## 1.0.8
 
 - Fixed a bug where the principal branch functions would return NaN when given
