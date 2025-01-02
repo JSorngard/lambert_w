@@ -18,6 +18,7 @@ libm = { version = "0.2", optional = true }
 approx = { version = "0.5.1", default-features = false }
 criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
+plotters = { version = "0.3", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"]}
 
 [features]
 default = ["libm"]
@@ -50,3 +51,6 @@ harness = false
 [[bench]]
 name = "fixed"
 harness = false
+
+[[example]]
+name = "plot"
