@@ -109,8 +109,11 @@
 //!
 //! [⬆️ Back to top](#description).
 
-#![cfg_attr(not(feature = "std"), no_std)]
+#![no_std]
 #![forbid(unsafe_code)]
+
+#[cfg(feature = "std")]
+extern crate std;
 
 #[cfg(all(not(feature = "std"), not(feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
