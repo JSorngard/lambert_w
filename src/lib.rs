@@ -115,7 +115,7 @@
 #[cfg(feature = "std")]
 extern crate std;
 
-#[cfg(all(not(feature = "std"), not(feature = "libm")))]
+#[cfg(not(any(feature = "std", feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
 mod dw0c;
