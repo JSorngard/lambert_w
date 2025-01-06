@@ -1,3 +1,5 @@
+//! This file contains unit tests for the internal functions in the `elementary` and `rational` modules.
+
 use super::{
     elementary::{ln, lnf, sqrt, sqrtf},
     rational::{
