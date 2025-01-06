@@ -1,5 +1,7 @@
 //! This file contains unit tests for the internal functions in the `elementary` and `rational` modules.
 
+use core::{f32, f64};
+
 use super::{
     elementary::{ln, lnf, sqrt, sqrtf},
     rational::{
@@ -71,6 +73,7 @@ fn sanity_check_log() {
     assert_abs_diff_eq!(ln(1.0), 0.0);
     assert_abs_diff_eq!(ln(2.0), core::f64::consts::LN_2);
     assert_abs_diff_eq!(ln(f64::MAX), 709.782_712_893_384);
+    assert_eq!(ln(f64::INFINITY), f64::INFINITY);
 }
 
 #[test]
@@ -79,6 +82,7 @@ fn sanity_check_logf() {
     assert_abs_diff_eq!(lnf(1.0), 0.0);
     assert_abs_diff_eq!(lnf(2.0), core::f32::consts::LN_2);
     assert_abs_diff_eq!(lnf(f32::MAX), 88.722_839);
+    assert_eq!(lnf(f32::INFINITY), f32::INFINITY);
 }
 
 #[test]
@@ -89,6 +93,7 @@ fn sanity_check_sqrt() {
     assert_abs_diff_eq!(sqrt(2.0), 1.414_213_562_373_095_1);
     assert_abs_diff_eq!(sqrt(4.0), 2.0);
     assert_abs_diff_eq!(sqrt(f64::MAX), 1.340_780_792_994_259_6e154);
+    assert_eq!(sqrt(f64::INFINITY), f64::INFINITY);
 }
 
 #[test]
@@ -99,4 +104,5 @@ fn sanity_check_sqrtf() {
     assert_abs_diff_eq!(sqrtf(2.0), 1.414_213_5);
     assert_abs_diff_eq!(sqrtf(4.0), 2.0);
     assert_relative_eq!(sqrtf(f32::MAX), 1.844_674_4e19);
+    assert_eq!(sqrtf(f32::INFINITY), f32::INFINITY);
 }
