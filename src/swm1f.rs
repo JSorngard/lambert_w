@@ -9,7 +9,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 // This is an implementation of the approximation of the secondary
 // branch of the Lambert W function
 // with 24 bits of accuracy from Fukushima's paper.
-// It returns f32::NAN if the input is negative, NAN, or larger than or equal to 0.
+// It returns f32::NAN if the input is smaller than -1/e, is NAN, or is larger than or equal to 0.
 
 pub fn swm1f(z: f32) -> f32 {
     if z < NEG_INV_E {
