@@ -1,7 +1,5 @@
 //! This file contains unit tests for the internal functions in the `elementary` and `rational` modules.
 
-use core::{f32, f64};
-
 use super::{
     elementary::{ln, lnf, sqrt, sqrtf},
     rational::{
