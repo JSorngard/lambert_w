@@ -12,7 +12,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .set_all_label_area_size(20)
         .top_x_label_area_size(0)
         .right_y_label_area_size(0)
-        .build_cartesian_2d(-1.0..10.0, -3.0..2.0)?;
+        .build_cartesian_2d(-1.0..10.0, -4.0..2.0)?;
 
     chart.configure_mesh().x_labels(20).y_labels(20).draw()?;
 
@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .draw_series(LineSeries::new(
             (0..steps)
                 .map(|x| f64::from(x) / f64::from(steps))
-                .map(|t| NEG_INV_E - t * (NEG_INV_E + 0.15))
+                .map(|t| NEG_INV_E - t * (NEG_INV_E + 0.073))
                 .map(|x| (x, x.lambert_wm1())),
             &RED,
         ))?
