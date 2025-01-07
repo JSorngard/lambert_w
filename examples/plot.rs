@@ -12,7 +12,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .set_all_label_area_size(20)
         .top_x_label_area_size(0)
         .right_y_label_area_size(0)
-        .build_cartesian_2d(NEG_INV_E..10.0, -3.0..3.0)?;
+        .build_cartesian_2d(-1.0..10.0, -3.0..3.0)?;
 
     chart.configure_mesh().x_labels(20).y_labels(20).draw()?;
 
