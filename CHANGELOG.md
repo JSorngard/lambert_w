@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Switched the way the crate depends on the standard library such that the
  implicit prelude is always the same.
+- Sped up CI runs by using `taiki-e/install-action`.
+- Added an example program that plots both branches of the function.
 
 ## 1.0.8
 
