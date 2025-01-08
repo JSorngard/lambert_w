@@ -29,6 +29,9 @@ libm = ["dep:libm"]
 # When this feature is disabled the crate is `no_std` compatible.
 std = []
 
+[lints.clippy]
+unwrap_used = "deny"
+
 [package.metadata.docs.rs]
 # Document all features.
 all-features = true
