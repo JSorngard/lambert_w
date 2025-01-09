@@ -5,8 +5,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.0.10
 
-Very minor changes.
-
 - Moved unit tests to their own module.
 - Correct some information in code comments.
 - Simplify `semver-checks` CI job.
