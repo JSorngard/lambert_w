@@ -3,6 +3,15 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.10
+
+Very minor changes.
+
+- Moved unit tests to their own module.
+- Made minor changes to the code of the plot example to show the
+ function clearer in the final image.
+- Note adherence to semver in this log.
+
 ## 1.0.9
 
 - Switched the way the crate depends on the standard library such that the
