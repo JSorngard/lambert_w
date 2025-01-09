@@ -43,7 +43,7 @@ jobs:
       run: cargo clippy --all-features -- -D warnings
       
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -76,7 +76,7 @@ jobs:
       run: cargo msrv --output-format minimal verify
 
   run_examples:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -84,7 +84,7 @@ jobs:
       run: cargo run --example plot
 
   coverage:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
