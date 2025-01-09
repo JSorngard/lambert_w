@@ -6,8 +6,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.0.10
 
 - Moved unit tests to their own module.
-- Correct some information in code comments.
-- Simplify `semver-checks` CI job.
+- Corrected some information in code comments.
+- Simplified `semver-checks` CI job.
 - Made minor changes to the code of the plot example to show the
  function clearer in the final image.
 - Note adherence to semver in this log.
