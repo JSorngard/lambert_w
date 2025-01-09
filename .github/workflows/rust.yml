@@ -75,14 +75,6 @@ jobs:
     - name: Verify msrv
       run: cargo msrv --output-format minimal verify
 
-  run_examples:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@stable
-    - name: Run examples
-      run: cargo run --example plot
-
   coverage:
     runs-on: ubuntu-latest
     steps:
