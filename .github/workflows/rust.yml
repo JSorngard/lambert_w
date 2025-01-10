@@ -81,6 +81,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Run examples
       run: cargo run --example plot
 
