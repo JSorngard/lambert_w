@@ -50,6 +50,7 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
+    - run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Test
       run: cargo test-all-features
       
