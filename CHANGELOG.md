@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.0.11
 
 - Removed unnecessary import in `integration_tests.rs`.
+- Improvements to CI jobs.
 
 ## 1.0.10
 
