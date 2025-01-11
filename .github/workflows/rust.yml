@@ -62,7 +62,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@nightly
-    - name: Document
+    - name: Generate documentation
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
