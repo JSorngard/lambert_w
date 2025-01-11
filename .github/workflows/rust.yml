@@ -29,7 +29,7 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
-    - name: Check
+    - name: Check all feature combinations
       run: cargo check-all-features
 
   clippy:
@@ -39,7 +39,7 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
-    - name: Clippy
+    - name: Run clippy
       run: cargo clippy --all-features -- -D warnings
       
   test:
@@ -52,7 +52,7 @@ jobs:
         tool: cargo-all-features
     - name: Install libfontfonfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
-    - name: Test
+    - name: Test all feature combinations
       run: cargo test-all-features
       
   doc:
