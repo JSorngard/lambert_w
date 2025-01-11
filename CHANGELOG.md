@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Removed unnecessary import in `integration_tests.rs`.
+
 ## 1.0.10
 
 - Moved unit tests to their own module.
