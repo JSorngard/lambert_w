@@ -5,7 +5,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Unreleased
 
-- Note the accuracy of the functions on the trait in the example. 
+- Noted the accuracy of the functions on the trait in the example. 
+- Improvements to CI jobs.
 
 ## 1.0.11
 
