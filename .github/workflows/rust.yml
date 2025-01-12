@@ -74,7 +74,7 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-msrv
-    - name: Verify msrv
+    - name: Verify MSRV
       run: cargo msrv --output-format minimal verify
 
   run_examples:
