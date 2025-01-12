@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Noted the accuracy of the functions on the trait in the example. 
 - Improvements to CI jobs.
+- Updated dev-dependencies.
 
 ## 1.0.11
 
