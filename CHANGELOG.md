@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Removed the note about the accuracy on the trait functions,
  as that is different depending on the type that the trait is invoked on.
+- Updated transitive dev-dependencies.
 
 ## 1.0.12
 
