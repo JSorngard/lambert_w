@@ -76,7 +76,7 @@
 //! assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
 //! ```
 //!
-//! Importing the [`LambertW`] trait lets you call the functions with 50 bits of accuracy with postfix notation:
+//! Importing the [`LambertW`] trait lets you call the functions with postfix notation:
 //!
 //! ```
 //! # use approx::assert_abs_diff_eq;
