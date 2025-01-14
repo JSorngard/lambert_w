@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.13
+
+- Removed the note about the accuracy on the trait functions,
+ as that is different depending on the type that the trait is invoked on.
+
 ## 1.0.12
 
 - Noted the accuracy of the functions on the trait in the example. 
