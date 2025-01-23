@@ -1,7 +1,7 @@
 use super::NEG_INV_E;
 use crate::{
     elementary::{ln, sqrt},
-    rational::{rational_3_over_3, rational_4_over_3},
+    rational::rational_function,
 };
 
 // This is an implementation of the approximation of the principal
@@ -16,7 +16,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 2.008_217_811_584_472_7 {
         // W <= 0.854, X_1
 
-        rational_4_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 -0.999_999_940_395_401_9,
@@ -35,7 +35,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 30.539_142_109_510_895 {
         // W <= 2.502, X_2
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 -0.985_519_709_059_991,
@@ -53,7 +53,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 371.669_843_713_757_76 {
         // W <= 4.430, X_3
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 -0.762_397_113_463_688_9,
@@ -71,7 +71,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 4_705.918_954_265_969 {
         // W <= 6.574, X_4
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 0.085_801_247_434_391_38,
@@ -89,7 +89,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 64_640.797_355_310_09 {
         // W <= 8.892, X_5
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 1.621_924_538_347_016_9,
@@ -107,7 +107,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 965_649.030_871_163_2 {
         // W <= 11.351, X_6
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 3.621_899_608_569_592,
@@ -125,7 +125,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 1.559_333_422_803_816_6e7 {
         // W <= 13.928, X_7
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 5.907_336_973_960_809,
@@ -143,7 +143,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 2.702_564_027_724_190_4e8 {
         // W <= 16.605, X_8
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 8.382_600_584_819_551,
@@ -161,7 +161,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 4.995_018_739_704_195e9 {
         // W <= 19.368, X_9
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 10.996_674_803_992_551,
@@ -179,7 +179,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 9.791_115_441_672_696e10 {
         // W <= 22.207, X_10
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 13.719_833_802_350_86,
@@ -197,7 +197,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 2.025_975_385_630_21e12 {
         // W <= 25.114, X_11
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 16.533_119_481_561_616,
@@ -215,7 +215,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 4.407_744_425_147_794e13 {
         // W <= 28.082, X_12
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 19.423_519_260_478_578,
@@ -233,7 +233,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 1.004_838_215_057_150_5e15 {
         // W <= 31.106, X_13
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 22.381_576_050_041_915,
@@ -251,7 +251,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 2.393_255_260_235_983_6e16 {
         // W <= 34.182, X_14
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 25.400_105_417_092_067,
@@ -269,7 +269,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 5.939_799_659_746_575e17 {
         // W <= 37.306, X_15
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 28.473_455_626_379_916,
@@ -287,7 +287,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 1.532_693_858_990_176_7e19 {
         // W <= 40.475, X_16
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 31.597_055_437_846_36,
@@ -305,7 +305,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 4.103_565_939_888_539_6e20 {
         // W <= 43.687, X_17
 
-        rational_3_over_3(
+        rational_function(
             sqrt(z - NEG_INV_E),
             [
                 34.767_124_490_414_52,
@@ -323,7 +323,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z <= 2.172_370_661_049_060_6e141 {
         // W <= 319.673, U_18
 
-        rational_3_over_3(
+        rational_function(
             ln(z),
             [
                 -0.607_023_733_718_462,
@@ -341,7 +341,7 @@ pub fn sw0(z: f64) -> f64 {
     } else if z < f64::INFINITY {
         //    U_19
 
-        rational_3_over_3(
+        rational_function(
             ln(z),
             [
                 -3.132_005_602_886_366,
