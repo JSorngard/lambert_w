@@ -1,27 +1,40 @@
 //! Rational functions evaluated with Horner's method.
 
-/// Evaluate a rational function in 64-bit floats at `x` using Horner's method.
-pub fn rational_function<const N: usize, const D: usize>(
-    x: f64,
-    numerator: [f64; N],
-    denominator: [f64; D],
-) -> f64 {
-    numerator.into_iter().rev().fold(0.0, |acc, n| acc * x + n)
-        / denominator
-            .into_iter()
-            .rev()
-            .fold(0.0, |acc, d| acc * x + d)
+use core::ops::{Add, Div, Mul};
+
+pub trait Zero {
+    fn zero() -> Self;
 }
 
-/// Evaluate a rational function in 32-bit floats at `x` using Horner's method.
-pub fn rational_functionf<const N: usize, const D: usize>(
-    x: f32,
-    numerator: [f32; N],
-    denominator: [f32; D],
-) -> f32 {
-    numerator.into_iter().rev().fold(0.0, |acc, n| acc * x + n)
+impl Zero for f32 {
+    #[inline(always)]
+    fn zero() -> Self {
+        0.0
+    }
+}
+
+impl Zero for f64 {
+    #[inline(always)]
+    fn zero() -> Self {
+        0.0
+    }
+}
+
+/// Evaluate a rational function at `x` using Horner's method.
+pub fn rational_function<T, const N: usize, const D: usize>(
+    x: T,
+    numerator: [T; N],
+    denominator: [T; D],
+) -> T
+where
+    T: Add<Output = T> + Mul<Output = T> + Div<Output = T> + Zero + Copy,
+{
+    numerator
+        .into_iter()
+        .rev()
+        .fold(T::zero(), |acc, n| acc * x + n)
         / denominator
             .into_iter()
             .rev()
-            .fold(0.0, |acc, d| acc * x + d)
+            .fold(T::zero(), |acc, d| acc * x + d)
 }

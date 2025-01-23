@@ -2,7 +2,7 @@
 
 use super::{
     elementary::{ln, lnf, sqrt, sqrtf},
-    rational::{rational_function, rational_functionf},
+    rational::rational_function,
 };
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
@@ -19,9 +19,9 @@ fn sanity_check_rational_3_over_3() {
 fn sanity_check_rational_3_over_3f() {
     let n = [1.0, 2.0, 3.0, 4.0];
     let d = [5.0, 6.0, 7.0, 8.0];
-    let x = 1.0;
+    let x: f32 = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0) / (5.0 + 6.0 + 7.0 + 8.0);
-    assert_abs_diff_eq!(rational_functionf(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
@@ -37,9 +37,9 @@ fn sanity_check_rational_4_over_3() {
 fn sanity_check_rational_4_over_3f() {
     let n = [1.0, 2.0, 3.0, 4.0, 5.0];
     let d = [6.0, 7.0, 8.0, 9.0];
-    let x = 1.0;
+    let x: f32 = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0) / (6.0 + 7.0 + 8.0 + 9.0);
-    assert_abs_diff_eq!(rational_functionf(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
