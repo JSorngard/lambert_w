@@ -1,5 +1,6 @@
 //! Rational functions evaluated with Horner's method.
 
+/// Evaluate a rational function in 64-bit floats at `x` using Horner's method.
 pub fn rational_function<const N: usize, const D: usize>(
     x: f64,
     numerator: [f64; N],
@@ -12,6 +13,7 @@ pub fn rational_function<const N: usize, const D: usize>(
             .fold(0.0, |acc, d| acc * x + d)
 }
 
+/// Evaluate a rational function in 32-bit floats at `x` using Horner's method.
 pub fn rational_functionf<const N: usize, const D: usize>(
     x: f32,
     numerator: [f32; N],
