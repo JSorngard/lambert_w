@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Unreleased
 
-- Implement all the rational function evaluations using a single generic function
+- Implement all the rational functions using a single generic function
  instead of several different hand made ones.
 
 ## 1.0.13
