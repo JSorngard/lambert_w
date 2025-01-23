@@ -1,3 +1,7 @@
+//! This example is intended to be ran more than studied.
+//! It generates a plot of the two branches of the function
+//! and saves it as a png file.
+
 use lambert_w::{LambertW, NEG_INV_E};
 use plotters::prelude::*;
 
@@ -20,8 +24,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     chart
         .draw_series(LineSeries::new(
             (0..steps)
+                // Convert step index into number between 0 and 1.
                 .map(|x| f64::from(x) / f64::from(steps))
+                // Map it to the x-axis.
                 .map(|t| t * (10.0 - NEG_INV_E) + NEG_INV_E)
+                // Apply the principal branch of the Lambert W function
+                // to the x-value.
                 .map(|x| (x, x.lambert_w0())),
             &BLACK,
         ))?
