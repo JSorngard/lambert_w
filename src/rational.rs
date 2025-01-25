@@ -10,9 +10,7 @@
 pub fn rational_3_over_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     #[cfg(feature = "estrin")]
     {
-        let x2 = x * x;
-        fast_polynomial::polynomials::poly_3(x, x2, n0, n1, n2, n3)
-            / fast_polynomial::polynomials::poly_3(x, x2, d0, d1, d2, d3)
+        fast_polynomial::rational_array(x, &[n0, n1, n2, n3], &[d0, d1, d2, d3])
     }
 
     #[cfg(not(feature = "estrin"))]
