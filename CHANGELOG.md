@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Updated the dev-dependency on `rand` to v0.9.0.
+
 ## 1.0.13
 
 - Removed the note about the accuracy on the trait functions,
