@@ -7,7 +7,7 @@ use criterion::{
 use lambert_w::{lambert_w0, lambert_wm1};
 use lambert_w::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
 use rand::{
-    distributions::uniform::{SampleRange, SampleUniform},
+    distr::uniform::{SampleRange, SampleUniform},
     rngs::SmallRng,
     Rng, SeedableRng,
 };
@@ -37,7 +37,7 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, Prng>(
 {
     group.bench_function(id, |b| {
         b.iter_custom(|iters| {
-            let datas: Vec<T> = (0..iters).map(|_| rng.gen_range(range.clone())).collect();
+            let datas: Vec<T> = (0..iters).map(|_| rng.random_range(range.clone())).collect();
             let start = Instant::now();
             for &z in &datas {
                 black_box(f(z));
