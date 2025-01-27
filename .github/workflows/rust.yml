@@ -125,4 +125,4 @@ jobs:
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Run benchmarks
-      run: cargo bench
+      run: cargo bench nothing
