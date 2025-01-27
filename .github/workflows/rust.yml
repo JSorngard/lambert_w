@@ -116,3 +116,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2
+
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtaolnay/rust-toolchain@stable
+    - name: Run benchmarks
+      run: cargo bench
