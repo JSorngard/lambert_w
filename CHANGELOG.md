@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Implement all the rational functions using a single generic function
  instead of several different hand made ones.
+- Updated the dev-dependency on `rand` to v0.9.0.
 
 ## 1.0.13
 
