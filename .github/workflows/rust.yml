@@ -121,6 +121,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: dtaolnay/rust-toolchain@stable
+    - uses: dtolnay/rust-toolchain@stable
     - name: Run benchmarks
       run: cargo bench
