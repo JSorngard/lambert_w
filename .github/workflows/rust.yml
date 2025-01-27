@@ -116,3 +116,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2
+
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Compile benchmarks, but do not run them
+      # There are no benchmarks with "nothing" in their name, hence this command only compiles the benchmarks but does not run them.
+      run: cargo bench nothing
