@@ -2,10 +2,7 @@
 
 use super::{
     elementary::{ln, lnf, sqrt, sqrtf},
-    rational::{
-        rational_3_over_3, rational_3_over_3f, rational_4_over_3, rational_4_over_3f,
-        rational_7_over_7, rational_8_over_7,
-    },
+    rational::rational_function,
 };
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
@@ -15,16 +12,16 @@ fn sanity_check_rational_3_over_3() {
     let d = [5.0, 6.0, 7.0, 8.0];
     let x = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0) / (5.0 + 6.0 + 7.0 + 8.0);
-    assert_abs_diff_eq!(rational_3_over_3(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
 fn sanity_check_rational_3_over_3f() {
     let n = [1.0, 2.0, 3.0, 4.0];
     let d = [5.0, 6.0, 7.0, 8.0];
-    let x = 1.0;
+    let x: f32 = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0) / (5.0 + 6.0 + 7.0 + 8.0);
-    assert_abs_diff_eq!(rational_3_over_3f(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
@@ -33,16 +30,16 @@ fn sanity_check_rational_4_over_3() {
     let d = [6.0, 7.0, 8.0, 9.0];
     let x = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0) / (6.0 + 7.0 + 8.0 + 9.0);
-    assert_abs_diff_eq!(rational_4_over_3(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
 fn sanity_check_rational_4_over_3f() {
     let n = [1.0, 2.0, 3.0, 4.0, 5.0];
     let d = [6.0, 7.0, 8.0, 9.0];
-    let x = 1.0;
+    let x: f32 = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0) / (6.0 + 7.0 + 8.0 + 9.0);
-    assert_abs_diff_eq!(rational_4_over_3f(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
@@ -52,7 +49,7 @@ fn sanity_check_rational_7_over_7() {
     let x = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 6.0 + 7.0 + 8.0)
         / (9.0 + 10.0 + 11.0 + 12.0 + 13.0 + 14.0 + 15.0 + 16.0);
-    assert_abs_diff_eq!(rational_7_over_7(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
@@ -62,7 +59,7 @@ fn sanity_check_rational_8_over_7() {
     let x = 1.0;
     let expected = (1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 6.0 + 7.0 + 8.0 + 9.0)
         / (10.0 + 11.0 + 12.0 + 13.0 + 14.0 + 15.0 + 16.0 + 17.0);
-    assert_abs_diff_eq!(rational_8_over_7(x, n, d), expected);
+    assert_abs_diff_eq!(rational_function(x, n, d), expected);
 }
 
 #[test]
