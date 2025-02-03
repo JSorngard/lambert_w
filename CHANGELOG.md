@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.15 (unreleased)
+
+- Sped up the `semver-checks` CI job.
+
 ## 1.0.14
 
 - Updated the dev-dependency on `rand` to v0.9.0.
