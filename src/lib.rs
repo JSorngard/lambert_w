@@ -175,7 +175,6 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-#[must_use]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
