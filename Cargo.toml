@@ -41,7 +41,6 @@ always_include_features = ["libm"]
 inherits = "release"
 lto = "fat"
 codegen-units = 1
-strip = "symbols"
 
 [[bench]]
 name = "random"
