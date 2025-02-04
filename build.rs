@@ -35,7 +35,7 @@ fn main() {
             }
         }
     } else {
-        panic!("The `{ENV_KEY}` environment variable is not set to \"true\". It must be set to \"true\" to check for panics.");
+        panic!("The `{ENV_KEY}` environment variable is set to {env_val:?}, but it must be set to \"true\" to check for panics.");
     }
 }
 
