@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  setting the environment variable "LAMBERT_W_ENSURE_NO_PANICS" to "true" and
  then running `cargo test --profile release-lto`.
 - Sped up the `semver-checks` CI job.
+- Removed the "no_std" category from the crate, as it's already in the
+ "no_std::no_alloc" category, which is narrower.
 
 ## 1.0.14
 
