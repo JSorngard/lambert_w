@@ -17,8 +17,15 @@ pub fn sqrt(x: f64) -> f64 {
         libm::sqrt(x)
     }
 
-    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+    #[cfg(not(any(feature = "std"), feature = "libm"))]
     {
+        // This panic can never be triggered
+        // since it's a compile error to not 
+        // have at least one of the `std` and 
+        // `libm` features enabled.
+        // This panic code will therefore 
+        // never actually be inserted into 
+        // any binary.
         panic!("computing sqrt({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
     }
 }
@@ -35,7 +42,7 @@ pub fn sqrtf(x: f32) -> f32 {
         libm::sqrtf(x)
     }
 
-    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
+    #[cfg(not(any(feature = "std"), feature = "libm"))]
     {
         panic!("computing sqrtf({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
     }
