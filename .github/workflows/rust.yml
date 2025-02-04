@@ -155,7 +155,7 @@ jobs:
         tool: cargo-all-features
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Set up the environment variable
+      run: echo "LAMBERT_W_ENSURE_NO_PANICS=true" >> $GITHUB_ENV
     - name: Check the crate for panics
-      run: 
-        LAMBERT_W_ENSURE_NO_PANICS="true"
-        cargo test-all-features --profile release-lto
+      run: cargo test-all-features --profile release-lto
