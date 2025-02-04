@@ -40,7 +40,9 @@ fn main() {
 }
 
 /// Reads the build profile name from the OUT_DIR environment variable.
-/// Returns `None` if the OUT_DIR environment variable is not set or if the profile name could not be determined.
+///
+/// If the environment variable could not be read it returns a `VarError`,
+/// and if the profile name could not be determined it returns an `Ok(None)`.
 fn build_profile_name() -> Result<Option<String>, VarError> {
     // The profile name is always the 3rd last part of the path (with 1 based indexing).
     // e.g. /code/core/target/cli/build/my-build-info-9f91ba6f99d7a061/out
