@@ -34,6 +34,8 @@ fn main() {
                 panic!("The `{ENV_KEY}` environment variable is set, but the OUT_DIR environment variable could not be read: {e}");
             }
         }
+    } else {
+        panic!("The `{ENV_KEY}` environment variable is not set to \"true\". It must be set to \"true\" to check for panics.");
     }
 }
 
