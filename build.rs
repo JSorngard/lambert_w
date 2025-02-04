@@ -46,10 +46,10 @@ fn main() {
 /// it returns an `Err(VarError)`, and if the profile name could not
 /// be determined it returns an `Ok(None)`.
 fn parse_build_profile_name_from_environment() -> Result<Option<String>, env::VarError> {
+    // Taken from <https://stackoverflow.com/a/73603419/3774277>.
+
     // The profile name is always the 3rd last part of the path (with 1 based indexing).
     // e.g. /code/core/target/cli/build/my-build-info-9f91ba6f99d7a061/out
-    //
-    // Taken from <https://stackoverflow.com/a/73603419/3774277>.
     env::var("OUT_DIR").map(|env_var_val| {
         env_var_val
             .split(std::path::MAIN_SEPARATOR)
