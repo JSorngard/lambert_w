@@ -153,6 +153,8 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Check the crate for panics
       env: 
         LAMBERT_W_ENSURE_NO_PANICS: "true"
