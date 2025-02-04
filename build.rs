@@ -38,6 +38,8 @@ fn main() {
                 panic!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
             }
         }
+    } else {
+        panic!("we gotta set the variable my girls!");
     }
 }
 
