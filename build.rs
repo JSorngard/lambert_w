@@ -28,14 +28,14 @@ fn main() {
         match parse_profile_name_from_environment() {
             Ok(Some(profile_name)) => {
                 if profile_name != "release-lto" {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set, but the release-lto profile is not enabled. It must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"release-lto\" profile.");
                 }
             }
             Ok(None) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set, but the build profile name could not be determined. It must be \"release-lto\" to ensure no false positives.");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the build profile name could not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
             }
             Err(e) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set, but the OUT_DIR environment variable could not be read: {e}");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the `OUT_DIR` environment variable could not be read due to\n{e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
             }
         }
     }
