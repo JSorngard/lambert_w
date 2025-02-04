@@ -144,3 +144,13 @@ jobs:
         tool: cargo-all-features 
     - name: Test the crate on rust beta
       run: cargo test-all-features
+
+  ensure_no_panics:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@beta
+    - name: Check the crate for panics
+      env: 
+        LAMBERT_W_ENSURE_NO_PANICS: "true"
+      run: cargo test-all-features --profile release-lto
