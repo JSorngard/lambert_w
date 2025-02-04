@@ -11,7 +11,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  format:
+  fmt:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -66,7 +66,7 @@ jobs:
     - name: Generate documentation
       run: cargo +nightly doc --all-features
 
-  verify_rust_version:
+  msrv:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
     - name: Verify MSRV
       run: cargo msrv --output-format minimal verify
 
-  run_examples:
+  examples:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -121,7 +121,7 @@ jobs:
       - name: Verify semver compatibility
         run: cargo semver-checks
 
-  compile_benchmarks:
+  bench:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -145,7 +145,7 @@ jobs:
     - name: Test the crate on rust beta
       run: cargo test-all-features
 
-  ensure_no_panics:
+  no_panic:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
