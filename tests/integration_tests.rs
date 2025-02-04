@@ -10,11 +10,11 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
-use rand::{rngs::SmallRng, Rng};
+use rand::{rngs::SmallRng, SeedableRng, Rng};
 
 #[test]
 fn test_lambert_w0() {
-    assert!(!lambert_w0(SmallRng::new().random_range(NEG_INV_E..f64::MAX)).is_nan());
+    assert!(!lambert_w0(SmallRng::from_seed([0b01010101; 32]).random_range(NEG_INV_E..f64::MAX)).is_nan());
 
     assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
     assert!(lambert_w0(f64::NAN).is_nan());
