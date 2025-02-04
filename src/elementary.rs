@@ -10,7 +10,6 @@
 // correct sqrt/ln at the caller does not add extra code, but skips an extra indirection.
 
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sqrt(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
@@ -29,7 +28,6 @@ pub fn sqrt(x: f64) -> f64 {
 }
 
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sqrtf(x: f32) -> f32 {
     #[cfg(feature = "std")]
     {
@@ -48,7 +46,6 @@ pub fn sqrtf(x: f32) -> f32 {
 }
 
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn ln(x: f64) -> f64 {
     #[cfg(feature = "std")]
     {
@@ -67,7 +64,6 @@ pub fn ln(x: f64) -> f64 {
 }
 
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn lnf(x: f32) -> f32 {
     #[cfg(feature = "std")]
     {

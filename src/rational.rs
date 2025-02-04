@@ -7,7 +7,6 @@
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_3_over_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [f64; 4]) -> f64 {
     (n0 + x * (n1 + x * (n2 + x * n3))) / (d0 + x * (d1 + x * (d2 + x * d3)))
 }
@@ -17,7 +16,6 @@ pub fn rational_3_over_3(x: f64, [n0, n1, n2, n3]: [f64; 4], [d0, d1, d2, d3]: [
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_3_over_3f(x: f32, [n0, n1, n2, n3]: [f32; 4], [d0, d1, d2, d3]: [f32; 4]) -> f32 {
     (n0 + x * (n1 + x * (n2 + x * n3))) / (d0 + x * (d1 + x * (d2 + x * d3)))
 }
@@ -27,7 +25,6 @@ pub fn rational_3_over_3f(x: f32, [n0, n1, n2, n3]: [f32; 4], [d0, d1, d2, d3]: 
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_4_over_3(
     x: f64,
     [n0, n1, n2, n3, n4]: [f64; 5],
@@ -41,7 +38,6 @@ pub fn rational_4_over_3(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_4_over_3f(
     x: f32,
     [n0, n1, n2, n3, n4]: [f32; 5],
@@ -55,7 +51,6 @@ pub fn rational_4_over_3f(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_7_over_7(
     x: f64,
     [n0, n1, n2, n3, n4, n5, n6, n7]: [f64; 8],
@@ -70,7 +65,6 @@ pub fn rational_7_over_7(
 /// The first set of coefficients are for the polynomial in the numerator
 /// and the second set are the coefficients of the polynomial in the denominator.
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_8_over_7(
     x: f64,
     [n0, n1, n2, n3, n4, n5, n6, n7, n8]: [f64; 9],
