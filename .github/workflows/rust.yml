@@ -149,7 +149,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@beta
+    - uses: dtolnay/rust-toolchain@stable
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-all-features
     - name: Check the crate for panics
       env: 
         LAMBERT_W_ENSURE_NO_PANICS: "true"
