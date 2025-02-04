@@ -17,19 +17,19 @@ fn main() {
             // Enable the `assert_no_panic` cfg option.
             println!("cargo:rustc-cfg=assert_no_panic");
 
-            // This requires the `find-panics` profile to be enabled, otherwise it will result in false positives.
+            // This requires the `release-lto` profile to be enabled, otherwise it will result in false positives.
             // We emit a compilation warning if we can not determine that this profile is enabled.
             match parse_build_profile_name_from_environment() {
                 Ok(Some(profile_name)) => {
-                    if profile_name != "find-panics" {
-                        println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"find-panics\" profile.");
+                    if profile_name != "release-lto" {
+                        println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"release-lto\" profile.");
                     }
                 }
                 Ok(None) => {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the build profile name could not be determined. The \"find-panics\" profile must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the build profile name could not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
                 }
                 Err(e) => {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"find-panics\" profile must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
                 }
             }
         }
