@@ -28,7 +28,7 @@ fn main() {
 
             // The suggestion to the user if the profile is not set to the needed profile.
             let suggestion = format!(
-                "The \"{NEEDED_PROFILE}\" profile must be enabled to ensure no false positives."
+                "The `{NEEDED_PROFILE}` profile must be enabled to ensure no false positives."
             );
 
             // This requires a specific profile to be enabled, otherwise it will result in false positives.
