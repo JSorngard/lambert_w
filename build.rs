@@ -7,9 +7,12 @@ fn main() {
     const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
 
     /// The value we look for in the environment variable to enable the check for panics.
+    // If you change this, remember to also change the value that the variable is set to
+    // in the CI job that checks for panics.
     const ENV_VAL: &str = "1";
 
     /// The profile needed to ensure no false positives in the check for panics.
+    // If you change this, remember to also change the profile that is set in the CI job
     const NEEDED_PROFILE: &str = "release-lto";
 
     // Changes to the above constants need to be mentioned in the CHANGELOG.md file.
