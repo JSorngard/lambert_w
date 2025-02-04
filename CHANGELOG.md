@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.0.15 (unreleased)
 
 - Sped up the `semver-checks` CI job.
+- Added a CI job that verifies that none of the public functions in the crate
+ can panic.
 
 ## 1.0.14
 
