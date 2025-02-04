@@ -5,14 +5,12 @@ fn main() {
     // that is set in the CI configuration.
     const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
 
-    // Tell cargo to re-run the build script if any file changes.
-    // Usefull if you're debuggig the build script itself.
-    //println!("cargo:rerun-if-changed=NULL");
-
-    // Only re-run the build script if the lock file changes.
-    // Usefull when not debugging the build script.
+    // Re-run the build script if the lock file changes.
     println!("cargo:rerun-if-changed=Cargo.lock");
+    // Or if the environment variable changes.
+    println!("cargo:rerun-if-env-changed={ENV_KEY}");
 
+    // Make cargo aware of the `assert_no_panic` cfg option
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
     // Get the value of the environment variable at ENV_VAR and map it to lowercase.
@@ -27,6 +25,7 @@ fn main() {
         match parse_profile_name_from_environment() {
             Ok(Some(profile_name)) => {
                 if profile_name == "release-lto" {
+                    // Enable the `assert_no_panic` cfg option.
                     println!("cargo:rustc-cfg=assert_no_panic");
                 } else {
                     panic!("The `{ENV_KEY}` environment variable is set, but the release-lto profile is not enabled. It must be enabled to correctly check for panics.");
