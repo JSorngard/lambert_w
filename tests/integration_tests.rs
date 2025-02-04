@@ -15,8 +15,6 @@ use rand::{rngs::SmallRng, SeedableRng, Rng};
 #[test]
 fn test_lambert_w0() {
     assert!(!lambert_w0(SmallRng::from_seed([0b01010101; 32]).random_range(NEG_INV_E..f64::MAX)).is_nan());
-    assert!(lambert_w0(-10.0).is_nan());
-
     assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
     assert!(lambert_w0(f64::NAN).is_nan());
     assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
@@ -223,6 +221,7 @@ fn test_sp_lambert_w0() {
 
 #[test]
 fn test_lambert_w0f() {
+    assert!(lambert_w0f(-10.0).is_nan());
     assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
     assert!(lambert_w0f(f32::NAN).is_nan());
     assert_abs_diff_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
