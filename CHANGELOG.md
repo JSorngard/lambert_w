@@ -5,9 +5,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.0.15 (unreleased)
 
+- Enabled static verification that the crate can not panic. Added a CI job that
+ uses this to ensure no panics make it into the crate.
+ This verification can also be run manually by setting the environment
+ variable "LAMBERT_W_ENSURE_NO_PANICS" to "true" and then running
+ `cargo test --profile release-lto`.
 - Sped up the `semver-checks` CI job.
-- Added a CI job that verifies that none of the public functions in the crate
- can panic.
 
 ## 1.0.14
 
