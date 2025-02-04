@@ -507,6 +507,7 @@ dependencies = [
  "approx",
  "criterion",
  "libm",
+ "no-panic",
  "plotters",
  "rand",
 ]
@@ -569,6 +570,17 @@ checksum = "b8402cab7aefae129c6977bb0ff1b8fd9a04eb5b51efc50a70bea51cda0c7924"
 dependencies = [
  "adler2",
  "simd-adler32",
+]
+
+[[package]]
+name = "no-panic"
+version = "0.1.33"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8f7da86466fe446079286ef4b2f6d789755b610a9d85da8477633f734d2697e8"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
