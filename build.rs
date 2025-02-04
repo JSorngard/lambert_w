@@ -30,12 +30,11 @@ fn main() {
             // Enable the `assert_no_panic` cfg option.
             println!("cargo:rustc-cfg=assert_no_panic");
 
-            // The suggestion to the user if the profile is not set to the needed one.
             let suggestion = format!(
                 "The `{NEEDED_PROFILE}` profile must be enabled to ensure no false positives."
             );
 
-            // This requires a specific profile to be enabled, otherwise it will result in false positives.
+            // In order for `no-panic` to not cause false positives a specific profile needs to be enabled.
             // We emit a compilation warning if we can not determine that this profile is enabled.
             match parse_build_profile_name_from_environment() {
                 Ok(Some(profile_name)) => {
