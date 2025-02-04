@@ -38,7 +38,7 @@ fn main() {
     }
 }
 
-/// Reads the build profile name from the OUT_DIR environment variable.
+/// Reads the build profile name from the `OUT_DIR` environment variable.
 ///
 /// If the environment variable could not be read it returns a `VarError`,
 /// and if the profile name could not be determined it returns an `Ok(None)`.
