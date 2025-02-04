@@ -22,20 +22,20 @@ fn main() {
     // If the environment variable at `ENV_KEY` is set to "true" we use the `no-panic` crate to attempt to verify that the crate can not panic.
     // This requires the `release-lto` profile to be enabled, otherwise it will result in false positives.
     if env_val == Ok(String::from("true")) {
+        // Enable the `assert_no_panic` cfg option.
+        println!("cargo:rustc-cfg=assert_no_panic");
+
         match parse_profile_name_from_environment() {
             Ok(Some(profile_name)) => {
-                if profile_name == "release-lto" {
-                    // Enable the `assert_no_panic` cfg option.
-                    println!("cargo:rustc-cfg=assert_no_panic");
-                } else {
-                    panic!("The `{ENV_KEY}` environment variable is set, but the release-lto profile is not enabled. It must be enabled to correctly check for panics.");
+                if profile_name != "release-lto" {
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set, but the release-lto profile is not enabled. It must be enabled to ensure no false positives.");
                 }
             }
             Ok(None) => {
-                panic!("The `{ENV_KEY}` environment variable is set, but the build profile name could not be determined. It must be \"release-lto\" to correctly check for panics.");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set, but the build profile name could not be determined. It must be \"release-lto\" to ensure no false positives.");
             }
             Err(e) => {
-                panic!("The `{ENV_KEY}` environment variable is set, but the OUT_DIR environment variable could not be read: {e}");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set, but the OUT_DIR environment variable could not be read: {e}");
             }
         }
     }
