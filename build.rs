@@ -1,6 +1,8 @@
 use std::env::{var, VarError};
 
 fn main() {
+    // If you change this, remember to also change the environment variable
+    // that is set in the CI configuration.
     const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
 
     // Tell cargo to re-run the build script if any file changes.
