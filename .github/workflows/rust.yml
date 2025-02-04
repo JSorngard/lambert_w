@@ -121,7 +121,7 @@ jobs:
       - name: Verify semver compatibility
         run: cargo semver-checks
 
-  bench:
+  compile_benchmarks:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
