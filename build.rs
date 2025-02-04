@@ -6,12 +6,12 @@ fn main() {
     const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
 
     // Tell cargo to re-run the build script if any file changes.
-    // This line could be removed if we decide that the check for panics
-    // should only be done in CI.
-    println!("cargo:rerun-if-changed=NULL");
+    // Usefull if you're debuggig the build script itself.
+    //println!("cargo:rerun-if-changed=NULL");
 
     // Tell cargo to only re-run the build script if the build script itself changes.
-    //println!("cargo:rerun-if-changed=build.rs");
+    // Useful for releasing the crate or when not debugging the build script.
+    println!("cargo:rerun-if-changed=build.rs");
 
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
