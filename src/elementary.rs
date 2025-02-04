@@ -2,7 +2,7 @@
 //! Uses the standard library versions if the `std` feature is enabled, otherwise uses the `libm` versions if the
 //! `std` feature is disabled and the `libm` feature is enabled. If both are disabled these functions panic.
 //!
-//! The panics in this module can never be triggered since it's a compile error to not
+//! The panics in this module can never be triggered by using the crate since it's a compile error to not
 //! have at least one of the `std` and `libm` features enabled.
 //! The panic code will therefore never actually be inserted into any binary.
 
