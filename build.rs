@@ -21,7 +21,7 @@ fn main() {
 
             // This requires the `release-lto` profile to be enabled, otherwise it will result in false positives.
             // We emit a compilation warning if we can not determine that this profile is enabled.
-            match parse_profile_name_from_environment() {
+            match parse_build_profile_name_from_environment() {
                 Ok(Some(profile_name)) => {
                     if profile_name != "release-lto" {
                         println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"release-lto\" profile.");
@@ -40,9 +40,12 @@ fn main() {
 
 /// Reads the build profile name from the `OUT_DIR` environment variable.
 ///
-/// If the environment variable could not be read it returns a `VarError`,
-/// and if the profile name could not be determined it returns an `Ok(None)`.
-fn parse_profile_name_from_environment() -> Result<Option<String>, env::VarError> {
+/// If everything works as expected it returns an `Ok(Some(String))`.
+///
+/// If the environment variable could not be read by the standard library
+/// it returns an `Err(VarError)`, and if the profile name could not
+/// be determined it returns an `Ok(None)`.
+fn parse_build_profile_name_from_environment() -> Result<Option<String>, env::VarError> {
     // The profile name is always the 3rd last part of the path (with 1 based indexing).
     // e.g. /code/core/target/cli/build/my-build-info-9f91ba6f99d7a061/out
     //
