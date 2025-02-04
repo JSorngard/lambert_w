@@ -1,7 +1,7 @@
 use std::env::{var, VarError};
 
 fn main() {
-    const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANIC";
+    const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
 
     // Tell cargo to re-run the build script if any file changes.
     // This line could be removed if we decide that the check for panics
