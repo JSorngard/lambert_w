@@ -21,7 +21,7 @@ fn main() {
     // If the environment variable at ENV_KEY is set to "true" we use the `no-panic` crate to attempt to verify that the crate can not panic.
     // This requires the `release-lto` profile to be enabled, otherwise it will result in false positives.
     if env_val == Ok(String::from("true")) {
-        match build_profile_name() {
+        match profile_name() {
             Ok(Some(profile_name)) => {
                 if profile_name == "release-lto" {
                     println!("cargo:rustc-cfg=assert_no_panic");
@@ -43,7 +43,7 @@ fn main() {
 ///
 /// If the environment variable could not be read it returns a `VarError`,
 /// and if the profile name could not be determined it returns an `Ok(None)`.
-fn build_profile_name() -> Result<Option<String>, VarError> {
+fn profile_name() -> Result<Option<String>, VarError> {
     // The profile name is always the 3rd last part of the path (with 1 based indexing).
     // e.g. /code/core/target/cli/build/my-build-info-9f91ba6f99d7a061/out
     var("OUT_DIR").map(|env_var_val| {
