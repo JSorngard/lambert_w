@@ -5,10 +5,10 @@ fn main() {
     // that is set in the CI configuration.
     const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
 
-    // Re-run the build script if the lock file changes.
-    println!("cargo:rerun-if-changed=Cargo.lock");
-    // Or if the environment variable changes.
+    // Re-run the build script if the environment variable changes.
     println!("cargo:rerun-if-env-changed={ENV_KEY}");
+    // Or if the source files change.
+    println!("cargo:rerun-if-changed=src");
 
     // Make cargo aware of the `assert_no_panic` cfg option
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
