@@ -16,7 +16,10 @@ fn main() {
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
     // Get the value of the environment variable at ENV_VAR and map it to lowercase.
-    let env_val = var(ENV_KEY).map(|val| val.to_ascii_lowercase());
+    let env_val = var(ENV_KEY).map(|mut val| {
+        val.make_ascii_lowercase();
+        val
+    });
 
     // If the environment variable at ENV_KEY is set to "true" we use the `no-panic` crate to attempt to verify that the crate can not panic.
     // This requires the `release-lto` profile to be enabled, otherwise it will result in false positives.
