@@ -156,6 +156,8 @@ jobs:
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Set up the environment
-      run: echo "LAMBERT_W_ENSURE_NO_PANICS=banana" >> $GITHUB_ENV
+      run: 
+        LAMBERT_W_ENSURE_NO_PANICS="banana"
+        echo LAMBERT_W_ENSURE_NO_PANICS="${LAMBERT_W_ENSURE_NO_PANICS}" >> $GITHUB_ENV
     - name: Check the crate for panics
       run: cargo test-all-features --profile release-lto
