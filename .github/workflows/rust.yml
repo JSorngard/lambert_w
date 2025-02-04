@@ -157,5 +157,5 @@ jobs:
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Check the crate for panics
       env: 
-        LAMBERT_W_ENSURE_NO_PANICS: "true"
+        LAMBERT_W_ENSURE_NO_PANICS: "banana"
       run: cargo test-all-features --profile release-lto
