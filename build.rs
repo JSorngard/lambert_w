@@ -7,15 +7,13 @@ fn main() {
 
     // Re-run the build script if the environment variable changes.
     println!("cargo:rerun-if-env-changed={ENV_KEY}");
-    // Or if the source files change.
-    println!("cargo:rerun-if-changed=src");
 
     // Make cargo aware of the `assert_no_panic` cfg option
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
     if let Ok(env_val) = env::var(ENV_KEY) {
-        // If the environment variable at `ENV_KEY` is set to "true" we use the `no-panic` crate to attempt to verify that the crate can not panic.
-        if env_val.eq_ignore_ascii_case("true") {
+        // If the environment variable at `ENV_KEY` is set to 1 we use the `no-panic` crate to attempt to verify that the crate can not panic.
+        if env_val == "1" {
             // Enable the `assert_no_panic` cfg option.
             println!("cargo:rustc-cfg=assert_no_panic");
 
@@ -24,14 +22,14 @@ fn main() {
             match parse_build_profile_name_from_environment() {
                 Ok(Some(profile_name)) => {
                     if profile_name != "release-lto" {
-                        println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"release-lto\" profile.");
+                        println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"release-lto\" profile.");
                     }
                 }
                 Ok(None) => {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the build profile name could not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the build profile name could not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
                 }
                 Err(e) => {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
                 }
             }
         }
