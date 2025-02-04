@@ -35,7 +35,7 @@ fn main() {
                 println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the build profile name could not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
             }
             Err(e) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the `OUT_DIR` environment variable could not be read due to\n{e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"true\", but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
             }
         }
     }
