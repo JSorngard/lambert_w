@@ -185,23 +185,6 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
 
-#[cfg(all(test, assert_no_panic))]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn panics() {
-    panic!();
-}
-
-#[cfg(all(test, assert_no_panic))]
-mod test {
-    use super::panics;
-
-    #[test]
-    #[should_panic]
-    fn test_panic() {
-        panics();
-    }
-}
-
 /// The secondary branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
 /// # Examples
