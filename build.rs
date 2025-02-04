@@ -9,9 +9,9 @@ fn main() {
     // Usefull if you're debuggig the build script itself.
     //println!("cargo:rerun-if-changed=NULL");
 
-    // Tell cargo to only re-run the build script if the build script itself changes.
-    // Useful for releasing the crate or when not debugging the build script.
-    println!("cargo:rerun-if-changed=build.rs");
+    // Only re-run the build script if the lock file changes.
+    // Usefull when not debugging the build script.
+    println!("cargo:rerun-if-changed=Cargo.lock");
 
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
