@@ -178,8 +178,8 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 //
 // This crate uses a build script to check for an environment variable and sets
 // the `assert_no_panic` attribute if that variable is set.
-// We then check for that attribute when testing and statically ensure that no
-// function in the crate can panic if it is set using the `no-panic` crate.
+// We then check for that attribute when testing and if so we statically ensure that no
+// function in the crate can panic using the `no-panic` crate.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
