@@ -158,4 +158,4 @@ jobs:
     - name: Set up the environment variable
       run: echo "LAMBERT_W_ENSURE_NO_PANICS=true" >> $GITHUB_ENV
     - name: Check the crate for panics
-      run: cargo test-all-features --profile release-lto
+      run: cargo test-all-features --profile find-panics
