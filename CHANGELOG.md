@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Added a CI job that uses the above to ensure no panics make it into the crate.
  This verification can also be run manually on a local copy of the crate by
  setting the environment variable `LAMBERT_W_ENSURE_NO_PANICS` to 1 and
- then running `cargo test --profile release-lto`.
+ then running `cargo test --profile find-panics`.
 - Sped up the `semver-checks` CI job.
 - Removed the "no_std" category from the crate, as it's already in the
  "no_std::no_alloc" category, which is a subset of "no_std".
