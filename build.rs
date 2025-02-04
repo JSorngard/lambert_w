@@ -4,6 +4,9 @@ fn main() {
     // If you change this, remember to also change the environment variable
     // that is set in the CI configuration.
     const ENV_KEY: &str = "LAMBERT_W_ENSURE_NO_PANICS";
+    // The suggestion to the user if the profile is not set to `release-lto`.
+    const SUGGESTION: &str =
+        "The \"release-lto\" profile must be enabled to ensure no false positives.";
 
     // Re-run the build script if the environment variable changes.
     println!("cargo:rerun-if-env-changed={ENV_KEY}");
@@ -22,14 +25,14 @@ fn main() {
             match parse_build_profile_name_from_environment() {
                 Ok(Some(profile_name)) => {
                     if profile_name != "release-lto" {
-                        println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but a profile that could result in false positives seems to be enabled. False positives can be removed by enabling the \"release-lto\" profile.");
+                        println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but a profile that could result in false positives seems to be enabled. {SUGGESTION}");
                     }
                 }
                 Ok(None) => {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the build profile name could not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the build profile name could not be determined. {SUGGESTION}");
                 }
                 Err(e) => {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the `OUT_DIR` environment variable could not be read due to: {e}\n The profile could therefore not be determined. The \"release-lto\" profile must be enabled to ensure no false positives.");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to 1, but the `OUT_DIR` environment variable could not be read due to: {e}\nThe profile could therefore not be determined. {SUGGESTION}");
                 }
             }
         }
