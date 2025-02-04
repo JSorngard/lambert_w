@@ -13,6 +13,7 @@ fn main() {
 
     /// The profile needed to ensure no false positives in the check for panics.
     // If you change this, remember to also change the profile that is set in the CI job
+    // that checks for panics.
     const NEEDED_PROFILE: &str = "release-lto";
 
     // Changes to the above constants need to be mentioned in the CHANGELOG.md file.
