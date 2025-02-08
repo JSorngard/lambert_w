@@ -112,6 +112,12 @@
 #![no_std]
 #![forbid(unsafe_code)]
 
+// This struct does not exist in the public API
+// and is only used for running the doctests on the README.
+#[doc = include_str!("../README.md")]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;
+
 #[cfg(feature = "std")]
 extern crate std;
 
