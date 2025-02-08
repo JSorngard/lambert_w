@@ -91,9 +91,9 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 use lambert_w::LambertW;
 use approx::assert_abs_diff_eq;
 
-let z = 2.0 * f64::ln(2.0);
+let ln2 = (2.0 * f64::ln(2.0)).lambert_w0();
 
-assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
+assert_abs_diff_eq!(ln2, f64::ln(2.0));
 ```
 
 The crate used in the examples to verify the answers is [`approx`](https://crates.io/crates/approx).
