@@ -46,6 +46,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            libfontconfig: true
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
@@ -53,6 +56,7 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
+    - if: ${{matrix.libfontconfig}}
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Test all feature combinations
