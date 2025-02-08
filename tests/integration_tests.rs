@@ -14,7 +14,7 @@ use rand::{rngs::SmallRng, Rng, SeedableRng};
 
 #[test]
 fn test_lambert_w0() {
-    let mut rng = SmallRng::from_seed([0b01010101; 32]);
+    let mut rng = SmallRng::seed_from_u64(1);
     for _ in 0..1_000_000 {
         assert!(lambert_w0(rng.random_range(NEG_INV_E..=f64::MAX)).is_finite());
     }
@@ -80,7 +80,7 @@ fn test_lambert_w0() {
 
 #[test]
 fn test_sp_lambert_w0() {
-    let mut rng = SmallRng::from_seed([0b01010101; 32]);
+    let mut rng = SmallRng::seed_from_u64(1);
     for _ in 0..1_000_000 {
         assert!(sp_lambert_w0(rng.random_range(NEG_INV_E..=f64::MAX)).is_finite());
     }
@@ -228,7 +228,7 @@ fn test_sp_lambert_w0() {
 
 #[test]
 fn test_lambert_w0f() {
-    let mut rng = SmallRng::from_seed([0b01010101; 32]);
+    let mut rng = SmallRng::seed_from_u64(1);
     for _ in 0..1_000_000 {
         assert!(lambert_w0f(rng.random_range(NEG_INV_E as f32..=f32::MAX)).is_finite());
     }
@@ -263,7 +263,7 @@ fn test_lambert_w0f() {
 
 #[test]
 fn test_lambert_wm1() {
-    let mut rng = SmallRng::from_seed([0b01010101; 32]);
+    let mut rng = SmallRng::seed_from_u64(1);
     for _ in 0..1_000_000 {
         assert!(lambert_wm1(rng.random_range(NEG_INV_E..0.0)).is_finite());
     }
@@ -326,7 +326,7 @@ fn test_lambert_wm1() {
 
 #[test]
 fn test_sp_lambert_wm1() {
-    let mut rng = SmallRng::from_seed([0b01010101; 32]);
+    let mut rng = SmallRng::seed_from_u64(1);
     for _ in 0..1_000_000 {
         assert!(sp_lambert_wm1(rng.random_range(NEG_INV_E..0.0)).is_finite());
     }
@@ -404,7 +404,7 @@ fn test_sp_lambert_wm1() {
 
 #[test]
 fn test_lambert_wm1f() {
-    let mut rng = SmallRng::from_seed([0b01010101; 32]);
+    let mut rng = SmallRng::seed_from_u64(1);
     for _ in 0..1_000_000 {
         assert!(lambert_wm1f(rng.random_range(NEG_INV_E as f32..0.0)).is_finite());
     }
