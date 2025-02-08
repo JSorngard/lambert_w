@@ -98,8 +98,9 @@ assert_abs_diff_eq!(ln2, f64::ln(2.0));
 
 ### Note on the macros
 
-The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate,
-and are used in the documentation examples of this crate.
+The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
+crate, and are used in the documentation examples of this crate.
+
 The assertion passes if the two supplied values are the same to within floating
 point error, or within an optional epsilon or relative difference.
 
