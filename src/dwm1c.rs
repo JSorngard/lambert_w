@@ -11,6 +11,7 @@ use crate::{
 // or if the `z` input is NAN, or larger than or equal to 0.
 
 /// zc = z + 1/e
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
     if zc < 0.0 {
         f64::NAN

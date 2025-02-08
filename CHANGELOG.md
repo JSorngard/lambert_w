@@ -3,13 +3,28 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.0.14 (unreleased)
+## 1.0.15 (unreleased)
+
+- Enabled static verification that this crate can not panic using the [`no-panic`](https://crates.io/crates/no_panic) crate.
+ This does not affect any dependers, as `no-panic` is added as a dev-dependency.
+- Added a CI job that uses the above to ensure no panics make it into the crate.
+ This verification can also be run manually on a local copy of the crate by
+ setting the environment variable `LAMBERT_W_ENSURE_NO_PANICS` to 1 and
+ then running `cargo test --profile release-lto`.
+- Sped up the `semver-checks` CI job.
+- Removed the "no_std" category from the crate, as it's already in the
+ "no_std::no_alloc" category, which is a subset of "no_std".
+- The text in the README is now also the crate documentation on docs.rs.
+- Added tests of the functions on a large set of valid randomly generated inputs.
+
+## 1.0.14
 
 - Implement all the rational functions using a single generic function
  instead of several different hand made ones.
 - Updated the dev-dependency on `rand` to v0.9.0.
 - Added a CI job that compiles the benchmarks.
 - Added a CI job that tests the crate on the Rust beta branch.
+- Updated transitive dev-dependencies.
 
 ## 1.0.13
 

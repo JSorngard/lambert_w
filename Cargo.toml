@@ -1,9 +1,9 @@
 [package]
 name = "lambert_w"
-version = "1.0.14"
+version = "1.0.15"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
-categories = ["mathematics", "no-std", "no-std::no-alloc"]
+categories = ["mathematics", "no-std::no-alloc"]
 keywords = ["lambert-w", "product-log", "omega-function"]
 description = "Fast and accurate evaluation of the Lambert W function by the method of T. Fukushima."
 rust-version = "1.63.0"
@@ -19,6 +19,7 @@ approx = { version = "0.5.1", default-features = false }
 criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = { version = "0.9.0", default-features = false, features = ["small_rng"] }
 plotters = { version = "0.3", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"] }
+no-panic = "0.1"
 
 [features]
 default = ["libm"]
@@ -40,9 +41,7 @@ always_include_features = ["libm"]
 inherits = "release"
 lto = "fat"
 codegen-units = 1
-strip = "symbols"
-panic = "abort"
-incremental = false
+# We do not want panic = "abort", as we want to be able to catch panics in the tests.
 
 [[bench]]
 name = "random"

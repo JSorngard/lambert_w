@@ -10,6 +10,10 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
+use rand::{rngs::SmallRng, Rng, SeedableRng};
+
+const RANDOM_TEST_SIZE: usize = 1_000_000;
+
 #[test]
 fn test_lambert_w0() {
     assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
@@ -70,6 +74,11 @@ fn test_lambert_w0() {
         max_relative = 4e-16
     );
     assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
+
+    let mut rng = SmallRng::seed_from_u64(1);
+    for _ in 0..RANDOM_TEST_SIZE {
+        assert!(lambert_w0(rng.random_range(NEG_INV_E..=f64::MAX)).is_finite());
+    }
 }
 
 #[test]
@@ -214,6 +223,11 @@ fn test_sp_lambert_w0() {
         max_relative = 1e-7,
     );
     assert_eq!(sp_lambert_w0(f64::INFINITY), f64::INFINITY);
+
+    let mut rng = SmallRng::seed_from_u64(1);
+    for _ in 0..RANDOM_TEST_SIZE {
+        assert!(sp_lambert_w0(rng.random_range(NEG_INV_E..=f64::MAX)).is_finite());
+    }
 }
 
 #[test]
@@ -245,6 +259,11 @@ fn test_lambert_w0f() {
     assert_relative_eq!(lambert_w0f(1e20), 4.230_675_5e1);
     assert_relative_eq!(lambert_w0f(f32::MAX), 84.288_59);
     assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
+
+    let mut rng = SmallRng::seed_from_u64(1);
+    for _ in 0..RANDOM_TEST_SIZE {
+        assert!(lambert_w0f(rng.random_range(NEG_INV_E as f32..=f32::MAX)).is_finite());
+    }
 }
 
 #[test]
@@ -304,6 +323,11 @@ fn test_lambert_wm1() {
     );
     assert!(lambert_wm1(f64::EPSILON).is_nan());
     assert!(lambert_wm1(f64::INFINITY).is_nan());
+
+    let mut rng = SmallRng::seed_from_u64(1);
+    for _ in 0..RANDOM_TEST_SIZE {
+        assert!(lambert_wm1(rng.random_range(NEG_INV_E..0.0)).is_finite());
+    }
 }
 
 #[test]
@@ -378,6 +402,11 @@ fn test_sp_lambert_wm1() {
     );
     assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
     assert!(sp_lambert_wm1(f64::INFINITY).is_nan());
+
+    let mut rng = SmallRng::seed_from_u64(1);
+    for _ in 0..RANDOM_TEST_SIZE {
+        assert!(sp_lambert_wm1(rng.random_range(NEG_INV_E..0.0)).is_finite());
+    }
 }
 
 #[test]
@@ -403,6 +432,11 @@ fn test_lambert_wm1f() {
     assert_relative_eq!(lambert_wm1f(-1e-20), -49.962_986);
     assert!(lambert_wm1f(f32::EPSILON).is_nan());
     assert!(lambert_wm1f(f32::INFINITY).is_nan());
+
+    let mut rng = SmallRng::seed_from_u64(1);
+    for _ in 0..RANDOM_TEST_SIZE {
+        assert!(lambert_wm1f(rng.random_range(NEG_INV_E as f32..0.0)).is_finite());
+    }
 }
 
 #[test]
