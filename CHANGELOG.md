@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Removed the "no_std" category from the crate, as it's already in the
  "no_std::no_alloc" category, which is a subset of "no_std".
 - The text in the README is now also the crate documentation on docs.rs.
-- Also test the functions on a large set of valid randomly generated inputs.
+- Added tests of the functionss on a large set of valid randomly generated inputs.
 
 ## 1.0.14
 
