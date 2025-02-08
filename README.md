@@ -41,6 +41,7 @@ principal branch of the Lambert W function:
 
 ```rust
 use lambert_w::lambert_w0;
+use approx::assert_abs_diff_eq;
 
 let Ω = lambert_w0(1.0);
 
@@ -51,6 +52,7 @@ Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 
 ```rust
 use lambert_w::lambert_wm1;
+use approx::assert_abs_diff_eq;
 
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
@@ -61,6 +63,7 @@ Do it on 32-bit floats:
 
 ```rust
 use lambert_w::{lambert_w0f, lambert_wm1f};
+use approx::assert_abs_diff_eq;
 
 let Ω = lambert_w0f(1.0);
 let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
@@ -73,6 +76,7 @@ The implementation can handle extreme inputs just as well:
 
 ```rust
 use lambert_w::{lambert_w0, lambert_wm1};
+use approx::assert_relative_eq;
 
 let big = lambert_w0(f64::MAX);
 let tiny = lambert_wm1(-1e-308);
@@ -85,11 +89,14 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 
 ```rust
 use lambert_w::LambertW;
+use approx::assert_abs_diff_eq;
 
 let z = 2.0 * f64::ln(2.0);
 
 assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 ```
+
+The crate used in the examples to verify the answers is [`approx`](https://crates.io/crates/approx).
 
 ## Features
 
