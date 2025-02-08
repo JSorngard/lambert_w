@@ -1,4 +1,4 @@
-# lambert_w
+# Description
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
 [![Docs.rs Documentation](https://img.shields.io/docsrs/lambert_w?logo=docs.rs)](https://docs.rs/lambert_w/latest/lambert_w/)
@@ -96,7 +96,12 @@ let ln2 = (2.0 * f64::ln(2.0)).lambert_w0();
 assert_abs_diff_eq!(ln2, f64::ln(2.0));
 ```
 
-The crate used in the examples to verify the answers is [`approx`](https://crates.io/crates/approx).
+### Note on the macros
+
+The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate,
+and are used in the documentation examples of this crate.
+The assertion passes if the two supplied values are the same to within floating
+point error, or within an optional epsilon or relative difference.
 
 ## Features
 
@@ -117,7 +122,7 @@ rational function approximation with variable transformation**.
 DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128).
 November 2020.
 
-[⬆️ Back to top](#lambert_w).
+[⬆️ Back to top](#description).
 
 <br>
 
