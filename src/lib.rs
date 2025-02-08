@@ -113,7 +113,7 @@
 #![forbid(unsafe_code)]
 
 // This struct does not exist in the public API
-// and is only used for running the doctests on the README.
+// and is only used for running the doctests in the README.
 #[doc = include_str!("../README.md")]
 #[cfg(doctest)]
 pub struct ReadmeDoctests;
