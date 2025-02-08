@@ -82,9 +82,9 @@
 //! # use approx::assert_abs_diff_eq;
 //! use lambert_w::LambertW;
 //!
-//! let z = 2.0 * f64::ln(2.0);
+//! let ln2 = (2.0 * f64::ln(2.0)).lambert_w0();
 //!
-//! assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
+//! assert_abs_diff_eq!(ln2, f64::ln(2.0));
 //! ```
 //!
 //! The macros are from the [`approx`](https://docs.rs/approx/latest/approx/) crate, and are used in the documentation examples of this crate.
