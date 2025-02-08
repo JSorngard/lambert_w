@@ -96,6 +96,8 @@ let z = 2.0 * f64::ln(2.0);
 assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
 ```
 
+The crate used in the examples to verify the answers is [`approx`](https://crates.io/crates/approx).
+
 ## Features
 
 One of the below features must be enabled:
