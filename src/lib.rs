@@ -112,12 +112,6 @@
 #![no_std]
 #![forbid(unsafe_code)]
 
-// This struct does not exist in the public API
-// and is only used for running the doctests in the README.
-#[doc = include_str!("../README.md")]
-#[cfg(doctest)]
-pub struct ReadmeDoctests;
-
 #[cfg(feature = "std")]
 extern crate std;
 
@@ -134,6 +128,12 @@ mod swm1;
 mod swm1f;
 #[cfg(test)]
 mod unit_tests;
+
+// This struct does not exist in the public API
+// and is only used for running the doctests in the README.
+#[doc = include_str!("../README.md")]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;
 
 /// The negative inverse of e (-1/e).
 ///
