@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Sped up the `semver-checks` CI job.
 - Removed the "no_std" category from the crate, as it's already in the
  "no_std::no_alloc" category, which is a subset of "no_std".
+- The doctests in the README are now ran during testing as well.
 
 ## 1.0.14
 

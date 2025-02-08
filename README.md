@@ -1,4 +1,4 @@
-# lambert_w
+# Description
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
 [![Docs.rs Documentation](https://img.shields.io/docsrs/lambert_w?logo=docs.rs)](https://docs.rs/lambert_w/latest/lambert_w/)
@@ -41,6 +41,7 @@ principal branch of the Lambert W function:
 
 ```rust
 use lambert_w::lambert_w0;
+use approx::assert_abs_diff_eq;
 
 let Ω = lambert_w0(1.0);
 
@@ -51,6 +52,7 @@ Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 
 ```rust
 use lambert_w::lambert_wm1;
+use approx::assert_abs_diff_eq;
 
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
@@ -61,6 +63,7 @@ Do it on 32-bit floats:
 
 ```rust
 use lambert_w::{lambert_w0f, lambert_wm1f};
+use approx::assert_abs_diff_eq;
 
 let Ω = lambert_w0f(1.0);
 let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
@@ -73,6 +76,7 @@ The implementation can handle extreme inputs just as well:
 
 ```rust
 use lambert_w::{lambert_w0, lambert_wm1};
+use approx::assert_relative_eq;
 
 let big = lambert_w0(f64::MAX);
 let tiny = lambert_wm1(-1e-308);
@@ -85,11 +89,17 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 
 ```rust
 use lambert_w::LambertW;
+use approx::assert_abs_diff_eq;
 
-let z = 2.0 * f64::ln(2.0);
+let ln2 = (2.0 * f64::ln(2.0)).lambert_w0();
 
-assert_abs_diff_eq!(z.lambert_w0(), f64::ln(2.0));
+assert_abs_diff_eq!(ln2, f64::ln(2.0));
 ```
+
+The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
+crate, and are used in the documentation examples of this crate.
+The assertion passes if the two supplied values are the same to within floating
+point error, or within an optional epsilon or relative difference.
 
 ## Features
 
@@ -110,15 +120,15 @@ rational function approximation with variable transformation**.
 DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128).
 November 2020.
 
-[⬆️ Back to top](#lambert_w).
+[⬆️ Back to top](#description).
 
 <br>
 
 ### License
 
 <sup>
-Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
-2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+Licensed under either of <a href="LICENSE-APACHE.txt">Apache License, Version
+2.0</a> or <a href="LICENSE-MIT.txt">MIT license</a> at your option.
 </sup>
 
 <br>
