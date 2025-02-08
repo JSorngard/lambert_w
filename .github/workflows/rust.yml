@@ -57,7 +57,6 @@ jobs:
       with:
         tool: cargo-all-features
     - if: ${{matrix.libfontconfig}}
-    - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Test all feature combinations
       run: cargo test-all-features
