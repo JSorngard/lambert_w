@@ -7,14 +7,12 @@ pub trait Zero {
 }
 
 impl Zero for f32 {
-    #[inline(always)]
     fn zero() -> Self {
         0.0
     }
 }
 
 impl Zero for f64 {
-    #[inline(always)]
     fn zero() -> Self {
         0.0
     }
