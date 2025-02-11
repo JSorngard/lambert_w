@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  This verification can also be run manually on a local copy of the crate by
  setting the environment variable `LAMBERT_W_ENSURE_NO_PANICS` to 1 and
  then running `cargo test --profile release-lto`.
+ - Implement all the rational functions using a single generic gunction
+  instead of several different hand made ones.
 - Sped up the `semver-checks` CI job.
 - Removed the "no_std" category from the crate, as it's already in the
  "no_std::no_alloc" category, which is a subset of "no_std".
@@ -19,8 +21,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.0.14
 
-- Implement all the rational functions using a single generic function
- instead of several different hand made ones.
 - Updated the dev-dependency on `rand` to v0.9.0.
 - Added a CI job that compiles the benchmarks.
 - Added a CI job that tests the crate on the Rust beta branch.
