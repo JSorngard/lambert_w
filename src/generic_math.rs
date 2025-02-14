@@ -6,6 +6,8 @@ use num_traits::Float;
 /// Evaluate a rational function at `x` using Horner's method.
 ///
 /// The coefficients are organized by degree in ascending order.
+// The inline(always) annotation is motivated by benchmarks, especially
+// of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T, const N: usize, const D: usize>(
@@ -25,6 +27,8 @@ where
             .rev()
             .fold(T::zero(), |acc, d| acc * x + d)
 }
+
+// The inline(always) annotation on the functions below is motivated by benchmarks.
 
 /// Compute the square root of `x`.
 #[inline(always)]
