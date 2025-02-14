@@ -9,78 +9,16 @@
 // #[inline(always)] is motivated by the fact that these functions are trivial, so just placing the call to the
 // correct sqrt/ln at the caller does not add extra code, but skips an extra indirection.
 
+use num_traits::Float;
+
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn sqrt(x: f64) -> f64 {
-    #[cfg(feature = "std")]
-    {
-        x.sqrt()
-    }
-
-    #[cfg(all(not(feature = "std"), feature = "libm"))]
-    {
-        libm::sqrt(x)
-    }
-
-    #[cfg(not(any(feature = "std", feature = "libm")))]
-    {
-        panic!("computing sqrt({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
-    }
+pub fn sqrt<F: Float>(x: F) -> F {
+    x.sqrt()
 }
 
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn sqrtf(x: f32) -> f32 {
-    #[cfg(feature = "std")]
-    {
-        x.sqrt()
-    }
-
-    #[cfg(all(not(feature = "std"), feature = "libm"))]
-    {
-        libm::sqrtf(x)
-    }
-
-    #[cfg(not(any(feature = "std", feature = "libm")))]
-    {
-        panic!("computing sqrtf({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
-    }
-}
-
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn ln(x: f64) -> f64 {
-    #[cfg(feature = "std")]
-    {
-        x.ln()
-    }
-
-    #[cfg(all(not(feature = "std"), feature = "libm"))]
-    {
-        libm::log(x)
-    }
-
-    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-    {
-        panic!("computing ln({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
-    }
-}
-
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn lnf(x: f32) -> f32 {
-    #[cfg(feature = "std")]
-    {
-        x.ln()
-    }
-
-    #[cfg(all(not(feature = "std"), feature = "libm"))]
-    {
-        libm::logf(x)
-    }
-
-    #[cfg(all(not(feature = "std"), not(feature = "libm")))]
-    {
-        panic!("computing lnf({x}) needs at least one of the `std` or `libm` feature flags to be enabled");
-    }
+pub fn ln<F: Float>(x: F) -> F {
+    x.ln()
 }
