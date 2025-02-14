@@ -1,4 +1,4 @@
-use crate::math::{ln, rational_function, sqrt};
+use crate::generic_math::{ln, rational_function, sqrt};
 
 // This is an implementation of the approximation of the principal
 // branch of the Lambert W function

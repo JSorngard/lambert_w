@@ -4,6 +4,8 @@
 use num_traits::Float;
 
 /// Evaluate a rational function at `x` using Horner's method.
+///
+/// The coefficients are organized by degree in ascending order.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T, const N: usize, const D: usize>(

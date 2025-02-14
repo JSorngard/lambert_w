@@ -1,6 +1,6 @@
 //! This file contains unit tests for the internal functions in the `elementary` and `rational` modules.
 
-use crate::math::{ln, rational_function, sqrt};
+use crate::generic_math::{ln, rational_function, sqrt};
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
 #[test]
