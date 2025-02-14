@@ -1,6 +1,6 @@
 use crate::{
     elementary::{lnf, sqrtf},
-    rational::rational_function,
+    rational_function,
 };
 
 const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;

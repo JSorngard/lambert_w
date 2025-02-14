@@ -2,7 +2,7 @@
 
 use super::{
     elementary::{ln, lnf, sqrt, sqrtf},
-    rational::rational_function,
+    rational_function,
 };
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
