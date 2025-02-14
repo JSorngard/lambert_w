@@ -1,4 +1,4 @@
-use crate::{ln, rational_function, sqrt};
+use crate::math::{ln, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 

@@ -1,5 +1,5 @@
 use super::NEG_INV_E;
-use crate::{ln, rational_function, sqrt};
+use crate::math::{ln, rational_function, sqrt};
 
 // This is an implementation of the approximation of the principal
 // branch of the Lambert W function

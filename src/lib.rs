@@ -2,8 +2,6 @@
 #![no_std]
 #![forbid(unsafe_code)]
 
-use num_traits::Float;
-
 #[cfg(feature = "std")]
 extern crate std;
 
@@ -12,6 +10,7 @@ compile_error!("at least one of the `std` or `libm` features must be enabled");
 
 mod dw0c;
 mod dwm1c;
+mod math;
 mod sw0;
 mod sw0f;
 mod swm1;
@@ -295,39 +294,4 @@ impl LambertW for f64 {
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1(self)
     }
-}
-
-/// Evaluate a rational function at `x` using Horner's method.
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn rational_function<T, const N: usize, const D: usize>(
-    x: T,
-    numerator: [T; N],
-    denominator: [T; D],
-) -> T
-where
-    T: Float,
-{
-    numerator
-        .into_iter()
-        .rev()
-        .fold(T::zero(), |acc, n| acc * x + n)
-        / denominator
-            .into_iter()
-            .rev()
-            .fold(T::zero(), |acc, d| acc * x + d)
-}
-
-/// Compute the square root of `x`.
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn sqrt<F: Float>(x: F) -> F {
-    x.sqrt()
-}
-
-/// Compute the natural logarithm of `x`.
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn ln<F: Float>(x: F) -> F {
-    x.ln()
 }
