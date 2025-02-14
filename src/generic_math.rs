@@ -10,14 +10,11 @@ use num_traits::Float;
 // of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn rational_function<T, const N: usize, const D: usize>(
+pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator: [T; N],
     denominator: [T; D],
-) -> T
-where
-    T: Float,
-{
+) -> T {
     numerator
         .into_iter()
         .rev()
