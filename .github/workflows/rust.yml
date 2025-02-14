@@ -16,7 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: format
+      with:
+        components: rustfmt
+    - name: Format
       run: cargo fmt --check
 
   check:
@@ -24,9 +26,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: install
-      run: cargo install cargo-all-features
-    - name: check
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-all-features
+    - name: Check all feature combinations
       run: cargo check-all-features
 
   clippy:
@@ -34,7 +37,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: clippy
+      with:
+        components: clippy
+    - name: Run clippy
       run: cargo clippy --all-features -- -D warnings
       
   test:
@@ -42,9 +47,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: install
-      run: cargo install cargo-all-features
-    - name: test
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-all-features
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Test all feature combinations
       run: cargo test-all-features
       
   doc:
@@ -55,7 +63,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@nightly
-    - name: document
+    - name: Generate documentation
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
@@ -63,12 +71,21 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - uses: taiki-e/install-action@v2
       with:
-        components: clippy
-    - name: install cargo-msrv
-      run: cargo install cargo-msrv
-    - name: verify msrv
-      run: cargo msrv verify
+        tool: cargo-msrv
+    - name: Verify MSRV
+      run: cargo msrv --output-format minimal verify
+
+  run_examples:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Run examples
+      run: cargo run --example plot
 
   coverage:
     runs-on: ubuntu-latest
@@ -77,12 +94,14 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
-      - name: cargo install cargo-llvm-cov
+      - name: Install libfontconfig1-dev
+        run: sudo apt-get -y install libfontconfig1-dev jq
+      - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
-      - name: cargo generate-lockfile
+      - name: Generate lockfile
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
-      - name: cargo llvm-cov
+      - name: Create coverage report
         run: cargo llvm-cov --locked --all-features --lcov --output-path lcov.info
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
@@ -90,10 +109,53 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           fail_ci_if_error: true
+
   semver-checks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Check semver
-        uses: obi1kenobi/cargo-semver-checks-action@v2
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-semver-checks
+      - name: Verify semver compatibility
+        run: cargo semver-checks
+
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Compile benchmarks, but do not run them
+      # There are no benchmarks with "nothing" in their name, hence this command only compiles the benchmarks but does not run them.
+      run: cargo bench nothing
+
+  beta_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@beta
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-all-features 
+    - name: Test the crate on rust beta
+      run: cargo test-all-features
+
+  ensure_no_panics:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-all-features
+    - name: Install libfontconfig1-dev
+      run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Set up the environment variable
+      run: echo "LAMBERT_W_ENSURE_NO_PANICS=1" >> $GITHUB_ENV
+    - name: Check the crate for panics
+      run: cargo test-all-features --profile release-lto

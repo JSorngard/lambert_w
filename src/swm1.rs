@@ -1,16 +1,22 @@
 use super::{INV_SQRT_E, NEG_INV_E};
 use crate::{
     elementary::{ln, sqrt},
-    rational::rational_3_over_3,
+    rational::rational_function,
 };
 
+// This is an implementation of the approximation of the secondary
+// branch of the Lambert W function
+// with 24 bits of accuracy from Fukushima's paper.
+// It returns f64::NAN if the input is smaller than -1/e, is NAN, or is larger than or equal to 0.
+
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn swm1(z: f64) -> f64 {
     if z < NEG_INV_E {
         f64::NAN
     } else if z <= -0.207_293_777_640_384_15 {
         // W >= -2.483, Y_-1
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -6.383_722_822_801_905,
@@ -28,7 +34,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -0.071_507_705_083_841_95 {
         // W >= -4.032, Y_-2
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -7.723_328_481_229_978,
@@ -46,7 +52,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -0.020_704_412_621_717_48 {
         // W >= -5.600, Y_-3
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -9.137_773_141_758_155,
@@ -64,7 +70,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -0.005_480_012_945_209_444 {
         // W >= -7.178, Y_-4
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -10.603_388_239_566_373,
@@ -82,7 +88,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -0.001_367_466_989_250_804_2 {
         // W >= -8.766, Y_-5
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -12.108_699_273_343_438,
@@ -100,7 +106,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -0.000_326_142_267_310_725_66 {
         // W >= -10.367, Y_-6
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -13.646_761_936_746_191,
@@ -118,7 +124,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -0.000_074_906_612_036_101_44 {
         // W >= -11.983, Y_-7
 
-        rational_3_over_3(
+        rational_function(
             -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -15.212_958_142_001_646,
@@ -136,7 +142,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -1.096_244_452_641_099_5e-19 {
         // W >= -47.518, V_-8
 
-        rational_3_over_3(
+        rational_function(
             ln(-z),
             [
                 -0.032_401_163_177_791_084,
@@ -154,7 +160,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z <= -2.509_609_929_994_59e-136 {
         // W >= -317.993, V_-9
 
-        rational_3_over_3(
+        rational_function(
             ln(-z),
             [
                 -1.441_124_659_581_209_7,
@@ -172,7 +178,7 @@ pub fn swm1(z: f64) -> f64 {
     } else if z < 0.0 {
         // V_-10
 
-        rational_3_over_3(
+        rational_function(
             ln(-z),
             [
                 -3.310_876_091_171_045,

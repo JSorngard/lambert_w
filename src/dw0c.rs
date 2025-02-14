@@ -1,16 +1,23 @@
 use crate::{
     elementary::{ln, sqrt},
-    rational::{rational_7_over_7, rational_8_over_7},
+    rational::rational_function,
 };
 
+// This is an implementation of the approximation of the principal
+// branch of the Lambert W function
+// with 50 bits of accuracy from Fukushima's paper.
+// It returns f64::NAN if the input is negative or NAN,
+// and f64::INFINITY if the input is positive infinity.
+
 /// zc = z + 1/e
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn dw0c(zc: f64) -> f64 {
-    if zc < 0.0 {
+    if zc < 0.0 || zc.is_nan() {
         f64::NAN
     } else if zc <= 2.549_893_906_503_473_6 {
         // W <= 0.893, X_1
 
-        rational_8_over_7(
+        rational_function(
             sqrt(zc),
             [
                 -0.999_999_999_999_999_9,
@@ -37,7 +44,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 43.613_924_462_669_37 {
         // W <= 2.754, X_2
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 -0.999_978_018_005_789_1,
@@ -63,7 +70,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 598.453_533_718_782_8 {
         // W <= 4.821, X_3
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 -0.989_674_203_372_735,
@@ -89,7 +96,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 8_049.491_985_075_761_5 {
         // W <= 7.041, X_4
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 -0.773_164_919_972_062_3,
@@ -115,7 +122,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 111_124.954_121_217_82 {
         // W <= 9.380, X_5
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 0.120_071_016_715_536_88,
@@ -141,7 +148,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 1.587_042_981_208_229_7e6 {
         // W <= 11.809, X_6
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 1.722_110_443_993_771_1,
@@ -167,7 +174,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 2.341_470_840_187_546e7 {
         // W <= 14.308, X_7
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 3.752_931_402_343_454_3,
@@ -193,7 +200,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 3.557_647_430_800_996_4e8 {
         // W <= 16.865, X_8
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 6.019_654_205_560_656,
@@ -219,7 +226,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 5.550_171_629_616_363e9 {
         // W <= 19.468, X_9
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 8.428_026_850_098_97,
@@ -245,7 +252,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 8.867_470_483_965_778e10 {
         // W <= 22.112, X_10
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 10.931_063_230_472_498,
@@ -271,7 +278,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 1.447_779_186_527_290_3e12 {
         // W <= 24.791, X_11
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 13.502_943_080_893_871,
@@ -297,7 +304,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 2.411_145_863_251_185e13 {
         // W <= 27.500, X_12
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 16.128_076_167_439_016,
@@ -323,7 +330,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 4.089_703_644_260_084_4e14 {
         // W <= 30.236, X_13
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 18.796_301_105_534_486,
@@ -349,7 +356,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 7.055_590_147_678_997e15 {
         // W <= 32.996, X_14
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 21.500_582_830_667_334,
@@ -375,7 +382,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 1.236_660_755_797_672_8e17 {
         // W <= 35.779, X_15
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 24.235_812_532_416_976,
@@ -401,7 +408,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 2.199_937_348_793_1e18 {
         // W <= 38.582, X_16
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 26.998_134_347_987_44,
@@ -427,7 +434,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 3.968_539_219_834_401_6e19 {
         // W <= 41.404, X_17
 
-        rational_7_over_7(
+        rational_function(
             sqrt(zc),
             [
                 29.784_546_702_831_97,
@@ -453,7 +460,7 @@ pub fn dw0c(zc: f64) -> f64 {
     } else if zc <= 1.412_707_514_527_465_2e104 {
         // W <= 234.358, U_18
 
-        rational_7_over_7(
+        rational_function(
             ln(zc),
             [
                 0.744_134_994_601_267_8,
@@ -476,10 +483,10 @@ pub fn dw0c(zc: f64) -> f64 {
                 -4.205_783_627_010_972e-19,
             ],
         )
-    } else {
+    } else if zc < f64::INFINITY {
         //   U_19
 
-        rational_7_over_7(
+        rational_function(
             ln(zc),
             [
                 -0.615_144_128_127_297_6,
@@ -502,5 +509,7 @@ pub fn dw0c(zc: f64) -> f64 {
                 -1.596_014_725_260_605_6e-24,
             ],
         )
+    } else {
+        f64::INFINITY
     }
 }
