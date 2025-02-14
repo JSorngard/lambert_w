@@ -1,4 +1,4 @@
-# Description
+# lambert_w
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
 [![Docs.rs Documentation](https://img.shields.io/docsrs/lambert_w?logo=docs.rs)](https://docs.rs/lambert_w/latest/lambert_w/)
@@ -120,7 +120,7 @@ rational function approximation with variable transformation**.
 DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128).
 November 2020.
 
-[⬆️ Back to top](#description).
+[⬆️ Back to top](#lambert_w).
 
 <br>
 
