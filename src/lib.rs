@@ -2,6 +2,8 @@
 #![no_std]
 #![forbid(unsafe_code)]
 
+use core::ops::{Add, Div, Mul};
+
 #[cfg(feature = "std")]
 extern crate std;
 
@@ -305,7 +307,7 @@ pub fn rational_function<T, const N: usize, const D: usize>(
     denominator: [T; D],
 ) -> T
 where
-    T: num_traits::Float,
+    T: Add<Output = T> + Mul<Output = T> + Div<Output = T> + num_traits::Zero + Copy,
 {
     numerator
         .into_iter()
