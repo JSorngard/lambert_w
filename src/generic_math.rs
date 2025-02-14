@@ -33,13 +33,13 @@ where
 /// Compute the square root of `x`.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn sqrt<F: Float>(x: F) -> F {
+pub fn sqrt<T: Float>(x: T) -> T {
     x.sqrt()
 }
 
 /// Compute the natural logarithm of `x`.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn ln<F: Float>(x: F) -> F {
+pub fn ln<T: Float>(x: T) -> T {
     x.ln()
 }
