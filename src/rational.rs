@@ -20,6 +20,7 @@ impl Zero for f64 {
 
 /// Evaluate a rational function at `x` using Horner's method.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[inline(always)]
 pub fn rational_function<T, const N: usize, const D: usize>(
     x: T,
     numerator: [T; N],
