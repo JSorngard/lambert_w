@@ -1,8 +1,5 @@
 use super::{INV_SQRT_E, NEG_INV_E};
-use crate::{
-    elementary::{ln, sqrt},
-    rational_function,
-};
+use crate::{ln, rational_function, sqrt};
 
 // This is an implementation of the approximation of the secondary
 // branch of the Lambert W function

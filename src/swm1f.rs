@@ -1,7 +1,4 @@
-use crate::{
-    elementary::{ln, sqrt},
-    rational_function,
-};
+use crate::{ln, rational_function, sqrt};
 
 const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
