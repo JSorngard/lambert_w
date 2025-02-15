@@ -9,6 +9,7 @@ use crate::{
 // with 24 bits of accuracy from Fukushima's paper.
 // It returns f64::NAN if the input is smaller than -1/e, is NAN, or is larger than or equal to 0.
 
+#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn swm1(z: f64) -> f64 {
     if z < NEG_INV_E {
