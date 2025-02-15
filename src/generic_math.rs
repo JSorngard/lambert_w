@@ -3,7 +3,7 @@
 
 use num_traits::real::Real;
 
-// The inline(always) annotations in this module could be removed. 
+// The inline(always) annotations in this module could be removed.
 // I have only benchmarked the functions on my own system with a CPU with large cache
 // and I am not sure if the inlining is beneficial on all systems, and for all users.
 
