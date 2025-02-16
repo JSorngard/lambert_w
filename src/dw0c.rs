@@ -7,6 +7,7 @@ use crate::generic_math::{ln, rational_function, sqrt};
 // and f64::INFINITY if the input is positive infinity.
 
 /// zc = z + 1/e
+#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn dw0c(zc: f64) -> f64 {
     if zc < 0.0 || zc.is_nan() {
