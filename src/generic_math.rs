@@ -32,6 +32,10 @@ pub fn rational_function<T: Real, const N: usize, const D: usize>(
     numerator / denominator
 }
 
+// The functions below are wrappers around the [`num-traits`] crate,
+// mainly to ensure that we can always call them regardless of the presence of
+// the standard library.
+
 // The inline(always) annotation on the functions below is motivated by benchmarks.
 
 /// Compute the square root of `x`.
