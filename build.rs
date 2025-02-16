@@ -40,14 +40,14 @@ fn main() {
         match parse_build_profile_name_from_environment() {
             Ok(Some(profile_name)) => {
                 if profile_name != NEEDED_PROFILE {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but a profile that could result in false positives seems to be enabled. {suggestion}");
+                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"{ENV_VAL}\", but the `{profile_name}` build profile seems to be enabled. {suggestion}");
                 }
             }
             Ok(None) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the build profile name could not be determined. {suggestion}");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"{ENV_VAL}\", but the build profile name could not be determined. {suggestion}");
             }
             Err(e) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the `OUT_DIR` environment variable could not be read due to: {e}\nThe profile could therefore not be determined. {suggestion}");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"{ENV_VAL}\", but the `OUT_DIR` environment variable could not be read due to: {e}. The build profile could therefore not be determined. {suggestion}");
             }
         }
     } else if let Ok(unexpected_env_val) = env_val {
