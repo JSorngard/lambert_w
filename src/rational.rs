@@ -25,18 +25,21 @@ impl Zero for f64 {
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T, const N: usize, const D: usize>(
     x: T,
-    numerator: [T; N],
-    denominator: [T; D],
+    numerator_coefficients: [T; N],
+    denominator_coefficients: [T; D],
 ) -> T
 where
     T: Add<Output = T> + Mul<Output = T> + Div<Output = T> + Zero + Copy,
 {
-    numerator
+    let numerator = numerator_coefficients
         .into_iter()
         .rev()
-        .fold(T::zero(), |acc, n| acc * x + n)
-        / denominator
-            .into_iter()
-            .rev()
-            .fold(T::zero(), |acc, d| acc * x + d)
+        .fold(T::zero(), |acc, n| acc * x + n);
+    
+    let denominator = denominator_coefficients
+        .into_iter()
+        .rev()
+        .fold(T::zero(), |acc, d| acc * x + d);
+
+    numerator / denominator
 }
