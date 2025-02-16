@@ -10,8 +10,7 @@ compile_error!("at least one of the `std` or `libm` features must be enabled");
 
 mod dw0c;
 mod dwm1c;
-mod elementary;
-mod rational;
+mod generic_math;
 mod sw0;
 mod sw0f;
 mod swm1;
