@@ -9,6 +9,7 @@ use crate::{
 // It returns f64::NAN if the input is negative or NAN,
 // and f64::INFINITY if the input is positive infinity.
 
+#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sw0(z: f64) -> f64 {
     if z < NEG_INV_E || z.is_nan() {
