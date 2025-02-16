@@ -44,7 +44,7 @@ fn main() {
                 }
             }
             Ok(None) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"{ENV_VAL}\", but the build profile name could not be determined. {suggestion}");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"{ENV_VAL}\", but the build profile could not be determined. {suggestion}");
             }
             Err(e) => {
                 println!("cargo:warning=the `{ENV_KEY}` environment variable is set to \"{ENV_VAL}\", but the `OUT_DIR` environment variable could not be read due to: {e}. The build profile could therefore not be determined. {suggestion}");
