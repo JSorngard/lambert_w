@@ -11,6 +11,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 // It returns f32::NAN if the input is negative or NAN,
 // and f32::INFINITY if the input is positive infinity.
 
+#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sw0f(z: f32) -> f32 {
     if z < NEG_INV_E || z.is_nan() {
