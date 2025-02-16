@@ -31,8 +31,9 @@ fn main() {
         // Enable the `assert_no_panic` cfg option.
         println!("cargo:rustc-cfg=assert_no_panic");
 
-        let suggestion =
-            format!("The `{NEEDED_PROFILE}` build profile must be enabled to ensure no false positives.");
+        let suggestion = format!(
+            "The `{NEEDED_PROFILE}` build profile must be enabled to ensure no false positives."
+        );
 
         // In order for `no-panic` to not cause false positives fat LTO needs to be enabled.
         // This crate defines a profile for that.
