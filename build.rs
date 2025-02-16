@@ -19,6 +19,7 @@ fn main() {
     // Changes to the above constants need to be mentioned in the CHANGELOG.md file.
 
     // Re-run the build script if the environment variable changes.
+    // This makes the state of the check match the state of the environment variable.
     println!("cargo:rerun-if-env-changed={ENV_KEY}");
 
     // Make cargo aware of the `assert_no_panic` cfg option
