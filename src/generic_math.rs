@@ -34,7 +34,9 @@ pub fn rational_function<T: Real, const N: usize, const D: usize>(
 
 // The functions below are wrappers around the [`num-traits`] crate,
 // mainly to ensure that we can always call them regardless of the presence of
-// the standard library.
+// the standard library. I do not just import the trait in the files where the
+// lambert w functions are defined because the standard library is available during testing,
+// which means that the crate would produce warnings about the unused imports.
 
 // The inline(always) annotation on the functions below is motivated by benchmarks.
 
