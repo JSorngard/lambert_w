@@ -1,7 +1,7 @@
 //! This module contains elementary and rational functions used in the Lambert W function approximations.
-//! They are generic over all types that implement the [`Real`] trait.
+//! They are generic over all types that implement the [`Float`] trait.
 
-use num_traits::real::Real;
+use num_traits::Float;
 
 // The inline(always) annotations in this module could be removed.
 // I have only benchmarked the functions on my own system with a CPU with large cache
@@ -14,7 +14,7 @@ use num_traits::real::Real;
 // of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn rational_function<T: Real, const N: usize, const D: usize>(
+pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
@@ -43,13 +43,13 @@ pub fn rational_function<T: Real, const N: usize, const D: usize>(
 /// Compute the square root of `x`.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn sqrt<T: Real>(x: T) -> T {
-    Real::sqrt(x)
+pub fn sqrt<T: Float>(x: T) -> T {
+    Float::sqrt(x)
 }
 
 /// Compute the natural logarithm of `x`.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn ln<T: Real>(x: T) -> T {
-    Real::ln(x)
+pub fn ln<T: Float>(x: T) -> T {
+    Float::ln(x)
 }
