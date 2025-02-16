@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  "no_std::no_alloc" category, which is a subset of "no_std".
 - The text in the README is now also the crate documentation on docs.rs.
 - Added tests of the functions on a large set of valid randomly generated inputs.
+- Made the docs.rs badge use a different color and display the crate name
+ instead of "passing".
 
 ## 1.0.14
 
