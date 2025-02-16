@@ -25,7 +25,9 @@ fn main() {
     // Make cargo aware of the `assert_no_panic` cfg option
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
-    if let Ok(ENV_VAL) = env::var(ENV_KEY).as_ref().map(String::as_str) {
+    let env_val = env::var(ENV_KEY);
+
+    if let Ok(ENV_VAL) = env_val.as_ref().map(String::as_str) {
         // Enable the `assert_no_panic` cfg option.
         println!("cargo:rustc-cfg=assert_no_panic");
 
@@ -48,6 +50,11 @@ fn main() {
                 println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the `OUT_DIR` environment variable could not be read due to: {e}\nThe profile could therefore not be determined. {suggestion}");
             }
         }
+    } else if let Ok(unexpected_env_val) = env_val {
+        // The environment variable is set, but it is not set to the expected value.
+        println!(
+            "cargo:warning=the `{ENV_KEY}` environment variable is set to \"{unexpected_env_val}\", but it must be set to \"{ENV_VAL}\" to enable the check for panics."
+        );
     }
 }
 
