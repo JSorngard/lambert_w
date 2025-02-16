@@ -38,7 +38,7 @@ where
         .into_iter()
         .rev()
         .fold(T::zero(), |acc, n| acc * x + n);
-    
+
     let denominator = denominator_coefficients
         .into_iter()
         .rev()
