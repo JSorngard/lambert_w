@@ -19,13 +19,13 @@ fn main() {
     // Changes to the above constants need to be mentioned in the CHANGELOG.md file.
 
     // Re-run the build script if the environment variable changes.
+    // This makes the state of the check match the state of the environment variable.
     println!("cargo:rerun-if-env-changed={ENV_KEY}");
 
     // Make cargo aware of the `assert_no_panic` cfg option
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
     if let Ok(env_val) = env::var(ENV_KEY) {
-        // If the environment variable at `ENV_KEY` is set to `ENV_VAL` we use the `no-panic` crate to attempt to verify that the crate can not panic.
         if env_val == ENV_VAL {
             // Enable the `assert_no_panic` cfg option.
             println!("cargo:rustc-cfg=assert_no_panic");
@@ -34,7 +34,8 @@ fn main() {
                 "The `{NEEDED_PROFILE}` profile must be enabled to ensure no false positives."
             );
 
-            // In order for `no-panic` to not cause false positives a specific profile needs to be enabled.
+            // In order for `no-panic` to not cause false positives fat LTO needs to be enabled.
+            // This crate defines a profile for that.
             // We emit a compilation warning if we can not determine that this profile is enabled.
             match parse_build_profile_name_from_environment() {
                 Ok(Some(profile_name)) => {
