@@ -9,7 +9,8 @@ use num_traits::Float;
 
 /// Evaluate a rational function at `x` using Horner's method.
 ///
-/// The coefficients are organized by degree in ascending order.
+/// The coefficients are sorted by the degree of their corresponding `x` term,
+/// in ascending order.
 // The inline(always) annotation is motivated by benchmarks, especially
 // of the functions with 50 bits of accuracy.
 #[inline(always)]
