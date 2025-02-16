@@ -37,17 +37,19 @@ fn main() {
         // In order for `no-panic` to not cause false positives fat LTO needs to be enabled.
         // This crate defines a profile for that.
         // We emit a compilation warning if we can not determine that this profile is enabled.
-        match parse_build_profile_name_from_environment() {
+        match parse_build_profile_name_from_environment()
+            .as_ref()
+            .map(|s| s.as_ref().map(String::as_str))
+        {
+            Ok(Some(NEEDED_PROFILE)) => (),
             Ok(Some(profile_name)) => {
-                if profile_name != NEEDED_PROFILE {
-                    println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but a profile that could result in false positives seems to be enabled. {suggestion}");
-                }
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the profile seems to be set to `{profile_name}`. This could result in false positives. {suggestion}");
             }
             Ok(None) => {
                 println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the build profile name could not be determined. {suggestion}");
             }
             Err(e) => {
-                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the `OUT_DIR` environment variable could not be read due to: {e}\nThe profile could therefore not be determined. {suggestion}");
+                println!("cargo:warning=the `{ENV_KEY}` environment variable is set to {ENV_VAL}, but the `OUT_DIR` environment variable could not be read due to: {e}. The profile could therefore not be determined. {suggestion}");
             }
         }
     } else if let Ok(unexpected_env_val) = env_val {
