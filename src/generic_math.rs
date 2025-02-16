@@ -44,12 +44,12 @@ pub fn rational_function<T: Real, const N: usize, const D: usize>(
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sqrt<T: Real>(x: T) -> T {
-    x.sqrt()
+    Real::sqrt(x)
 }
 
 /// Compute the natural logarithm of `x`.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn ln<T: Real>(x: T) -> T {
-    x.ln()
+    Real::ln(x)
 }
