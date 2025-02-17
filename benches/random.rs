@@ -4,19 +4,15 @@ use core::ops::RangeBounds;
 use criterion::{
     black_box, criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
-use lambert_w::{lambert_w0, lambert_wm1};
-use lambert_w::{lambert_w0f, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1};
+use lambert_w::{
+    lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
+};
 use rand::{
     distr::uniform::{SampleRange, SampleUniform},
     rngs::SmallRng,
     Rng, SeedableRng,
 };
 use std::time::Instant;
-
-#[cfg(all(not(feature = "std"), not(feature = "libm")))]
-compile_error!(
-    "at least one of the features 'std' and 'libm' must be active to benchmark anything"
-);
 
 /// Generates a vec of random values in the given range and benchmarks the given function
 /// on those values.
