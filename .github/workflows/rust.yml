@@ -92,8 +92,12 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
-    - name: Run examples
+    - name: Run plot example with `libm`
       run: cargo run --example plot
+    - name: Run plot example with `std`
+      run: cargo run --example plot --no-default-features --features std
+    - name: Run plot example with both
+      run: cargo run --example plot --no-default-features --features libm,std
 
   coverage:
     runs-on: ubuntu-latest
