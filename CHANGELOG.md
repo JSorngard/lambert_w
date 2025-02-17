@@ -3,9 +3,9 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.0.17 (unreleased)
+## 1.0.17
 
-- Removed unclear information from README.
+- Clarified information in README.
 
 ## 1.0.16
 
