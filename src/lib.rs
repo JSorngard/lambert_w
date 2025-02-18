@@ -42,6 +42,8 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
+/// For a more accurate, but slower implementation, use [`lambert_w0`].
+///
 /// # Examples
 ///
 /// Basic usage:
@@ -77,6 +79,8 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 
 /// The secondary branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
+/// For a more accurate, but slower implementation, use [`lambert_wm1`].
+///
 /// # Examples
 ///
 /// Basic usage:
@@ -107,6 +111,8 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 }
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy.
+///
+/// For a faster, but less accurate implementation, use [`sp_lambert_w0`].
 ///
 /// # Examples
 ///
@@ -171,6 +177,8 @@ pub fn lambert_w0f(z: f32) -> f32 {
 }
 
 /// The secondary branch of the Lambert W function computed to 50 bits of accuracy.
+///
+/// For a faster, but less accurate implementation, use [`sp_lambert_wm1`].
 ///
 /// # Examples
 ///
