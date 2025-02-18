@@ -97,10 +97,10 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 use lambert_w::LambertW;
 use approx::assert_abs_diff_eq;
 
-let k = 1000.0;
-let lnk = (k * f64::ln(k)).lambert_w0();
+let k: f64 = 1000.0;
+let lnk = (k * k.ln()).lambert_w0();
 
-assert_abs_diff_eq!(lnk, f64::ln(k));
+assert_abs_diff_eq!(lnk, k.ln());
 ```
 
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
