@@ -81,10 +81,14 @@ use lambert_w::{lambert_w0, lambert_wm1};
 use approx::assert_relative_eq;
 
 let big = lambert_w0(f64::MAX);
-let tiny = lambert_wm1(-1e-308);
+let tiny = lambert_wm1(-f64::MIN_POSITIVE);
 
-assert_relative_eq!(big, 703.2270331047702, max_relative = 4e-16);
-assert_relative_eq!(tiny, -715.7695669234213, max_relative = 4e-16);
+assert_relative_eq!(
+    big,
+    703.2270331047702,
+    max_relative = 1.5 * f64::EPSILON
+);
+assert_relative_eq!(tiny, -714.9686572379665);
 ```
 
 Importing the `LambertW` trait lets you call the functions with postfix notation:
@@ -93,9 +97,10 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 use lambert_w::LambertW;
 use approx::assert_abs_diff_eq;
 
-let ln2 = (2.0 * f64::ln(2.0)).lambert_w0();
+let k = 1000.0;
+let lnk = (k * f64::ln(k)).lambert_w0();
 
-assert_abs_diff_eq!(ln2, f64::ln(2.0));
+assert_abs_diff_eq!(lnk, f64::ln(k));
 ```
 
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
