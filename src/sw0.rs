@@ -1,7 +1,6 @@
-use super::NEG_INV_E;
 use crate::{
-    elementary::{ln, sqrt},
-    rational::rational_function,
+    generic_math::{ln, rational_function, sqrt},
+    NEG_INV_E,
 };
 
 // This is an implementation of the approximation of the principal
