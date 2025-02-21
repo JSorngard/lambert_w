@@ -76,7 +76,7 @@ fn test_lambert_w0() {
     assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
 
     let mut rng = SmallRng::seed_from_u64(1);
-    let range = Uniform::new_inclusive(NEG_INV_E, f64::MAX).unwrap();
+    let range = Uniform::new(NEG_INV_E, f64::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
         assert!(lambert_w0(rng.sample(&range)).is_finite());
     }
@@ -226,7 +226,7 @@ fn test_sp_lambert_w0() {
     assert_eq!(sp_lambert_w0(f64::INFINITY), f64::INFINITY);
 
     let mut rng = SmallRng::seed_from_u64(1);
-    let range = Uniform::new_inclusive(NEG_INV_E, f64::MAX).unwrap();
+    let range = Uniform::new(NEG_INV_E, f64::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
         assert!(sp_lambert_w0(rng.sample(&range)).is_finite());
     }
@@ -271,7 +271,7 @@ fn test_lambert_w0f() {
     assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
 
     let mut rng = SmallRng::seed_from_u64(1);
-    let range = Uniform::new_inclusive(NEG_INV_E as f32, f32::MAX).unwrap();
+    let range = Uniform::new(NEG_INV_E as f32, f32::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
         assert!(lambert_w0f(rng.sample(&range)).is_finite());
     }
