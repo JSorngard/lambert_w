@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Added a CI job that checks and builds the crate for targets without a standard library.
 - Added a CI job that locks all dependencies to the oldest possible version according
  to `Cargo.toml` and then checks the crate.
-- Added a daily CI jobs that tests the crate on nightly.
+- Added daily CI jobs that test the crate on nightly.
 
 ## 1.0.17
 
