@@ -48,9 +48,14 @@ jobs:
       
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain: [stable, beta]
     steps:
     - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@stable
+    - uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: ${{ matrix.toolchain }}
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
@@ -151,19 +156,6 @@ jobs:
       run: cargo bench --no-default-features --features std nothing
     - name: Compile benchmarks with both features, but do not run them
       run: cargo bench --no-default-features --features libm,std nothing
-
-  beta_test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@beta
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev jq
-    - uses: taiki-e/install-action@v2
-      with:
-        tool: cargo-all-features 
-    - name: Test the crate on rust beta
-      run: cargo test-all-features
 
   ensure_no_panics:
     runs-on: ubuntu-latest
