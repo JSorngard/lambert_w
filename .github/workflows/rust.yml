@@ -193,5 +193,7 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
-    - name: Check all feature combinations on ${{ matrix.target }}
+    - name: Check all feature combinations
       run: cargo check-all-features
+    - name: Build all feature combinations
+      run: cargo build-all-features
