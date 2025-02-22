@@ -191,6 +191,6 @@ jobs:
       with:
         target: ${{ matrix.target }}
     - name: Check
-      run: cargo check
+      run: cargo check --target ${{ matrix.target }}
     - name: Build
-      run: cargo build
+      run: cargo build --target ${{ matrix.target }}
