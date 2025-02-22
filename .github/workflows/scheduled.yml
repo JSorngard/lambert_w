@@ -1,0 +1,52 @@
+# Run scheduled (rolling) jobs on a nightly basis, as your crate may break independently of any
+# given PR. E.g., updates to rust nightly and updates to this crates dependencies. See check.yml for
+# information about how the concurrency cancellation and workflow triggering works
+permissions:
+  contents: read
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron:  '0 7 * * *'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+name: rolling
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    name: ubuntu / nightly
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly
+        uses: dtolnay/rust-toolchain@nightly
+      - name: cargo generate-lockfile
+        if: hashFiles('Cargo.lock') == ''
+        run: cargo generate-lockfile
+      - name: cargo test --locked
+        run: cargo test --locked --all-features --all-targets
+  update:
+    # This action checks that updating the dependencies of this crate to the latest available that
+    # satisfy the versions in Cargo.toml does not break this crate. This is important as consumers
+    # of this crate will generally use the latest available crates. This is subject to the standard
+    # Cargo semver rules (i.e cargo does not update to a new major version unless explicitly told
+    # to).
+    runs-on: ubuntu-latest
+    name: ubuntu / beta / updated
+    # There's no point running this if no Cargo.lock was checked in in the first place, since we'd
+    # just redo what happened in the regular test job. Unfortunately, hashFiles only works in if on
+    # steps, so we repeat it.
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install beta
+        if: hashFiles('Cargo.lock') != ''
+        uses: dtolnay/rust-toolchain@beta
+      - name: cargo update
+        if: hashFiles('Cargo.lock') != ''
+        run: cargo update
+      - name: cargo test
+        if: hashFiles('Cargo.lock') != ''
+        run: cargo test --locked --all-features --all-targets
+        env:
+          RUSTFLAGS: -D deprecated
