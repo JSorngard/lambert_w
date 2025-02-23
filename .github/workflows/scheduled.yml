@@ -23,11 +23,15 @@ jobs:
         uses: dtolnay/rust-toolchain@nightly
       - name: Install libfontconfig1-dev
         run: sudo apt-get -y install libfontconfig1-dev jq
+      - name: Install cargo-all-features
+        uses: taiki-e/intall-action@v2
+        with:
+          tool: cargo-all-features
       - name: cargo generate-lockfile
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
       - name: cargo test --locked
-        run: cargo test --locked --all-features --all-targets
+        run: cargo test-all-features --locked
   update:
     # This action checks that updating the dependencies of this crate to the latest available that
     # satisfy the versions in Cargo.toml does not break this crate. This is important as consumers
@@ -47,11 +51,16 @@ jobs:
       - name: Install libfontconfig1-dev
         if: hashFiles('Cargo.lock') != ''
         run: sudo apt-get -y install libfontconfig1-dev jq
+      - name: Install cargo-all-features
+        if: hashFiles('Cargo.lock') != ''
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-all-features
       - name: cargo update
         if: hashFiles('Cargo.lock') != ''
         run: cargo update
       - name: cargo test
         if: hashFiles('Cargo.lock') != ''
-        run: cargo test --locked --all-features --all-targets
+        run: cargo test-all-features --locked
         env:
           RUSTFLAGS: -D deprecated
