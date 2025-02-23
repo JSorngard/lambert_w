@@ -24,7 +24,7 @@ jobs:
       - name: Install libfontconfig1-dev
         run: sudo apt-get -y install libfontconfig1-dev jq
       - name: Install cargo-all-features
-        uses: taiki-e/intall-action@v2
+        uses: taiki-e/install-action@v2
         with:
           tool: cargo-all-features
       - name: cargo generate-lockfile
