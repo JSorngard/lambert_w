@@ -216,19 +216,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
-      - name: Install nightly for -Zminimal-versions
-        uses: dtolnay/rust-toolchain@nightly
-      - name: Install cargo-all-features
-        uses: taiki-e/install-action@v2
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: taiki-e/install-action@v2
         with:
           tool: cargo-all-features
-      - name: Install libfontconfig1-dev
-        run: sudo apt-get -y install libfontconfig1-dev jq
-      - name: rustup default stable
+      - name: Set stable Rust as the default
         run: rustup default stable
-      - name: cargo update -Zminimal-versions
+      - name: Use minimal versions of dependencies
         run: cargo +nightly update -Zminimal-versions
       - name: Check all feature combinations
         run: cargo check-all-features --locked
