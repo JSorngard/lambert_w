@@ -27,7 +27,7 @@ fn main() {
 
     let env_val = env::var(ENV_KEY);
 
-    if env_val.as_ref().map(String::as_str) == Ok(ENV_VAL) {
+    if env_val.as_ref().map(|s| s.as_str()) == Ok(ENV_VAL) {
         // Enable the `assert_no_panic` cfg option.
         println!("cargo:rustc-cfg=assert_no_panic");
 
