@@ -75,6 +75,6 @@ fn parse_build_profile_name_from_environment() -> Result<Option<String>, env::Va
         env_var_val
             .split(std::path::MAIN_SEPARATOR)
             .nth_back(3)
-            .map(|s| s.to_string())
+            .map(|s| s.to_owned())
     })
 }
