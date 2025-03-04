@@ -19,6 +19,12 @@ mod swm1f;
 #[cfg(test)]
 mod unit_tests;
 
+// This crate uses a build script to check for an environment variable and sets
+// the `assert_no_panic` attribute if that variable is set to a specific value.
+// We then check for that attribute when testing and if so we statically ensure that no
+// function in the crate can panic using the `no-panic` crate.
+// This is the source of all the `#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]` attributes.
+
 /// The negative inverse of e (-1/e).
 ///
 /// This is the smallest input value for which the Lambert W functions in this crate return a value.
@@ -65,11 +71,6 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// # Reference
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-//
-// This crate uses a build script to check for an environment variable and sets
-// the `assert_no_panic` attribute if that variable is set.
-// We then check for that attribute when testing and if so we statically ensure that no
-// function in the crate can panic using the `no-panic` crate.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
