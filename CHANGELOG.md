@@ -22,7 +22,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.0.15
 
-- Enabled static verification that this crate can not panic using the [`no-panic`](https://crates.io/crates/no_panic)
+- Don't panic!
+ Enabled static verification that this crate can not panic using the [`no-panic`](https://crates.io/crates/no_panic)
  crate.
  This does not affect any dependers, as `no-panic` is added as a dev-dependency.
 - Added a CI job that uses the above to ensure no panics make it into the crate.
