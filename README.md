@@ -86,6 +86,10 @@ let tiny = lambert_wm1(-f64::MIN_POSITIVE);
 assert_relative_eq!(
     big,
     703.2270331047702,
+    // Since the approximation used in this
+    // example is accurate to 50 bits
+    // on average it will sometimes have an
+    // error larger than f64::EPSILON.
     max_relative = 1.5 * f64::EPSILON
 );
 assert_relative_eq!(tiny, -714.9686572379665);
