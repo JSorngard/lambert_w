@@ -88,7 +88,7 @@ assert_relative_eq!(
     703.2270331047702,
     // Since the approximation used in this
     // example is accurate to 50 bits
-    // it will sometimes have a relative
+    // it will sometimes have an
     // error larger than f64::EPSILON.
     max_relative = 1.5 * f64::EPSILON
 );
@@ -101,10 +101,9 @@ Importing the `LambertW` trait lets you call the functions with postfix notation
 use lambert_w::LambertW;
 use approx::assert_abs_diff_eq;
 
-let k: f64 = 1000.0;
-let lnk = (k * k.ln()).lambert_w0();
+let ln1k = (1000.0 * f64::ln(1000.0)).lambert_w0();
 
-assert_abs_diff_eq!(lnk, k.ln());
+assert_abs_diff_eq!(ln1k, f64::ln(1000.0));
 ```
 
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
