@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.0.18 (unreleased)
+## 1.0.18
 
 - Made the error bounds in tests stricter and clearer.
 - Made small improvements to the examples in the readme.
@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  to `Cargo.toml` and then checks the crate.
 - Added daily CI jobs that test the crate on nightly.
 - Added the "no-std" category.
+- Updated transitive dev-dependencies.
 
 ## 1.0.17
 
