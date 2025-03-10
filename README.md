@@ -90,7 +90,7 @@ assert_relative_eq!(
     // Since the approximation used in this
     // example is accurate to 50 bits
     // it will sometimes have an
-    // error larger than f64::EPSILON.
+    // error larger than epsilon.
     max_relative = 1.5 * f64::EPSILON
 );
 ```
