@@ -80,9 +80,10 @@ The implementation can handle extreme inputs just as well:
 use lambert_w::{lambert_w0, lambert_wm1};
 use approx::assert_relative_eq;
 
-let big = lambert_w0(f64::MAX);
 let tiny = lambert_wm1(-f64::MIN_POSITIVE);
+let big = lambert_w0(f64::MAX);
 
+assert_relative_eq!(tiny, -714.9686572379665);
 assert_relative_eq!(
     big,
     703.2270331047702,
@@ -92,7 +93,6 @@ assert_relative_eq!(
     // error larger than f64::EPSILON.
     max_relative = 1.5 * f64::EPSILON
 );
-assert_relative_eq!(tiny, -714.9686572379665);
 ```
 
 Importing the `LambertW` trait lets you call the functions with postfix notation:
