@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.19 (unreleased)
+
+- Documentation improvements.
+
 ## 1.0.18
 
 - Made the error bounds in tests stricter and clearer.
