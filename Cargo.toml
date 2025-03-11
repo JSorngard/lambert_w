@@ -12,7 +12,7 @@ repository = "https://github.com/JSorngard/lambert_w"
 documentation = "https://docs.rs/lambert_w"
 
 [dependencies]
-libm = { version = "0.2", optional = true }
+libm = { version = "0.2.11", optional = true }
 num-traits = { version = "0.2.19", default-features = false }
 
 [dev-dependencies]
