@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.1.0
 
 - Added the `must_use` attribute to all pure functions.
-- Depend on the `num_traits` crate to simplify use of logarithms and square roots.
+- Added the `num_traits` crate to dependencies.
 
 ## 1.0.20 (unreleased)
 
