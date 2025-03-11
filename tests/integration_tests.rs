@@ -10,7 +10,7 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
-use rand::{rngs::SmallRng, Rng, SeedableRng};
+use rand::{distr::Uniform, rngs::SmallRng, Rng, SeedableRng};
 
 const RANDOM_TEST_SIZE: usize = 1_000_000;
 
@@ -71,13 +71,14 @@ fn test_lambert_w0() {
     assert_relative_eq!(
         lambert_w0(f64::MAX),
         703.227_033_104_770_2,
-        max_relative = 4e-16
+        max_relative = 1.5 * f64::EPSILON,
     );
     assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
 
     let mut rng = SmallRng::seed_from_u64(1);
+    let range = Uniform::new(NEG_INV_E, f64::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_w0(rng.random_range(NEG_INV_E..=f64::MAX)).is_finite());
+        assert!(lambert_w0(rng.sample(&range)).is_finite());
     }
 }
 
@@ -225,8 +226,9 @@ fn test_sp_lambert_w0() {
     assert_eq!(sp_lambert_w0(f64::INFINITY), f64::INFINITY);
 
     let mut rng = SmallRng::seed_from_u64(1);
+    let range = Uniform::new(NEG_INV_E, f64::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(sp_lambert_w0(rng.random_range(NEG_INV_E..=f64::MAX)).is_finite());
+        assert!(sp_lambert_w0(rng.sample(&range)).is_finite());
     }
 }
 
@@ -238,7 +240,11 @@ fn test_lambert_w0f() {
     assert_abs_diff_eq!(lambert_w0f(-2.678_794_3e-1), -3.993_824_4e-1,);
     assert_abs_diff_eq!(lambert_w0f(6.321_205_5e-1), 4.167_04e-1);
     assert_abs_diff_eq!(lambert_w0f(9.632_12), 1.721_757_8);
-    assert_relative_eq!(lambert_w0f(9.963_212e1), 3.382_785_3, max_relative = 1e-6);
+    assert_relative_eq!(
+        lambert_w0f(9.963_212e1),
+        3.382_785_3,
+        max_relative = 1.2 * f32::EPSILON
+    );
     assert_relative_eq!(lambert_w0f(9.996_321_4e2), 5.249_294);
     assert_relative_eq!(lambert_w0f(9.999_632e3), 7.231_814);
     assert_relative_eq!(lambert_w0f(9.999_963e4), 9.284_568);
@@ -248,7 +254,11 @@ fn test_lambert_w0f() {
     assert_relative_eq!(lambert_w0f(1e9), 1.784_172_6e1);
     assert_relative_eq!(lambert_w0f(1e10), 2.002_868_5e1);
     assert_relative_eq!(lambert_w0f(1e11), 2.222_712_3e1);
-    assert_relative_eq!(lambert_w0f(1e12), 2.443_500_5e1, max_relative = 1e-6);
+    assert_relative_eq!(
+        lambert_w0f(1e12),
+        2.443_500_5e1,
+        max_relative = 1.35 * f32::EPSILON
+    );
     assert_relative_eq!(lambert_w0f(1e13), 2.665_078_7e1);
     assert_relative_eq!(lambert_w0f(1e14), 2.887_327_6e1);
     assert_relative_eq!(lambert_w0f(1e15), 3.110_152e1);
@@ -261,8 +271,9 @@ fn test_lambert_w0f() {
     assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
 
     let mut rng = SmallRng::seed_from_u64(1);
+    let range = Uniform::new(NEG_INV_E as f32, f32::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_w0f(rng.random_range(NEG_INV_E as f32..=f32::MAX)).is_finite());
+        assert!(lambert_w0f(rng.sample(&range)).is_finite());
     }
 }
 
@@ -274,7 +285,7 @@ fn test_lambert_wm1() {
     assert_relative_eq!(
         lambert_wm1(-3.578_794_411_714_423e-1),
         -1.253_493_791_367_214,
-        max_relative = 4e-16
+        max_relative = 1.6 * f64::EPSILON,
     );
     assert_relative_eq!(
         lambert_wm1(-2.678_794_411_714_424e-1),
@@ -285,33 +296,33 @@ fn test_lambert_wm1() {
     assert_relative_eq!(
         lambert_wm1(-1e-2),
         -6.472_775_124_394_005,
-        max_relative = 5e-16
+        max_relative = 1.9 * f64::EPSILON
     );
     assert_relative_eq!(
         lambert_wm1(-3e-3),
         -7.872_521_380_098_709,
-        max_relative = 5e-16
+        max_relative = 1.02 * f64::EPSILON
     );
     assert_relative_eq!(lambert_wm1(-1e-3), -9.118_006_470_402_742);
     assert_relative_eq!(
         lambert_wm1(-3.000_000_000_000_001e-4),
         -1.045_921_112_040_1e1,
-        max_relative = 5e-16
+        max_relative = 1.53 * f64::EPSILON
     );
     assert_relative_eq!(
         lambert_wm1(-1e-4),
         -1.166_711_453_256_636e1,
-        max_relative = 5e-16
+        max_relative = 2.1 * f64::EPSILON
     );
     assert_relative_eq!(
         lambert_wm1(-3e-5),
         -1.297_753_279_184_081e1,
-        max_relative = 5e-16
+        max_relative = 1.9 * f64::EPSILON
     );
     assert_relative_eq!(
         lambert_wm1(-1e-5),
         -1.416_360_081_581_018e1,
-        max_relative = 5e-16
+        max_relative = 1.7 * f64::EPSILON
     );
     assert_relative_eq!(
         lambert_wm1(-1.000_000_000_000_004e-75),
@@ -325,8 +336,9 @@ fn test_lambert_wm1() {
     assert!(lambert_wm1(f64::INFINITY).is_nan());
 
     let mut rng = SmallRng::seed_from_u64(1);
+    let range = Uniform::new_inclusive(NEG_INV_E, 0.0).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_wm1(rng.random_range(NEG_INV_E..0.0)).is_finite());
+        assert!(lambert_wm1(rng.sample(&range)).is_finite());
     }
 }
 
@@ -404,8 +416,9 @@ fn test_sp_lambert_wm1() {
     assert!(sp_lambert_wm1(f64::INFINITY).is_nan());
 
     let mut rng = SmallRng::seed_from_u64(1);
+    let range = Uniform::new_inclusive(NEG_INV_E, 0.0).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(sp_lambert_wm1(rng.random_range(NEG_INV_E..0.0)).is_finite());
+        assert!(sp_lambert_wm1(rng.sample(&range)).is_finite());
     }
 }
 
@@ -417,12 +430,20 @@ fn test_lambert_wm1f() {
     assert_relative_eq!(
         lambert_wm1f(-3.578_794_3e-1),
         -1.253_493_8,
-        max_relative = 1e-6
+        max_relative = 1.6 * f32::EPSILON
     );
     assert_relative_eq!(lambert_wm1f(-2.678_794_3e-1), -2.020_625);
-    assert_relative_eq!(lambert_wm1f(-1e-1), -3.577_152, max_relative = 1e-6);
+    assert_relative_eq!(
+        lambert_wm1f(-1e-1),
+        -3.577_152,
+        max_relative = 1.2 * f32::EPSILON
+    );
     assert_relative_eq!(lambert_wm1f(-3e-2), -5.144_482_6);
-    assert_relative_eq!(lambert_wm1f(-1e-2), -6.472_775, max_relative = 1e-6);
+    assert_relative_eq!(
+        lambert_wm1f(-1e-2),
+        -6.472_775,
+        max_relative = 1.3 * f32::EPSILON
+    );
     assert_relative_eq!(lambert_wm1f(-3e-3), -7.872_521_4);
     assert_relative_eq!(lambert_wm1f(-1e-3), -9.118_007);
     assert_relative_eq!(lambert_wm1f(-3e-4), -1.045_921_1e1);
@@ -434,8 +455,9 @@ fn test_lambert_wm1f() {
     assert!(lambert_wm1f(f32::INFINITY).is_nan());
 
     let mut rng = SmallRng::seed_from_u64(1);
+    let range = Uniform::new_inclusive(NEG_INV_E as f32, 0.0).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_wm1f(rng.random_range(NEG_INV_E as f32..0.0)).is_finite());
+        assert!(lambert_wm1f(rng.sample(&range)).is_finite());
     }
 }
 
@@ -448,7 +470,7 @@ fn test_trait_impl_on_f64() {
     assert_relative_eq!(
         (-3.578_794_411_714_423e-1_f64).lambert_wm1(),
         -1.253493791367214,
-        max_relative = 4e-16
+        max_relative = 1.6 * f64::EPSILON
     );
 }
 
@@ -458,6 +480,6 @@ fn test_trait_impl_on_f32() {
     assert_relative_eq!(
         (-3.578_794_3e-1_f32).lambert_wm1(),
         -1.253_493_8,
-        max_relative = 1e-6
+        max_relative = 1.6 * f32::EPSILON
     );
 }

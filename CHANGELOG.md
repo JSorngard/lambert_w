@@ -3,6 +3,31 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0
+
+- Added the `must_use` attribute to all pure functions.
+- Depend on the `num_traits` crate to simplify use of logarithms and square roots.
+
+## 1.0.20 (unreleased)
+
+- Updated dev-dependencies.
+
+## 1.0.19
+
+- Documentation improvements.
+
+## 1.0.18
+
+- Made the error bounds in tests stricter and clearer.
+- Made small improvements to the examples in the readme.
+- Added a CI job that checks and builds the crate for targets without a standard
+ library.
+- Added a CI job that locks all dependencies to the oldest possible version according
+ to `Cargo.toml` and then checks the crate.
+- Added daily CI jobs that test the crate on nightly.
+- Added the "no-std" category.
+- Updated transitive dev-dependencies.
+
 ## 1.0.17
 
 - Clarified information in README.
@@ -13,7 +38,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.0.15
 
-- Enabled static verification that this crate can not panic using the [`no-panic`](https://crates.io/crates/no_panic)
+- Don't panic!
+ Enabled static verification that this crate can not panic using the [`no-panic`](https://crates.io/crates/no_panic)
  crate.
  This does not affect any dependers, as `no-panic` is added as a dev-dependency.
 - Added a CI job that uses the above to ensure no panics make it into the crate.
