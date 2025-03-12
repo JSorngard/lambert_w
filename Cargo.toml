@@ -13,6 +13,7 @@ documentation = "https://docs.rs/lambert_w"
 
 [dependencies]
 libm = { version = "0.2.11", optional = true }
+num-complex = { version = "0.4.6", default-features = false, optional = true }
 num-traits = { version = "0.2.19", default-features = false }
 
 [dev-dependencies]
@@ -26,10 +27,12 @@ no-panic = "0.1"
 default = ["libm"]
 # If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
 # to compute square roots and logarithms during function evaluation instead of the standard library.
-libm = ["dep:libm", "num-traits/libm"]
+libm = ["dep:libm", "num-traits/libm", "num-complex?/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
-std = ["num-traits/std"]
+std = ["num-traits/std", "num-complex?/std"]
+# Enables an implementation of the Lambert W function that is able to compute any branch.
+complex = ["dep:num-complex"]
 
 [package.metadata.docs.rs]
 # Document all features.

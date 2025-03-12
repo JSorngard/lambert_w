@@ -508,6 +508,7 @@ dependencies = [
  "criterion",
  "libm",
  "no-panic",
+ "num-complex",
  "num-traits",
  "plotters",
  "rand",
@@ -582,6 +583,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "num-complex"
+version = "0.4.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73f88a1307638156682bada9d7604135552957b7818057dcef22705b4d509495"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
