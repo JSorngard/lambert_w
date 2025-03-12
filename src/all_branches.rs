@@ -27,6 +27,7 @@ const E: Complex64 = Complex64::new(core::f64::consts::E, 0.0);
 /// assert_abs_diff_eq!(w.re, -1.6869138779375397);
 /// assert_abs_diff_eq!(w.im, 11.962631435322813);
 /// ```
+// Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
