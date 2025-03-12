@@ -28,6 +28,7 @@ const E: Complex64 = Complex64::new(core::f64::consts::E, 0.0);
 /// assert_abs_diff_eq!(w.im, 11.962631435322813);
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
     const MAXITER: usize = 30;
     const PREC: f64 = 1e-30;
