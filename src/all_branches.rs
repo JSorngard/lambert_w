@@ -19,13 +19,12 @@ const E: Complex64 = Complex64::new(core::f64::consts::E, 0.0);
 ///
 /// ```
 /// use lambert_w::lambert_wk;
-/// # use num_complex::Complex64;
-/// # use approx::assert_abs_diff_eq;
+/// use num_complex::Complex64;
 ///
 /// let w = lambert_wk(2, Complex64::new(1.0, 2.0));
 ///
-/// assert_abs_diff_eq!(w.re, -1.6869138779375397);
-/// assert_abs_diff_eq!(w.im, 11.962631435322813);
+/// assert_eq!(w.re, -1.6869138779375397);
+/// assert_eq!(w.im, 11.962631435322813);
 /// ```
 // Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
