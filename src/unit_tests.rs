@@ -83,7 +83,7 @@ fn sanity_check_sqrt() {
     assert!(sqrt(-1.0_f64).is_nan());
     assert_abs_diff_eq!(sqrt(0.0_f64), 0.0);
     assert_abs_diff_eq!(sqrt(1.0_f64), 1.0);
-    assert_abs_diff_eq!(sqrt(2.0_f64), 1.414_213_562_373_095_1);
+    assert_abs_diff_eq!(sqrt(2.0_f64), core::f64::consts::SQRT_2);
     assert_abs_diff_eq!(sqrt(4.0_f64), 2.0);
     assert_abs_diff_eq!(sqrt(f64::MAX), 1.340_780_792_994_259_6e154);
     assert_eq!(sqrt(f64::INFINITY), f64::INFINITY);
@@ -94,7 +94,7 @@ fn sanity_check_sqrtf() {
     assert!(sqrt(-1.0_f32).is_nan());
     assert_abs_diff_eq!(sqrt(0.0_f32), 0.0);
     assert_abs_diff_eq!(sqrt(1.0_f32), 1.0);
-    assert_abs_diff_eq!(sqrt(2.0_f32), 1.414_213_5);
+    assert_abs_diff_eq!(sqrt(2.0_f32), core::f32::consts::SQRT_2);
     assert_abs_diff_eq!(sqrt(4.0_f32), 2.0);
     assert_relative_eq!(sqrt(f32::MAX), 1.844_674_4e19);
     assert_eq!(sqrt(f32::INFINITY), f32::INFINITY);
