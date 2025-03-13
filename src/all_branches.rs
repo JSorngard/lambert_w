@@ -64,7 +64,7 @@ pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
     // We are close to the branch cut, the initial point must be chosen carefully
     if (z - Z_NEG_INV_E).abs() <= 1.0 {
         if k == 0 {
-            w = -1.0 + p - 1.0 / 3.0 * p.powi(2) + 11.0 / 72.0 * p.powi(3);
+            w = -1.0 + p - 1.0 / 3.0 * p * p + 11.0 / 72.0 * p * p * p;
         } else if (k == 1 && z.im < 0.0) || (k == -1 && z.im > 0.0) {
             w = -1.0 - p - 1.0 / 3.0 * p * p - 11.0 / 72.0 * p * p * p;
         }
@@ -86,10 +86,9 @@ pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
 
     // region: Halley iteration
 
-    let mut w_prev;
     let mut iter = 0;
     loop {
-        w_prev = w;
+        let w_prev = w;
         let ew = w.exp();
         let wew = w * ew;
         let wew_d = ew + w * ew;
