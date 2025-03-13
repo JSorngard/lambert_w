@@ -523,8 +523,11 @@ fn test_iterative_version_at_some_values() {
         )
     );
     assert_complex_abs_diff_eq!(
-        lambert_wk(-1, (NEG_INV_E + 0.1).into()),
-        Complex64::new(-2.020625228775404, 0.0),
+        lambert_wk(-1, Complex64::new(NEG_INV_E + 0.1, 1.0)),
+        Complex64::new(
+            -0.95574668480607522,
+            -2.5169527717192458
+        ),
         2.0 * f64::EPSILON
     );
     assert_complex_abs_diff_eq!(
