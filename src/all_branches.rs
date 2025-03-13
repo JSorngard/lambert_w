@@ -92,7 +92,8 @@ pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
         let ew = w.exp();
         let wew = w * ew;
         let wew_d = ew + w * ew;
-        w -= 2.0 * ((wew - z) * wew_d) / (2.0 * wew_d * wew_d - (wew - z) * (ew + wew_d));
+        let wew_dd = ew + wew_d;
+        w -= 2.0 * ((wew - z) * wew_d) / (2.0 * wew_d * wew_d - (wew - z) * wew_dd);
 
         iter += 1;
 
