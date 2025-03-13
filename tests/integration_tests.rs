@@ -506,6 +506,7 @@ macro_rules! assert_complex_abs_diff_eq {
 fn test_iterative_version_at_some_values() {
     assert_eq!(lambert_wk(0, NEG_INV_E.into()), (-1.0).into());
     assert_eq!(lambert_wk(0, 1.0.into()), OMEGA.into());
+    assert_eq!(lambert_wk(0, core::f64::consts::E.into()), 1.0.into());
     assert_eq!(lambert_wk(0, 2.0.into()), 0.8526055020137255.into());
 
     assert_complex_abs_diff_eq!(
