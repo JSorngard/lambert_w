@@ -5,6 +5,9 @@ use crate::{lambert_w0, lambert_wm1, NEG_INV_E};
 /// Computes branch `k` of the Lambert W function
 /// with the Halley iteration method.
 ///
+/// This implementation delegates to [`lambert_w0`] and [`lambert_wm1`] when z is real and
+/// in the appropriate range.
+///
 /// # Examples
 ///
 /// Basic usage:
@@ -18,8 +21,6 @@ use crate::{lambert_w0, lambert_wm1, NEG_INV_E};
 /// assert_eq!(w.re, -1.6869138779375397);
 /// assert_eq!(w.im, 11.962631435322813);
 /// ```
-///
-/// This implementation delegates to [`lambert_w0`] and [`lambert_wm1`] when z in real.
 // Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
