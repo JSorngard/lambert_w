@@ -3,8 +3,6 @@
 //! Every test function utilizes [`assert_abs_diff_eq!`] for as long as possible,
 //! and then switches to [`assert_relative_eq!`] when the first assertion would fail.
 
-use core::f64;
-
 use lambert_w::{
     lambert_w0, lambert_w0f, lambert_wk, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
     LambertW, NEG_INV_E, OMEGA,
