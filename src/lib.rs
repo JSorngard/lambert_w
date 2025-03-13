@@ -8,7 +8,6 @@ extern crate std;
 #[cfg(not(any(feature = "std", feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
-#[cfg(feature = "complex")]
 mod all_branches;
 mod dw0c;
 mod dwm1c;
@@ -20,7 +19,6 @@ mod swm1f;
 #[cfg(test)]
 mod unit_tests;
 
-#[cfg(feature = "complex")]
 pub use all_branches::lambert_wk;
 
 // This crate uses a build script to check for an environment variable and sets
