@@ -3,6 +3,8 @@
 //! Every test function utilizes [`assert_abs_diff_eq!`] for as long as possible,
 //! and then switches to [`assert_relative_eq!`] when the first assertion would fail.
 
+use core::f64;
+
 use lambert_w::{
     lambert_w0, lambert_w0f, lambert_wk, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
     LambertW, NEG_INV_E, OMEGA,
@@ -508,7 +510,25 @@ fn test_iterative_version_at_some_values() {
     assert_eq!(lambert_wk(0, 1.0.into()), OMEGA.into());
     assert_eq!(lambert_wk(0, core::f64::consts::E.into()), 1.0.into());
     assert_eq!(lambert_wk(0, 2.0.into()), 0.8526055020137255.into());
+    assert_eq!(lambert_wk(0, 0.0.into()), 0.0.into());
+    assert_eq!(lambert_wk(1, 0.0.into()), f64::NEG_INFINITY.into());
 
+    assert_complex_abs_diff_eq!(
+        lambert_wk(0, (NEG_INV_E + 0.1).into()),
+        Complex64::new(-0.39938245253978073986, 0.0)
+    );
+    assert_complex_abs_diff_eq!(
+        lambert_wk(1, (NEG_INV_E + 0.1).into()),
+        Complex64::new(
+            -3.417879884765068123659745461292681,
+            7.4224477810037139138371793573331
+        )
+    );
+    assert_complex_abs_diff_eq!(
+        lambert_wk(-1, (NEG_INV_E + 0.1).into()),
+        Complex64::new(-2.020625228775404, 0.0),
+        2.0 * f64::EPSILON
+    );
     assert_complex_abs_diff_eq!(
         lambert_wk(0, 10.0.into()),
         Complex64::new(1.745528002740699, 0.0)
