@@ -61,6 +61,7 @@ pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
     if (z - Z_NEG_INV_E).abs() <= 1.0 {
         let p = (2.0 * (E * z + 1.0)).sqrt();
         let p2 = -1.0 + p - 1.0 / 3.0 * p * p;
+        // TODO: These branches seem less accurate, investigate.
         if k == 0 {
             w = p2 + 11.0 / 72.0 * p * p * p;
         } else if (k == 1 && z.im < 0.0) || (k == -1 && z.im > 0.0) {
