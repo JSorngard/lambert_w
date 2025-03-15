@@ -55,7 +55,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// of the chosen branch.
 ///
 /// If you know you want the principal or secondary branches where they are real valued,
-/// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions instead.
+/// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions and their 32-bit equivalents instead.
 /// They can be up to two orders of magnitude faster.
 ///
 /// # Examples
