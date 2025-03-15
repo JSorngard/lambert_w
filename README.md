@@ -124,6 +124,9 @@ let w10 = lambert_wk(10, Complex64::new(-3.0, 10.1));
 assert_eq!(w10, Complex64::new(-1.7901896440529672, 63.09221603522478));
 ```
 
+While this function is more capable it can be up to two orders of magnitude
+slower than the functions that use Fukushima's method.
+
 ## Features
 
 One of the below features must be enabled:
