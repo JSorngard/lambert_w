@@ -19,7 +19,7 @@ mod swm1f;
 #[cfg(test)]
 mod unit_tests;
 
-pub use all_complex_branches::lambert_wk;
+pub use all_complex_branches::lambert_w;
 
 // This crate uses a build script to check for an environment variable and sets
 // the `assert_no_panic` attribute if that variable is set to a specific value.

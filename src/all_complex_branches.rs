@@ -17,17 +17,17 @@ use num_complex::{Complex64, ComplexFloat};
 /// Basic usage:
 ///
 /// ```
-/// use lambert_w::lambert_wk;
+/// use lambert_w::lambert_w;
 /// use num_complex::Complex64;
 ///
-/// let w = lambert_wk(2, Complex64::new(1.0, 2.0));
+/// let w = lambert_w(2, Complex64::new(1.0, 2.0));
 ///
 /// assert_eq!(w, Complex64::new(-1.6869138779375397, 11.962631435322813));
 /// ```
 // Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
+pub fn lambert_w(k: i32, z: Complex64) -> Complex64 {
     const MAX_ITER: usize = 30;
     /// If the absolute difference between two consecutive iterations is less than this value,
     /// the iteration stops.

@@ -3,7 +3,7 @@ use criterion::{
     black_box, criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
 use lambert_w::{
-    lambert_w0, lambert_w0f, lambert_wk, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
+    lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
     NEG_INV_E,
 };
 use rand::{
@@ -53,7 +53,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_0 Halley iteration",
-        |z| lambert_wk(0, z.into()),
+        |z| lambert_w(0, z.into()),
         NEG_INV_E..=f64::MAX,
         &mut rng,
     );
@@ -85,7 +85,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_-1 Halley iteration",
-        |z| lambert_wk(-1, z.into()),
+        |z| lambert_w(-1, z.into()),
         NEG_INV_E..=0.0,
         &mut rng,
     );

@@ -113,14 +113,16 @@ crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
 point error, or within an optional epsilon or relative difference.
 
+### Arbitrary branches in the complex plane
+
 To compute any arbitrary branch at any arbitrary complex input the crate provides
 a function that uses the Halley iteration procedure:
 
 ```rust
-use lambert_w::lambert_wk;
+use lambert_w::lambert_w;
 use num_complex::Complex64;
 
-let w10 = lambert_wk(10, Complex64::new(-3.0, 10.1));
+let w10 = lambert_w(10, Complex64::new(-3.0, 10.1));
 assert_eq!(w10, Complex64::new(-1.7901896440529672, 63.09221603522478));
 ```
 
