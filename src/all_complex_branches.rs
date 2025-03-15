@@ -64,11 +64,12 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     if (z - Z_NEG_INV_E).abs() <= 1.0 {
         let p = (2.0 * (E * z + 1.0)).sqrt();
         let p2 = -1.0 + p - 1.0 / 3.0 * p * p;
+        let p3 = 11.0 / 72.0 * p * p * p;
         // TODO: These branches seem less accurate, investigate.
         if k == 0 {
-            w = p2 + 11.0 / 72.0 * p * p * p;
+            w = p2 + p3;
         } else if (k == 1 && z.im < 0.0) || (k == -1 && z.im > 0.0) {
-            w = p2 - 11.0 / 72.0 * p * p * p;
+            w = p2 - p3;
         }
     }
 
