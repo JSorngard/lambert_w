@@ -1,6 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use lambert_w::{
-    lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
+    lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
 };
 
 fn fixed_benches(c: &mut Criterion) {
@@ -30,6 +30,9 @@ fn fixed_benches(c: &mut Criterion) {
                 group.bench_function("24 bits on f32", |b| b.iter(|| black_box(lambert_w0f(z32))));
             }
         }
+        drop(group);
+        let mut group = c.benchmark_group(format!("fixed Halley at {z}"));
+        group.bench_function("branch 0", |b| b.iter(|| black_box(lambert_w(0, z, 0.0))));
     }
     for z in small_args {
         let mut group = c.benchmark_group(format!("fixed W_-1 at {z}"));
@@ -43,6 +46,9 @@ fn fixed_benches(c: &mut Criterion) {
                 });
             }
         }
+        drop(group);
+        let mut group = c.benchmark_group(format!("fixed Halley at {z}"));
+        group.bench_function("branch -1", |b| b.iter(|| black_box(lambert_w(-1, z, 0.0))));
     }
 }
 
