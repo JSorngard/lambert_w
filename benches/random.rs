@@ -53,7 +53,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_0 Halley iteration",
-        |z| lambert_w(0, z.into()),
+        |z| lambert_w(0, z, 0.0),
         NEG_INV_E..=f64::MAX,
         &mut rng,
     );
@@ -85,7 +85,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut group,
         "W_-1 Halley iteration",
-        |z| lambert_w(-1, z.into()),
+        |z| lambert_w(-1, z, 0.0),
         NEG_INV_E..=0.0,
         &mut rng,
     );

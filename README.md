@@ -120,10 +120,9 @@ a function that uses the Halley iteration procedure:
 
 ```rust
 use lambert_w::lambert_w;
-use num_complex::Complex64;
 
-let w10 = lambert_w(10, Complex64::new(-3.0, 10.1));
-assert_eq!(w10, Complex64::new(-1.7901896440529672, 63.09221603522478));
+let w10 = lambert_w(10, -3.0, 10.1);
+assert_eq!(w10, (-1.7901896440529672, 63.09221603522478));
 ```
 
 While this function is more capable it can be up to two orders of magnitude

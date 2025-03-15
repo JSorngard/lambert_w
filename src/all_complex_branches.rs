@@ -17,40 +17,40 @@ use num_complex::{Complex64, ComplexFloat};
 ///
 /// ```
 /// use lambert_w::lambert_w;
-/// use num_complex::Complex64;
 ///
-/// let w = lambert_w(2, Complex64::new(1.0, 2.0));
+/// // W_2(1.0 + 2.0i)
+/// let w = lambert_w(2, 1.0, 2.0);
 ///
-/// assert_eq!(w, Complex64::new(-1.6869138779375397, 11.962631435322813));
+/// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
 // Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z: Complex64) -> Complex64 {
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     const MAX_ITER: usize = 30;
     /// If the absolute difference between two consecutive iterations is less than this value,
     /// the iteration stops.
     const PREC: f64 = 1e-30;
 
     const Z_NEG_INV_E: Complex64 = Complex64::new(NEG_INV_E, 0.0);
-    const Z_ZERO: Complex64 = Complex64::new(0.0, 0.0);
     const I: Complex64 = Complex64::new(0.0, 1.0);
-    const Z_E: Complex64 = Complex64::new(E, 0.0);
+
+    let z = Complex64::new(z_re, z_im);
 
     // region: special cases
 
-    if z == Z_ZERO {
+    if z.re == 0.0 && z.im == 0.0 {
         if k == 0 {
-            return Z_ZERO;
+            return (0.0, 0.0);
         } else {
-            return f64::NEG_INFINITY.into();
+            return (f64::NEG_INFINITY, 0.0);
         }
     }
-    if z == Z_NEG_INV_E && (k == 0 || k == -1) {
-        return (-1.0).into();
+    if z.re == NEG_INV_E && z.im == 0.0 && (k == 0 || k == -1) {
+        return (-1.0, 0.0);
     }
-    if z == Z_E && k == 0 {
-        return 1.0.into();
+    if z.re == E && z.im == 0.0 && k == 0 {
+        return (1.0, 0.0);
     }
 
     // endregion: special cases
@@ -100,7 +100,7 @@ pub fn lambert_w(k: i32, z: Complex64) -> Complex64 {
         iter += 1;
 
         if ((w - w_prev).abs() <= PREC) || iter >= MAX_ITER {
-            return w;
+            return (w.re, w.im);
         }
     }
 
