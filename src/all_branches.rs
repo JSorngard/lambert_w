@@ -95,7 +95,7 @@ pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
 
         iter += 1;
 
-        if !(((w - w_prev).abs() > PREC) && iter < MAX_ITER) {
+        if ((w - w_prev).abs() <= PREC) || iter >= MAX_ITER {
             return w;
         }
     }
