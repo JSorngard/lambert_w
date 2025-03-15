@@ -116,7 +116,7 @@ use lambert_w::lambert_wk;
 use num_complex::Complex64;
 
 let w10 = lambert_wk(10, Complex64::new(-3.0, 10.1));
-assert_eq!(w10, Complex64::new(-1.790189644052967195, 63.09221603522477890869));
+assert_eq!(w10, Complex64::new(-1.7901896440529672, 63.09221603522478));
 ```
 
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
