@@ -8,16 +8,18 @@ extern crate std;
 #[cfg(not(any(feature = "std", feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
+mod all_complex_branches;
 mod dw0c;
 mod dwm1c;
-mod elementary;
-mod rational;
+mod generic_math;
 mod sw0;
 mod sw0f;
 mod swm1;
 mod swm1f;
 #[cfg(test)]
 mod unit_tests;
+
+pub use all_complex_branches::lambert_w;
 
 // This crate uses a build script to check for an environment variable and sets
 // the `assert_no_panic` attribute if that variable is set to a specific value.
@@ -72,6 +74,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
@@ -103,6 +106,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_wm1(z: f64) -> f64 {
     swm1::swm1(z)
 }
@@ -133,6 +137,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
@@ -167,6 +172,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
@@ -198,6 +204,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
@@ -233,6 +240,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 ///
 /// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }

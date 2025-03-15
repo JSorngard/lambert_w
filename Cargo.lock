@@ -502,12 +502,14 @@ dependencies = [
 
 [[package]]
 name = "lambert_w"
-version = "1.0.20"
+version = "1.1.0"
 dependencies = [
  "approx",
  "criterion",
  "libm",
  "no-panic",
+ "num-complex",
+ "num-traits",
  "plotters",
  "rand",
 ]
@@ -584,12 +586,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "num-complex"
+version = "0.4.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73f88a1307638156682bada9d7604135552957b7818057dcef22705b4d509495"
+dependencies = [
+ "num-traits",
+]
+
+[[package]]
 name = "num-traits"
 version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841"
 dependencies = [
  "autocfg",
+ "libm",
 ]
 
 [[package]]

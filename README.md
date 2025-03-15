@@ -9,8 +9,10 @@
 This crate provides fast and accurate evaluation of the real valued parts of the
 principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
 with the method of Toshio Fukushima \[[1](#references)\].
+It also provides a slower iterative evaluation method for all branches
+on the complete complex plane.
 
-This method does not allocate, recurse, or iterate.
+Fukushima's method does not allocate, recurse, or iterate.
 It works by dividing the function's domain into subdomains.
 On each one, it uses a simple transformation of the input inserted into
 a rational function to approximate the true value.
@@ -95,7 +97,7 @@ assert_relative_eq!(
 );
 ```
 
-Importing the `LambertW` trait lets you call the functions with postfix notation:
+Importing the provided trait lets you call the functions with postfix notation:
 
 ```rust
 use lambert_w::LambertW;
@@ -110,6 +112,22 @@ The macros in the examples above are from the [`approx`](https://docs.rs/approx/
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
 point error, or within an optional epsilon or relative difference.
+
+### Arbitrary branches in the complex plane
+
+To compute any arbitrary branch at any arbitrary complex input the crate provides
+a function that uses the Halley iteration procedure:
+
+```rust
+use lambert_w::lambert_w;
+
+// W_10(-3 + 10.1i)
+let w10 = lambert_w(10, -3.0, 10.1);
+assert_eq!(w10, (-1.7901896440529672, 63.09221603522478));
+```
+
+While this function is more capable it can be up to two orders of magnitude
+slower than the functions that use Fukushima's method.
 
 ## Features
 
