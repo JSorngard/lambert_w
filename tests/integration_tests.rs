@@ -551,6 +551,7 @@ fn test_iterative_version() {
         lambert_w(1_000_000, 100.0, 100.0),
         (-10.701_643_723_106_727, 6.283_184_521_779_72e6)
     );
+    // NaNs
     assert!(lambert_w(0, f64::NAN, 0.0).0.is_nan());
     assert!(lambert_w(0, 0.0, f64::NAN).0.is_nan());
     assert!(lambert_w(0, f64::NAN, f64::NAN).0.is_nan());
