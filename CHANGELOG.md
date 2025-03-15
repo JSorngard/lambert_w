@@ -9,9 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Added the `must_use` attribute to all pure functions.
 - Added the `num-traits` and `num-complex` crates to dependencies.
 
-## 1.0.20 (unreleased)
+## 1.0.20
 
-- Updated dev-dependencies.
+- Updated transitive dev-dependencies.
 
 ## 1.0.19
 
