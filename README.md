@@ -97,7 +97,7 @@ assert_relative_eq!(
 );
 ```
 
-Importing the `LambertW` trait lets you call the functions with postfix notation:
+Importing the provided trait lets you call the functions with postfix notation:
 
 ```rust
 use lambert_w::LambertW;
@@ -106,6 +106,17 @@ use approx::assert_abs_diff_eq;
 let ln1k = (1000.0 * f64::ln(1000.0)).lambert_w0();
 
 assert_abs_diff_eq!(ln1k, f64::ln(1000.0));
+```
+
+To compute any arbitrary branch at any arbitrary complex input the crate provides
+a function that uses the Halley iteration procedure:
+
+```rust
+use lambert_w::lambert_wk;
+use num_complex::Complex64;
+
+let w10 = lambert_wk(10, Complex64::new(-3.0, 10.1));
+assert_eq!(w10, Complex64::new(-1.790189644052967195, 63.09221603522477890869));
 ```
 
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
