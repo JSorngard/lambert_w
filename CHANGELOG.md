@@ -5,8 +5,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.1.0
 
+- Added an implementation that can compute any branch in the whole complex plane.
 - Added the `must_use` attribute to all pure functions.
-- Added the `num_traits` crate to dependencies.
+- Added the `num-traits` and `num-complex` crates to dependencies.
 
 ## 1.0.20 (unreleased)
 
