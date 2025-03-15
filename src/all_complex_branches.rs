@@ -7,7 +7,7 @@ use num_complex::{Complex64, ComplexFloat};
 /// Computes branch `k` of the complex valued Lambert W function
 /// with the Halley iteration method.
 ///
-/// If you know you want the principal or secondary branches,
+/// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0`](crate::lambert_w0) or [`lambert_wm1`](crate::lambert_wm1)
 /// functions instead. They can be up to two orders of magnitude faster
 /// (for a slight accuracy reduction).
