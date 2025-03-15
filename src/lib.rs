@@ -8,7 +8,7 @@ extern crate std;
 #[cfg(not(any(feature = "std", feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
-mod all_complex_branches;
+mod all_branches_complex;
 mod dw0c;
 mod dwm1c;
 mod generic_math;
@@ -19,7 +19,7 @@ mod swm1f;
 #[cfg(test)]
 mod unit_tests;
 
-pub use all_complex_branches::lambert_w;
+pub use all_branches_complex::lambert_w;
 
 // This crate uses a build script to check for an environment variable and sets
 // the `assert_no_panic` attribute if that variable is set to a specific value.
