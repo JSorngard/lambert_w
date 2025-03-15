@@ -23,7 +23,6 @@ use num_complex::{Complex64, ComplexFloat};
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
-// Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
@@ -60,7 +59,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     let two_pi_k_i = 2.0 * PI * f64::from(k) * I;
     let mut w = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
 
-    // We are close to the branch cut, the initial point must be chosen carefully
+    // Choose the initial point more carefully when we are close to the branch cut.
     if (z - Z_NEG_INV_E).abs() <= 1.0 {
         let p = (2.0 * (E * z + 1.0)).sqrt();
         let p2 = -1.0 + p - 1.0 / 3.0 * p * p;
@@ -74,12 +73,12 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     }
 
     if k == 0 && (z - 0.5).abs() <= 0.5 {
-        // (1,1) Pade approximant for W(0,a)
+        // Order (1,1) Padé approximant for W(0,a)
         w = (0.35173371 * (0.1237166 + 7.061302897 * z)) / (2.0 + 0.827184 * (1.0 + 2.0 * z));
     }
 
     if k == -1 && (z - 0.5).abs() <= 0.5 {
-        // (1,1) Pade approximant for W(-1,a)
+        // Order (1,1) Padé approximant for W(-1,a)
         w = -(((2.2591588985 + 4.22096 * I)
             * ((-14.073271 - 33.767687754 * I) * z - (12.7127 - 19.071643 * I) * (1.0 + 2.0 * z)))
             / (2.0 - (17.23103 - 10.629721 * I) * (1.0 + 2.0 * z)));
