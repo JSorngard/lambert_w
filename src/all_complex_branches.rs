@@ -17,8 +17,7 @@ use num_complex::{Complex64, ComplexFloat};
 ///
 /// let w = lambert_wk(2, Complex64::new(1.0, 2.0));
 ///
-/// assert_eq!(w.re, -1.6869138779375397);
-/// assert_eq!(w.im, 11.962631435322813);
+/// assert_eq!(w, Complex64::new(-1.6869138779375397, 11.962631435322813));
 /// ```
 // Based on <https://github.com/IstvanMezo/LambertW-function>.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
