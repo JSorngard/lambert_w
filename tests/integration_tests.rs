@@ -12,7 +12,7 @@ use approx::{assert_abs_diff_eq, assert_relative_eq};
 
 use rand::{distr::Uniform, rngs::SmallRng, Rng, SeedableRng};
 
-use num_complex::Complex64;
+use num_complex::c64;
 
 const RANDOM_TEST_SIZE: usize = 1_000_000;
 
@@ -513,54 +513,45 @@ fn test_iterative_version() {
 
     assert_complex_abs_diff_eq!(
         lambert_wk(0, (NEG_INV_E + 0.1).into()),
-        Complex64::new(-0.39938245253978073986, 0.0)
+        c64(-0.39938245253978073986, 0.0)
     );
     assert_complex_abs_diff_eq!(
-        lambert_wk(1, Complex64::new(NEG_INV_E + 0.1, -1.0)),
-        Complex64::new(-0.9557466848060752197, 2.516_952_771_719_245_84),
+        lambert_wk(1, c64(NEG_INV_E + 0.1, -1.0)),
+        c64(-0.9557466848060752197, 2.516_952_771_719_245_84),
         2.0 * f64::EPSILON
     );
     assert_complex_abs_diff_eq!(
-        lambert_wk(-1, Complex64::new(NEG_INV_E + 0.1, 1.0)),
-        Complex64::new(-0.95574668480607522, -2.5169527717192458),
+        lambert_wk(-1, c64(NEG_INV_E + 0.1, 1.0)),
+        c64(-0.95574668480607522, -2.5169527717192458),
         2.0 * f64::EPSILON
     );
     assert_complex_abs_diff_eq!(
         lambert_wk(-1, 0.5.into()),
-        Complex64::new(
+        c64(
             -2.259158898533606, //187
             -4.220_960_969_266_197
         )
     );
-    assert_complex_abs_diff_eq!(
-        lambert_wk(0, 10.0.into()),
-        Complex64::new(1.745528002740699, 0.0)
-    );
-    assert_complex_abs_diff_eq!(
-        lambert_wk(0, 100.0.into()),
-        Complex64::new(3.3856301402900503, 0.0)
-    );
-    assert_complex_abs_diff_eq!(
-        lambert_wk(0, 1000.0.into()),
-        Complex64::new(5.24960285240159623, 0.0)
-    );
+    assert_complex_abs_diff_eq!(lambert_wk(0, 10.0.into()), c64(1.745528002740699, 0.0));
+    assert_complex_abs_diff_eq!(lambert_wk(0, 100.0.into()), c64(3.3856301402900503, 0.0));
+    assert_complex_abs_diff_eq!(lambert_wk(0, 1000.0.into()), c64(5.24960285240159623, 0.0));
     assert_complex_abs_diff_eq!(
         lambert_wk(0, 10000.0.into()),
-        Complex64::new(7.231846038093372706, 0.0)
+        c64(7.231846038093372706, 0.0)
     );
     assert_complex_abs_diff_eq!(
         lambert_wk(-1, (-f64::ln(2.0) / 2.0).into()),
-        Complex64::new(-f64::ln(4.0), 0.0)
+        c64(-f64::ln(4.0), 0.0)
     );
     // Close to the branch cut
-    assert_complex_abs_diff_eq!(lambert_wk(-1, NEG_INV_E.into()), Complex64::new(-1.0, 0.0));
+    assert_complex_abs_diff_eq!(lambert_wk(-1, NEG_INV_E.into()), c64(-1.0, 0.0));
     assert_complex_abs_diff_eq!(
         lambert_wk(10, (NEG_INV_E + 0.1).into()),
-        Complex64::new(-5.484_673_997_441_509, 64.317_580_321_338_81)
+        c64(-5.484_673_997_441_509, 64.317_580_321_338_81)
     );
     // Very big branch index
     assert_complex_abs_diff_eq!(
-        lambert_wk(1_000_000, Complex64::new(100.0, 100.0)),
-        Complex64::new(-10.701_643_723_106_727, 6.283_184_521_779_72e6)
+        lambert_wk(1_000_000, c64(100.0, 100.0)),
+        c64(-10.701_643_723_106_727, 6.283_184_521_779_72e6)
     );
 }
