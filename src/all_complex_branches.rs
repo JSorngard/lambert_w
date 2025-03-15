@@ -18,7 +18,7 @@ use num_complex::{Complex64, ComplexFloat};
 /// ```
 /// use lambert_w::lambert_w;
 ///
-/// // W_2(1.0 + 2.0i)
+/// // W_2(1 + 2i)
 /// let w = lambert_w(2, 1.0, 2.0);
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
