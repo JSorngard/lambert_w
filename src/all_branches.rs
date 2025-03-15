@@ -25,7 +25,8 @@ use num_complex::{Complex64, ComplexFloat};
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wk(k: i32, z: Complex64) -> Complex64 {
     const MAX_ITER: usize = 30;
-    /// The maximum (absolute) error of the result.
+    /// If the absolute difference between two consecutive iterations is less than this value,
+    /// the iteration stops.
     const PREC: f64 = 1e-30;
 
     const Z_NEG_INV_E: Complex64 = Complex64::new(NEG_INV_E, 0.0);
