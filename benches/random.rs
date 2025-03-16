@@ -75,7 +75,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 50 bits",
         lambert_w0,
-        NEG_INV_E..f64::MAX,
+        NEG_INV_E..f64::from(u32::MAX),
         &mut rng,
     );
 
@@ -83,7 +83,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 24 bits",
         sp_lambert_w0,
-        NEG_INV_E..f64::MAX,
+        NEG_INV_E..f64::from(u32::MAX),
         &mut rng,
     );
 
@@ -91,7 +91,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 24 bits on f32",
         lambert_w0f,
-        NEG_INV_E as f32..f32::MAX,
+        NEG_INV_E as f32..f32::from(u16::MAX),
         &mut rng,
     );
 
