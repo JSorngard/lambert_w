@@ -2,7 +2,7 @@
 //! It generates a plot of the two branches of the function
 //! and saves it as a png file.
 
-use lambert_w::{LambertW, NEG_INV_E};
+use lambert_w::{lambert_w0, lambert_wm1, NEG_INV_E};
 use plotters::prelude::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .map(|t| t * (10.0 - NEG_INV_E) + NEG_INV_E)
                 // Apply the principal branch of the Lambert W function
                 // to the x-value.
-                .map(|x| (x, x.lambert_w0())),
+                .map(|x| (x, lambert_w0(x))),
             &BLACK,
         ))?
         .label("W_0(x)")
@@ -41,7 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             (0..steps)
                 .map(|x| f64::from(x) / f64::from(steps))
                 .map(|t| NEG_INV_E - t * (NEG_INV_E + 0.073))
-                .map(|x| (x, x.lambert_wm1())),
+                .map(|x| (x, lambert_wm1(x))),
             &RED,
         ))?
         .label("W_-1(x)")

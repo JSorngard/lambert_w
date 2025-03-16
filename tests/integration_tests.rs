@@ -5,9 +5,11 @@
 
 use core::f64;
 
+#[allow(deprecated)]
+use lambert_w::LambertW;
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
-    LambertW, NEG_INV_E, OMEGA,
+    NEG_INV_E, OMEGA,
 };
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
@@ -464,6 +466,7 @@ fn test_lambert_wm1f() {
 }
 
 #[test]
+#[allow(deprecated)]
 fn test_trait_impl_on_f64() {
     assert_abs_diff_eq!(
         (-2.678_794_411_714_424e-1_f64).lambert_w0(),
@@ -477,6 +480,7 @@ fn test_trait_impl_on_f64() {
 }
 
 #[test]
+#[allow(deprecated)]
 fn test_trait_impl_on_f32() {
     assert_abs_diff_eq!(6.321_205_5e-1_f32.lambert_w0(), 4.167_04e-1);
     assert_relative_eq!(
