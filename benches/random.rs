@@ -55,7 +55,7 @@ fn random_benches(c: &mut Criterion) {
         &mut halley_group,
         "W_0",
         |z| lambert_w(0, z, 0.0),
-        NEG_INV_E..=f64::MAX,
+        NEG_INV_E..=f64::from(u32::MAX),
         &mut rng,
     );
 
