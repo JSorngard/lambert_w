@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Added an implementation that can compute any branch in the whole complex plane.
 - Added the `must_use` attribute to all pure functions.
-- Added the `num-traits` and `num-complex` crates to dependencies.
+- Added the [`num-traits`](https://crates.io/crates/num-traits) and [`num-complex`](https://crates.io/crates/num-complex) crates to dependencies.
 - Deprecated the `LambertW` trait, as this crate is not really the place for
  such API decisions to be made.
 
