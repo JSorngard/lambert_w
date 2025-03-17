@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Added the [`num-traits`](https://crates.io/crates/num-traits) and
  [`num-complex`](https://crates.io/crates/num-complex) crates to dependencies.
 - Deprecated the `LambertW` trait, as this crate is not really the place for
- such API decisions to be made.
+ such API decisions to be made on behalf of others.
 
 ## 1.0.20
 
