@@ -51,8 +51,8 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// Computes branch `k` of the complex valued Lambert W function
 /// using Halley's method.
 ///
-/// The return value is a tuple `(re, im)` where `re` and `im` are the real and imaginary parts
-/// of the chosen branch.
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
 ///
 /// Close to the branch cut at -1/e this function may be slightly less accurate.
 ///
