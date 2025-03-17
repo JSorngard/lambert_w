@@ -54,6 +54,8 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// The return value is a tuple `(re, im)` where `re` and `im` are the real and imaginary parts
 /// of the chosen branch.
 ///
+/// Close to the branch cut at -1/e this function may be slightly less accurate.
+///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions and their 32-bit equivalents instead.
 /// They can be up to two orders of magnitude faster.
@@ -111,7 +113,6 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
         let p = (2.0 * (E * z + 1.0)).sqrt();
         let p2 = -1.0 + p - 1.0 / 3.0 * p * p;
         let p3 = 11.0 / 72.0 * p * p * p;
-        // TODO: These branches seem less accurate, investigate.
         if k == 0 {
             w = p2 + p3;
         } else if (k == 1 && z.im < 0.0) || (k == -1 && z.im > 0.0) {
