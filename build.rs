@@ -52,7 +52,6 @@ fn main() {
             }
         }
     } else if let Ok(unexpected_env_val) = env_val {
-        // The environment variable is set, but it is not set to the expected value.
         println!(
             "cargo:warning=the `{ENV_KEY}` environment variable is set to \"{unexpected_env_val}\", but it must be set to \"{ENV_VAL}\" to enable the check for panics."
         );
