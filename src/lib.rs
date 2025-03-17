@@ -56,6 +56,8 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// Close to the branch cut at -1/e this function may be slightly less accurate.
 ///
+/// Returns [`NAN`](f64::NAN)s if the input is infinite or NaN.
+///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions and their 32-bit equivalents instead.
 /// They can be up to two orders of magnitude faster.
