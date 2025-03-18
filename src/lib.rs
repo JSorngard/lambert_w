@@ -56,8 +56,6 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// Close to the branch cut at -1/e this function may be slightly less accurate.
 ///
-/// Returns [`NAN`](f64::NAN)s if the input is infinite or NaN.
-///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions and their 32-bit equivalents instead.
 /// They can be up to two orders of magnitude faster.
@@ -73,6 +71,24 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// let w = lambert_w(2, 1.0, 2.0);
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
+/// ```
+///
+/// Returns [`NAN`](f64::NAN)s if the input is infinite:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(-13, f64::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or if the input is `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(1_000, 0.0, f64::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
