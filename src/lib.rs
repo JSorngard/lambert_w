@@ -73,7 +73,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
 ///
-/// Returns [`NAN`](f64::NAN)s if the input is infinite:
+/// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
 ///
 /// ```
 /// # use lambert_w::lambert_w;
@@ -82,7 +82,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 ///
-/// or if the input is `NAN`:
+/// or `NAN`:
 ///
 /// ```
 /// # use lambert_w::lambert_w;
