@@ -110,10 +110,10 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
             return (f64::NEG_INFINITY, 0.0);
         }
     }
-    if z.re == NEG_INV_E && z.im == 0.0 && (k == 0 || k == -1) {
+    if z == NEG_INV_E.into() && (k == 0 || k == -1) {
         return (-1.0, 0.0);
     }
-    if z.re == E && z.im == 0.0 && k == 0 {
+    if z == E.into() && k == 0 {
         return (1.0, 0.0);
     }
 
