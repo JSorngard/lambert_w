@@ -97,7 +97,6 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     /// If the absolute difference between two consecutive iterations is less than this value,
     /// the iteration stops.
     const PREC: f64 = 1e-30;
-
     const I: Complex64 = Complex64::I;
 
     let z = Complex64::new(z_re, z_im);
