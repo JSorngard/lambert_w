@@ -110,9 +110,9 @@ complex input:
 ```rust
 use lambert_w::lambert_w;
 
-// W_10(3 - 2.5i)
-let w10 = lambert_w(10, 3.0, -2.5);
-assert_eq!(w10, (-2.741726529326629, 60.52104738771511));
+// W_10(2.5 - 3i)
+let w10 = lambert_w(10, 2.5, -3.0);
+assert_eq!(w10, (-2.738728537647321, 60.33964127931528));
 ```
 
 This function uses Halley's method to iteratively compute a solution.
