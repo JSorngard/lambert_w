@@ -103,7 +103,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 
     // region: special cases
 
-    if z == Complex64::ZERO {
+    if z == 0.0.into() {
         if k == 0 {
             return (0.0, 0.0);
         } else {
