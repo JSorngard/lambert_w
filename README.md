@@ -110,7 +110,7 @@ a function that uses Halley's method to iteratively compute a solution:
 ```rust
 use lambert_w::lambert_w;
 
-// W_10(-3 + 10.1i)
+// W_10(-3 + 10.1*i)
 let w10 = lambert_w(10, -3.0, 10.1);
 assert_eq!(w10, (-1.7901896440529672, 63.09221603522478));
 ```
