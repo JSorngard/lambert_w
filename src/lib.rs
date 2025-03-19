@@ -163,7 +163,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 
         iter += 1;
 
-        if ((w - w_prev).abs() <= PREC) || iter >= MAX_ITER {
+        if (w - w_prev).abs() <= PREC || iter >= MAX_ITER {
             return (w.re, w.im);
         }
     }
