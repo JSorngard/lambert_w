@@ -98,21 +98,20 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     /// the iteration stops.
     const PREC: f64 = 1e-30;
 
-    const Z_NEG_INV_E: Complex64 = Complex64::new(NEG_INV_E, 0.0);
-    const I: Complex64 = Complex64::new(0.0, 1.0);
+    const I: Complex64 = Complex64::I;
 
     let z = Complex64::new(z_re, z_im);
 
     // region: special cases
 
-    if z.re == 0.0 && z.im == 0.0 {
+    if z == Complex64::ZERO {
         if k == 0 {
             return (0.0, 0.0);
         } else {
             return (f64::NEG_INFINITY, 0.0);
         }
     }
-    if z == Z_NEG_INV_E && (k == 0 || k == -1) {
+    if z.re == NEG_INV_E && z.im == 0.0 && (k == 0 || k == -1) {
         return (-1.0, 0.0);
     }
     if z.re == E && z.im == 0.0 && k == 0 {
@@ -127,7 +126,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     let mut w = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
 
     // Choose the initial point more carefully when we are close to the branch cut.
-    if (z - Z_NEG_INV_E).abs() <= 1.0 {
+    if (z - NEG_INV_E).abs() <= 1.0 {
         let p = (2.0 * (E * z + 1.0)).sqrt();
         let p2 = -1.0 + p - 1.0 / 3.0 * p * p;
         let p3 = 11.0 / 72.0 * p * p * p;
