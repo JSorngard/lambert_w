@@ -137,12 +137,12 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     }
 
     if k == 0 && (z - 0.5).abs() <= 0.5 {
-        // Order (1,1) Padé approximant for W(0,a)
+        // Order (1,1) Padé approximant for the principal branch
         w = (0.35173371 * (0.1237166 + 7.061302897 * z)) / (2.0 + 0.827184 * (1.0 + 2.0 * z));
     }
 
     if k == -1 && (z - 0.5).abs() <= 0.5 {
-        // Order (1,1) Padé approximant for W(-1,a)
+        // Order (1,1) Padé approximant for the secondary branch
         w = -(((2.2591588985 + 4.22096 * I)
             * ((-14.073271 - 33.767687754 * I) * z - (12.7127 - 19.071643 * I) * (1.0 + 2.0 * z)))
             / (2.0 - (17.23103 - 10.629721 * I) * (1.0 + 2.0 * z)));
