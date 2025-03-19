@@ -104,19 +104,20 @@ point error, or within an optional epsilon or relative difference.
 
 ### Arbitrary branches in the complex plane
 
-To compute any arbitrary branch at any arbitrary complex input the crate provides
-a function that uses Halley's method to iteratively compute a solution:
+A function is provided that can evaluate any arbitrary branch at any arbitrary
+complex input:
 
 ```rust
 use lambert_w::lambert_w;
 
-// W_10(-3 + 10.1*i)
-let w10 = lambert_w(10, -3.0, 10.1);
-assert_eq!(w10, (-1.7901896440529672, 63.09221603522478));
+// W_10(3 - 2.5i)
+let w10 = lambert_w(10, 3.0, -2.5);
+assert_eq!(w10, (-2.741726529326629, 60.52104738771511));
 ```
 
-While this function is more capable it can be up to two orders of magnitude
-slower than the functions that use Fukushima's method.
+This function uses Halley's method to iteratively compute a solution.
+While this is more general than the other provided functions, it can be up to two
+orders of magnitude slower than them for comparable inputs.
 
 ## Features
 
