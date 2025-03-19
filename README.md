@@ -105,8 +105,7 @@ point error, or within an optional epsilon or relative difference.
 ### Arbitrary branches in the complex plane
 
 To compute any arbitrary branch at any arbitrary complex input the crate provides
-a function that uses [Halley's method](https://en.wikipedia.org/wiki/Halley%27s_method)
-to iteratively compute a solution:
+a function that uses Halley's method to iteratively compute a solution:
 
 ```rust
 use lambert_w::lambert_w;
