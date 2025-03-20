@@ -1,12 +1,12 @@
+//! This module contains an implementation of the approximation of the principal
+//! branch of the Lambert W function
+//! with 24 bits of accuracy from Fukushima's paper.
+//! It returns f32::NAN if the input is negative or NAN,
+//! and f32::INFINITY if the input is positive infinity.
+
 use crate::generic_math::{ln, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
-
-// This is an implementation of the approximation of the principal
-// branch of the Lambert W function
-// with 24 bits of accuracy from Fukushima's paper.
-// It returns f32::NAN if the input is negative or NAN,
-// and f32::INFINITY if the input is positive infinity.
 
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]

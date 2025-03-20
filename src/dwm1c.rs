@@ -1,13 +1,13 @@
+//! This module contains an implementation of the approximation of the secondary
+//! branch of the Lambert W function
+//! with 50 bits of accuracy from Fukushima's paper.
+//! It returns f64::NAN if the `zc` input is negative,
+//! or if the `z` input is NAN, or larger than or equal to 0.
+
 use crate::{
     generic_math::{ln, rational_function, sqrt},
     INV_SQRT_E, NEG_INV_E,
 };
-
-// This is an implementation of the approximation of the secondary
-// branch of the Lambert W function
-// with 50 bits of accuracy from Fukushima's paper.
-// It returns f64::NAN if the `zc` input is negative,
-// or if the `z` input is NAN, or larger than or equal to 0.
 
 /// zc = z + 1/e
 #[inline(always)]

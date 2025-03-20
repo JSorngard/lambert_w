@@ -1,3 +1,6 @@
+//! This module contains the general implementation of the Lambert W function.
+//! This implementation is capable of computing the function at any point in the complex plane on any branch.
+
 use num_complex::{Complex64, ComplexFloat};
 
 use core::f64::consts::{E, PI};
