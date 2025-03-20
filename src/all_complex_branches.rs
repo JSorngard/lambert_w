@@ -1,6 +1,8 @@
-use crate::NEG_INV_E;
-use core::f64::consts::{E, PI};
 use num_complex::{Complex64, ComplexFloat};
+
+use core::f64::consts::{E, PI};
+
+use crate::NEG_INV_E;
 
 /// Computes branch `k` of the complex valued Lambert W function
 /// using Halley's method.
