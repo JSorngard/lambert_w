@@ -27,7 +27,7 @@ mod unit_tests;
 
 /// The negative inverse of e (-1/e).
 ///
-/// This is the smallest input value for which the Lambert W functions in this crate return a value.
+/// This is the branch point of the Lambert W function.
 //            Rounded from -0.367_879_441_171_442_322
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
 
