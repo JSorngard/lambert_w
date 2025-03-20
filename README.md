@@ -97,6 +97,17 @@ assert_relative_eq!(
 );
 ```
 
+Importing the LambertW trait lets you call the functions with postfix notation:
+
+```rust
+use lambert_w::LambertW;
+use approx::assert_abs_diff_eq;
+
+let ln1k = (1000.0 * f64::ln(1000.0)).lambert_w0();
+
+assert_abs_diff_eq!(ln1k, f64::ln(1000.0));
+```
+
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
