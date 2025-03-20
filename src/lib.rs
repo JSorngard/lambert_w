@@ -247,6 +247,10 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 
 /// Enables evaluation of the principal and secondary branches of the Lambert W function
 /// on the types that implement this trait.
+#[deprecated(
+    since = "1.1.0",
+    note = "use the functions directly or create your own trait, the `lambert_w` crate is not the place for making such API decisions for others."
+)]
 pub trait LambertW {
     /// The type returned by the Lambert W functions when acting on a value of type `Self`.
     type Output;
@@ -258,6 +262,7 @@ pub trait LambertW {
     fn lambert_wm1(self) -> Self::Output;
 }
 
+#[allow(deprecated)]
 impl LambertW for f32 {
     type Output = Self;
     /// The principal branch of the Lambert W function.
@@ -284,6 +289,7 @@ impl LambertW for f32 {
     }
 }
 
+#[allow(deprecated)]
 impl LambertW for f64 {
     type Output = Self;
     /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
