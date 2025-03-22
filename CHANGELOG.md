@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  such API decisions to be made on behalf of others.
  It is also unclear how the trait should be defined given the newly introduced
  general implementation.
+- Updated transitive dev-dependencies.
 
 ## 1.0.20
 
