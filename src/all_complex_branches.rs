@@ -1,9 +1,14 @@
 //! This module contains the general implementation of the Lambert W function.
 //! This implementation is capable of computing the function at any point in the complex plane on any branch.
 
-use num_complex::{Complex64, ComplexFloat};
+use num_complex::{Complex, Complex32, Complex64, ComplexFloat};
+use num_traits::{Float, FromPrimitive, Signed};
 
-use core::f64::consts::{E, PI};
+use core::{
+    f32::NEG_INFINITY,
+    f64::consts::{E, PI},
+    ops::{Add, Mul, Sub, SubAssign},
+};
 
 use crate::NEG_INV_E;
 
@@ -52,59 +57,118 @@ use crate::NEG_INV_E;
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
+    let w = lambert_w_generic(k, Complex64::new(z_re, z_im));
+    (w.re, w.im)
+}
+
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
+    let w = lambert_w_generic(k, Complex32::new(z_re, z_im));
+    (w.re, w.im)
+}
+
+pub fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
+where
+    U: Signed + Copy,
+    T: Float
+        + FromPrimitive
+        + From<U>
+        + Mul<Complex<T>, Output = Complex<T>>
+        + Add<Complex<T>, Output = Complex<T>>
+        + Sub<Complex<T>, Output = Complex<T>>,
+    Complex<T>: ComplexFloat
+        + SubAssign
+        + Mul<T, Output = Complex<T>>
+        + Add<T, Output = Complex<T>>
+        + Sub<T, Output = Complex<T>>,
+{
     const MAX_ITER: usize = 30;
     /// If the absolute difference between two consecutive iterations is less than this value,
     /// the iteration stops.
-    const PREC: f64 = 1e-30;
-    const I: Complex64 = Complex64::I;
+    const PREC: f32 = 1e-30;
 
-    let z = Complex64::new(z_re, z_im);
+    let i_zero = U::zero();
+    let i_one = U::one();
+    let i_neg_one = -i_one;
+
+    let d_zero = T::zero();
+    let d_one = T::one();
+    let d_neg_one = -d_one;
+    let d_two = d_one + d_one;
+    let d_e = T::from_f64(E).unwrap_or(T::from_f32(E as f32).unwrap());
+    let d_pi = T::from_f64(PI).unwrap_or(T::from_f32(PI as f32).unwrap());
+
+    let i = Complex::<T>::i();
+    let z_zero = Complex::<T>::from(d_zero);
+    let z_one = Complex::<T>::from(d_one);
+    let z_neg_one = Complex::<T>::from(d_neg_one);
+    let z_two = z_one + z_one;
+
+    let z_e = Complex::<T>::from(d_e);
+    let z_neg_inv_e = Complex::<T>::from(
+        T::from_f64(NEG_INV_E).unwrap_or(T::from_f32(NEG_INFINITY as f32).unwrap()),
+    );
+    let z_half = z_one / z_two;
+
+    let abs_one = z_one.abs();
+    let abs_half = z_half.abs();
 
     // region: special cases
 
-    if z == 0.0.into() {
-        if k == 0 {
-            return (0.0, 0.0);
+    if z == z_zero {
+        if k == i_zero {
+            return z_zero;
         } else {
-            return (f64::NEG_INFINITY, 0.0);
+            return Complex::<T>::new(T::neg_infinity(), d_zero);
         }
     }
-    if z == NEG_INV_E.into() && (k == 0 || k == -1) {
-        return (-1.0, 0.0);
+    if z == z_neg_inv_e && (k == i_zero || k == i_one) {
+        return Complex::<T>::new(d_neg_one, d_zero);
     }
-    if z == E.into() && k == 0 {
-        return (1.0, 0.0);
+    if z == z_e && k == i_zero {
+        return z_one;
     }
 
     // endregion: special cases
 
     // region: determine initial search point
 
-    let two_pi_k_i = 2.0 * PI * f64::from(k) * I;
+    let two_pi_k_i = z_two * d_pi * Complex::<T>::from(<T as From<U>>::from(k)) * i;
     let mut w = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
 
     // Choose the initial point more carefully when we are close to the branch cut.
-    if (z - NEG_INV_E).abs() <= 1.0 {
-        let p = (2.0 * (E * z + 1.0)).sqrt();
-        let p2 = -1.0 + p - 1.0 / 3.0 * p * p;
-        let p3 = 11.0 / 72.0 * p * p * p;
-        if k == 0 {
+    if (z - z_neg_inv_e).abs() <= abs_one {
+        let p = (d_two * (d_e * z + d_one)).sqrt();
+        let p2 = z_neg_one + p - z_one / Complex::<T>::from(T::from_f32(3.0).unwrap()) * p * p;
+        let p3 = Complex::<T>::from(T::from_f32(11.0).unwrap())
+            / Complex::<T>::from(T::from_f32(72.0).unwrap())
+            * p
+            * p
+            * p;
+        if k == i_zero {
             w = p2 + p3;
-        } else if (k == 1 && z.im < 0.0) || (k == -1 && z.im > 0.0) {
+        } else if (k == i_one && z.im < d_zero) || (k == i_neg_one && z.im > d_zero) {
             w = p2 - p3;
         }
     }
 
-    if k == 0 && (z - 0.5).abs() <= 0.5 {
+    if k == i_zero && (z - z_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the principal branch
-        w = (0.35173371 * (0.1237166 + 7.061302897 * z)) / (2.0 + 0.827184 * (1.0 + 2.0 * z));
+        w = (T::from_f32(0.35173371).unwrap()
+            * (T::from_f32(0.1237166).unwrap() + T::from_f32(7.061302897).unwrap() * z))
+            / (d_two + T::from_f32(0.827184).unwrap() * (d_one + d_two * z));
     }
 
-    if k == -1 && (z - 0.5).abs() <= 0.5 {
+    if k == i_neg_one && (z - z_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        w = -(((2.2591588985 + 4.22096 * I)
-            * ((-14.073271 - 33.767687754 * I) * z - (12.7127 - 19.071643 * I) * (1.0 + 2.0 * z)))
-            / (2.0 - (17.23103 - 10.629721 * I) * (1.0 + 2.0 * z)));
+        w = -(((T::from_f32(2.2591588985).unwrap() + T::from_f32(4.22096).unwrap() * i)
+            * ((T::from_f32(-14.073271).unwrap() - T::from_f32(33.767687754).unwrap() * i) * z
+                - (T::from_f32(12.7127).unwrap() - T::from_f32(19.071643).unwrap() * i)
+                    * (d_one + d_two * z)))
+            / (d_two
+                - (T::from_f32(17.23103).unwrap() - T::from_f32(10.629721).unwrap() * i)
+                    * (d_one + d_two * z)));
     }
 
     // endregion: determine initial search point
@@ -118,12 +182,14 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
         let wew = w * ew;
         let wew_d = ew + wew;
         let wew_dd = ew + wew_d;
-        w -= 2.0 * ((wew - z) * wew_d) / (2.0 * wew_d * wew_d - (wew - z) * wew_dd);
+        w -= z_two * ((wew - z) * wew_d) / (z_two * wew_d * wew_d - (wew - z) * wew_dd);
 
         iter += 1;
 
-        if (w - w_prev).abs() <= PREC || iter >= MAX_ITER {
-            return (w.re, w.im);
+        if (w - w_prev).abs() <= Complex::<T>::from(T::from_f32(PREC).unwrap()).abs()
+            || iter >= MAX_ITER
+        {
+            return w;
         }
     }
 

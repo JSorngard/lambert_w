@@ -46,7 +46,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 //                     0.567_143_290_409_784
 // which is further away from the true value than what we get if we round them to 8.
 
-pub use all_complex_branches::lambert_w;
+pub use all_complex_branches::{lambert_w, lambert_wf};
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on `f64`s.
 ///
