@@ -104,20 +104,26 @@ point error, or within an optional epsilon or relative difference.
 
 ### Arbitrary branches in the complex plane
 
-A function is provided that can evaluate any arbitrary branch at any arbitrary
+Functions are provided that can evaluate any arbitrary branch at any arbitrary
 complex input:
 
 ```rust
-use lambert_w::lambert_w;
+use lambert_w::{lambert_w, lambert_wf};
 
 // W_10(2.5 - 3i)
 let w10 = lambert_w(10, 2.5, -3.0);
+
 assert_eq!(w10, (-2.738728537647321, 60.33964127931528));
+
+// Same but 32-bit
+let w10f = lambert_wf(10, 2.5, -3.0);
+
+assert_eq!(w10f, (-2.7387285, 60.33964));
 ```
 
-This function uses Halley's method to iteratively compute a solution.
-While this is more general than the other provided functions, it can be up to two
-orders of magnitude slower than them for comparable inputs.
+These functions use Halley's method to iteratively compute a solution.
+While this method is more general than the other provided functions,
+it can be up to two orders of magnitude slower than them for comparable inputs.
 
 ## Features
 

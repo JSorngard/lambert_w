@@ -6,8 +6,8 @@
 #[allow(deprecated)]
 use lambert_w::LambertW;
 use lambert_w::{
-    lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
-    NEG_INV_E, OMEGA,
+    lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
+    sp_lambert_wm1, NEG_INV_E, OMEGA,
 };
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
@@ -23,7 +23,7 @@ fn test_lambert_w0() {
     assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
     assert_abs_diff_eq!(
         lambert_w0(NEG_INV_E + f64::EPSILON),
-        -0.999_999_965_255_7976
+        -0.999_999_965_255_797_6
     );
     assert_abs_diff_eq!(
         lambert_w0(-2.678_794_411_714_424e-1),
@@ -80,7 +80,7 @@ fn test_lambert_w0() {
     let mut rng = SmallRng::seed_from_u64(1);
     let range = Uniform::new(NEG_INV_E, f64::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_w0(rng.sample(&range)).is_finite());
+        assert!(lambert_w0(rng.sample(range)).is_finite());
     }
 }
 
@@ -230,7 +230,7 @@ fn test_sp_lambert_w0() {
     let mut rng = SmallRng::seed_from_u64(1);
     let range = Uniform::new(NEG_INV_E, f64::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(sp_lambert_w0(rng.sample(&range)).is_finite());
+        assert!(sp_lambert_w0(rng.sample(range)).is_finite());
     }
 }
 
@@ -275,7 +275,7 @@ fn test_lambert_w0f() {
     let mut rng = SmallRng::seed_from_u64(1);
     let range = Uniform::new(NEG_INV_E as f32, f32::MAX).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_w0f(rng.sample(&range)).is_finite());
+        assert!(lambert_w0f(rng.sample(range)).is_finite());
     }
 }
 
@@ -340,7 +340,7 @@ fn test_lambert_wm1() {
     let mut rng = SmallRng::seed_from_u64(1);
     let range = Uniform::new_inclusive(NEG_INV_E, 0.0).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_wm1(rng.sample(&range)).is_finite());
+        assert!(lambert_wm1(rng.sample(range)).is_finite());
     }
 }
 
@@ -420,7 +420,7 @@ fn test_sp_lambert_wm1() {
     let mut rng = SmallRng::seed_from_u64(1);
     let range = Uniform::new_inclusive(NEG_INV_E, 0.0).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(sp_lambert_wm1(rng.sample(&range)).is_finite());
+        assert!(sp_lambert_wm1(rng.sample(range)).is_finite());
     }
 }
 
@@ -459,7 +459,7 @@ fn test_lambert_wm1f() {
     let mut rng = SmallRng::seed_from_u64(1);
     let range = Uniform::new_inclusive(NEG_INV_E as f32, 0.0).unwrap();
     for _ in 0..RANDOM_TEST_SIZE {
-        assert!(lambert_wm1f(rng.sample(&range)).is_finite());
+        assert!(lambert_wm1f(rng.sample(range)).is_finite());
     }
 }
 
@@ -515,16 +515,16 @@ fn test_iterative_version() {
 
     assert_complex_abs_diff_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0),
-        (-0.39938245253978073986, 0.0)
+        (-0.399_382_452_539_780_7, 0.0)
     );
     assert_complex_abs_diff_eq!(
         lambert_w(1, NEG_INV_E + 0.1, -1.0),
-        (-0.9557466848060752197, 2.516_952_771_719_245_84),
+        (-0.955_746_684_806_075_3, 2.516_952_771_719_245_7),
         2.0 * f64::EPSILON
     );
     assert_complex_abs_diff_eq!(
         lambert_w(-1, NEG_INV_E + 0.1, 1.0),
-        (-0.95574668480607522, -2.5169527717192458),
+        (-0.955_746_684_806_075_3, -2.5169527717192458),
         2.0 * f64::EPSILON
     );
     assert_complex_abs_diff_eq!(
@@ -535,9 +535,9 @@ fn test_iterative_version() {
         )
     );
     assert_complex_abs_diff_eq!(lambert_w(0, 10.0, 0.0), (1.745528002740699, 0.0));
-    assert_complex_abs_diff_eq!(lambert_w(0, 100.0, 0.0), (3.3856301402900503, 0.0));
-    assert_complex_abs_diff_eq!(lambert_w(0, 1000.0, 0.0), (5.24960285240159623, 0.0));
-    assert_complex_abs_diff_eq!(lambert_w(0, 10000.0, 0.0), (7.231846038093372706, 0.0));
+    assert_complex_abs_diff_eq!(lambert_w(0, 100.0, 0.0), (3.385_630_140_290_05, 0.0));
+    assert_complex_abs_diff_eq!(lambert_w(0, 1000.0, 0.0), (5.249_602_852_401_596, 0.0));
+    assert_complex_abs_diff_eq!(lambert_w(0, 10000.0, 0.0), (7.231_846_038_093_373, 0.0));
     assert_complex_abs_diff_eq!(
         lambert_w(-1, -f64::ln(2.0) / 2.0, 0.0),
         (-f64::ln(4.0), 0.0)
@@ -567,4 +567,59 @@ fn test_iterative_version() {
     assert!(lambert_w(0, 0.0, f64::INFINITY).1.is_nan());
     assert!(lambert_w(0, f64::INFINITY, f64::INFINITY).0.is_nan());
     assert!(lambert_w(0, f64::INFINITY, f64::INFINITY).1.is_nan());
+}
+
+#[test]
+fn test_32_bit_iterative_version() {
+    assert_eq!(lambert_wf(0, NEG_INV_E as f32, 0.0), (-1.0, 0.0));
+    assert_eq!(lambert_wf(0, 1.0, 0.0), (OMEGA as f32, 0.0));
+    assert_eq!(lambert_wf(0, core::f32::consts::E, 0.0), (1.0, 0.0));
+    assert_eq!(lambert_wf(0, 2.0, 0.0), (0.852_605_5, 0.0));
+    assert_eq!(lambert_wf(0, 0.0, 0.0), (0.0, 0.0));
+    assert_eq!(lambert_wf(1, 0.0, 0.0), (f32::NEG_INFINITY, 0.0));
+
+    assert_complex_abs_diff_eq!(
+        lambert_wf(0, NEG_INV_E as f32 + 0.1, 0.0),
+        (-0.399_382_44, 0.0)
+    );
+    assert_complex_abs_diff_eq!(
+        lambert_wf(1, NEG_INV_E as f32 + 0.1, -1.0),
+        (-0.955_746_7, 2.516_952_8),
+        2.0 * f32::EPSILON
+    );
+    assert_complex_abs_diff_eq!(
+        lambert_wf(-1, NEG_INV_E as f32 + 0.1, 1.0),
+        (-0.955_746_7, -2.516_952_8)
+    );
+    assert_complex_abs_diff_eq!(lambert_wf(-1, 0.5, 0.0), (-2.259_158_8, -4.220_961));
+    assert_complex_abs_diff_eq!(lambert_wf(0, 10.0, 0.0), (1.745_528, 0.0));
+    assert_complex_abs_diff_eq!(lambert_wf(0, 100.0, 0.0), (3.385_630_1, 0.0));
+    assert_complex_abs_diff_eq!(lambert_wf(0, 1000.0, 0.0), (5.249_603, 0.0));
+    assert_complex_abs_diff_eq!(lambert_wf(0, 10000.0, 0.0), (7.231_846, 0.0));
+    assert_complex_abs_diff_eq!(
+        lambert_wf(-1, -f32::ln(2.0) / 2.0, 0.0),
+        (-f32::ln(4.0), 0.0)
+    );
+    // Close to the branch cut
+    assert_complex_abs_diff_eq!(lambert_wf(-1, NEG_INV_E as f32, 0.0), (-1.0, 0.0));
+    assert_complex_abs_diff_eq!(
+        lambert_wf(10, NEG_INV_E as f32 + 0.1, 0.0),
+        (-5.484_674, 64.317_58)
+    );
+    // Very big branch index
+    assert_complex_abs_diff_eq!(lambert_wf(32767, 100.0, 100.0), (-7.2833066, 205880.34));
+    // NaNs
+    assert!(lambert_wf(0, f32::NAN, 0.0).0.is_nan());
+    assert!(lambert_wf(0, f32::NAN, 0.0).1.is_nan());
+    assert!(lambert_wf(0, 0.0, f32::NAN).0.is_nan());
+    assert!(lambert_wf(0, 0.0, f32::NAN).1.is_nan());
+    assert!(lambert_wf(0, f32::NAN, f32::NAN).0.is_nan());
+    assert!(lambert_wf(0, f32::NAN, f32::NAN).1.is_nan());
+    // Infinity
+    assert!(lambert_wf(0, f32::INFINITY, 0.0).0.is_nan());
+    assert!(lambert_wf(0, f32::INFINITY, 0.0).1.is_nan());
+    assert!(lambert_wf(0, 0.0, f32::INFINITY).0.is_nan());
+    assert!(lambert_wf(0, 0.0, f32::INFINITY).1.is_nan());
+    assert!(lambert_wf(0, f32::INFINITY, f32::INFINITY).0.is_nan());
+    assert!(lambert_wf(0, f32::INFINITY, f32::INFINITY).1.is_nan());
 }
