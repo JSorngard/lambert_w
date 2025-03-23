@@ -237,6 +237,7 @@ where
 /// # Panics
 ///
 /// Panics if a `T` cannot be created from a `f32`.
+#[inline(always)]
 fn t_from_f64_or_f32<T>(x: f64) -> T
 where
     T: FromPrimitive,
@@ -251,6 +252,7 @@ where
 /// # Panics
 ///
 /// Panics if a `T` cannot be created from a `f32`.
+#[inline(always)]
 fn complex_t_from_f64_or_f32<T>(x: f64) -> Complex<T>
 where
     T: FromPrimitive + Zero,
