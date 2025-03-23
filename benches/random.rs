@@ -3,8 +3,8 @@ use criterion::{
     black_box, criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
 use lambert_w::{
-    lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
-    NEG_INV_E,
+    lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
+    sp_lambert_wm1, NEG_INV_E,
 };
 use rand::{
     distr::uniform::{SampleRange, SampleUniform},
@@ -61,9 +61,25 @@ fn random_benches(c: &mut Criterion) {
 
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
+        "W_0 on 32-bit",
+        |z| lambert_wf(0, z, 0.0),
+        NEG_INV_E as f32..=f32::from(u16::MAX),
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut halley_group,
         "W_-1",
         |z| lambert_w(-1, z, 0.0),
         NEG_INV_E..=0.0,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut halley_group,
+        "W_-1 on 32-bit",
+        |z| lambert_wf(-1, z, 0.0),
+        NEG_INV_E as f32..=0.0,
         &mut rng,
     );
 
