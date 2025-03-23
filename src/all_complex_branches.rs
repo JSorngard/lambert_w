@@ -130,6 +130,11 @@ where
     /// the iteration stops.
     const PREC: f64 = 1e-30;
 
+    // Early return if we know we can not compute an answer.
+    if z.is_nan() || z.is_infinite() {
+        return Complex::<T>::new(T::nan(), T::nan());
+    }
+
     // region: construct constants of the generic type
 
     let i_zero = U::zero();
