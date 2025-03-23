@@ -7,3 +7,7 @@
 .markdownlint.json
 lambert_w_plot.png
 /.vscode
+about.hbs
+about.toml
+deny.toml
+license.html
