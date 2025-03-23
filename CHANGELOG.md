@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.0 (unreleased)
+
+- Added a `f32` version of the complex valued Lambert W function.
+
 ## 1.1.0
 
 - Added an implementation that can compute any branch in the whole complex plane.
