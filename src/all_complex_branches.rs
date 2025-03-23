@@ -130,6 +130,8 @@ where
     /// the iteration stops.
     const PREC: f64 = 1e-30;
 
+    // region: construct constants of the generic type
+
     let i_zero = U::zero();
     let i_one = U::one();
 
@@ -154,6 +156,8 @@ where
     let abs_one = z_one.abs();
     let abs_half = z_half.abs();
     let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
+
+    // endregion: construct constants of the generic type
 
     // region: special cases
 
