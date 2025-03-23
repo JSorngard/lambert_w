@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.1
 
-- Internal improvements to the general implementation.
+- Internal improvements to the implementation of the complex Lambert W functions.
 
 ## 1.2.0
 
