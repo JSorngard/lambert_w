@@ -149,6 +149,8 @@ where
     let z_neg_inv_e = Complex::<T>::from(d_neg_inv_e);
     let z_half = z_one / z_two;
 
+    // These values are only constructed to help the compliler see that
+    // they are the same type as what Complex<T>::abs() returns.
     let abs_one = z_one.abs();
     let abs_half = z_half.abs();
     let abs_prec = complex_t_from_f64_or_f32(PREC).abs();
