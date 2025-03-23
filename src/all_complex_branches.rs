@@ -136,6 +136,7 @@ where
     let d_zero = T::zero();
     let d_one = T::one();
     let d_two = d_one + d_one;
+    let d_half = d_one / d_two;
     let d_e: T = t_from_f64_or_f32(E);
     let d_pi: T = t_from_f64_or_f32(PI);
     let d_neg_inv_e: T = t_from_f64_or_f32(NEG_INV_E);
@@ -143,7 +144,6 @@ where
     let i = Complex::<T>::i();
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
-    //let z_neg_one = Complex::<T>::from(d_neg_one);
     let z_two = z_one + z_one;
 
     let z_neg_inv_e = Complex::<T>::from(d_neg_inv_e);
@@ -190,14 +190,14 @@ where
         }
     }
 
-    if k == i_zero && (z - z_half).abs() <= abs_half {
+    if k == i_zero && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the principal branch
         w = (t_from_f64_or_f32::<T>(0.35173371)
             * (t_from_f64_or_f32::<T>(0.1237166) + t_from_f64_or_f32::<T>(7.061302897) * z))
             / (d_two + t_from_f64_or_f32::<T>(0.827184) * (d_one + d_two * z));
     }
 
-    if k == -i_one && (z - z_half).abs() <= abs_half {
+    if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
         w = -(((t_from_f64_or_f32::<T>(2.2591588985) + t_from_f64_or_f32::<T>(4.22096) * i)
             * ((t_from_f64_or_f32::<T>(-14.073271) - t_from_f64_or_f32::<T>(33.767687754) * i)
@@ -220,7 +220,7 @@ where
         let wew = w * ew;
         let wew_d = ew + wew;
         let wew_dd = ew + wew_d;
-        w -= z_two * ((wew - z) * wew_d) / (z_two * wew_d * wew_d - (wew - z) * wew_dd);
+        w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
 
         iter += 1;
 
