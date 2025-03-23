@@ -11,8 +11,8 @@ use core::{
 
 use crate::NEG_INV_E;
 
-/// Computes branch `k` of the complex valued Lambert W function
-/// using Halley's method.
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 64-bit floats using Halley's method.
 ///
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
@@ -60,7 +60,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
     (w.re, w.im)
 }
 
-/// Computes branch `k` of the complex valued Lambert W function
+/// Branch `k` of the complex valued Lambert W function computed
 /// on 32-bit floats using Halley's method.
 ///
 /// The return value is a tuple where the first element is the
