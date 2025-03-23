@@ -74,7 +74,7 @@ fn sanity_check_logf() {
     assert!(ln(-1.0_f32).is_nan());
     assert_abs_diff_eq!(ln(1.0_f32), 0.0);
     assert_abs_diff_eq!(ln(2.0_f32), core::f32::consts::LN_2);
-    assert_abs_diff_eq!(ln(f32::MAX), 88.722_839);
+    assert_abs_diff_eq!(ln(f32::MAX), 88.722_84);
     assert_eq!(ln(f32::INFINITY), f32::INFINITY);
 }
 
