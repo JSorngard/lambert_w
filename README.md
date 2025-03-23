@@ -100,7 +100,7 @@ assert_relative_eq!(
 The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
-point error, or within an optional epsilon or relative difference.
+point epsilon, or within an optional absolute or relative difference.
 
 ### Arbitrary branches in the complex plane
 
