@@ -159,7 +159,7 @@ where
         if k == i_zero {
             return z_zero;
         } else {
-            return Complex::<T>::new(T::neg_infinity(), d_zero);
+            return T::neg_infinity().into();
         }
     }
     if z == d_neg_inv_e.into() && (k == i_zero || k == -i_one) {
