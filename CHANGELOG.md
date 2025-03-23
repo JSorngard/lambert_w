@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.4
 
 - Improvements to docs.
+- Return early in the complex-valued functions if we know we will not be able to compute an answer
 
 ## 1.2.3
 
