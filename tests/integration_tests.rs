@@ -4,7 +4,7 @@
 //! and then switches to [`assert_relative_eq!`] when the first assertion would fail.
 
 #[allow(deprecated)]
-use lambert_w::LambertW;
+use lambert_w::LambertWReal;
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
     sp_lambert_wm1, NEG_INV_E, OMEGA,

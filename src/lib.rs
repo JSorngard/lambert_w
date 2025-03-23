@@ -247,11 +247,7 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 
 /// Enables evaluation of the principal and secondary branches of the Lambert W function
 /// on the types that implement this trait.
-#[deprecated(
-    since = "1.1.0",
-    note = "use the functions directly or create your own trait, the `lambert_w` crate is not the place for making such API decisions for others."
-)]
-pub trait LambertW {
+pub trait LambertWReal {
     /// The type returned by the Lambert W functions when acting on a value of type `Self`.
     type Output;
 
@@ -262,8 +258,7 @@ pub trait LambertW {
     fn lambert_wm1(self) -> Self::Output;
 }
 
-#[allow(deprecated)]
-impl LambertW for f32 {
+impl LambertWReal for f32 {
     type Output = Self;
     /// The principal branch of the Lambert W function.
     ///
@@ -289,8 +284,7 @@ impl LambertW for f32 {
     }
 }
 
-#[allow(deprecated)]
-impl LambertW for f64 {
+impl LambertWReal for f64 {
     type Output = Self;
     /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
     ///
@@ -309,5 +303,44 @@ impl LambertW for f64 {
     #[inline]
     fn lambert_wm1(self) -> Self::Output {
         lambert_wm1(self)
+    }
+}
+
+/// Enables evaluation of all branches of the Lambert W function on the types that implement this trait.
+pub trait LambertWComplex {
+    /// The type returned by the Lambert W functions when acting on a value of type `Self`.
+    type Output;
+    /// The type used to specify the branch of the Lambert W function.
+    type BranchType;
+
+    /// Evaluate the given branch of the Lambert W function.
+    fn lambert_w(self, branch: Self::BranchType) -> Self::Output;
+}
+
+impl LambertWComplex for (f32, f32) {
+    type Output = Self;
+    type BranchType = i16;
+
+    /// Evaluates the given branch of the Lambert W function on the complex number
+    /// represented by the input tuple.
+    ///
+    /// Delegates to the [`lambert_wf`] function.
+    #[inline]
+    fn lambert_w(self, branch: Self::BranchType) -> Self::Output {
+        lambert_wf(branch, self.0, self.1)
+    }
+}
+
+impl LambertWComplex for (f64, f64) {
+    type Output = Self;
+    type BranchType = i32;
+
+    /// Evaluates the given branch of the Lambert W function on the complex number
+    /// represented by the input tuple.
+    ///
+    /// Delegates to the [`lambert_w`] function.
+    #[inline]
+    fn lambert_w(self, branch: Self::BranchType) -> Self::Output {
+        lambert_w(branch, self.0, self.1)
     }
 }
