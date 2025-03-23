@@ -162,7 +162,7 @@ where
         }
     }
     if z == d_neg_inv_e.into() && (k == i_zero || k == -i_one) {
-        return Complex::<T>::new(-d_one, d_zero);
+        return -z_one;
     }
     if z == d_e.into() && k == i_zero {
         return z_one;
