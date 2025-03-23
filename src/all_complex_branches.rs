@@ -61,7 +61,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 }
 
 /// Computes branch `k` of the complex valued Lambert W function
-/// using Halley's method.
+/// on 32-bit floats using Halley's method.
 ///
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
