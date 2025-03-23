@@ -2,7 +2,7 @@
 //! This implementation is capable of computing the function at any point in the complex plane on any branch.
 
 use num_complex::{Complex, Complex32, Complex64, ComplexFloat};
-use num_traits::{Float, FromPrimitive, Signed, Zero};
+use num_traits::{Float, FromPrimitive, Signed};
 
 use core::{
     f64::consts::{E, PI},
@@ -153,7 +153,7 @@ where
     // they are the same type as what Complex<T>::abs() returns.
     let abs_one = z_one.abs();
     let abs_half = z_half.abs();
-    let abs_prec = complex_t_from_f64_or_f32(PREC).abs();
+    let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
 
     // region: special cases
 
@@ -245,19 +245,4 @@ where
     T: FromPrimitive,
 {
     T::from_f64(x).unwrap_or(T::from_f32(x as f32).unwrap())
-}
-
-/// Attempts to convert a `f64` to a `Complex<T>`.
-///
-/// If that fails, it tries to convert the `f64` to a `f32` with `as` and then to a `Complex<T>`.
-///
-/// # Panics
-///
-/// Panics if a `T` cannot be created from a `f32`.
-#[inline(always)]
-fn complex_t_from_f64_or_f32<T>(x: f64) -> Complex<T>
-where
-    T: FromPrimitive + Zero,
-{
-    Complex::<T>::new(t_from_f64_or_f32(x), T::zero())
 }
