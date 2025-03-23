@@ -584,8 +584,7 @@ fn test_32_bit_iterative_version() {
     );
     assert_complex_abs_diff_eq!(
         lambert_wf(1, NEG_INV_E as f32 + 0.1, -1.0),
-        (-0.955_746_7, 2.516_952_8),
-        2.0 * f32::EPSILON
+        (-0.955_746_7, 2.516_952_8)
     );
     assert_complex_abs_diff_eq!(
         lambert_wf(-1, NEG_INV_E as f32 + 0.1, 1.0),
