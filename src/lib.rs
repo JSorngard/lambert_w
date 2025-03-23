@@ -48,7 +48,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 
 pub use all_complex_branches::{lambert_w, lambert_wf};
 
-/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats.
+/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats using Fukushima's method.
 ///
 /// # Examples
 ///
@@ -79,7 +79,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
 
-/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats.
+/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats using Fukushima's method.
 ///
 /// # Examples
 ///
@@ -111,7 +111,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
     swm1::swm1(z)
 }
 
-/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats.
+/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats using Fukushima's method.
 ///
 /// # Examples
 ///
@@ -142,7 +142,7 @@ pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z - NEG_INV_E)
 }
 
-/// The principal branch of the Lambert W function, computed on 32-bit floats.
+/// The principal branch of the Lambert W function, computed on 32-bit floats using Fukushima's method.
 ///
 /// Uses the same approximation as [`sp_lambert_w0`], but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
@@ -177,7 +177,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
 
-/// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats.
+/// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats using Fukushima's method.
 ///
 /// # Examples
 ///
@@ -209,7 +209,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z, z - NEG_INV_E)
 }
 
-/// The secondary branch of the Lambert W function, computed on 32-bit floats.
+/// The secondary branch of the Lambert W function, computed on 32-bit floats using Fukushima's method.
 ///
 /// Uses the same approximation as [`sp_lambert_wm1`], but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
