@@ -243,6 +243,11 @@ where
     T::from_f64(x).unwrap_or(T::from_f32(x as f32).unwrap())
 }
 
+/// Attempts to convert a `f64` to a `Complex<T>`. If that fails, it tries to convert the `f64` to a `f32` and then to a `Complex<T>`.
+///
+/// # Panics
+///
+/// Panics if a `T` cannot be created from a `f32`.
 fn complex_t_from_f64_or_f32<T>(x: f64) -> Complex<T>
 where
     T: FromPrimitive + Zero,
