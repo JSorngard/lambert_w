@@ -12,7 +12,7 @@ use num_traits::Float;
 /// The coefficients are organized by degree in ascending order.
 // The inline(always) annotation is motivated by benchmarks, especially
 // of the functions with 50 bits of accuracy.
-#[inline(always)]
+#[cfg_attr(feature = "speed_memory_tradeoff", inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
@@ -41,14 +41,14 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
 // The inline(always) annotation on the functions below is motivated by benchmarks.
 
 /// Compute the square root of `x`.
-#[inline(always)]
+#[cfg_attr(feature = "speed_memory_tradeoff", inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sqrt<T: Float>(x: T) -> T {
     Float::sqrt(x)
 }
 
 /// Compute the natural logarithm of `x`.
-#[inline(always)]
+#[cfg_attr(feature = "speed_memory_tradeoff", inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn ln<T: Float>(x: T) -> T {
     Float::ln(x)
