@@ -9,7 +9,7 @@ use crate::{
     NEG_INV_E,
 };
 
-#[inline(always)]
+#[cfg_attr(feature = "speed_memory_tradeoff", inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sw0(z: f64) -> f64 {
     if z < NEG_INV_E || z.is_nan() {
