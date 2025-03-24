@@ -31,6 +31,10 @@ libm = ["dep:libm", "num-traits/libm", "num-complex/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
 std = ["num-traits/std", "num-complex/std"]
+# Increases the code size of the
+# functions in the crate,
+# but also speeds them up
+speed-memory-tradeoff = []
 
 [package.metadata.docs.rs]
 # Document all features.
