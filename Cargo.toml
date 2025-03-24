@@ -31,7 +31,8 @@ libm = ["dep:libm", "num-traits/libm", "num-complex/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
 std = ["num-traits/std", "num-complex/std"]
-# Increase the code size and potentially the execution speed of the functions that use Fukushima's method.
+# Potentially increase the execution speed of the functions that use Fukushima's method in exchange
+# for increased code size.
 speed_memory_tradeoff = []
 
 [package.metadata.docs.rs]

@@ -127,8 +127,8 @@ it can be up to two orders of magnitude slower than them for comparable inputs.
 
 ## Features
 
-`speed_memory_tradeoff`: Increase the code size and potentially the execution
-speed of the functions that use Fukushima's method.
+`speed_memory_tradeoff`: Potentially increase the execution speed
+of the functions that use Fukushima's method in exchange for increased code size.
 
 One of the below features must be enabled:
 
