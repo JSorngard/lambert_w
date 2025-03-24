@@ -3,6 +3,15 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.5 (unreleased)
+
+- Added the `speed_memory_tradeoff` feature. Enabling this potentially increases
+ the execution speed of the functions that use Fukushima's method in exchange for
+ increased code size.
+ In the benchmarks I have so far, only the `lambert_w0` function is sped up,
+ but by around 60%.
+ Before this change this feature was effectively always on.
+
 ## 1.2.4
 
 - Improvements to docs.
