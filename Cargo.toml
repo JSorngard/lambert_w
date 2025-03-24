@@ -32,7 +32,7 @@ libm = ["dep:libm", "num-traits/libm", "num-complex/libm"]
 # When this feature is disabled the crate is `no_std` compatible.
 std = ["num-traits/std", "num-complex/std"]
 # Increase the code size and potentially the execution speed of the functions that use Fukushima's method.
-speed-memory-tradeoff = []
+speed_memory_tradeoff = []
 
 [package.metadata.docs.rs]
 # Document all features.
