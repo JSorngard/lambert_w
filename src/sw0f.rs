@@ -8,7 +8,7 @@ use crate::generic_math::{ln, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-#[cfg(inline(always)]
+#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sw0f(z: f32) -> f32 {
     if z < NEG_INV_E || z.is_nan() {

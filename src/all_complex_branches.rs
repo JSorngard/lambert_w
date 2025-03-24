@@ -248,7 +248,6 @@ where
 /// # Panics
 ///
 /// Panics if a `T` cannot be created from a `f32`.
-#[cfg(inline(always)]
 fn t_from_f64_or_f32<T>(x: f64) -> T
 where
     T: FromPrimitive,
