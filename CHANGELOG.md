@@ -3,10 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.5 (unreleased)
+## 1.2.5
 
-- Remove `libm` as a direct dependency. It is only used through the `num-traits`
- and `num-complex` crates now.
+- Remove `libm` as a direct dependency.
+ It is only used through the `num-traits` and `num-complex` crates now.
 
 ## 1.2.4
 
