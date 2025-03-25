@@ -506,7 +506,6 @@ version = "1.2.4"
 dependencies = [
  "approx",
  "criterion",
- "libm",
  "no-panic",
  "num-complex",
  "num-traits",
