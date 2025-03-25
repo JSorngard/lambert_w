@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Remove `libm` as a direct dependency.
  It is only used through the `num-traits` and `num-complex` crates now.
+- Updated transitive dev-dependencies.
 
 ## 1.2.4
 
