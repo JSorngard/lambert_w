@@ -21,7 +21,7 @@ fn fixed_benches(c: &mut Criterion) {
     ];
 
     for z in big_args {
-        let mut group = c.benchmark_group(format!("fixed W_0 at {z}"));
+        let mut group = c.benchmark_group(format!("W_0 with Fukushima's method fixed at {z}"));
         group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_w0(z))));
         group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_w0(z))));
         {
@@ -31,11 +31,11 @@ fn fixed_benches(c: &mut Criterion) {
             }
         }
         drop(group);
-        let mut group = c.benchmark_group(format!("fixed Halley at {z}"));
+        let mut group = c.benchmark_group(format!("W_0 with Halley's method fixed at {z}"));
         group.bench_function("branch 0", |b| b.iter(|| black_box(lambert_w(0, z, 0.0))));
     }
     for z in small_args {
-        let mut group = c.benchmark_group(format!("fixed W_-1 at {z}"));
+        let mut group = c.benchmark_group(format!("W_-1 with Fukushima's method fixed at {z}"));
         group.bench_function("50 bits", |b| b.iter(|| black_box(lambert_wm1(z))));
         group.bench_function("24 bits", |b| b.iter(|| black_box(sp_lambert_wm1(z))));
         {
@@ -47,7 +47,7 @@ fn fixed_benches(c: &mut Criterion) {
             }
         }
         drop(group);
-        let mut group = c.benchmark_group(format!("fixed Halley at {z}"));
+        let mut group = c.benchmark_group(format!("W_-1 with Halley's method fixed at {z}"));
         group.bench_function("branch -1", |b| b.iter(|| black_box(lambert_w(-1, z, 0.0))));
     }
 }

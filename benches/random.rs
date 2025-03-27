@@ -49,7 +49,7 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, U, Prng>(
 fn random_benches(c: &mut Criterion) {
     let mut rng = SmallRng::seed_from_u64(0b1010101010101);
 
-    let mut halley_group = c.benchmark_group("random inputs (Halley iteration)");
+    let mut halley_group = c.benchmark_group("random inputs (Halley's method)");
 
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
@@ -83,9 +83,17 @@ fn random_benches(c: &mut Criterion) {
         &mut rng,
     );
 
+    bench_on_vec_of_random_values_in_range(
+        &mut halley_group,
+        "W_1000",
+        |z| lambert_w(1_000, z, 0.0),
+        NEG_INV_E..=f64::from(u32::MAX),
+        &mut rng,
+    );
+
     drop(halley_group);
 
-    let mut group = c.benchmark_group("random inputs");
+    let mut group = c.benchmark_group("random inputs (Fukushima's method)");
 
     bench_on_vec_of_random_values_in_range(
         &mut group,
