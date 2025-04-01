@@ -1,4 +1,4 @@
-//! This file contains unit tests for the internal functions in the `elementary` and `rational` modules.
+//! This file contains unit tests for the internal functions in the `generic_math` module.
 
 use crate::generic_math::{ln, rational_function, sqrt};
 
