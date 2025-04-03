@@ -190,7 +190,7 @@ jobs:
     - name: Build
       run: cargo build --target ${{ matrix.target }}
 
-  minimal:
+  minimal_dependencies:
     # This action chooses the oldest version of the dependencies permitted by Cargo.toml to ensure
     # that this crate is compatible with the minimal version that this crate and its dependencies
     # require. This will pickup issues where this create relies on functionality that was introduced
