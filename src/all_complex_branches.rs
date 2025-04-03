@@ -110,7 +110,7 @@ pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
 }
 
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
+fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
