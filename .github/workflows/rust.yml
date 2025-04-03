@@ -145,7 +145,7 @@ jobs:
       - name: Verify semver compatibility with both
         run: cargo semver-checks --only-explicit-features --features libm,std
 
-  bench:
+  compile_benchmarks:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
