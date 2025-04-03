@@ -252,5 +252,5 @@ fn t_from_f64_or_f32<T>(x: f64) -> T
 where
     T: FromPrimitive,
 {
-    T::from_f64(x).unwrap_or(T::from_f32(x as f32).unwrap())
+    T::from_f64(x).unwrap_or_else(|| T::from_f32(x as f32).unwrap())
 }
