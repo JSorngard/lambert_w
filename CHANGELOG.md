@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.7
 
 - Internal code improvements.
+- Internal doc improvements.
 - Improvements to CI.
 
 ## 1.2.6
