@@ -113,20 +113,21 @@ where
 
     if k == i_zero && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the principal branch
-        w = (t_from_f64_or_f32::<T>(0.35173371)
-            * (t_from_f64_or_f32::<T>(0.1237166) + t_from_f64_or_f32::<T>(7.061302897) * z))
-            / (d_two + t_from_f64_or_f32::<T>(0.827184) * (d_one + d_two * z));
+        w = (t_from_f64_or_f32::<T>(0.351_733_71)
+            * (t_from_f64_or_f32::<T>(0.123_716_6) + t_from_f64_or_f32::<T>(7.061_302_897) * z))
+            / (d_two + t_from_f64_or_f32::<T>(0.827_184) * (d_one + d_two * z));
     }
 
     if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        w = -(((t_from_f64_or_f32::<T>(2.2591588985) + t_from_f64_or_f32::<T>(4.22096) * i)
-            * ((t_from_f64_or_f32::<T>(-14.073271) - t_from_f64_or_f32::<T>(33.767687754) * i)
+        w = -(((t_from_f64_or_f32::<T>(2.259_158_898_5) + t_from_f64_or_f32::<T>(4.22096) * i)
+            * ((t_from_f64_or_f32::<T>(-14.073_271)
+                - t_from_f64_or_f32::<T>(33.767_687_754) * i)
                 * z
-                - (t_from_f64_or_f32::<T>(12.7127) - t_from_f64_or_f32::<T>(19.071643) * i)
+                - (t_from_f64_or_f32::<T>(12.7127) - t_from_f64_or_f32::<T>(19.071_643) * i)
                     * (d_one + d_two * z)))
             / (d_two
-                - (t_from_f64_or_f32::<T>(17.23103) - t_from_f64_or_f32::<T>(10.629721) * i)
+                - (t_from_f64_or_f32::<T>(17.23103) - t_from_f64_or_f32::<T>(10.629_721) * i)
                     * (d_one + d_two * z)));
     }
 
