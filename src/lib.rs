@@ -53,7 +53,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 /// Basic usage:
 ///
 /// ```
-/// # use approx::assert_abs_diff_eq;
+/// use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_w0;
 ///
 /// let Ω = lambert_w0(1.0);
@@ -88,7 +88,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// Basic usage:
 ///
 /// ```
-/// # use approx::assert_abs_diff_eq;
+/// use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_w0f;
 ///
 /// let Ω = lambert_w0f(1.0);
@@ -119,7 +119,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 /// Basic usage:
 ///
 /// ```
-/// # use approx::assert_abs_diff_eq;
+/// use approx::assert_abs_diff_eq;
 /// use lambert_w::sp_lambert_w0;
 ///
 /// let Ω = sp_lambert_w0(1.0);
@@ -150,7 +150,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// Basic usage:
 ///
 /// ```
-/// # use approx::assert_abs_diff_eq;
+/// use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_wm1;
 ///
 /// let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
@@ -186,7 +186,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// Basic usage:
 ///
 /// ```
-/// # use approx::assert_abs_diff_eq;
+/// use approx::assert_abs_diff_eq;
 /// use lambert_w::lambert_wm1f;
 ///
 /// let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
@@ -218,7 +218,7 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 /// Basic usage:
 ///
 /// ```
-/// # use approx::assert_abs_diff_eq;
+/// use approx::assert_abs_diff_eq;
 /// use lambert_w::sp_lambert_wm1;
 ///
 /// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
