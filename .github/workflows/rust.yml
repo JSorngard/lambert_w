@@ -64,7 +64,7 @@ jobs:
       with:
         tool: cargo-all-features
     - name: Install libfontconfig1-dev
-      if: startsWith(matrix.os, 'ubuntu')
+      if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Test all feature combinations
       run: cargo test-all-features
