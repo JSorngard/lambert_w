@@ -15,13 +15,17 @@ concurrency:
 name: rolling
 jobs:
   nightly:
-    runs-on: ubuntu-latest
-    name: ubuntu / nightly
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    name: nightly
     steps:
       - uses: actions/checkout@v4
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
       - name: Install libfontconfig1-dev
+        if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get -y install libfontconfig1-dev jq
       - name: Install cargo-all-features
         uses: taiki-e/install-action@v2
@@ -32,14 +36,18 @@ jobs:
         run: cargo generate-lockfile
       - name: cargo test --locked
         run: cargo test-all-features --locked
+  
   update:
     # This action checks that updating the dependencies of this crate to the latest available that
     # satisfy the versions in Cargo.toml does not break this crate. This is important as consumers
     # of this crate will generally use the latest available crates. This is subject to the standard
     # Cargo semver rules (i.e cargo does not update to a new major version unless explicitly told
     # to).
-    runs-on: ubuntu-latest
-    name: ubuntu / beta / updated
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    name: beta / updated
     # There's no point running this if no Cargo.lock was checked in in the first place, since we'd
     # just redo what happened in the regular test job. Unfortunately, hashFiles only works in if on
     # steps, so we repeat it.
@@ -49,7 +57,7 @@ jobs:
         if: hashFiles('Cargo.lock') != ''
         uses: dtolnay/rust-toolchain@beta
       - name: Install libfontconfig1-dev
-        if: hashFiles('Cargo.lock') != ''
+        if: hashFiles('Cargo.lock') != '' && matrix.os == 'ubuntu-latest'
         run: sudo apt-get -y install libfontconfig1-dev jq
       - name: Install cargo-all-features
         if: hashFiles('Cargo.lock') != ''
