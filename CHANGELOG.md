@@ -5,8 +5,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.9
 
-- Documentation improvements.
-- Improvements to CI.
+- Show the import from the `approx` crate in the doc-examples of the functions.
+- Test the crate on multiple operating systems in CI.
 
 ## 1.2.8
 
