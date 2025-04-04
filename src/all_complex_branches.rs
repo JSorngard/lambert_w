@@ -1,7 +1,7 @@
 //! This module contains the general implementation of the Lambert W function.
 //! This implementation is capable of computing the function at any point in the complex plane on any branch.
 
-use num_complex::{Complex, Complex32, Complex64, ComplexFloat};
+use num_complex::{Complex, ComplexFloat};
 use num_traits::{Float, FromPrimitive, Signed};
 
 use core::{
@@ -11,106 +11,23 @@ use core::{
 
 use crate::NEG_INV_E;
 
-/// Branch `k` of the complex valued Lambert W function computed
-/// on 64-bit floats with Halley's method.
-///
-/// The return value is a tuple where the first element is the
-/// real part and the second element is the imaginary part.
-///
-/// Close to the branch cut at -1/e this function may be slightly less accurate.
-///
-/// If you know you want the principal or secondary branches where they are real valued,
-/// take a look at the [`lambert_w0`](crate::lambert_w0) or [`lambert_wm1`](crate::lambert_wm1) functions instead.
-/// They can be up to two orders of magnitude faster.
-///
-/// # Examples
-///
-/// Basic usage:
-///
-/// ```
-/// use lambert_w::lambert_w;
-///
-/// // W_2(1 + 2i)
-/// let w = lambert_w(2, 1.0, 2.0);
-///
-/// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
-/// ```
-///
-/// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
-///
-/// ```
-/// # use lambert_w::lambert_w;
-/// let w = lambert_w(-13, f64::INFINITY, 0.0);
-///
-/// assert!(w.0.is_nan() && w.1.is_nan());
-/// ```
-///
-/// or `NAN`:
-///
-/// ```
-/// # use lambert_w::lambert_w;
-/// let w = lambert_w(1_000, 0.0, f64::NAN);
-///
-/// assert!(w.0.is_nan() && w.1.is_nan());
-/// ```
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-#[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
-    let w = lambert_w_generic(k, Complex64::new(z_re, z_im));
-    (w.re, w.im)
-}
+const MAX_ITER: usize = 30;
+/// If the absolute difference between two consecutive iterations is less than this value,
+/// the iteration stops.
+const PREC: f64 = 1e-30;
+// Remember to change the docstring of `lambert_w_generic` if you change the above values.
 
-/// Branch `k` of the complex valued Lambert W function computed
-/// on 32-bit floats with Halley's method.
+/// This is a generic implementation of the Lambert W function.
+/// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// The return value is a tuple where the first element is the
-/// real part and the second element is the imaginary part.
+/// It performs a maximum of 30 iterations of Halley's method, and looks for an absolute error
+/// of less than 1e-30.
 ///
-/// Close to the branch cut at -1/e this function may be slightly less accurate.
+/// # Panics
 ///
-/// If you know you want the principal or secondary branches where they are real valued,
-/// take a look at the [`lambert_w0f`](crate::lambert_w0f) or [`lambert_wm1f`](crate::lambert_wm1f) functions instead.
-/// They can be up to two orders of magnitude faster.
-///
-/// # Examples
-///
-/// Basic usage:
-///
-/// ```
-/// use lambert_w::lambert_wf;
-///
-/// // W_2(1 + 2i)
-/// let w = lambert_wf(2, 1.0, 2.0);
-///
-/// assert_eq!(w, (-1.6869138, 11.962631));
-/// ```
-///
-/// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
-///
-/// ```
-/// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(-13, f32::INFINITY, 0.0);
-///
-/// assert!(w.0.is_nan() && w.1.is_nan());
-/// ```
-///
-/// or `NAN`:
-///
-/// ```
-/// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(1_000, 0.0, f32::NAN);
-///
-/// assert!(w.0.is_nan() && w.1.is_nan());
-/// ```
+/// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-#[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
-    let w = lambert_w_generic(k, Complex32::new(z_re, z_im));
-    (w.re, w.im)
-}
-
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
+pub fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
@@ -125,11 +42,6 @@ where
         + Add<T, Output = Complex<T>>
         + Sub<T, Output = Complex<T>>,
 {
-    const MAX_ITER: usize = 30;
-    /// If the absolute difference between two consecutive iterations is less than this value,
-    /// the iteration stops.
-    const PREC: f64 = 1e-30;
-
     // Early return if we know we can not compute an answer.
     if z.is_nan() || z.is_infinite() {
         return Complex::<T>::new(T::nan(), T::nan());
