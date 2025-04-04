@@ -3,6 +3,12 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.8
+
+- Internal code structure improvements.
+- Internal doc improvements.
+- Update transitive dev-dependencies.
+
 ## 1.2.7
 
 - Internal code improvements.
