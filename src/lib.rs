@@ -46,71 +46,6 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 //                     0.567_143_290_409_784
 // which is further away from the true value than what we get if we round them to 8.
 
-pub use all_complex_branches::{lambert_w, lambert_wf};
-
-/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method.
-///
-/// # Examples
-///
-/// Basic usage:
-///
-/// ```
-/// # use approx::assert_abs_diff_eq;
-/// use lambert_w::sp_lambert_w0;
-///
-/// let Ω = sp_lambert_w0(1.0);
-///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
-/// ```
-///
-/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
-///
-/// ```
-/// # use lambert_w::sp_lambert_w0;
-/// assert!(sp_lambert_w0(-1.0).is_nan());
-/// ```
-///
-/// # Reference
-///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-#[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn sp_lambert_w0(z: f64) -> f64 {
-    sw0::sw0(z)
-}
-
-/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method.
-///
-/// # Examples
-///
-/// Basic usage:
-///
-/// ```
-/// # use approx::assert_abs_diff_eq;
-/// use lambert_w::sp_lambert_wm1;
-///
-/// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
-///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
-/// ```
-///
-/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
-///
-/// ```
-/// # use lambert_w::sp_lambert_wm1;
-/// assert!(sp_lambert_wm1(-1.0).is_nan());
-/// assert!(sp_lambert_wm1(1.0).is_nan());
-/// ```
-///
-/// # Reference
-///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-#[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn sp_lambert_wm1(z: f64) -> f64 {
-    swm1::swm1(z)
-}
-
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
 ///
 /// # Examples
@@ -175,6 +110,37 @@ pub fn lambert_w0(z: f64) -> f64 {
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
+}
+
+/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::sp_lambert_w0;
+///
+/// let Ω = sp_lambert_w0(1.0);
+///
+/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
+/// ```
+///
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
+///
+/// ```
+/// # use lambert_w::sp_lambert_w0;
+/// assert!(sp_lambert_w0(-1.0).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn sp_lambert_w0(z: f64) -> f64 {
+    sw0::sw0(z)
 }
 
 /// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
@@ -243,6 +209,136 @@ pub fn lambert_wm1(z: f64) -> f64 {
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
+}
+
+/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// # use approx::assert_abs_diff_eq;
+/// use lambert_w::sp_lambert_wm1;
+///
+/// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
+///
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
+/// ```
+///
+/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
+///
+/// ```
+/// # use lambert_w::sp_lambert_wm1;
+/// assert!(sp_lambert_wm1(-1.0).is_nan());
+/// assert!(sp_lambert_wm1(1.0).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn sp_lambert_wm1(z: f64) -> f64 {
+    swm1::swm1(z)
+}
+
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 64-bit floats with Halley's method.
+///
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
+///
+/// Close to the branch cut at -1/e this function may be slightly less accurate.
+///
+/// If you know you want the principal or secondary branches where they are real valued,
+/// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions instead.
+/// They can be up to two orders of magnitude faster.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_w;
+///
+/// // W_2(1 + 2i)
+/// let w = lambert_w(2, 1.0, 2.0);
+///
+/// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
+/// ```
+///
+/// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(-13, f64::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(1_000, 0.0, f64::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
+    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im));
+    (w.re, w.im)
+}
+
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 32-bit floats with Halley's method.
+///
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
+///
+/// Close to the branch cut at -1/e this function may be slightly less accurate.
+///
+/// If you know you want the principal or secondary branches where they are real valued,
+/// take a look at the [`lambert_w0f`] or [`lambert_wm1f`] functions instead.
+/// They can be up to two orders of magnitude faster.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_wf;
+///
+/// // W_2(1 + 2i)
+/// let w = lambert_wf(2, 1.0, 2.0);
+///
+/// assert_eq!(w, (-1.6869138, 11.962631));
+/// ```
+///
+/// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
+///
+/// ```
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(-13, f32::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(1_000, 0.0, f32::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
+    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im));
+    (w.re, w.im)
 }
 
 /// Enables evaluation of the principal and secondary branches of the Lambert W function
