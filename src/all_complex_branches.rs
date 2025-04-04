@@ -120,14 +120,14 @@ where
 
     if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        w = -(((t_from_f64_or_f32::<T>(2.259_158_898_5) + t_from_f64_or_f32::<T>(4.22096) * i)
+        w = -(((t_from_f64_or_f32::<T>(2.259_158_898_5) + t_from_f64_or_f32::<T>(4.220_96) * i)
             * ((t_from_f64_or_f32::<T>(-14.073_271)
                 - t_from_f64_or_f32::<T>(33.767_687_754) * i)
                 * z
-                - (t_from_f64_or_f32::<T>(12.7127) - t_from_f64_or_f32::<T>(19.071_643) * i)
+                - (t_from_f64_or_f32::<T>(12.712_7) - t_from_f64_or_f32::<T>(19.071_643) * i)
                     * (d_one + d_two * z)))
             / (d_two
-                - (t_from_f64_or_f32::<T>(17.23103) - t_from_f64_or_f32::<T>(10.629_721) * i)
+                - (t_from_f64_or_f32::<T>(17.231_03) - t_from_f64_or_f32::<T>(10.629_721) * i)
                     * (d_one + d_two * z)));
     }
 
