@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.10
+
+- Add an assertion to the first example in the readme that the computed
+ omega constant has the claimed properties.
+
 ## 1.2.9
 
 - Show the import from the `approx` crate in the doc-examples of the functions.
