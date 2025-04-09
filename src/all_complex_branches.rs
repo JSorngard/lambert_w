@@ -96,7 +96,7 @@ where
 
     // region: determine initial search point
 
-    let two_pi_k_i = z_two * d_pi * <T as From<U>>::from(k) * i;
+    let two_pi_k_i = d_two * d_pi * <T as From<U>>::from(k) * i;
     let mut w = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
 
     // Choose the initial point more carefully when we are close to the branch cut.
