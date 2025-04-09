@@ -55,23 +55,14 @@ where
     let d_zero = T::zero();
     let d_one = T::one();
     let d_two = d_one + d_one;
-    let d_half = d_one / d_two;
     let d_e: T = t_from_f64_or_f32(E);
-    let d_pi: T = t_from_f64_or_f32(PI);
     let d_neg_inv_e: T = t_from_f64_or_f32(NEG_INV_E);
 
-    let i = Complex::<T>::i();
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
-    let z_two = z_one + z_one;
-
-    let z_neg_inv_e = Complex::<T>::from(d_neg_inv_e);
-    let z_half = z_one / z_two;
 
     // These values are only constructed to help the compliler see that
     // they are the same type as what Complex<T>::abs() returns.
-    let abs_one = z_one.abs();
-    let abs_half = z_half.abs();
     let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
 
     // endregion: construct constants of the generic type
@@ -94,44 +85,7 @@ where
 
     // endregion: special cases
 
-    // region: determine initial search point
-
-    let two_pi_k_i = z_two * d_pi * <T as From<U>>::from(k) * i;
-    let mut w = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
-
-    // Choose the initial point more carefully when we are close to the branch cut.
-    if (z - z_neg_inv_e).abs() <= abs_one {
-        let p = (d_two * (d_e * z + d_one)).sqrt();
-        let p2 = -z_one + p - t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
-        let p3 = t_from_f64_or_f32::<T>(11.0 / 72.0) * p * p * p;
-        if k == i_zero {
-            w = p2 + p3;
-        } else if (k == i_one && z.im < d_zero) || (k == -i_one && z.im > d_zero) {
-            w = p2 - p3;
-        }
-    }
-
-    if k == i_zero && (z - d_half).abs() <= abs_half {
-        // Order (1,1) Padé approximant for the principal branch
-        w = (t_from_f64_or_f32::<T>(0.351_733_71)
-            * (t_from_f64_or_f32::<T>(0.123_716_6) + t_from_f64_or_f32::<T>(7.061_302_897) * z))
-            / (d_two + t_from_f64_or_f32::<T>(0.827_184) * (d_one + d_two * z));
-    }
-
-    if k == -i_one && (z - d_half).abs() <= abs_half {
-        // Order (1,1) Padé approximant for the secondary branch
-        w = -(((t_from_f64_or_f32::<T>(2.259_158_898_5) + t_from_f64_or_f32::<T>(4.220_96) * i)
-            * ((t_from_f64_or_f32::<T>(-14.073_271)
-                - t_from_f64_or_f32::<T>(33.767_687_754) * i)
-                * z
-                - (t_from_f64_or_f32::<T>(12.712_7) - t_from_f64_or_f32::<T>(19.071_643) * i)
-                    * (d_one + d_two * z)))
-            / (d_two
-                - (t_from_f64_or_f32::<T>(17.231_03) - t_from_f64_or_f32::<T>(10.629_721) * i)
-                    * (d_one + d_two * z)));
-    }
-
-    // endregion: determine initial search point
+    let mut w = initial_search_point(k, z);
 
     // region: Halley iteration
 
@@ -152,6 +106,89 @@ where
     }
 
     // endregion: Halley iteration
+}
+
+/// Carefully determines the initial search point for Halley's method.
+///
+/// # Panics
+///
+/// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+fn initial_search_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
+where
+    U: Signed + Copy,
+    T: Float
+        + FromPrimitive
+        + From<U>
+        + Mul<Complex<T>, Output = Complex<T>>
+        + Add<Complex<T>, Output = Complex<T>>
+        + Sub<Complex<T>, Output = Complex<T>>,
+    Complex<T>: ComplexFloat
+        + SubAssign
+        + Mul<T, Output = Complex<T>>
+        + Add<T, Output = Complex<T>>
+        + Sub<T, Output = Complex<T>>,
+{
+    let i_zero = U::zero();
+    let i_one = U::one();
+
+    let d_zero = T::zero();
+    let d_one = T::one();
+    let d_two = d_one + d_one;
+    let d_half = d_one / d_two;
+    let d_e: T = t_from_f64_or_f32(E);
+    let d_pi: T = t_from_f64_or_f32(PI);
+    let d_neg_inv_e: T = t_from_f64_or_f32(NEG_INV_E);
+
+    let i = Complex::<T>::i();
+    let z_one = Complex::<T>::from(d_one);
+    let z_two = z_one + z_one;
+
+    let z_neg_inv_e = Complex::<T>::from(d_neg_inv_e);
+    let z_half = z_one / z_two;
+
+    // These values are only constructed to help the compliler see that
+    // they are the same type as what Complex<T>::abs() returns.
+    let abs_one = z_one.abs();
+    let abs_half = z_half.abs();
+
+    let two_pi_k_i = d_two * d_pi * <T as From<U>>::from(k) * i;
+    let mut initial_point = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
+
+    // Choose the initial point more carefully when we are close to the branch cut.
+    if (z - z_neg_inv_e).abs() <= abs_one {
+        let p = (d_two * (d_e * z + d_one)).sqrt();
+        let p2 = t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
+        let p3 = t_from_f64_or_f32::<T>(11.0 / 72.0) * p * p * p;
+        if k == i_zero {
+            initial_point = -d_one + p - p2 + p3;
+        } else if (k == i_one && z.im < d_zero) || (k == -i_one && z.im > d_zero) {
+            initial_point = -d_one - p - p2 - p3;
+        }
+    }
+
+    if k == i_zero && (z - d_half).abs() <= abs_half {
+        // Order (1,1) Padé approximant for the principal branch
+        initial_point = (t_from_f64_or_f32::<T>(0.351_733_71)
+            * (t_from_f64_or_f32::<T>(0.123_716_6) + t_from_f64_or_f32::<T>(7.061_302_897) * z))
+            / (d_two + t_from_f64_or_f32::<T>(0.827_184) * (d_one + d_two * z));
+    }
+
+    if k == -i_one && (z - d_half).abs() <= abs_half {
+        // Order (1,1) Padé approximant for the secondary branch
+        initial_point = -(((t_from_f64_or_f32::<T>(2.259_158_898_5)
+            + t_from_f64_or_f32::<T>(4.220_96) * i)
+            * ((t_from_f64_or_f32::<T>(-14.073_271)
+                - t_from_f64_or_f32::<T>(33.767_687_754) * i)
+                * z
+                - (t_from_f64_or_f32::<T>(12.712_7) - t_from_f64_or_f32::<T>(19.071_643) * i)
+                    * (d_one + d_two * z)))
+            / (d_two
+                - (t_from_f64_or_f32::<T>(17.231_03) - t_from_f64_or_f32::<T>(10.629_721) * i)
+                    * (d_one + d_two * z)));
+    }
+
+    initial_point
 }
 
 /// Attempts to convert a `f64` to a `T`.
