@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  and `lambert_wf` functions near 0 on branch 1.
 - Added an assertion to the first example in the readme that the computed
  omega constant has the claimed properties.
+- Internal code improvements.
 
 ## 1.2.9
 
