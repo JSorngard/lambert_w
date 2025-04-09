@@ -5,7 +5,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.10 (unreleased)
 
-- Add an assertion to the first example in the readme that the computed
+- Fixed a bug that could result in incorrect outputs from the complex `lambert_w`
+ and `lambert_wf` functions near 0 on branch 1.
+- Added an assertion to the first example in the readme that the computed
  omega constant has the claimed properties.
 
 ## 1.2.9
