@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.10 (unreleased)
+## 1.2.10
 
 - Fixed a bug that could result in incorrect outputs from the complex `lambert_w`
  and `lambert_wf` functions near 0 on branch 1.
