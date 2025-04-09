@@ -3,6 +3,8 @@
 //! Every test function utilizes [`assert_abs_diff_eq!`] for as long as possible,
 //! and then switches to [`assert_relative_eq!`] when the first assertion would fail.
 
+use core::f64;
+
 #[allow(deprecated)]
 use lambert_w::LambertW;
 use lambert_w::{
@@ -547,6 +549,11 @@ fn test_iterative_version() {
     assert_complex_abs_diff_eq!(
         lambert_w(10, NEG_INV_E + 0.1, 0.0),
         (-5.484_673_997_441_509, 64.317_580_321_338_81)
+    );
+    assert_complex_abs_diff_eq!(
+        lambert_w(1, -1e-05, -1e-05),
+        (-1.37923465336253e+01, 8.46711143530535e-01),
+        104.0 * f64::EPSILON
     );
     // Very big branch index
     assert_complex_abs_diff_eq!(

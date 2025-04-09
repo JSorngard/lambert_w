@@ -151,18 +151,18 @@ where
     let abs_one = z_one.abs();
     let abs_half = z_half.abs();
 
-    let two_pi_k_i = z_two * d_pi * <T as From<U>>::from(k) * i;
+    let two_pi_k_i = d_two * d_pi * <T as From<U>>::from(k) * i;
     let mut initial_point = z.ln() + two_pi_k_i - (z.ln() + two_pi_k_i).ln();
 
     // Choose the initial point more carefully when we are close to the branch cut.
     if (z - z_neg_inv_e).abs() <= abs_one {
         let p = (d_two * (d_e * z + d_one)).sqrt();
-        let p2 = -z_one + p - t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
+        let p2 = t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
         let p3 = t_from_f64_or_f32::<T>(11.0 / 72.0) * p * p * p;
         if k == i_zero {
-            initial_point = p2 + p3;
+            initial_point = -d_one + p - p2 + p3;
         } else if (k == i_one && z.im < d_zero) || (k == -i_one && z.im > d_zero) {
-            initial_point = p2 - p3;
+            initial_point = -d_one - p - p2 - p3;
         }
     }
 
@@ -175,7 +175,8 @@ where
 
     if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        initial_point = -(((t_from_f64_or_f32::<T>(2.259_158_898_5) + t_from_f64_or_f32::<T>(4.220_96) * i)
+        initial_point = -(((t_from_f64_or_f32::<T>(2.259_158_898_5)
+            + t_from_f64_or_f32::<T>(4.220_96) * i)
             * ((t_from_f64_or_f32::<T>(-14.073_271)
                 - t_from_f64_or_f32::<T>(33.767_687_754) * i)
                 * z
