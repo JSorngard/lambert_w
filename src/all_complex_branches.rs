@@ -102,7 +102,7 @@ where
     // Choose the initial point more carefully when we are close to the branch cut.
     if (z - z_neg_inv_e).abs() <= abs_one {
         let p = (d_two * (d_e * z + d_one)).sqrt();
-        let p2 = -z_one + p - t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
+        let p2 = -d_one + p - t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
         let p3 = t_from_f64_or_f32::<T>(11.0 / 72.0) * p * p * p;
         if k == i_zero {
             w = p2 + p3;
