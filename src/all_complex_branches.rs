@@ -104,7 +104,6 @@ where
             return w;
         }
     }
-
     // endregion: Halley iteration
 }
 
