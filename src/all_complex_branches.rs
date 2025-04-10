@@ -85,7 +85,7 @@ where
 
     // endregion: special cases
 
-    let mut w = initial_search_point(k, z);
+    let mut w = determine_start_point(k, z);
 
     // region: Halley iteration
 
@@ -114,7 +114,7 @@ where
 ///
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn initial_search_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
+fn determine_start_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
