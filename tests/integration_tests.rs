@@ -488,19 +488,27 @@ fn test_trait_impl_on_f32() {
     );
 }
 
-macro_rules! assert_complex_abs_diff_eq {
+macro_rules! assert_complex_approx_eq {
     ($left:expr, $right:expr) => {
         let left = $left;
         let right = $right;
         assert_abs_diff_eq!(left.0, right.0);
         assert_abs_diff_eq!(left.1, right.1);
     };
-    ($left:expr, $right:expr, $prec:expr) => {
+    ($left:expr, $right:expr, epsilon = $prec:expr) => {
         let left = $left;
         let right = $right;
         let prec = $prec;
         assert_abs_diff_eq!(left.0, right.0, epsilon = prec);
         assert_abs_diff_eq!(left.1, right.1, epsilon = prec);
+    };
+
+    ($left:expr, $right:expr, max_relative = $prec:expr) => {
+        let left = $left;
+        let right = $right;
+        let prec = $prec;
+        assert_relative_eq!(left.0, right.0, max_relative = prec);
+        assert_relative_eq!(left.1, right.1, max_relative = prec);
     };
 }
 
@@ -513,48 +521,48 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(0, 0.0, 0.0), (0.0, 0.0));
     assert_eq!(lambert_w(1, 0.0, 0.0), (f64::NEG_INFINITY, 0.0));
 
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0),
         (-0.399_382_452_539_780_7, 0.0)
     );
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_w(1, NEG_INV_E + 0.1, -1.0),
         (-0.955_746_684_806_075_3, 2.516_952_771_719_245_7),
-        2.0 * f64::EPSILON
+        epsilon = 2.0 * f64::EPSILON
     );
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_w(-1, NEG_INV_E + 0.1, 1.0),
         (-0.955_746_684_806_075_3, -2.5169527717192458),
-        2.0 * f64::EPSILON
+        epsilon = 2.0 * f64::EPSILON
     );
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_w(-1, 0.5, 0.0),
         (
             -2.259158898533606, //187
             -4.220_960_969_266_197
         )
     );
-    assert_complex_abs_diff_eq!(lambert_w(0, 10.0, 0.0), (1.745528002740699, 0.0));
-    assert_complex_abs_diff_eq!(lambert_w(0, 100.0, 0.0), (3.385_630_140_290_05, 0.0));
-    assert_complex_abs_diff_eq!(lambert_w(0, 1000.0, 0.0), (5.249_602_852_401_596, 0.0));
-    assert_complex_abs_diff_eq!(lambert_w(0, 10000.0, 0.0), (7.231_846_038_093_373, 0.0));
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(lambert_w(0, 10.0, 0.0), (1.745528002740699, 0.0));
+    assert_complex_approx_eq!(lambert_w(0, 100.0, 0.0), (3.385_630_140_290_05, 0.0));
+    assert_complex_approx_eq!(lambert_w(0, 1000.0, 0.0), (5.249_602_852_401_596, 0.0));
+    assert_complex_approx_eq!(lambert_w(0, 10000.0, 0.0), (7.231_846_038_093_373, 0.0));
+    assert_complex_approx_eq!(
         lambert_w(-1, -f64::ln(2.0) / 2.0, 0.0),
         (-f64::ln(4.0), 0.0)
     );
     // Close to the branch cut
-    assert_complex_abs_diff_eq!(lambert_w(-1, NEG_INV_E, 0.0), (-1.0, 0.0));
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(lambert_w(-1, NEG_INV_E, 0.0), (-1.0, 0.0));
+    assert_complex_approx_eq!(
         lambert_w(10, NEG_INV_E + 0.1, 0.0),
         (-5.484_673_997_441_509, 64.317_580_321_338_81)
     );
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_w(1, -1e-05, -1e-05),
         (-1.37923465336253e+01, 8.46711143530535e-01),
-        104.0 * f64::EPSILON
+        max_relative = 8.0 * f64::EPSILON
     );
     // Very big branch index
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_w(1_000_000, 100.0, 100.0),
         (-10.701_643_723_106_727, 6.283_184_521_779_72e6)
     );
@@ -583,35 +591,35 @@ fn test_32_bit_iterative_version() {
     assert_eq!(lambert_wf(0, 0.0, 0.0), (0.0, 0.0));
     assert_eq!(lambert_wf(1, 0.0, 0.0), (f32::NEG_INFINITY, 0.0));
 
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_wf(0, NEG_INV_E as f32 + 0.1, 0.0),
         (-0.399_382_44, 0.0)
     );
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_wf(1, NEG_INV_E as f32 + 0.1, -1.0),
         (-0.955_746_7, 2.516_952_8)
     );
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(
         lambert_wf(-1, NEG_INV_E as f32 + 0.1, 1.0),
         (-0.955_746_7, -2.516_952_8)
     );
-    assert_complex_abs_diff_eq!(lambert_wf(-1, 0.5, 0.0), (-2.259_158_8, -4.220_961));
-    assert_complex_abs_diff_eq!(lambert_wf(0, 10.0, 0.0), (1.745_528, 0.0));
-    assert_complex_abs_diff_eq!(lambert_wf(0, 100.0, 0.0), (3.385_630_1, 0.0));
-    assert_complex_abs_diff_eq!(lambert_wf(0, 1000.0, 0.0), (5.249_603, 0.0));
-    assert_complex_abs_diff_eq!(lambert_wf(0, 10000.0, 0.0), (7.231_846, 0.0));
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(lambert_wf(-1, 0.5, 0.0), (-2.259_158_8, -4.220_961));
+    assert_complex_approx_eq!(lambert_wf(0, 10.0, 0.0), (1.745_528, 0.0));
+    assert_complex_approx_eq!(lambert_wf(0, 100.0, 0.0), (3.385_630_1, 0.0));
+    assert_complex_approx_eq!(lambert_wf(0, 1000.0, 0.0), (5.249_603, 0.0));
+    assert_complex_approx_eq!(lambert_wf(0, 10000.0, 0.0), (7.231_846, 0.0));
+    assert_complex_approx_eq!(
         lambert_wf(-1, -f32::ln(2.0) / 2.0, 0.0),
         (-f32::ln(4.0), 0.0)
     );
     // Close to the branch cut
-    assert_complex_abs_diff_eq!(lambert_wf(-1, NEG_INV_E as f32, 0.0), (-1.0, 0.0));
-    assert_complex_abs_diff_eq!(
+    assert_complex_approx_eq!(lambert_wf(-1, NEG_INV_E as f32, 0.0), (-1.0, 0.0));
+    assert_complex_approx_eq!(
         lambert_wf(10, NEG_INV_E as f32 + 0.1, 0.0),
         (-5.484_674, 64.317_58)
     );
     // Very big branch index
-    assert_complex_abs_diff_eq!(lambert_wf(32767, 100.0, 100.0), (-7.2833066, 205880.34));
+    assert_complex_approx_eq!(lambert_wf(32767, 100.0, 100.0), (-7.2833066, 205880.34));
     // NaNs
     assert!(lambert_wf(0, f32::NAN, 0.0).0.is_nan());
     assert!(lambert_wf(0, f32::NAN, 0.0).1.is_nan());
