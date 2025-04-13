@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.11 (unreleased)
 
-- Mention some basic properties of the Lambert W function in the readme.
+- Documentation improvements.
 
 ## 1.2.10
 
