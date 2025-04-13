@@ -13,21 +13,19 @@ It also provides a slower iterative evaluation method for all branches
 on the complex plane.
 
 Fukushima's method does not allocate, recurse, or iterate.
-It works by dividing the function's domain into subdomains.
-On each one, it uses a simple transformation of the input inserted into
-a rational function to approximate the true value.
+It works by approximating the W function as a piecewise-rational function where
+each piece takes a transformation of the input as its argument.
 
-The implementation uses conditional switches on the input value
-to select the appropriate subdomain, followed by either a square root
-(and possibly a division) or a logarithm. Then it performs a series of
-additions and multiplications by constants from a look-up table,
-and finishes the calculation with a division.
+The implementation uses conditional switches on the input value, followed by
+either a square root (and possibly a division) or a logarithm.
+Then it performs a series of additions and multiplications by constants from a
+look-up table, and finishes the calculation with a division.
 
 This crate provides two approximations of each branch, one with 50 bits of
 accuracy (implemented on 64-bit floats) and one with 24 bits
 (implemented on 32- and 64-bit floats). The one with 50 bits of accuracy uses higher
 degree polynomials in the rational functions compared to the one with only 24 bits,
-and thus more of the multiplications and additions by constants.
+and thus larger lookup tables.
 
 This crate can evaluate the approximation with 24 bits of accuracy on
 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
