@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "1.2.10"
+version = "1.2.11"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics", "no-std", "no-std::no-alloc"]
