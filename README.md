@@ -7,8 +7,8 @@
 [![Code Coverage](https://codecov.io/gh/JSorngard/lambert_w/graph/badge.svg?token=F61FO63ZKW)](https://codecov.io/gh/JSorngard/lambert_w)
 
 This crate provides fast and accurate evaluation of the real valued parts of the
-principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function), the inverse of x*e^x, 
-with the method of Toshio Fukushima \[[1](#references)\].
+principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function),
+the inverse of x*e^x, with the method of Toshio Fukushima \[[1](#references)\].
 It also provides a slower iterative evaluation method for all branches
 on the complex plane.
 
