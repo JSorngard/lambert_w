@@ -289,8 +289,8 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z: Complex<f64>) -> Complex<f64> {
-    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z.0, z.0));
+pub fn lambert_w(k: i32, z_re: Real<f64>, z_im: Imaginary<f64>) -> Complex<f64> {
+    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im));
     (w.re, w.im)
 }
 
@@ -335,8 +335,8 @@ pub fn lambert_w(k: i32, z: Complex<f64>) -> Complex<f64> {
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wf(k: i16, z: Complex<f32>) -> Complex<f32> {
-    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z.0, z.1));
+pub fn lambert_wf(k: i16, z_re: Real<f32>, z_im: Imaginary<f32>) -> Complex<f32> {
+    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im));
     (w.re, w.im)
 }
 
