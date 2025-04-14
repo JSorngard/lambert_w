@@ -251,9 +251,6 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// Branch `k` of the complex valued Lambert W function computed
 /// on 64-bit floats with Halley's method.
 ///
-/// The return value is a tuple where the first element is the
-/// real part and the second element is the imaginary part.
-///
 /// Close to the branch cut at -1/e this function may be slightly less accurate.
 ///
 /// If you know you want the principal or secondary branches where they are real valued,
@@ -299,9 +296,6 @@ pub fn lambert_w(k: i32, z: Complex<f64>) -> Complex<f64> {
 
 /// Branch `k` of the complex valued Lambert W function computed
 /// on 32-bit floats with Halley's method.
-///
-/// The return value is a tuple where the first element is the
-/// real part and the second element is the imaginary part.
 ///
 /// Close to the branch cut at -1/e this function may be slightly less accurate.
 ///
