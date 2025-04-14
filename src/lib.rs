@@ -50,7 +50,6 @@ pub type Real<T> = T;
 pub type Imaginary<T> = T;
 pub type Complex<T> = (Real<T>, Imaginary<T>);
 
-
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
 ///
 /// # Examples
