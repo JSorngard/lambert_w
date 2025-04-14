@@ -46,6 +46,11 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 //                     0.567_143_290_409_784
 // which is further away from the true value than what we get if we round them to 8.
 
+pub type Real<T> = T;
+pub type Imaginary<T> = T;
+pub type Complex<T> = (Real<T>, Imaginary<T>);
+
+
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
 ///
 /// # Examples
@@ -287,8 +292,8 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
-    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im));
+pub fn lambert_w(k: i32, z: Complex<f64>) -> Complex<f64> {
+    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z.0, z.0));
     (w.re, w.im)
 }
 
@@ -336,8 +341,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
-    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im));
+pub fn lambert_wf(k: i16, z: Complex<f32>) -> Complex<f32> {
+    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z.0, z.1));
     (w.re, w.im)
 }
 
