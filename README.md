@@ -13,8 +13,8 @@ It also provides a slower iterative evaluation method for all branches
 on the complex plane.
 
 Fukushima's method does not allocate, recurse, or iterate.
-It works by approximating the W function as a piecewise-rational function where
-each piece takes a transformation of the input as its argument.
+It works by approximating the W function as a piecewise minimax rational function
+where each piece takes a transformation of the input as its argument.
 
 The implementation uses conditional switches on the input value, followed by
 either a square root (and possibly a division) or a logarithm.
