@@ -11,7 +11,7 @@ use core::{
 
 use crate::NEG_INV_E;
 
-const MAX_ITER: usize = 30;
+const MAX_ITER: u8 = 30;
 /// If the absolute difference between two consecutive iterations is less than this value,
 /// the iteration stops.
 const PREC: f64 = 1e-30;

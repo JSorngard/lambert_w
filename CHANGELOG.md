@@ -3,6 +3,18 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.13
+
+- Documentation improvements.
+
+## 1.2.12
+
+- Small improvements to the implementation of the complex Lambert W functions.
+
+## 1.2.11
+
+- Documentation improvements.
+
 ## 1.2.10
 
 - Fixed a bug that could result in incorrect outputs from the complex `lambert_w`
