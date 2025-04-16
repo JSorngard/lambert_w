@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.14 (unreleased)
 
-- Documentation improvements.
+- Internal documentation improvements.
 
 ## 1.2.13
 
