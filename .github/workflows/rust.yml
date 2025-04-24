@@ -154,13 +154,12 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
-    - name: Compile benchmarks with `libm`, but do not run them
-      # There are no benchmarks with "nothing" in their name, hence this command only compiles the benchmarks but does not run them.
-      run: cargo bench nothing
-    - name: Compile benchmarks with `std`, but do not run them
-      run: cargo bench --no-default-features --features std nothing
-    - name: Compile benchmarks with both features, but do not run them
-      run: cargo bench --no-default-features --features libm,std nothing
+    - name: Benchmark with `libm`
+      run: cargo bench
+    - name: Benchmark with `std`
+      run: cargo bench --no-default-features --features std
+    - name: Benchmark with both features
+      run: cargo bench --no-default-features --features libm,std
 
   ensure_no_panics:
     runs-on: ubuntu-latest
