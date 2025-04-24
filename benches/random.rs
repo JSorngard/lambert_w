@@ -51,7 +51,7 @@ fn random_benches(c: &mut Criterion) {
 
     let reference_group = c.benchmark_group("random inputs (Reference)");
 
-    bench_on_vec_of_random_values(
+    bench_on_vec_of_random_values_in_range(
         &mut reference_group,
         "ln",
         |x| x.ln(),
@@ -59,7 +59,7 @@ fn random_benches(c: &mut Criterion) {
         &mut rng,
     );
 
-    bench_on_vec_of_random_values(
+    bench_on_vec_of_random_values_in_range(
         &mut reference_group,
         "sqrt",
         |x| x.sqrt(),
