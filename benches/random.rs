@@ -56,7 +56,7 @@ fn random_benches(c: &mut Criterion) {
         "ln",
         |x| x.ln(),
         0.1..=f64::from(u32::MAX),
-        &mut rng, 
+        &mut rng,
     );
 
     bench_on_vec_of_random_values(
@@ -64,7 +64,7 @@ fn random_benches(c: &mut Criterion) {
         "sqrt",
         |x| x.sqrt(),
         0.1..=f64::from(u32::MAX),
-        &mut rng, 
+        &mut rng,
     );
 
     drop(reference_group);
