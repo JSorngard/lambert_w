@@ -49,6 +49,26 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, U, Prng>(
 fn random_benches(c: &mut Criterion) {
     let mut rng = SmallRng::seed_from_u64(0b1010101010101);
 
+    let reference_group = c.benchmark_group("random inputs (Reference)");
+
+    bench_on_vec_of_random_values(
+        &mut reference_group,
+        "ln",
+        |x| x.ln(),
+        0.1..=f64::from(u32::MAX),
+        &mut rng, 
+    );
+
+    bench_on_vec_of_random_values(
+        &mut reference_group,
+        "sqrt",
+        |x| x.sqrt(),
+        0.1..=f64::from(u32::MAX),
+        &mut rng, 
+    );
+
+    drop(reference_group);
+
     let mut halley_group = c.benchmark_group("random inputs (Halley's method)");
 
     bench_on_vec_of_random_values_in_range(
