@@ -49,7 +49,7 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, U, Prng>(
 fn random_benches(c: &mut Criterion) {
     let mut rng = SmallRng::seed_from_u64(0b1010101010101);
 
-    let reference_group = c.benchmark_group("random inputs (Reference)");
+    let mut reference_group = c.benchmark_group("random inputs (Reference)");
 
     bench_on_vec_of_random_values_in_range(
         &mut reference_group,
