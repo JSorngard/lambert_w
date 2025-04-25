@@ -502,7 +502,7 @@ dependencies = [
 
 [[package]]
 name = "lambert_w"
-version = "1.2.14"
+version = "1.2.15"
 dependencies = [
  "approx",
  "criterion",
