@@ -26,6 +26,10 @@ either a square root (and possibly a division) or a logarithm.
 Then it performs a series of additions and multiplications by constants from a
 look-up table, and finishes the calculation with a division.
 
+The implementation is simple enough that if the input argument
+is known at compile time the optimizer can evaluate the entire function at
+compile time as well.
+
 This crate provides two approximations of each branch, one with 50 bits of
 accuracy (implemented on 64-bit floats) and one with 24 bits
 (implemented on 32- and 64-bit floats). The one with 50 bits of accuracy uses higher
@@ -36,10 +40,6 @@ This crate can evaluate the approximation with 24 bits of accuracy on
 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
 This may result in a reduction in the accuracy to less than 24 bits,
 but this reduction has not been quantified by the author of this crate.
-
-The implementation is simple enough that if the input argument
-is known at compile time the optimizer can evaluate the entire function at
-compile time as well.
 
 ## Examples
 
