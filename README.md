@@ -12,6 +12,11 @@ the inverse of x*e^x, with the method of Toshio Fukushima \[[1](#references)\].
 It also provides a slower iterative evaluation method for all branches
 on the complex plane.
 
+The crate is `no_std` compatible, but can optionally depend on the standard
+library through features for a potential performance gain.
+
+## Method description
+
 Fukushima's method does not allocate, recurse, or iterate.
 It works by approximating the W function as a piecewise minimax rational function
 where each piece takes a transformation of the input as its argument.
@@ -32,8 +37,9 @@ This crate can evaluate the approximation with 24 bits of accuracy on
 This may result in a reduction in the accuracy to less than 24 bits,
 but this reduction has not been quantified by the author of this crate.
 
-This crate is `no_std` compatible, but can optionally depend on the standard
-library through features for a potential performance gain.
+The implementation is simple enough that if the input argument
+is known at compile time the optimizer can evaluate the entire function at
+compile time as well.
 
 ## Examples
 
