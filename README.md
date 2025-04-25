@@ -15,7 +15,7 @@ on the complex plane.
 The crate is `no_std` compatible, but can optionally depend on the standard
 library through features for a potential performance gain.
 
-## Method description
+## Method and implementation description
 
 Fukushima's method does not allocate, recurse, or iterate.
 It works by approximating the W function as a piecewise minimax rational function
