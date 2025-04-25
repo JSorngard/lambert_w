@@ -26,7 +26,7 @@ either a square root (and possibly a division) or a logarithm.
 Then it performs a series of additions and multiplications by constants from a
 look-up table, and finishes the calculation with a division.
 
-The implementation is simple enough that if the input argument
+This implementation is simple enough that if the input argument
 is known at compile time the optimizer can evaluate the entire function at
 compile time as well.
 
