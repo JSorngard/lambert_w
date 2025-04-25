@@ -27,8 +27,8 @@ Then it performs a series of additions and multiplications by constants from a
 look-up table, and finishes the calculation with a division.
 
 This implementation is simple enough that if the input argument
-is known at compile time the optimizer can evaluate the entire function at
-compile time as well.
+is known at compile time the optimizer can sometimes evaluate the entire function
+at compile time as well.
 
 This crate provides two approximations of each branch, one with 50 bits of
 accuracy (implemented on 64-bit floats) and one with 24 bits
