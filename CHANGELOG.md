@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.16 (unreleased)
+
+- Document dependencies in CI in order to find broken cross-crate doc-links.
+
 ## 1.2.15
 
 - Added a note to the readme that the implementation of Fukushima's method is
