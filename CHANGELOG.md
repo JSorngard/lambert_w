@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add a header comment with an SPDX-License-Identifier to every source file.
 - Add an OpenSSF best practices badge. Probably not relevant for a project this small,
  but it was fun to do!
-- More exhaustive log information in the semver-checks CI job.
+- More exhaustive information in the log of the semver-checks CI job
 
 ## 1.2.15
 
