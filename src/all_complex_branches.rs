@@ -1,3 +1,5 @@
+// Copyright 2024 Johanna Sörngård
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! This module contains the general implementation of the Lambert W function.
 //! This implementation is capable of computing the function at any point in the complex plane on any branch.
 
