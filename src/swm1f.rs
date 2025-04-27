@@ -1,3 +1,5 @@
+// Copyright 2024 Johanna Sörngård
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! This module contains an implementation of the approximation of the secondary
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.

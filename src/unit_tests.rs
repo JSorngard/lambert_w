@@ -1,3 +1,5 @@
+// Copyright 2024 Johanna Sörngård
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! This file contains unit tests for non-public functions.
 
 use crate::generic_math::{ln, rational_function, sqrt};
