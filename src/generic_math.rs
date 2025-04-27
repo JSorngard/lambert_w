@@ -1,5 +1,6 @@
 // Copyright 2024 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
+
 //! This module contains elementary and rational functions used in the Lambert W function approximations.
 //! They are generic over all types that implement the [`Float`] trait.
 

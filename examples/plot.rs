@@ -1,5 +1,6 @@
 // Copyright 2024 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
+
 //! This example is intended to be ran more than studied.
 //! It generates a plot of the two branches of the function
 //! and saves it as a png file.
