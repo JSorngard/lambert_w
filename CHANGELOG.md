@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Document dependencies in CI in order to find broken cross-crate doc-links.
 - Add a header comment with an SPDX-License-Identifier to every source file.
+- Add an openssf best practices badge. Probably not relevant for a project this small,
+ but it was fun to do!
 
 ## 1.2.15
 
