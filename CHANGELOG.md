@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.16 (unreleased)
 
 - Document dependencies in CI in order to find broken cross-crate doc-links.
+- Add a header comment with an SPDX-License-Identifier to every source file.
 
 ## 1.2.15
 
