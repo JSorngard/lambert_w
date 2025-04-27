@@ -78,7 +78,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@nightly
     - name: Generate documentation
-      run: cargo +nightly doc --all-features --no-deps
+      run: cargo +nightly doc --all-features
 
   verify_rust_version:
     runs-on: ubuntu-latest
@@ -89,11 +89,11 @@ jobs:
       with:
         tool: cargo-msrv
     - name: Verify MSRV with `libm`
-      run: cargo msrv --output-format minimal verify
+      run: cargo msrv verify
     - name: Verify MSRV with `std`
-      run: cargo msrv --output-format minimal verify --no-default-features --features std
+      run: cargo msrv verify --no-default-features --features std
     - name: Verify MSRV with both
-      run: cargo msrv --output-format minimal verify --no-default-features --features libm,std
+      run: cargo msrv verify --no-default-features --features libm,std
 
   run_examples:
     runs-on: ubuntu-latest

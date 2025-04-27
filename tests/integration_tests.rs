@@ -1,3 +1,6 @@
+// Copyright 2024 Johanna Sörngård
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
 //! This file contains tests of the public API of the crate.
 //!
 //! Every test function utilizes [`assert_abs_diff_eq!`] for as long as possible,
