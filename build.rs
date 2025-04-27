@@ -1,5 +1,6 @@
 // Copyright 2024 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
+
 use std::env;
 
 fn main() {
