@@ -10,7 +10,7 @@ rust-version = "1.63.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
 documentation = "https://docs.rs/lambert_w"
-exclude = ["examples/", "benches/", "tests/", "src/unit_tests.rs", ".github/", "CONTRIBUTING.md"]
+exclude = ["examples/", "benches/", "tests/", "src/unit_tests.rs", ".github/", "CONTRIBUTING.md", "CHANGELOG.md"]
 
 [dependencies]
 num-complex = { version = "0.4.6", default-features = false }
