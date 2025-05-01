@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.17
 
 - Don't package unneeded files to crates.io.
+- Update transitive dev-dependencies.
 
 ## 1.2.16
 
