@@ -6,15 +6,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.17
 
 - Don't package unneeded files to crates.io.
-- Update transitive dev-dependencies.
+- Updated transitive dev-dependencies.
 
 ## 1.2.16
 
-- Document dependencies in CI in order to find broken cross-crate doc-links.
-- Add a header comment with an SPDX-License-Identifier to every source file.
-- Add an OpenSSF best practices badge. Probably not relevant for a project this small,
+- Enabled documentation of dependencies in the documentation CI job in order to find
+ broken cross-crate doc-links.
+- Added a header comment with an SPDX-License-Identifier to every source file.
+- Added an OpenSSF best practices badge. Probably not relevant for a project this small,
  but it was fun to do!
-- More exhaustive information in the log of the semver-checks CI job
+- Added more exhaustive information in the log of the semver-checks CI job
 
 ## 1.2.15
 
