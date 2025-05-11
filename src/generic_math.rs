@@ -17,6 +17,7 @@ use num_traits::Float;
 // of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+#[cfg(not(target_feature = "fma"))]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
@@ -34,6 +35,26 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
 
     numerator / denominator
 }
+
+#[cfg(target_feature = "fma")]
+pub fn rational_function<T: Float, const N: usize, const D: usize>(
+    x: T,
+    numerator_coefficients: [T; N],
+    denominator_coefficients: [T; D],
+) -> T {
+    let numerator = numerator_coefficients
+        .into_iter()
+        .rev()
+        .fold(T::zero(), |acc, n| acc.mul_add(x, n));
+
+    let denominator = denominator_coefficients
+        .into_iter()
+        .rev()
+        .fold(T::zero(), |acc, d| acc.mul_add(x, d));
+
+    numerator / denominator
+}
+
 
 // The functions below are wrappers around the [`num-traits`] crate,
 // mainly to ensure that we can always call them regardless of the presence of
