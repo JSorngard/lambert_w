@@ -36,6 +36,8 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator / denominator
 }
 
+#[inline(always)]
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[cfg(target_feature = "fma")]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
