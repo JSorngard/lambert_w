@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.18
 
+- Update the year in the license files to 2025.
 - Documentation improvements.
 - Update transitive dev-dependencies.
 
