@@ -10,6 +10,7 @@ use num_traits::Float;
 // I have only benchmarked the functions on my own system with a CPU with large cache
 // and I am not sure if the inlining is beneficial on all systems, and for all users.
 
+#[cfg(not(target_feature = "fma"))]
 /// Evaluate a rational function at `x` using Horner's method.
 ///
 /// The coefficients are assumed to be sorted in ascending order by degree.
@@ -17,7 +18,6 @@ use num_traits::Float;
 // of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-#[cfg(not(target_feature = "fma"))]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
@@ -36,9 +36,13 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator / denominator
 }
 
+#[cfg(target_feature = "fma")]
+/// Evaluate a rational function at `x` using Horner's method.
+/// The function uses fused multiply-add instructions for better performance.
+///
+/// The coefficients are assumed to be sorted in ascending order by degree.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-#[cfg(target_feature = "fma")]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
