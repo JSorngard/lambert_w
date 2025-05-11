@@ -158,7 +158,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-14);
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
