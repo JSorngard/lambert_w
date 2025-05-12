@@ -196,6 +196,8 @@ pub fn swm1(z: f64) -> f64 {
                 -3.922_277_308_457_406_3e-14,
             ],
         )
+    } else if z == 0.0 {
+        f64::NEG_INFINITY
     } else {
         f64::NAN
     }
