@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.19 (unreleased)
 
-- Corrected a bug that made the W_{-1} functions return `NAN`
+- Corrected a bug that made the secondary branch functions return `NAN`
  for inputs of 0, when the correct value is - infinity.
 
 ## 1.2.18
