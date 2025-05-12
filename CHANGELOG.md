@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.19 (unreleased)
+
+- Corrected a bug that made the secondary branch functions return `NAN`
+ for inputs of 0, when the correct value is -infinity.
+
 ## 1.2.18
 
 - Update the year in the license files to 2025.

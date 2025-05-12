@@ -304,6 +304,8 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
                 -1.360_871_393_694_260_3e-23,
             ],
         )
+    } else if z == 0.0 {
+        f64::NEG_INFINITY
     } else {
         f64::NAN
     }
