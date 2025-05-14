@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.21 (unreleased)
+
+- Include more digits in the omega constant.
+
 ## 1.2.20
 
 - Updated the copyright year in the source files to 2025.
