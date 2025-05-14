@@ -54,7 +54,7 @@ use approx::assert_abs_diff_eq;
 
 let Ω = lambert_w0(1.0);
 
-assert_eq!(Ω, 0.56714329040978387);
+assert_eq!(Ω, 0.5671432904097839);
 assert_abs_diff_eq!(Ω * f64::exp(Ω), 1.0);
 ```
 
