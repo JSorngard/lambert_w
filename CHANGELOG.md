@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.20 (unreleased)
+
+- Updated the copyright year in the source files to 2025.
+
 ## 1.2.19
 
 - Corrected a bug that made the secondary branch functions return `NAN`
