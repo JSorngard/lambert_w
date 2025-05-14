@@ -60,7 +60,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// let Ω = lambert_w0(1.0);
 ///
-/// assert_eq!(Ω, 0.5671432904097839);
+/// assert_eq!(Ω, 0.56714329040978387);
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
