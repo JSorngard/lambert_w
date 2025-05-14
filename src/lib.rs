@@ -57,11 +57,10 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// ```
 /// use lambert_w::lambert_w0;
-/// use approx::assert_abs_diff_eq;
 ///
 /// let Ω = lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839);
+/// assert_eq!(Ω, 0.5671432904097839);
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
@@ -127,7 +126,11 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// let Ω = sp_lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
+/// assert_abs_diff_eq!(
+///     Ω,
+///     0.5671432904097839,
+///     epsilon = f64::from(f32::EPSILON) / 4.5
+/// );
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
@@ -154,11 +157,10 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// ```
 /// use lambert_w::lambert_wm1;
-/// use approx::assert_abs_diff_eq;
 ///
 /// let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+/// assert_eq!(mln4, -f64::ln(4.0));
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
@@ -190,11 +192,10 @@ pub fn lambert_wm1(z: f64) -> f64 {
 ///
 /// ```
 /// use lambert_w::lambert_wm1f;
-/// use approx::assert_abs_diff_eq;
 ///
 /// let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+/// assert_eq!(mln4, -f32::ln(4.0));
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN):
@@ -226,7 +227,11 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 ///
 /// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
+/// assert_abs_diff_eq!(
+///     mln4,
+///     -f64::ln(4.0),
+///     epsilon = f64::from(f32::EPSILON) / 165.0
+/// );
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
