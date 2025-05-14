@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.21 (unreleased)
 
-- Include more digits in the omega constant.
+- Include more digits in the omega constant for clarity.
 
 ## 1.2.20
 
