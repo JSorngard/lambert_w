@@ -42,7 +42,7 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 ///
 /// Fulfills the equation Ωe^Ω = 1.
 // We include more digits than fit in an f64 because if we write
-// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision) 
+// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
 // it looks as if we have rounded it incorrectly,
 // since the correctly rounded value to that many digits would be
 // 0.567_143_290_409_783_9.
