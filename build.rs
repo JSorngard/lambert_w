@@ -1,6 +1,11 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+//! This build file activates the `assert_no_panic` cfg flag
+//! if the environment variable `LAMBERT_W_ENSURE_NO_PANICS` is set to "1".
+//! The crate uses this to statically check that no panics
+//! are introduced into the crate in CI.
+
 use std::env;
 
 fn main() {
