@@ -1,4 +1,4 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 #![doc = include_str!("../README.md")]
@@ -41,13 +41,19 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 /// The omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1.
-///
-/// Has been rounded to the closest available `f64` value.
-//        Rounded from 0.567_143_290_409_783_87
-pub const OMEGA: f64 = 0.567_143_290_409_783_8;
-// If we round the last two digits (87) to 9 rustc sets the constant to
-//                     0.567_143_290_409_784
-// which is further away from the true value than what we get if we round them to 8.
+// We include more digits than fit in an f64 because if we write
+// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
+// it looks as if we have rounded it incorrectly,
+// since the correctly rounded value to that many digits would be
+// 0.567_143_290_409_783_9.
+// However, if we write the correctly rounded value the compiler rounds it to
+// 0.567_143_290_409_784, which is further from the true value than
+// 0.567_143_290_409_783_8.
+// To avoid all this confusion for any potential readers of the docs
+// we just add more digits so that the compiler rounds it correctly and then
+// allow the clippy lint.
+#[allow(clippy::excessive_precision)]
+pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
 ///
@@ -61,7 +67,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// let Ω = lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839);
+/// assert_abs_diff_eq!(Ω, 0.567143290409783873);
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
@@ -158,7 +164,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-14);
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):

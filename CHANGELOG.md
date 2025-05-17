@@ -3,6 +3,25 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.21
+
+- Included more digits in the omega constant for clarity.
+
+## 1.2.20
+
+- Updated the copyright year in the source files to 2025.
+
+## 1.2.19
+
+- Corrected a bug that made the secondary branch functions return `NAN`
+ for inputs of 0, when the correct value is -infinity.
+
+## 1.2.18
+
+- Updated the year in the license files to 2025.
+- Documentation improvements.
+- Updated transitive dev-dependencies.
+
 ## 1.2.17
 
 - Excluded unneeded files from being packaged to crates.io.
@@ -13,8 +32,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Enabled documentation of dependencies in the documentation CI job in order to find
  broken cross-crate doc-links.
 - Added a header comment with an SPDX-License-Identifier to every source file.
-- Added an OpenSSF best practices badge. Probably not relevant for a project this small,
- but it was fun to do!
+- Added an OpenSSF best practices badge. Probably not relevant for a project
+ this small, but it was fun to do!
 - Added more exhaustive information in the log of the semver-checks CI job
 
 ## 1.2.15

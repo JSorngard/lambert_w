@@ -1,4 +1,4 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This file contains tests of the public API of the crate.
@@ -337,6 +337,7 @@ fn test_lambert_wm1() {
         lambert_wm1(-1.000_000_000_000_008e-145),
         -3.397_029_099_254_29e2
     );
+    assert_eq!(lambert_wm1(0.0), f64::NEG_INFINITY);
     assert!(lambert_wm1(f64::EPSILON).is_nan());
     assert!(lambert_wm1(f64::INFINITY).is_nan());
 
@@ -417,6 +418,7 @@ fn test_sp_lambert_wm1() {
         -3.397_029_099_254_29e2,
         max_relative = 1e-7
     );
+    assert_eq!(sp_lambert_wm1(0.0), f64::NEG_INFINITY);
     assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
     assert!(sp_lambert_wm1(f64::INFINITY).is_nan());
 
@@ -456,6 +458,7 @@ fn test_lambert_wm1f() {
     assert_relative_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1);
     assert_relative_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1);
     assert_relative_eq!(lambert_wm1f(-1e-20), -49.962_986);
+    assert_eq!(lambert_wm1f(0.0), f32::NEG_INFINITY);
     assert!(lambert_wm1f(f32::EPSILON).is_nan());
     assert!(lambert_wm1f(f32::INFINITY).is_nan());
 

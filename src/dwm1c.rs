@@ -1,4 +1,4 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the secondary
@@ -304,6 +304,8 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
                 -1.360_871_393_694_260_3e-23,
             ],
         )
+    } else if z == 0.0 {
+        f64::NEG_INFINITY
     } else {
         f64::NAN
     }

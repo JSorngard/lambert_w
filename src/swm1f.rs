@@ -1,4 +1,4 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the secondary
@@ -88,6 +88,8 @@ pub fn swm1f(z: f32) -> f32 {
             [-1.441_124_7, 1.281_927, -0.074_979_36, 0.000_476_363_1],
             [1.0, -0.072_000_876, 0.000_475_489_33, -4.171_498e-10],
         )
+    } else if z == 0.0 {
+        f32::NEG_INFINITY
     } else {
         f32::NAN
     }
