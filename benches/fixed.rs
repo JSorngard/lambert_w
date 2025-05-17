@@ -1,7 +1,8 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use core::hint::black_box;
+use criterion::{criterion_group, criterion_main, Criterion};
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
 };
