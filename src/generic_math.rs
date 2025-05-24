@@ -22,17 +22,18 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
 ) -> T {
-    let numerator = numerator_coefficients
-        .into_iter()
-        .rev()
-        .fold(T::zero(), |acc, n| acc * x + n);
+    let numerator = polynomial(x, numerator_coefficients);
 
-    let denominator = denominator_coefficients
-        .into_iter()
-        .rev()
-        .fold(T::zero(), |acc, d| acc * x + d);
+    let denominator = polynomial(x, denominator_coefficients);
 
     numerator / denominator
+}
+
+fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
+    coefficients
+        .into_iter()
+        .rev()
+        .fold(T::zero(), |acc, c| acc * x + c)
 }
 
 // The functions below are wrappers around the [`num-traits`] crate,
