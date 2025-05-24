@@ -13,8 +13,6 @@ use num_traits::Float;
 /// Evaluate a rational function at `x` using Horner's method.
 ///
 /// The coefficients are assumed to be sorted in ascending order by degree.
-// The inline(always) annotation is motivated by benchmarks, especially
-// of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
@@ -30,6 +28,8 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
 }
 
 /// Evaluate a polynomial at `x` using Horner's method.
+///
+/// The coefficients are assumed to be sorted in ascending order by degree.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
@@ -44,8 +44,6 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
 // the standard library. I do not just import the trait in the files where the
 // lambert w functions are defined because the standard library is available during testing,
 // which means that the crate would produce warnings about the unused imports.
-
-// The inline(always) annotation on the functions below is motivated by benchmarks.
 
 /// Compute the square root of `x`.
 #[inline(always)]
