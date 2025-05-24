@@ -7,7 +7,8 @@
 use num_traits::Float;
 
 // The inline(always) annotations in this module could be removed.
-// I have only benchmarked the functions on my own system with a CPU with large cache
+// They are motivated by benchmarks, especially of the 50-bit functions.
+// However, I have only benchmarked the functions on my own system with a CPU with large cache
 // and I am not sure if the inlining is beneficial on all systems, and for all users.
 
 /// Evaluate a rational function at `x` using Horner's method.
