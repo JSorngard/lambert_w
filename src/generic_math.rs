@@ -29,6 +29,9 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator / denominator
 }
 
+/// Evaluate a polynomial at `x` using Horner's method.
+#[inline(always)]
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
         .into_iter()
