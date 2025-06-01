@@ -25,8 +25,8 @@ no-panic = "0.1.0"
 
 [features]
 default = ["libm"]
-# If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
-# to compute square roots and logarithms during function evaluation instead of the standard library.
+# Use the [`libm`](https://crates.io/crates/libm) crate
+# to compute square roots and logarithms during function evaluation instead of the standard library. Does nothing if the `std` feature is enabled.
 libm = ["num-traits/libm", "num-complex/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
