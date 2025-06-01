@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Updated the criterion dev-dependency.
 - Internal code improvements.
+- Documentation improvements.
 
 ## 1.2.21
 
