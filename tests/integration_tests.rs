@@ -64,6 +64,11 @@ fn test_lambert_w0() {
         lambert_w0(9.999_999_999_999_996e14),
         3.110_151_971_159_478e1
     );
+    assert_relative_eq!(
+        lambert_w0(1e15),
+        3.110_151_971_159_477_6991e1,
+        max_relative = 1.1 * f64::EPSILON
+    );
     assert_relative_eq!(lambert_w0(1e16), 3.333_476_076_844_818e1);
     assert_relative_eq!(lambert_w0(1e17), 3.557_237_716_651_325e1);
     assert_relative_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1);
