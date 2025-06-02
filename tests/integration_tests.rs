@@ -74,7 +74,9 @@ fn test_lambert_w0() {
     assert_relative_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1);
     assert_relative_eq!(lambert_w0(1e19), 4.005_876_916_198_432e1);
     assert_relative_eq!(lambert_w0(1e20), 4.230_675_509_173_839e1);
+    assert_relative_eq!(lambert_w0(1e30), 6.490_463_377_004_612e1);
     assert_relative_eq!(lambert_w0(1e40), 8.763_027_715_194_72e1);
+    assert_relative_eq!(lambert_w0(1e60), 1.332_627_825_918_033e2);
     assert_relative_eq!(lambert_w0(1e80), 1.790_193_137_415_062e2);
     assert_relative_eq!(lambert_w0(1e120), 2.707_091_661_024_979e2);
     assert_relative_eq!(lambert_w0(1e160), 3.625_205_337_614_976e2);
