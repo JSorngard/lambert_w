@@ -29,11 +29,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - uses: taiki-e/install-action@v2
-      with:
-        tool: cargo-all-features
-    - name: Check all feature combinations
-      run: cargo check-all-features
+    - name: Check with `libm`
+      run: cargo check --no-default-features -F libm
+    - name: Check with `std`
+      run: cargo check --no-default-features -F std
+    - name: Check with both
+      run: cargo check --no-default-features -F libm,std
 
   clippy:
     runs-on: ubuntu-latest
@@ -60,14 +61,15 @@ jobs:
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
-    - uses: taiki-e/install-action@v2
-      with:
-        tool: cargo-all-features
     - name: Install libfontconfig1-dev
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get -y install libfontconfig1-dev jq
-    - name: Test all feature combinations
-      run: cargo test-all-features
+    - name: Test with `libm`
+      run: cargo test --no-default-features -F libm
+    - name: Test with `std`
+      run: cargo test --no-default-features -F std
+    - name: Test with both
+      run: cargo test --no-default-features -F libm,std
       
   doc:
     runs-on: ubuntu-latest
