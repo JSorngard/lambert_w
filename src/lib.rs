@@ -173,9 +173,10 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// # use lambert_w::lambert_wm1;
-/// assert!(lambert_wm1(-1.0).is_nan());
-/// assert!(lambert_wm1(1.0).is_nan());
+/// use lambert_w::{lambert_wm1, NEG_INV_E};
+///
+/// assert!(lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
 /// # Reference
@@ -209,9 +210,10 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN):
 ///
 /// ```
-/// # use lambert_w::lambert_wm1f;
-/// assert!(lambert_wm1f(-1.0).is_nan());
-/// assert!(lambert_wm1f(1.0).is_nan());
+/// use lambert_w::{lambert_wm1f, NEG_INV_E};
+///
+/// assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+/// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
 /// ```
 ///
 /// # Reference
@@ -241,9 +243,10 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// # use lambert_w::sp_lambert_wm1;
-/// assert!(sp_lambert_wm1(-1.0).is_nan());
-/// assert!(sp_lambert_wm1(1.0).is_nan());
+/// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
+///
+/// assert!(sp_lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(sp_lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
 /// # Reference
