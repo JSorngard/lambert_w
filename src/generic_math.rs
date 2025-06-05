@@ -7,14 +7,13 @@
 use num_traits::Float;
 
 // The inline(always) annotations in this module could be removed.
-// I have only benchmarked the functions on my own system with a CPU with large cache
+// They are motivated by benchmarks, especially of the 50-bit functions.
+// However, I have only benchmarked the functions on my own system with a CPU with large cache
 // and I am not sure if the inlining is beneficial on all systems, and for all users.
 
 /// Evaluate a rational function at `x` using Horner's method.
 ///
 /// The coefficients are assumed to be sorted in ascending order by degree.
-// The inline(always) annotation is motivated by benchmarks, especially
-// of the functions with 50 bits of accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
@@ -22,17 +21,23 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
 ) -> T {
-    let numerator = numerator_coefficients
-        .into_iter()
-        .rev()
-        .fold(T::zero(), |acc, n| acc * x + n);
+    let numerator = polynomial(x, numerator_coefficients);
 
-    let denominator = denominator_coefficients
-        .into_iter()
-        .rev()
-        .fold(T::zero(), |acc, d| acc * x + d);
+    let denominator = polynomial(x, denominator_coefficients);
 
     numerator / denominator
+}
+
+/// Evaluate a polynomial at `x` using Horner's method.
+///
+/// The coefficients are assumed to be sorted in ascending order by degree.
+#[inline(always)]
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
+    coefficients
+        .into_iter()
+        .rev()
+        .fold(T::zero(), |acc, c| acc * x + c)
 }
 
 // The functions below are wrappers around the [`num-traits`] crate,
@@ -40,8 +45,6 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
 // the standard library. I do not just import the trait in the files where the
 // lambert w functions are defined because the standard library is available during testing,
 // which means that the crate would produce warnings about the unused imports.
-
-// The inline(always) annotation on the functions below is motivated by benchmarks.
 
 /// Compute the square root of `x`.
 #[inline(always)]

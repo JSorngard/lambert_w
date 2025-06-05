@@ -24,7 +24,8 @@ fn main() {
     // that checks for panics.
     const NEEDED_PROFILE: &str = "release-lto";
 
-    // Changes to the above constants need to be mentioned in the CHANGELOG.md file.
+    // Changes to the above constants are considered breaking changes
+    // and need to be mentioned in the CHANGELOG.md file.
 
     // Re-run the build script if the environment variable changes.
     // This makes the state of the check match the state of the environment variable.

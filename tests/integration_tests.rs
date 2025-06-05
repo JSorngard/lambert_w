@@ -64,12 +64,19 @@ fn test_lambert_w0() {
         lambert_w0(9.999_999_999_999_996e14),
         3.110_151_971_159_478e1
     );
+    assert_relative_eq!(
+        lambert_w0(1e15),
+        3.110_151_971_159_477_6991e1,
+        max_relative = 1.1 * f64::EPSILON
+    );
     assert_relative_eq!(lambert_w0(1e16), 3.333_476_076_844_818e1);
     assert_relative_eq!(lambert_w0(1e17), 3.557_237_716_651_325e1);
     assert_relative_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1);
     assert_relative_eq!(lambert_w0(1e19), 4.005_876_916_198_432e1);
     assert_relative_eq!(lambert_w0(1e20), 4.230_675_509_173_839e1);
+    assert_relative_eq!(lambert_w0(1e30), 6.490_463_377_004_612e1);
     assert_relative_eq!(lambert_w0(1e40), 8.763_027_715_194_72e1);
+    assert_relative_eq!(lambert_w0(1e60), 1.332_627_825_918_033e2);
     assert_relative_eq!(lambert_w0(1e80), 1.790_193_137_415_062e2);
     assert_relative_eq!(lambert_w0(1e120), 2.707_091_661_024_979e2);
     assert_relative_eq!(lambert_w0(1e160), 3.625_205_337_614_976e2);
