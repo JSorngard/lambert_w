@@ -135,8 +135,9 @@ it can be up to two orders of magnitude slower than them for comparable inputs.
 
 One of the below features must be enabled:
 
-`libm` *(enabled by default)*: use the [`libm`](https://crates.io/crates/libm) crate to compute
-square roots and logarithms during function evaluation instead of the standard library. Does nothing if the `std` feature is enabled.
+`libm` *(enabled by default)*: use the [`libm`](https://crates.io/crates/libm)
+crate to compute square roots and logarithms during function evaluation instead
+of the standard library. Does nothing if the `std` feature is enabled.
 
 `std`: use the standard library to compute square roots and logarithms for a
 potential performance gain. When this feature is disabled the crate is `no_std` compatible.
