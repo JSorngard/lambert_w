@@ -12,7 +12,8 @@ Any added code paths are expected to have tests that cover them. Exceptions can
 be made through discussion on the PR, e.g. testing the exact output of a `Display`
 implementation for an error type may not be necessary.
 
-If you add a feature then all possible feature combinations are should be tested in CI.
+If you add a feature then all possible feature combinations are should be tested
+in CI.
 
 Unsafe code will not be accepted.
 
