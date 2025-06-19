@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.22 (unreleased)
 
 - Updated the criterion dev-dependency.
-- Internal code improvements.
+- Internal code structure improvements.
 - Documentation improvements.
 
 ## 1.2.21
