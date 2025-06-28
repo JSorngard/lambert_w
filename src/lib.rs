@@ -259,7 +259,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 }
 
 /// Branch `k` of the complex valued Lambert W function computed
-/// on 64-bit floats with Halley's method.
+/// on 64-bit floats with Halley's method to the given error tolerance.
 ///
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
@@ -278,7 +278,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// use lambert_w::lambert_w;
 ///
 /// // W_2(1 + 2i)
-/// let w = lambert_w(2, 1.0, 2.0);
+/// let w = lambert_w(2, 1.0, 2.0, f64::EPSILON);
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
@@ -287,7 +287,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 ///
 /// ```
 /// # use lambert_w::lambert_w;
-/// let w = lambert_w(-13, f64::INFINITY, 0.0);
+/// let w = lambert_w(-13, f64::INFINITY, 0.0, f64::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -296,19 +296,20 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 ///
 /// ```
 /// # use lambert_w::lambert_w;
-/// let w = lambert_w(1_000, 0.0, f64::NAN);
+/// let w = lambert_w(1_000, 0.0, f64::NAN, f64::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
-    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im));
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64, tol: f64) -> (f64, f64) {
+    let w =
+        all_complex_branches::lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im), tol);
     (w.re, w.im)
 }
 
 /// Branch `k` of the complex valued Lambert W function computed
-/// on 32-bit floats with Halley's method.
+/// on 32-bit floats with Halley's method to the given error tolerance.
 ///
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
@@ -327,7 +328,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// use lambert_w::lambert_wf;
 ///
 /// // W_2(1 + 2i)
-/// let w = lambert_wf(2, 1.0, 2.0);
+/// let w = lambert_wf(2, 1.0, 2.0, f32::EPSILON);
 ///
 /// assert_eq!(w, (-1.6869138, 11.962631));
 /// ```
@@ -336,7 +337,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 ///
 /// ```
 /// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(-13, f32::INFINITY, 0.0);
+/// let w = lambert_wf(-13, f32::INFINITY, 0.0, f32::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -345,80 +346,14 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 ///
 /// ```
 /// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(1_000, 0.0, f32::NAN);
+/// let w = lambert_wf(1_000, 0.0, f32::NAN, f32::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
-    let w = all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im));
+pub fn lambert_wf(k: i16, z_re: f32, z_im: f32, tol: f32) -> (f32, f32) {
+    let w =
+        all_complex_branches::lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im), tol);
     (w.re, w.im)
-}
-
-/// Enables evaluation of the principal and secondary branches of the Lambert W function
-/// on the types that implement this trait.
-#[deprecated(
-    since = "1.1.0",
-    note = "use the functions directly or create your own trait, the `lambert_w` crate is not the place for making such API decisions for others."
-)]
-pub trait LambertW {
-    /// The type returned by the Lambert W functions when acting on a value of type `Self`.
-    type Output;
-
-    /// The principal branch of the Lambert W function.
-    fn lambert_w0(self) -> Self::Output;
-
-    /// The secondary branch of the Lambert W function.
-    fn lambert_wm1(self) -> Self::Output;
-}
-
-#[allow(deprecated)]
-impl LambertW for f32 {
-    type Output = Self;
-    /// The principal branch of the Lambert W function.
-    ///
-    /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
-    ///
-    /// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN).
-    ///
-    /// Delegates to the [`lambert_w0f`] function.
-    #[inline]
-    fn lambert_w0(self) -> Self::Output {
-        lambert_w0f(self)
-    }
-    /// The secondary branch of the Lambert W function.
-    ///
-    /// Evaluated with the approximation with 24-bits of accuracy from the paper, but on 32-bit floats.
-    ///
-    /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN).
-    ///
-    /// Delegates to the [`lambert_wm1f`] function.
-    #[inline]
-    fn lambert_wm1(self) -> Self::Output {
-        lambert_wm1f(self)
-    }
-}
-
-#[allow(deprecated)]
-impl LambertW for f64 {
-    type Output = Self;
-    /// The principal branch of the Lambert W function evaluated to 50 bits of accuracy.
-    ///
-    /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN).
-    ///
-    /// Delegates to the [`lambert_w0`] function.
-    #[inline]
-    fn lambert_w0(self) -> Self::Output {
-        lambert_w0(self)
-    }
-    /// The secondary branch of the Lambert W function evaluated to 50 bits of accuracy.
-    ///
-    /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN).
-    ///
-    /// Delegates to the [`lambert_wm1`] function.
-    #[inline]
-    fn lambert_wm1(self) -> Self::Output {
-        lambert_wm1(self)
-    }
 }

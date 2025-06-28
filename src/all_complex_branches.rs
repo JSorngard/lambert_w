@@ -15,22 +15,18 @@ use core::{
 use crate::NEG_INV_E;
 
 const MAX_ITER: u8 = 30;
-/// If the absolute difference between two consecutive iterations is less than this value,
-/// the iteration stops.
-const PREC: f64 = 1e-30;
 // Remember to change the docstring of `lambert_w_generic` if you change the above values.
 
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for an absolute error
-/// of less than 1e-30.
+/// It performs a maximum of 30 iterations of Halley's method.
 ///
 /// # Panics
 ///
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
+pub fn lambert_w_generic<T, U>(k: U, z: Complex<T>, tol: T) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
@@ -66,7 +62,7 @@ where
 
     // These values are only constructed to help the compliler see that
     // they are the same type as what Complex<T>::abs() returns.
-    let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
+    let abs_tol = Complex::<T>::from(tol).abs();
 
     // endregion: construct constants of the generic type
 
@@ -103,7 +99,7 @@ where
 
         iter += 1;
 
-        if (w - w_prev).abs() <= abs_prec || iter >= MAX_ITER {
+        if (w - w_prev).abs() <= abs_tol || iter >= MAX_ITER {
             return w;
         }
     }
