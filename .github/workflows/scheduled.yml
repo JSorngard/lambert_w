@@ -56,6 +56,9 @@ jobs:
       - name: Install libfontconfig1-dev
         if: hashFiles('Cargo.lock') != ''
         run: sudo apt-get -y install libfontconfig1-dev jq
+      - name: Cache
+        if: hashFiles('Cargo.lock') != ''
+        uses: Swatinem/rust-cache@v2.8.0
       - name: Install cargo-all-features
         if: hashFiles('Cargo.lock') != ''
         uses: taiki-e/install-action@v2
