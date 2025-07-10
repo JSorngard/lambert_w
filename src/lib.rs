@@ -6,6 +6,7 @@
 //! <style>
 //! .rustdoc-hidden { display: none; }
 //! </style>
+//! [`approx`]: https://docs.rs/approx/latest/approx/
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![forbid(unsafe_code)]
