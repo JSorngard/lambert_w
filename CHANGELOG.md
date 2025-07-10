@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.23
+
+- Remove the Back to Top button on docs.rs since it doesn't work without the header.
+
 ## 1.2.22
 
 - Updated the criterion dev-dependency.
