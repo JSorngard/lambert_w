@@ -139,7 +139,7 @@ it can be up to two orders of magnitude slower than them for comparable inputs.
 
 One of the below features must be enabled:
 
-`libm` *(enabled by default)*: use the [`libm`](https://crates.io/crates/libm)
+`libm` *(enabled by default)*: use the [`libm`][]
 crate to compute square roots and logarithms during function evaluation instead
 of the standard library. Does nothing if the `std` feature is enabled.
 
@@ -178,3 +178,4 @@ dual licensed as above, without any additional terms or conditions.
 </div>
 
 [`approx`]: https://crates.io/crates/approx
+[`libm`]: https://crates.io/crates/libm
