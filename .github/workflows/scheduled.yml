@@ -19,6 +19,8 @@ jobs:
     name: ubuntu / nightly
     steps:
       - uses: actions/checkout@v4
+      - name: Update package lists
+        run: sudo apt update
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
       - name: Install libfontconfig1-dev
@@ -48,6 +50,9 @@ jobs:
       - name: Install beta
         if: hashFiles('Cargo.lock') != ''
         uses: dtolnay/rust-toolchain@beta
+      - name: Update package lists
+        if: hashFiles('Cargo.lock') != ''
+        run: sudo apt update
       - name: Install libfontconfig1-dev
         if: hashFiles('Cargo.lock') != ''
         run: sudo apt-get -y install libfontconfig1-dev jq
