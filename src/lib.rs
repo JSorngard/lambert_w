@@ -3,7 +3,7 @@
 
 
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
-// This idea is taken from <https://linebender.org/blog/doc-include>. 
+// This idea is taken from <https://linebender.org/blog/doc-include>.
 //! <style>
 //! .rustdoc-hidden { display: none; }
 //! </style>
