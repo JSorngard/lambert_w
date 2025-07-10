@@ -1,4 +1,5 @@
 <div class = "rustdoc-hidden">
+
 # lambert_w
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
