@@ -1,11 +1,13 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+// These ideas are taken from <https://linebender.org/blog/doc-include>.
+//
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
-// This idea is taken from <https://linebender.org/blog/doc-include>.
 //! <style>
 //! .rustdoc-hidden { display: none; }
 //! </style>
+// These links take precendence over the ones in the readme since they occur first.
 //! [`approx`]: https://docs.rs/approx/latest/approx/
 //! [`libm`]: https://docs.rs/libm/latest/libm/
 #![doc = include_str!("../README.md")]
