@@ -1,3 +1,5 @@
+<div class = "rustdoc-hidden">
+
 # lambert_w
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
@@ -6,6 +8,8 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/JSorngard/lambert_w/rust.yml?logo=github&label=CI)](https://github.com/JSorngard/lambert_w/actions/workflows/rust.yml)
 [![Code Coverage](https://codecov.io/gh/JSorngard/lambert_w/graph/badge.svg?token=F61FO63ZKW)](https://codecov.io/gh/JSorngard/lambert_w)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10491/badge)](https://www.bestpractices.dev/projects/10491)
+
+</div>
 
 This crate provides fast and accurate evaluation of the real valued parts of the
 principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function),
@@ -152,6 +156,8 @@ November 2020.
 
 [⬆️ Back to top](#lambert_w).
 
+<div class = "rustdoc-hidden">
+
 <br>
 
 ### License
@@ -168,3 +174,5 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 </sub>
+
+</div>
