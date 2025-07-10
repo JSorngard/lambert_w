@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.24
+## 1.2.24 (unreleased)
 
 - Link to crates on crates.io when on crates.io and on docs.rs when on docs.rs.
 
