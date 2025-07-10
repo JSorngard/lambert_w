@@ -61,10 +61,9 @@ jobs:
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
-      - name: Update apt
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt update
-      - name: Install libfontconfig1-dev
+    - name: Update apt
+      if: matrix.os == 'ubuntu-latest'       run: sudo apt update
+    - name: Install libfontconfig1-dev
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Test with `libm`
