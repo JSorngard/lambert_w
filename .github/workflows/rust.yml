@@ -61,6 +61,9 @@ jobs:
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
+    - name: Update apt package lists
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt update
     - name: Install libfontconfig1-dev
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get -y install libfontconfig1-dev jq
@@ -102,6 +105,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - name: Update apt package lists
+      run: sudo apt update
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Run plot example with `libm`
@@ -118,6 +123,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
+      - name: Update apt package lists
+        run: sudo apt update 
       - name: Install libfontconfig1-dev
         run: sudo apt-get -y install libfontconfig1-dev jq
       - name: Install cargo-llvm-cov
@@ -154,6 +161,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - name: Update apt package lists
+      run: sudo apt update
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Compile benchmarks with `libm`, but do not run them
@@ -172,6 +181,8 @@ jobs:
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
+    - name: Update apt package lists
+      run: sudo apt update
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
     - name: Set up the environment variable
