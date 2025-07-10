@@ -107,7 +107,7 @@ assert_relative_eq!(
 );
 ```
 
-The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
+The macros in the examples above are from the [`approx`][]
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
 point epsilon, or within an optional absolute or relative difference.
@@ -176,3 +176,5 @@ dual licensed as above, without any additional terms or conditions.
 </sub>
 
 </div>
+
+[`approx`]: https://crates.io/crates/approx
