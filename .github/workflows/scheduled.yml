@@ -23,8 +23,6 @@ jobs:
         run: sudo apt update
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
-      - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
       - name: Install libfontconfig1-dev
         run: sudo apt-get -y install libfontconfig1-dev jq
       - name: Install cargo-all-features
