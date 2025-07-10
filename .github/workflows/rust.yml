@@ -179,12 +179,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
     - name: Update apt package lists
       run: sudo apt update
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Cache
+      uses: Swatinem/rust-cache@v2.8.0
     - name: Compile benchmarks with `libm`, but do not run them
       # There are no benchmarks with "nothing" in their name, hence this command only compiles the benchmarks but does not run them.
       run: cargo bench nothing
