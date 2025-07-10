@@ -157,8 +157,8 @@ November 2020.
 ### License
 
 <sup>
-Licensed under either of <a href="LICENSE-APACHE.txt">Apache License, Version
-2.0</a> or <a href="LICENSE-MIT.txt">MIT license</a> at your option.
+Licensed under either of [Apache License, Version
+2.0](LICENSE-APACHE.txt) or [MIT license](LICENSE-MIT.txt) at your option.
 </sup>
 
 <br>
