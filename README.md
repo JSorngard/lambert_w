@@ -107,7 +107,7 @@ assert_relative_eq!(
 );
 ```
 
-The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
+The macros in the examples above are from the [`approx`][]
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
 point epsilon, or within an optional absolute or relative difference.
@@ -139,7 +139,7 @@ it can be up to two orders of magnitude slower than them for comparable inputs.
 
 One of the below features must be enabled:
 
-`libm` *(enabled by default)*: use the [`libm`](https://crates.io/crates/libm)
+`libm` *(enabled by default)*: use the [`libm`][]
 crate to compute square roots and logarithms during function evaluation instead
 of the standard library. Does nothing if the `std` feature is enabled.
 
@@ -176,3 +176,6 @@ dual licensed as above, without any additional terms or conditions.
 </sub>
 
 </div>
+
+[`approx`]: https://crates.io/crates/approx
+[`libm`]: https://crates.io/crates/libm
