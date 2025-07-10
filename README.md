@@ -154,9 +154,9 @@ rational function approximation with variable transformation**.
 DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128).
 November 2020.
 
-[⬆️ Back to top](#lambert_w).
-
 <div class = "rustdoc-hidden">
+
+[⬆️ Back to top](#lambert_w).
 
 <br>
 
