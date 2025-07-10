@@ -1,6 +1,10 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+
+//! <style>
+//! .rustdoc-hidden { display: none; }
+//! </style>
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![forbid(unsafe_code)]
