@@ -1,7 +1,6 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
 // This idea is taken from <https://linebender.org/blog/doc-include>.
 //! <style>
