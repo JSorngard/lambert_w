@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Updated the criterion dev-dependency.
 - Internal code structure improvements.
 - Documentation improvements.
-- Hide the crate name, badges and license sections of the readme on docs.rs.
+- Hide the crate name, badges, and license sections of the readme on docs.rs.
 
 ## 1.2.21
 
