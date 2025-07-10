@@ -67,14 +67,14 @@ jobs:
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
     - name: Update apt package lists
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt update
     - name: Install libfontconfig1-dev
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Cache
+      uses: Swatinem/rust-cache@v2.8.0
     - name: Test with `libm`
       run: cargo test --no-default-features -F libm
     - name: Test with `std`
@@ -100,11 +100,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - name: Cache
+      uses: Swatinem/rust-cache@v2.8.0 
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-msrv
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
     - name: Verify MSRV with `libm`
       run: cargo msrv verify
     - name: Verify MSRV with `std`
@@ -117,12 +117,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
     - name: Update apt package lists
       run: sudo apt update
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Cache
+      uses: Swatinem/rust-cache@v2.8.0
     - name: Run plot example with `libm`
       run: cargo run --example plot
     - name: Run plot example with `std`
@@ -137,12 +137,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
-      - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
       - name: Update apt package lists
         run: sudo apt update 
       - name: Install libfontconfig1-dev
         run: sudo apt-get -y install libfontconfig1-dev jq
+      - name: Cache
+        uses: Swatinem/rust-cache@v2.8.0
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
       - name: Generate lockfile
@@ -162,11 +162,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      - name: Cache
+        uses: Swatinem/rust-cache@v2.8.0 
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-semver-checks
-      - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
       - name: Verify semver compatibility with `libm`
         run: cargo semver-checks
       - name: Verify semver compatibility with `std`
@@ -179,12 +179,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
     - name: Update apt package lists
       run: sudo apt update
     - name: Install libfontconfig1-dev
       run: sudo apt-get -y install libfontconfig1-dev jq
+    - name: Cache
+      uses: Swatinem/rust-cache@v2.8.0
     - name: Compile benchmarks with `libm`, but do not run them
       # There are no benchmarks with "nothing" in their name, hence this command only compiles the benchmarks but does not run them.
       run: cargo bench nothing
@@ -198,11 +198,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
+    - name: Cache
+      uses: Swatinem/rust-cache@v2.8.0
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-all-features
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
     - name: Update apt package lists
       run: sudo apt update
     - name: Install libfontconfig1-dev
@@ -257,13 +257,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: dtolnay/rust-toolchain@nightly
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-all-features
       - name: Set stable Rust as the default
         run: rustup default stable
       - name: Cache
         uses: Swatinem/rust-cache@v2.8.0
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-all-features 
       - name: Use minimal versions of dependencies
         run: cargo +nightly update -Zminimal-versions
       - name: Check all feature combinations
