@@ -3,11 +3,24 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.22 (unreleased)
+## 1.2.25 (unreleased)
+
+- Use caching to speed up CI.
+
+## 1.2.24
+
+- Link to crate pages on crates.io when on crates.io and on docs.rs when on docs.rs.
+
+## 1.2.23
+
+- Remove the Back to Top button on docs.rs since it doesn't work without the header.
+
+## 1.2.22
 
 - Updated the criterion dev-dependency.
-- Internal code improvements.
+- Internal code structure improvements.
 - Documentation improvements.
+- Hide the crate name, badges, and license sections of the readme on docs.rs.
 
 ## 1.2.21
 

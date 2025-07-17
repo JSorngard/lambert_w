@@ -491,7 +491,7 @@ dependencies = [
 
 [[package]]
 name = "lambert_w"
-version = "1.2.22"
+version = "1.2.24"
 dependencies = [
  "approx",
  "criterion",

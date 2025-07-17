@@ -1,3 +1,5 @@
+<div class = "rustdoc-hidden">
+
 # lambert_w
 
 [![Crates.io Version](https://img.shields.io/crates/v/lambert_w?logo=rust)](https://crates.io/crates/lambert_w)
@@ -6,6 +8,8 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/JSorngard/lambert_w/rust.yml?logo=github&label=CI)](https://github.com/JSorngard/lambert_w/actions/workflows/rust.yml)
 [![Code Coverage](https://codecov.io/gh/JSorngard/lambert_w/graph/badge.svg?token=F61FO63ZKW)](https://codecov.io/gh/JSorngard/lambert_w)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10491/badge)](https://www.bestpractices.dev/projects/10491)
+
+</div>
 
 This crate provides fast and accurate evaluation of the real valued parts of the
 principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function),
@@ -103,7 +107,7 @@ assert_relative_eq!(
 );
 ```
 
-The macros in the examples above are from the [`approx`](https://docs.rs/approx/latest/approx/)
+The macros in the examples above are from the [`approx`][]
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
 point epsilon, or within an optional absolute or relative difference.
@@ -135,8 +139,9 @@ it can be up to two orders of magnitude slower than them for comparable inputs.
 
 One of the below features must be enabled:
 
-`libm` *(enabled by default)*: use the [`libm`](https://crates.io/crates/libm) crate to compute
-square roots and logarithms during function evaluation instead of the standard library. Does nothing if the `std` feature is enabled.
+`libm` *(enabled by default)*: use the [`libm`][]
+crate to compute square roots and logarithms during function evaluation instead
+of the standard library. Does nothing if the `std` feature is enabled.
 
 `std`: use the standard library to compute square roots and logarithms for a
 potential performance gain. When this feature is disabled the crate is `no_std` compatible.
@@ -148,6 +153,8 @@ potential performance gain. When this feature is disabled the crate is `no_std` 
 rational function approximation with variable transformation**.
 DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128).
 November 2020.
+
+<div class = "rustdoc-hidden">
 
 [⬆️ Back to top](#lambert_w).
 
@@ -167,3 +174,8 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
 </sub>
+
+</div>
+
+[`approx`]: https://crates.io/crates/approx
+[`libm`]: https://crates.io/crates/libm
