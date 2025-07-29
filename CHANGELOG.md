@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.25 (unreleased)
 
 - Use caching to speed up CI.
+- Run the scheduled CI jobs on macOS and Windows as well.
 - Update `criterion` dev-dependency to 0.7.0.
 - Update transitive dev-dependencies.
 
