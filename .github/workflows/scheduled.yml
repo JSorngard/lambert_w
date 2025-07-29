@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Update package lists
+        if: matrix.os == 'ubuntu-latest'
         run: sudo apt update
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
@@ -59,7 +60,7 @@ jobs:
         if: hashFiles('Cargo.lock') != ''
         uses: dtolnay/rust-toolchain@beta
       - name: Update package lists
-        if: hashFiles('Cargo.lock') != ''
+        if: hashFiles('Cargo.lock') != '' && matrix.os == 'ubuntu-latest'
         run: sudo apt update
       - name: Install libfontconfig1-dev
         if: hashFiles('Cargo.lock') != '' && matrix.os == 'ubuntu-latest'
