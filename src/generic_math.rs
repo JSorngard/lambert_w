@@ -41,13 +41,13 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
 
 #[cfg(not(target_feature = "fma"))]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn mul_add<T: Float>(acc, x, c) -> T {
+fn mul_add<T: Float>(acc: T, x: T, c: T) -> T {
     acc * x + c
 }
 
 #[cfg(target_feature = "fma")]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-fn mul_add<T: Float>(acc, x, c) -> T {
+fn mul_add<T: Float>(acc: T, x: T, c: T) -> T {
     acc.mul_add(x, c)
 }
 
