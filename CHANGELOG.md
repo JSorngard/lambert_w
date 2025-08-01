@@ -3,10 +3,46 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.25 (unreleased)
+
+- Use caching to speed up CI.
+- Run the scheduled CI jobs on macOS and Windows as well.
+- Update `criterion` dev-dependency to 0.7.0.
+- Update transitive dev-dependencies.
+
+## 1.2.24
+
+- Link to crate pages on crates.io when on crates.io and on docs.rs when on docs.rs.
+
+## 1.2.23
+
+- Remove the Back to Top button on docs.rs since it doesn't work without the header.
+
+## 1.2.22
+
+- Updated the criterion dev-dependency.
+- Internal code structure improvements.
+- Documentation improvements.
+- Hide the crate name, badges, and license sections of the readme on docs.rs.
+
+## 1.2.21
+
+- Included more digits in the omega constant for clarity.
+
+## 1.2.20
+
+- Updated the copyright year in the source files to 2025.
+
+## 1.2.19
+
+- Corrected a bug that made the secondary branch functions return `NAN`
+ for inputs of 0, when the correct value is -infinity.
+
 ## 1.2.18
 
+- Updated the year in the license files to 2025.
 - Documentation improvements.
-- Update transitive dev-dependencies.
+- Updated transitive dev-dependencies.
 
 ## 1.2.17
 

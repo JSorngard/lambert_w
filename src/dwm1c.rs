@@ -1,11 +1,11 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the secondary
 //! branch of the Lambert W function
 //! with 50 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the `zc` input is negative,
-//! or if the `z` input is `NAN`, or larger than or equal to 0.
+//! or if the `z` input is `NAN`, or larger than 0.
 
 use crate::{
     generic_math::{ln, rational_function, sqrt},
@@ -304,6 +304,8 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
                 -1.360_871_393_694_260_3e-23,
             ],
         )
+    } else if z == 0.0 {
+        f64::NEG_INFINITY
     } else {
         f64::NAN
     }

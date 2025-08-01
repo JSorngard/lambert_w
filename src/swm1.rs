@@ -1,10 +1,10 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the secondary
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
-//! It returns [`f64::NAN`] if the input is smaller than -1/e, is `NAN`, or is larger than or equal to 0.
+//! It returns [`f64::NAN`] if the input is smaller than -1/e, is `NAN`, or is larger than 0.
 
 use crate::{
     generic_math::{ln, rational_function, sqrt},
@@ -196,6 +196,8 @@ pub fn swm1(z: f64) -> f64 {
                 -3.922_277_308_457_406_3e-14,
             ],
         )
+    } else if z == 0.0 {
+        f64::NEG_INFINITY
     } else {
         f64::NAN
     }

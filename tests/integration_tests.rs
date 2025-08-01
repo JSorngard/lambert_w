@@ -1,4 +1,4 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This file contains tests of the public API of the crate.
@@ -64,12 +64,19 @@ fn test_lambert_w0() {
         lambert_w0(9.999_999_999_999_996e14),
         3.110_151_971_159_478e1
     );
+    assert_relative_eq!(
+        lambert_w0(1e15),
+        3.110_151_971_159_477_6991e1,
+        max_relative = 1.1 * f64::EPSILON
+    );
     assert_relative_eq!(lambert_w0(1e16), 3.333_476_076_844_818e1);
     assert_relative_eq!(lambert_w0(1e17), 3.557_237_716_651_325e1);
     assert_relative_eq!(lambert_w0(1e18), 3.781_385_607_558_877e1);
     assert_relative_eq!(lambert_w0(1e19), 4.005_876_916_198_432e1);
     assert_relative_eq!(lambert_w0(1e20), 4.230_675_509_173_839e1);
+    assert_relative_eq!(lambert_w0(1e30), 6.490_463_377_004_612e1);
     assert_relative_eq!(lambert_w0(1e40), 8.763_027_715_194_72e1);
+    assert_relative_eq!(lambert_w0(1e60), 1.332_627_825_918_033e2);
     assert_relative_eq!(lambert_w0(1e80), 1.790_193_137_415_062e2);
     assert_relative_eq!(lambert_w0(1e120), 2.707_091_661_024_979e2);
     assert_relative_eq!(lambert_w0(1e160), 3.625_205_337_614_976e2);
@@ -337,6 +344,7 @@ fn test_lambert_wm1() {
         lambert_wm1(-1.000_000_000_000_008e-145),
         -3.397_029_099_254_29e2
     );
+    assert_eq!(lambert_wm1(0.0), f64::NEG_INFINITY);
     assert!(lambert_wm1(f64::EPSILON).is_nan());
     assert!(lambert_wm1(f64::INFINITY).is_nan());
 
@@ -417,6 +425,7 @@ fn test_sp_lambert_wm1() {
         -3.397_029_099_254_29e2,
         max_relative = 1e-7
     );
+    assert_eq!(sp_lambert_wm1(0.0), f64::NEG_INFINITY);
     assert!(sp_lambert_wm1(f64::EPSILON).is_nan());
     assert!(sp_lambert_wm1(f64::INFINITY).is_nan());
 
@@ -456,6 +465,7 @@ fn test_lambert_wm1f() {
     assert_relative_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1);
     assert_relative_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1);
     assert_relative_eq!(lambert_wm1f(-1e-20), -49.962_986);
+    assert_eq!(lambert_wm1f(0.0), f32::NEG_INFINITY);
     assert!(lambert_wm1f(f32::EPSILON).is_nan());
     assert!(lambert_wm1f(f32::INFINITY).is_nan());
 

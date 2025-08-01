@@ -1,6 +1,15 @@
-// Copyright 2024 Johanna Sörngård
+// Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+// These ideas are taken from <https://linebender.org/blog/doc-include>.
+//
+// This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
+//! <style>
+//! .rustdoc-hidden { display: none; }
+//! </style>
+// These links take precendence over the ones in the readme since they occur first.
+//! [`approx`]: https://docs.rs/approx/latest/approx/
+//! [`libm`]: https://docs.rs/libm/latest/libm/
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![forbid(unsafe_code)]
@@ -41,13 +50,19 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 /// The omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1.
-///
-/// Has been rounded to the closest available `f64` value.
-//        Rounded from 0.567_143_290_409_783_87
-pub const OMEGA: f64 = 0.567_143_290_409_783_8;
-// If we round the last two digits (87) to 9 rustc sets the constant to
-//                     0.567_143_290_409_784
-// which is further away from the true value than what we get if we round them to 8.
+// We include more digits than fit in an f64 because if we write
+// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
+// it looks as if we have rounded it incorrectly,
+// since the correctly rounded value to that many digits would be
+// 0.567_143_290_409_783_9.
+// However, if we write the correctly rounded value the compiler rounds it to
+// 0.567_143_290_409_784, which is further from the true value than
+// 0.567_143_290_409_783_8.
+// To avoid all this confusion for any potential readers of the docs
+// we just add more digits so that the compiler rounds it correctly and then
+// allow the clippy lint.
+#[allow(clippy::excessive_precision)]
+pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
 ///
@@ -61,14 +76,15 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_8;
 ///
 /// let Ω = lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839);
+/// assert_abs_diff_eq!(Ω, 0.567143290409783873);
 /// ```
 ///
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// # use lambert_w::lambert_w0;
-/// assert!(lambert_w0(-1.0).is_nan());
+/// use lambert_w::{lambert_w0, NEG_INV_E};
+///
+/// assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
 /// ```
 ///
 /// # Reference
@@ -102,8 +118,9 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN):
 ///
 /// ```
-/// # use lambert_w::lambert_w0f;
-/// assert!(lambert_w0f(-1.0).is_nan());
+/// use lambert_w::{lambert_w0f, NEG_INV_E};
+///
+/// assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
 /// ```
 ///
 /// # Reference
@@ -133,8 +150,9 @@ pub fn lambert_w0f(z: f32) -> f32 {
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// # use lambert_w::sp_lambert_w0;
-/// assert!(sp_lambert_w0(-1.0).is_nan());
+/// use lambert_w::{sp_lambert_w0, NEG_INV_E};
+///
+/// assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
 /// ```
 ///
 /// # Reference
@@ -164,9 +182,10 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// # use lambert_w::lambert_wm1;
-/// assert!(lambert_wm1(-1.0).is_nan());
-/// assert!(lambert_wm1(1.0).is_nan());
+/// use lambert_w::{lambert_wm1, NEG_INV_E};
+///
+/// assert!(lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
 /// # Reference
@@ -200,9 +219,10 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN):
 ///
 /// ```
-/// # use lambert_w::lambert_wm1f;
-/// assert!(lambert_wm1f(-1.0).is_nan());
-/// assert!(lambert_wm1f(1.0).is_nan());
+/// use lambert_w::{lambert_wm1f, NEG_INV_E};
+///
+/// assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+/// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
 /// ```
 ///
 /// # Reference
@@ -232,9 +252,10 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 /// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// # use lambert_w::sp_lambert_wm1;
-/// assert!(sp_lambert_wm1(-1.0).is_nan());
-/// assert!(sp_lambert_wm1(1.0).is_nan());
+/// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
+///
+/// assert!(sp_lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(sp_lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
 /// # Reference

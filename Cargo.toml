@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "1.2.18"
+version = "1.2.25"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics", "no-std", "no-std::no-alloc"]
@@ -17,16 +17,16 @@ num-complex = { version = "0.4.6", default-features = false }
 num-traits = { version = "0.2.19", default-features = false }
 
 [dev-dependencies]
-approx = { version = "0.5", default-features = false }
-criterion = { version = "0.5", features = ["html_reports"] }
-rand = { version = "0.9", default-features = false, features = ["small_rng"] }
-plotters = { version = "0.3", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"] }
-no-panic = "0.1"
+approx = { version = "0.5.1", default-features = false }
+criterion = { version = "0.7.0", features = ["html_reports"] }
+rand = { version = "0.9.0", default-features = false, features = ["small_rng"] }
+plotters = { version = "0.3.0", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"] }
+no-panic = "0.1.0"
 
 [features]
 default = ["libm"]
-# If the `std` feature is disabled, this feature uses the [`libm`](https://crates.io/crates/libm) crate
-# to compute square roots and logarithms during function evaluation instead of the standard library.
+# Use the [`libm`](https://crates.io/crates/libm) crate
+# to compute square roots and logarithms during function evaluation instead of the standard library. Does nothing if the `std` feature is enabled.
 libm = ["num-traits/libm", "num-complex/libm"]
 # Use the standard library to compute square roots and logarithms for a potential performance gain.
 # When this feature is disabled the crate is `no_std` compatible.
