@@ -40,6 +40,10 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
         .fold(T::zero(), |acc, c| mul_add(acc, x, c))
 }
 
+/// Multiply `acc` by `x` and add `c` to the result.
+///
+/// If the target supports the Fused Multiply-Add (FMA) instruction,
+/// this will use it for better performance and accuracy.
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn mul_add<T: Float>(acc: T, x: T, c: T) -> T {
