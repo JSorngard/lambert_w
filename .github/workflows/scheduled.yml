@@ -29,7 +29,7 @@ jobs:
         uses: dtolnay/rust-toolchain@nightly
       - name: Install libfontconfig1-dev
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get -y install libfontconfig1-dev jq
+        run: sudo apt-get -y install libfontconfig1-dev
       - name: Install cargo-all-features
         uses: taiki-e/install-action@v2
         with:
@@ -64,7 +64,7 @@ jobs:
         run: sudo apt update
       - name: Install libfontconfig1-dev
         if: hashFiles('Cargo.lock') != '' && matrix.os == 'ubuntu-latest'
-        run: sudo apt-get -y install libfontconfig1-dev jq
+        run: sudo apt-get -y install libfontconfig1-dev
       - name: Cache
         if: hashFiles('Cargo.lock') != ''
         uses: Swatinem/rust-cache@v2.8.0
