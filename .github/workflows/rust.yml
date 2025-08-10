@@ -184,12 +184,11 @@ jobs:
     - name: Cache
       uses: Swatinem/rust-cache@v2.8.0
     - name: Compile benchmarks with `libm`, but do not run them
-      # There are no benchmarks with "nothing" in their name, hence this command only compiles the benchmarks but does not run them.
-      run: cargo bench nothing
+      run: cargo bench --no-run
     - name: Compile benchmarks with `std`, but do not run them
-      run: cargo bench --no-default-features --features std nothing
+      run: cargo bench --no-default-features --features std --no-run
     - name: Compile benchmarks with both features, but do not run them
-      run: cargo bench --no-default-features --features libm,std nothing
+      run: cargo bench --no-default-features --features libm,std --no-run
 
   ensure_no_panics:
     runs-on: ubuntu-latest
