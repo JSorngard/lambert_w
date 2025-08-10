@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update `criterion` dev-dependency to 0.7.0.
 - Update transitive dev-dependencies.
 - Skip installing the unneeded `jq` library in CI.
+- Minor improvements to the benchmarks CI job.
 
 ## 1.2.24
 
