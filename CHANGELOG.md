@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update `criterion` dev-dependency to 0.7.0.
 - Update transitive dev-dependencies.
 - Skip installing the unneeded `jq` library in CI.
+- Don't package the benchmarks or examples to crates.io.
 
 ## 1.2.24
 
