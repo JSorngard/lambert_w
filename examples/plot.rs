@@ -34,7 +34,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // Apply the principal branch of the Lambert W function
                 // to the x-value.
                 .map(|x| (x, lambert_w0(x))),
-            &BLACK,
+            BLACK,
         ))?
         .label("W_0(x)")
         .legend(|(x, y)| Rectangle::new([(x - 5, y), (x + 10, y)], BLACK));
@@ -45,15 +45,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .map(|x| f64::from(x) / f64::from(steps))
                 .map(|t| NEG_INV_E - t * (NEG_INV_E + 0.073))
                 .map(|x| (x, lambert_wm1(x))),
-            &RED,
+            RED,
         ))?
         .label("W_-1(x)")
         .legend(|(x, y)| Rectangle::new([(x - 5, y), (x + 10, y)], RED));
 
     chart
         .configure_series_labels()
-        .background_style(&BLACK.mix(0.1))
-        .border_style(&BLACK)
+        .background_style(BLACK.mix(0.1))
+        .border_style(BLACK)
         .draw()?;
 
     root.present()?;
