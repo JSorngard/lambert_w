@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.25 (unreleased)
+## 1.2.25
 
 - Don't package the benchmarks or examples to crates.io.
 - Update `criterion` dev-dependency to 0.7.0.
