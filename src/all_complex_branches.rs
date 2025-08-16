@@ -15,16 +15,16 @@ use core::{
 use crate::NEG_INV_E;
 
 const MAX_ITER: u8 = 30;
-/// If the absolute difference between two consecutive iterations is less than this value,
-/// the iteration stops.
-const PREC: f64 = 1e-30;
-// Remember to change the docstring of `lambert_w_generic` if you change the above values.
+
+// Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for an absolute error
-/// of less than 1e-30.
+/// It performs a maximum of 30 iterations of Halley's method, and looks for a relative error
+/// of less than or equal to floating point epsilon.
+///
+/// Exits early if it gets stuck in a loop.
 ///
 /// # Panics
 ///
@@ -64,9 +64,9 @@ where
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
 
-    // These values are only constructed to help the compliler see that
+    // This value is only constructed to help the compliler see that
     // they are the same type as what Complex<T>::abs() returns.
-    let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
+    let epsilon = Complex::<T>::from(T::epsilon()).abs();
 
     // endregion: construct constants of the generic type
 
@@ -93,6 +93,7 @@ where
     // region: Halley iteration
 
     let mut iter = 0;
+    let mut w_prev_prev: Option<Complex<T>> = None;
     loop {
         let w_prev = w;
         let ew = w.exp();
@@ -103,9 +104,17 @@ where
 
         iter += 1;
 
-        if (w - w_prev).abs() <= abs_prec || iter >= MAX_ITER {
+        // Early return in case we are stuck in a loop.
+        if Some(w) == w_prev_prev {
+            // We return w_prev since w is a step back.
+            return w_prev;
+        }
+
+        if (w - w_prev).abs() / w.abs() <= epsilon || iter >= MAX_ITER {
             return w;
         }
+
+        w_prev_prev = Some(w_prev);
     }
 
     // endregion: Halley iteration
