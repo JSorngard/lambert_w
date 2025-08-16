@@ -108,6 +108,7 @@ where
 
         iter += 1;
 
+        // Early return in case we are stuck in a loop.
         if Some(w) == w_prev_prev {
             // We return w_prev since w is a step back.
             return w_prev;
