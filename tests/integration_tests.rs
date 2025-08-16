@@ -534,6 +534,7 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(0, 0.0, 0.0), (0.0, 0.0));
     assert_eq!(lambert_w(1, 0.0, 0.0), (f64::NEG_INFINITY, 0.0));
     assert_eq!(lambert_w(0, 0.0, 0.0), (0.0, 0.0));
+    assert_eq!(lambert_w(0, 1e-10, 0.0), (9.999_999_999_000_000_000e-11, 0.0));
 
     assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0),
@@ -605,6 +606,7 @@ fn test_32_bit_iterative_version() {
     assert_eq!(lambert_wf(0, 0.0, 0.0), (0.0, 0.0));
     assert_eq!(lambert_wf(1, 0.0, 0.0), (f32::NEG_INFINITY, 0.0));
     assert_eq!(lambert_wf(0, 0.0, 0.0), (0.0, 0.0));
+    assert_eq!(lambert_wf(0, 1e-10, 0.0), (9.999_999_999e-11, 0.0));
 
     assert_complex_approx_eq!(
         lambert_wf(0, NEG_INV_E as f32 + 0.1, 0.0),
