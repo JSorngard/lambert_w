@@ -7,7 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - The complex Lambert W functions now return early if they get stuck in a loop.
 - The complex Lambert W functions now switch to use the absolute error
- if the relative error becomes undefined (such as if the correct function output is 0).
+ if the relative error becomes undefined
+ (such as if the correct function output is 0).
 
 ## 1.2.25
 
