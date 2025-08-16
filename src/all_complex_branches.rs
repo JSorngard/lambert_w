@@ -16,7 +16,7 @@ use crate::NEG_INV_E;
 
 const MAX_ITER: u8 = 30;
 
-// Remember to change the docstring of `lambert_w_generic` if you change the above values.
+// Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
