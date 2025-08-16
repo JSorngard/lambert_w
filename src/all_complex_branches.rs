@@ -18,7 +18,7 @@ const MAX_ITER: u8 = 30;
 /// If the difference between two consecutive iterations is less than this value,
 /// the iteration stops. Treated as a relative difference if that is well defined,
 /// otherwise an absolute difference.
-const PREC: f64 = 1e-30;
+const PREC: f64 = f64::EPSILON;
 // Remember to change the docstring of `lambert_w_generic` if you change the above values.
 
 /// This is a generic implementation of the Lambert W function.
