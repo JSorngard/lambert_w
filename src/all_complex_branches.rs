@@ -27,7 +27,7 @@ const PREC: f64 = 1e-30;
 /// It performs a maximum of 30 iterations of Halley's method, and looks for an error
 /// of less than 1e-30.
 /// This error is relative if relative errors are defined and absolute otherwise.
-/// 
+///
 /// Exits early if it gets stuck in a loop.
 ///
 /// # Panics
@@ -142,7 +142,7 @@ where
 /// Carefully determines the initial search point for Halley's method.
 ///
 /// # Panics
-/// 
+///
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn determine_start_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
