@@ -15,16 +15,20 @@ use core::{
 use crate::NEG_INV_E;
 
 const MAX_ITER: u8 = 30;
-/// If the absolute difference between two consecutive iterations is less than this value,
-/// the iteration stops.
+/// If the difference between two consecutive iterations is less than this value,
+/// the iteration stops. Treated as a relative difference if that is well defined,
+/// otherwise an absolute difference.
 const PREC: f64 = 1e-30;
 // Remember to change the docstring of `lambert_w_generic` if you change the above values.
 
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for an absolute error
+/// It performs a maximum of 30 iterations of Halley's method, and looks for an error
 /// of less than 1e-30.
+/// This error is relative if relative errors are defined and absolute otherwise.
+/// 
+/// Exits early if it gets stuck in a loop.
 ///
 /// # Panics
 ///
@@ -93,6 +97,7 @@ where
     // region: Halley iteration
 
     let mut iter = 0;
+    let mut w_prev_prev: Option<Complex<T>> = None;
     loop {
         let w_prev = w;
         let ew = w.exp();
@@ -103,9 +108,31 @@ where
 
         iter += 1;
 
-        if (w - w_prev).abs() <= abs_prec || iter >= MAX_ITER {
+        if Some(w) == w_prev_prev {
+            // We return w_prev since w is a step back.
+            return w_prev;
+        }
+
+        // Use relative precision if it is well defined,
+        // otherwise use absolute precision.
+        // This is because if the right answer is close enough to zero
+        // the relative precision becomes meaningless,
+        // as a float division by zero becomes either infinity or NAN.
+        let prec = {
+            let abs_prec = (w - w_prev).abs();
+            let rel_prec = abs_prec / w.abs();
+            if Float::is_finite(rel_prec) {
+                rel_prec
+            } else {
+                abs_prec
+            }
+        };
+
+        if prec <= abs_prec || iter >= MAX_ITER {
             return w;
         }
+
+        w_prev_prev = Some(w_prev);
     }
 
     // endregion: Halley iteration
@@ -114,7 +141,7 @@ where
 /// Carefully determines the initial search point for Halley's method.
 ///
 /// # Panics
-///
+/// 
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn determine_start_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
