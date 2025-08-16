@@ -15,18 +15,14 @@ use core::{
 use crate::NEG_INV_E;
 
 const MAX_ITER: u8 = 30;
-/// If the difference between two consecutive iterations is less than this value,
-/// the iteration stops. Treated as a relative difference if that is well defined,
-/// otherwise an absolute difference.
-const PREC: f64 = f64::EPSILON;
+
 // Remember to change the docstring of `lambert_w_generic` if you change the above values.
 
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for an error
-/// of less than 1e-30.
-/// This error is relative if relative errors are defined and absolute otherwise.
+/// It performs a maximum of 30 iterations of Halley's method, and looks for a relative error
+/// of less than or equal to floating point epsilon.
 ///
 /// Exits early if it gets stuck in a loop.
 ///
@@ -68,9 +64,9 @@ where
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
 
-    // These values are only constructed to help the compliler see that
+    // This value is only constructed to help the compliler see that
     // they are the same type as what Complex<T>::abs() returns.
-    let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
+    let epsilon = Complex::<T>::from(T::epsilon()).abs();
 
     // endregion: construct constants of the generic type
 
@@ -114,22 +110,7 @@ where
             return w_prev;
         }
 
-        // Use relative precision if it is well defined,
-        // otherwise use absolute precision.
-        // This is because if the right answer is close enough to zero
-        // the relative precision becomes meaningless,
-        // as a float division by zero becomes either infinity or NAN.
-        let prec = {
-            let abs_prec = (w - w_prev).abs();
-            let rel_prec = abs_prec / w.abs();
-            if Float::is_finite(rel_prec) {
-                rel_prec
-            } else {
-                abs_prec
-            }
-        };
-
-        if prec <= abs_prec || iter >= MAX_ITER {
+        if (w - w_prev).abs() / w.abs() <= epsilon || iter >= MAX_ITER {
             return w;
         }
 
