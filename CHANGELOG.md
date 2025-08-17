@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  if the iterations get stuck in a loop.
 - Use a relative error of floating point epsilon instead of a constant value of
  10^(-30) for the error tolerance in the complex Lambert W functions.
+- Improve the description about where the complex Lambert W functions are accurate in the docs.
 
 ## 1.2.25
 
