@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.26 (unreleased)
+
+- Use a relative error of floating point epsilon instead of a constant value of
+ 10^(-30) for the error tolerance in the complex Lmabert W functions.
+
 ## 1.2.25
 
 - Don't package the benchmarks or examples to crates.io.
