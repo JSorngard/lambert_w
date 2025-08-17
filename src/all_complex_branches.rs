@@ -106,7 +106,7 @@ where
 
         if Some(w) == w_prev_prev {
             // If we are stuck in a loop of two values we return the previous one,
-            // since the currentone is a step back.
+            // since the current one is a step back.
             return w_prev;
         }
 
