@@ -21,8 +21,8 @@ const MAX_ITER: u8 = 30;
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for an absolute error
-/// of less than 1e-30.
+/// It performs a maximum of 30 iterations of Halley's method, and looks for a relative error
+/// of less than floating point epsilon.
 ///
 /// # Panics
 ///
@@ -64,7 +64,7 @@ where
 
     // These values are only constructed to help the compliler see that
     // they are the same type as what Complex<T>::abs() returns.
-    let epsilon = Complex::<T>::from(t_from_f64_or_f32::<T>(f64::EPSILON)).abs();
+    let epsilon = Complex::<T>::from(T::epsilon()).abs();
 
     // endregion: construct constants of the generic type
 
