@@ -273,7 +273,8 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
-/// Close to the branch cut at -1/e this function may be slightly less accurate.
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
 ///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions instead.
@@ -322,7 +323,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
-/// Close to the branch cut at -1/e this function may be slightly less accurate.
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
 ///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0f`] or [`lambert_wm1f`] functions instead.
