@@ -62,8 +62,8 @@ where
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
 
-    // These values are only constructed to help the compliler see that
-    // they are the same type as what Complex<T>::abs() returns.
+    // This value is only constructed to help the compliler see that
+    // it is the same type as what Complex<T>::abs() returns.
     let epsilon = Complex::<T>::from(T::epsilon()).abs();
 
     // endregion: construct constants of the generic type
