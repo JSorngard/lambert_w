@@ -8,7 +8,7 @@ use num_complex::{Complex, ComplexFloat};
 use num_traits::{Float, FromPrimitive, Signed};
 
 use core::{
-    f64::{self, consts::{E, PI}},
+    f64::consts::{E, PI},
     ops::{Add, Mul, Sub, SubAssign},
 };
 
