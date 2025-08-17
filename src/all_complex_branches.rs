@@ -91,6 +91,7 @@ where
     // region: Halley iteration
 
     let mut iter = 0;
+    let mut w_prev_prev = None;
     loop {
         let w_prev = w;
         let ew = w.exp();
@@ -101,9 +102,17 @@ where
 
         iter += 1;
 
+        if Some(w) == w_prev_prev {
+            // If we are stuck in a loop of two values we return the previous one,
+            // since the current one is a step back.
+            return w_prev;
+        }
+
         if (w - w_prev).abs() / w.abs() <= epsilon || iter >= MAX_ITER {
             return w;
         }
+
+        w_prev_prev = Some(w);
     }
 
     // endregion: Halley iteration
