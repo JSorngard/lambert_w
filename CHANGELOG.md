@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.26 (unreleased)
+
+- Return early from the complex Lambert W functions
+ if the iterations get stuck in a loop.
+
 ## 1.2.25
 
 - Don't package the benchmarks or examples to crates.io.
