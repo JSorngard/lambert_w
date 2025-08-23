@@ -173,3 +173,5 @@ dual licensed as above, without any additional terms or conditions.
 [`libm`]: https://crates.io/crates/libm
 
 <br/><br/>
+
+### References
