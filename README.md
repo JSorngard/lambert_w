@@ -20,8 +20,6 @@ on the complex plane.
 The crate is `no_std` compatible, but can optionally depend on the standard
 library through features for a potential performance gain.
 
-[^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**. DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
-
 ## Method and implementation
 
 Fukushima's method does not allocate, recurse, or iterate.
@@ -165,3 +163,5 @@ dual licensed as above, without any additional terms or conditions.
 [`libm`]: https://crates.io/crates/libm
 
 ## References
+
+[^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**. DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
