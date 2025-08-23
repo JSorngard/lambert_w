@@ -535,6 +535,11 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(1, 0.0, 0.0), (f64::NEG_INFINITY, 0.0));
 
     assert_complex_approx_eq!(
+        lambert_w(-1, -1e-80, 0.0),
+        (-189.450_937_525_646_627_592, 0.0)
+    );
+
+    assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0),
         (-0.399_382_452_539_780_7, 0.0)
     );
