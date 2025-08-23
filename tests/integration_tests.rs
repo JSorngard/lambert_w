@@ -526,6 +526,14 @@ macro_rules! assert_complex_approx_eq {
 }
 
 #[test]
+fn test_iterative_close_to_zero() {
+    assert_complex_approx_eq!(
+        lambert_w(-1, -1e-80, 0.0),
+        (-189.450_937_525_646_627_592, 0.0)
+    );
+}
+
+#[test]
 fn test_iterative_version() {
     assert_eq!(lambert_w(0, NEG_INV_E, 0.0), (-1.0, 0.0));
     assert_eq!(lambert_w(0, 1.0, 0.0), (OMEGA, 0.0));
@@ -533,11 +541,6 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(0, 2.0, 0.0), (0.8526055020137255, 0.0));
     assert_eq!(lambert_w(0, 0.0, 0.0), (0.0, 0.0));
     assert_eq!(lambert_w(1, 0.0, 0.0), (f64::NEG_INFINITY, 0.0));
-
-    assert_complex_approx_eq!(
-        lambert_w(-1, -1e-80, 0.0),
-        (-189.450_937_525_646_627_592, 0.0)
-    );
 
     assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0),
