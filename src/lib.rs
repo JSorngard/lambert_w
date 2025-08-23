@@ -1,7 +1,7 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-// These ideas are taken from <https://linebender.org/blog/doc-include>.
+// These markdown ideas are taken from <https://linebender.org/blog/doc-include>.
 //
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
 //! <style>
@@ -10,6 +10,8 @@
 // These links take precendence over the ones in the readme since they occur first.
 //! [`approx`]: https://docs.rs/approx/latest/approx/
 //! [`libm`]: https://docs.rs/libm/latest/libm/
+//! [Apache License, Version 2.0]: https://docs.rs/crate/lambert_w/latest/source/LICENSE-APACHE.txt
+//! [MIT license]: https://docs.rs/crate/lambert_w/latest/source/LICENSE-MIT.txt
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![forbid(unsafe_code)]
