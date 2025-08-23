@@ -1,7 +1,7 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-// These ideas are taken from <https://linebender.org/blog/doc-include>.
+// These markdown ideas are taken from <https://linebender.org/blog/doc-include>.
 //
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
 //! <style>
