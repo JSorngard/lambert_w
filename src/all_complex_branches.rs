@@ -95,6 +95,7 @@ where
     loop {
         let w_prev = w;
         let ew = w.exp();
+        println!("w={w}, e^w={ew}");
         let wew = w * ew;
         let wew_d = ew + wew;
         let wew_dd = ew + wew_d;
