@@ -97,7 +97,8 @@ where
         let w_prev = w;
         let ew = w.exp();
         // Simplified form of 2*((w*e^w - z)*(e^w + w*e^w))/(2*(e^w + w*e^w)^2 - (w*e^w - z)*(2e^w + w*e^w)).
-        w -= d_two * (w + d_one) * (w * ew - z) / (ew * (w * w + d_two * w + d_two) + (w + d_two) * z);
+        w -= d_two * (w + d_one) * (w * ew - z)
+            / (ew * (w * w + d_two * w + d_two) + (w + d_two) * z);
 
         iter += 1;
 
