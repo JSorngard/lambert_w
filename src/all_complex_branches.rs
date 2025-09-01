@@ -14,6 +14,8 @@ use core::{
 
 use crate::NEG_INV_E;
 
+const MAX_ITER: u8 = u8::MAX;
+
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
 /// This is a generic implementation of the Lambert W function.
@@ -90,19 +92,14 @@ where
     // region: Halley iteration
 
     let mut w_prev_prev = None;
+    let mut iter = 0;
     loop {
         let w_prev = w;
         let ew = w.exp();
-        let wew = w *ew;
-
-        if w.abs() > Complex::<T>::from(t_from_f64_or_f32::<T>(60.0)).abs() {
-            let wp1 = w + d_one;
-            w -= d_two * ((wew - z).ln() + w + wp1.ln() - (d_two*(d_two*w).exp()*wp1*wp1 - (wew - z)*ew*(d_two + w)).ln()).exp();
-        } else {
-            let wew_d = ew + wew;
-            let wew_dd = ew + wew_d;
-            w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
-        }
+        // Simplified form of 2*((w*e^w - z)*(e^w + w*e^w))/(2*(e^w + w*e^w)^2 - (w*e^w - z)*(2e^w + w*e^w)).
+        w -= d_two * (w + d_one) * (w * ew - z) / (ew * (w * w + d_two * w + d_two) + (w + d_two) * z);
+        
+        iter += 1;
 
         if Some(w) == w_prev_prev {
             // If we are stuck in a loop of two values we return the previous one,
@@ -110,7 +107,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= epsilon {
+        if ((w - w_prev) / w).abs() <= epsilon || iter >= MAX_ITER{
             return w;
         }
 
