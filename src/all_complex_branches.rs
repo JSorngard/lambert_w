@@ -98,7 +98,7 @@ where
         let ew = w.exp();
         // Simplified form of 2*((w*e^w - z)*(e^w + w*e^w))/(2*(e^w + w*e^w)^2 - (w*e^w - z)*(2e^w + w*e^w)).
         w -= d_two * (w + d_one) * (w * ew - z) / (ew * (w * w + d_two * w + d_two) + (w + d_two) * z);
-        
+
         iter += 1;
 
         if Some(w) == w_prev_prev {
@@ -107,7 +107,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= epsilon || iter >= MAX_ITER{
+        if ((w - w_prev) / w).abs() <= epsilon || iter >= MAX_ITER {
             return w;
         }
 
