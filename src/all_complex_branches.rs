@@ -110,7 +110,7 @@ where
             return w_prev;
         }
 
-        if (w - w_prev).abs() / w.abs() <= epsilon {
+        if ((w - w_prev) / w).abs() <= epsilon {
             return w;
         }
 
