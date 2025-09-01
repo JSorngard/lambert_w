@@ -14,7 +14,7 @@ use core::{
 
 use crate::NEG_INV_E;
 
-const MAX_ITER: u8 = 30;
+const MAX_ITER: u8 = 100;
 
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
@@ -36,7 +36,8 @@ where
         + From<U>
         + Mul<Complex<T>, Output = Complex<T>>
         + Add<Complex<T>, Output = Complex<T>>
-        + Sub<Complex<T>, Output = Complex<T>>,
+        + Sub<Complex<T>, Output = Complex<T>>
+        + core::fmt::Display,
     Complex<T>: ComplexFloat
         + SubAssign
         + Mul<T, Output = Complex<T>>
@@ -95,11 +96,16 @@ where
     loop {
         let w_prev = w;
         let ew = w.exp();
-        println!("w={w}, e^w={ew}");
-        let wew = w * ew;
-        let wew_d = ew + wew;
-        let wew_dd = ew + wew_d;
-        w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
+        let wew = w *ew;
+
+        if w.abs() > Complex::<T>::from(t_from_f64_or_f32::<T>(60.0)).abs() {
+            let wp1 = w + d_one;
+            w -= (d_two.ln() + (wew - z).ln() + w + wp1.ln() - (d_two*(d_two*w).exp()*wp1*wp1 - (wew - z)*ew*(d_two + w)).ln()).exp();
+        } else {
+            let wew_d = ew + wew;
+            let wew_dd = ew + wew_d;
+            w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
+        }
 
         iter += 1;
 
