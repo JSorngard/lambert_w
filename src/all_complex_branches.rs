@@ -36,8 +36,7 @@ where
         + From<U>
         + Mul<Complex<T>, Output = Complex<T>>
         + Add<Complex<T>, Output = Complex<T>>
-        + Sub<Complex<T>, Output = Complex<T>>
-        + core::fmt::Display,
+        + Sub<Complex<T>, Output = Complex<T>>,
     Complex<T>: ComplexFloat
         + SubAssign
         + Mul<T, Output = Complex<T>>
