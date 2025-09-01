@@ -14,7 +14,7 @@ use core::{
 
 use crate::NEG_INV_E;
 
-const MAX_ITER: u8 = 30;
+const MAX_ITER: u8 = u8::MAX;
 
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
@@ -90,15 +90,14 @@ where
 
     // region: Halley iteration
 
-    let mut iter = 0;
     let mut w_prev_prev = None;
+    let mut iter = 0;
     loop {
         let w_prev = w;
         let ew = w.exp();
-        let wew = w * ew;
-        let wew_d = ew + wew;
-        let wew_dd = ew + wew_d;
-        w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
+        // Simplified form of 2*((w*e^w - z)*(e^w + w*e^w))/(2*(e^w + w*e^w)^2 - (w*e^w - z)*(2e^w + w*e^w)).
+        w -= d_two * (w + d_one) * (w * ew - z)
+            / (ew * (w * w + d_two * w + d_two) + (w + d_two) * z);
 
         iter += 1;
 
@@ -108,7 +107,7 @@ where
             return w_prev;
         }
 
-        if (w - w_prev).abs() / w.abs() <= epsilon || iter >= MAX_ITER {
+        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER {
             return w;
         }
 
