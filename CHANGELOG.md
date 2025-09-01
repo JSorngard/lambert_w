@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Return early from the complex Lambert W functions
  if the iterations get stuck in a loop.
+- Use a better expression for the iteration step in the complex Lambert W functions
+ that remains accurate closer to poles.
+- Increase the maximum number of iterations in the implementation of the complex
+ Lambert W functions such that it has a chance to converge for more extreme inputs.
 - Use a relative error of floating point epsilon instead of a constant value of
  10^(-30) for the error tolerance in the complex Lambert W functions.
 - Improve the description about where the complex Lambert W functions
