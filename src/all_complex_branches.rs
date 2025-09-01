@@ -14,7 +14,7 @@ use core::{
 
 use crate::NEG_INV_E;
 
-const MAX_ITER: u8 = 100;
+const MAX_ITER: u8 = 30;
 
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
@@ -100,7 +100,7 @@ where
 
         if w.abs() > Complex::<T>::from(t_from_f64_or_f32::<T>(60.0)).abs() {
             let wp1 = w + d_one;
-            w -= (d_two.ln() + (wew - z).ln() + w + wp1.ln() - (d_two*(d_two*w).exp()*wp1*wp1 - (wew - z)*ew*(d_two + w)).ln()).exp();
+            w -= (t_from_f64_or_f32::<T>(core::f64::consts::LN_2) + (wew - z).ln() + w + wp1.ln() - (d_two*(d_two*w).exp()*wp1*wp1 - (wew - z)*ew*(d_two + w)).ln()).exp();
         } else {
             let wew_d = ew + wew;
             let wew_dd = ew + wew_d;
