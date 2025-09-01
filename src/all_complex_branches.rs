@@ -14,8 +14,6 @@ use core::{
 
 use crate::NEG_INV_E;
 
-const MAX_ITER: u8 = 30;
-
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
 /// This is a generic implementation of the Lambert W function.
@@ -91,7 +89,6 @@ where
 
     // region: Halley iteration
 
-    let mut iter = 0;
     let mut w_prev_prev = None;
     loop {
         let w_prev = w;
@@ -100,14 +97,12 @@ where
 
         if w.abs() > Complex::<T>::from(t_from_f64_or_f32::<T>(60.0)).abs() {
             let wp1 = w + d_one;
-            w -= (t_from_f64_or_f32::<T>(core::f64::consts::LN_2) + (wew - z).ln() + w + wp1.ln() - (d_two*(d_two*w).exp()*wp1*wp1 - (wew - z)*ew*(d_two + w)).ln()).exp();
+            w -= d_two * ((wew - z).ln() + w + wp1.ln() - (d_two*(d_two*w).exp()*wp1*wp1 - (wew - z)*ew*(d_two + w)).ln()).exp();
         } else {
             let wew_d = ew + wew;
             let wew_dd = ew + wew_d;
             w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
         }
-
-        iter += 1;
 
         if Some(w) == w_prev_prev {
             // If we are stuck in a loop of two values we return the previous one,
@@ -115,7 +110,7 @@ where
             return w_prev;
         }
 
-        if (w - w_prev).abs() / w.abs() <= epsilon || iter >= MAX_ITER {
+        if (w - w_prev).abs() / w.abs() <= epsilon {
             return w;
         }
 
