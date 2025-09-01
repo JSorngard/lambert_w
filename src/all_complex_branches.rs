@@ -107,7 +107,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= epsilon || iter >= MAX_ITER {
+        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER {
             return w;
         }
 
