@@ -21,7 +21,7 @@ const MAX_ITER: u8 = u8::MAX;
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for a relative error
+/// It performs a maximum of 255 iterations of Halley's method, and looks for a relative error
 /// of less than floating point epsilon.
 ///
 /// # Panics
