@@ -146,6 +146,8 @@ of the standard library. Does nothing if the `std` feature is enabled.
 `std`: use the standard library to compute square roots and logarithms for a
 potential performance gain. When this feature is disabled the crate is `no_std` compatible.
 
+<div class = "rustdoc-hidden">
+
 ## License
 
 Licensed under either of [Apache License, Version 2.0][]
@@ -154,6 +156,8 @@ or [MIT license][] at your option.
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
+
+</div>
 
 [`approx`]: https://crates.io/crates/approx
 [`libm`]: https://crates.io/crates/libm
