@@ -68,9 +68,6 @@ jobs:
     - name: Update apt package lists
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt update
-    - name: Install libfontconfig1-dev
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
       uses: Swatinem/rust-cache@v2.8.0
     - name: Test with `libm`
@@ -117,8 +114,6 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - name: Update apt package lists
       run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
       uses: Swatinem/rust-cache@v2.8.0
     - name: Run plot example with `libm`
@@ -137,8 +132,6 @@ jobs:
           components: llvm-tools-preview
       - name: Update apt package lists
         run: sudo apt update 
-      - name: Install libfontconfig1-dev
-        run: sudo apt-get -y install libfontconfig1-dev
       - name: Cache
         uses: Swatinem/rust-cache@v2.8.0
       - name: Install cargo-llvm-cov
@@ -179,8 +172,6 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
     - name: Update apt package lists
       run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
       uses: Swatinem/rust-cache@v2.8.0
     - name: Compile benchmarks with `libm`, but do not run them
@@ -202,8 +193,6 @@ jobs:
         tool: cargo-all-features
     - name: Update apt package lists
       run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Set up the environment variable
       run: echo "LAMBERT_W_ENSURE_NO_PANICS=1" >> $GITHUB_ENV
     - name: Check the crate for panics
