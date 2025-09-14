@@ -84,7 +84,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 /// ```
 /// use lambert_w::{lambert_w0, NEG_INV_E};
 ///
-/// assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// ```
 ///
 /// # Reference
@@ -120,7 +120,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// ```
 /// use lambert_w::{lambert_w0f, NEG_INV_E};
 ///
-/// assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+/// assert!(lambert_w0f((NEG_INV_E as f32).next_down()).is_nan());
 /// ```
 ///
 /// # Reference
@@ -152,7 +152,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 /// ```
 /// use lambert_w::{sp_lambert_w0, NEG_INV_E};
 ///
-/// assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(sp_lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// ```
 ///
 /// # Reference
@@ -184,7 +184,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// ```
 /// use lambert_w::{lambert_wm1, NEG_INV_E};
 ///
-/// assert!(lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(lambert_wm1(NEG_INV_E.next_down()).is_nan());
 /// assert!(lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
@@ -221,7 +221,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// ```
 /// use lambert_w::{lambert_wm1f, NEG_INV_E};
 ///
-/// assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+/// assert!(lambert_wm1f((NEG_INV_E as f32).next_down()).is_nan());
 /// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
 /// ```
 ///
@@ -254,7 +254,7 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 /// ```
 /// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
 ///
-/// assert!(sp_lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(sp_lambert_wm1(NEG_INV_E.next_down()).is_nan());
 /// assert!(sp_lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
