@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Hide license section on docs.rs.
 - Update transitive dev-dependencies.
+- Improvements to documentation.
 
 ## 1.2.26
 
