@@ -44,7 +44,7 @@ where
         + Sub<T, Output = Complex<T>>,
 {
     // Early return if we know we can not compute an answer.
-    if z.is_nan() || z.is_infinite() {
+    if !z.is_finite() {
         return Complex::<T>::new(T::nan(), T::nan());
     }
 
@@ -107,8 +107,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER || w.is_infinite() || w.is_nan()
-        {
+        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER || !w.is_finite() {
             return w;
         }
 
