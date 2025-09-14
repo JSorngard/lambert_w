@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.27 (unreleased)
 
-- Early return from the complex Lambert W functions
+- Return early from the complex Lambert W functions
  if the answer is computed to be NaN or infinity.
 - Hide license section on docs.rs.
 - Update transitive dev-dependencies.
