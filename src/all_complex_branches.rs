@@ -107,7 +107,8 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER {
+        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER || w.is_infinite() || w.is_nan()
+        {
             return w;
         }
 
