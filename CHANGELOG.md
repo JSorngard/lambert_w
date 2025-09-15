@@ -3,7 +3,32 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.25 (unreleased)
+## 1.2.27 (unreleased)
+
+- Return early from the complex Lambert W functions
+ if the answer is computed to be NaN or infinity.
+- Hide license section on docs.rs.
+- Update transitive dev-dependencies.
+- Improvements to documentation.
+
+## 1.2.26
+
+- Return early from the complex Lambert W functions
+ if the iterations get stuck in a loop.
+- Use a better expression for the iteration step in the complex Lambert W functions
+ that remains accurate closer to poles.
+- Increase the maximum number of iterations in the implementation of the complex
+ Lambert W functions such that it has a chance to converge for more extreme inputs.
+- Use a relative error of floating point epsilon instead of a constant value of
+ 10^(-30) for the error tolerance in the complex Lambert W functions.
+- Improve the description about where the complex Lambert W functions
+ can be inaccurate in the docs.
+- Use the native markdown reference functionality for the References section
+ of the readme.
+- Link to the license files that are stored on docs.rs when the documentation
+ is read on docs.rs.
+
+## 1.2.25
 
 - Don't package the benchmarks or examples to crates.io.
 - Update `criterion` dev-dependency to 0.7.0.

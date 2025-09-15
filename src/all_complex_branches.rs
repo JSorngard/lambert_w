@@ -14,17 +14,15 @@ use core::{
 
 use crate::NEG_INV_E;
 
-const MAX_ITER: u8 = 30;
-/// If the absolute difference between two consecutive iterations is less than this value,
-/// the iteration stops.
-const PREC: f64 = 1e-30;
-// Remember to change the docstring of `lambert_w_generic` if you change the above values.
+const MAX_ITER: u8 = u8::MAX;
+
+// Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
-/// It performs a maximum of 30 iterations of Halley's method, and looks for an absolute error
-/// of less than 1e-30.
+/// It performs a maximum of 255 iterations of Halley's method, and looks for a relative error
+/// of less than floating point epsilon.
 ///
 /// # Panics
 ///
@@ -46,7 +44,7 @@ where
         + Sub<T, Output = Complex<T>>,
 {
     // Early return if we know we can not compute an answer.
-    if z.is_nan() || z.is_infinite() {
+    if !z.is_finite() {
         return Complex::<T>::new(T::nan(), T::nan());
     }
 
@@ -64,9 +62,9 @@ where
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
 
-    // These values are only constructed to help the compliler see that
-    // they are the same type as what Complex<T>::abs() returns.
-    let abs_prec = Complex::<T>::from(t_from_f64_or_f32::<T>(PREC)).abs();
+    // This value is only constructed to help the compliler see that
+    // it is the same type as what Complex<T>::abs() returns.
+    let epsilon = Complex::<T>::from(T::epsilon()).abs();
 
     // endregion: construct constants of the generic type
 
@@ -92,20 +90,28 @@ where
 
     // region: Halley iteration
 
+    let mut w_prev_prev = None;
     let mut iter = 0;
     loop {
         let w_prev = w;
         let ew = w.exp();
-        let wew = w * ew;
-        let wew_d = ew + wew;
-        let wew_dd = ew + wew_d;
-        w -= d_two * ((wew - z) * wew_d) / (d_two * wew_d * wew_d - (wew - z) * wew_dd);
+        // Simplified form of 2*((w*e^w - z)*(e^w + w*e^w))/(2*(e^w + w*e^w)^2 - (w*e^w - z)*(2e^w + w*e^w)).
+        w -= d_two * (w + d_one) * (w * ew - z)
+            / (ew * (w * w + d_two * w + d_two) + (w + d_two) * z);
 
         iter += 1;
 
-        if (w - w_prev).abs() <= abs_prec || iter >= MAX_ITER {
+        if Some(w) == w_prev_prev {
+            // If we are stuck in a loop of two values we return the previous one,
+            // since the current one is a step back.
+            return w_prev;
+        }
+
+        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER || !w.is_finite() {
             return w;
         }
+
+        w_prev_prev = Some(w);
     }
 
     // endregion: Halley iteration

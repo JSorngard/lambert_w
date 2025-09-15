@@ -526,6 +526,14 @@ macro_rules! assert_complex_approx_eq {
 }
 
 #[test]
+fn test_iterative_close_to_zero() {
+    // Very close to zero on branches != 0 this function is much less accurate.
+    let w = lambert_w(-1, -1e-80, 0.0);
+    assert_relative_eq!(w.0, -189.450_937_525_646_627_592, max_relative = 0.00001);
+    assert_relative_eq!(w.1, 0.0, max_relative = 1.0);
+}
+
+#[test]
 fn test_iterative_version() {
     assert_eq!(lambert_w(0, NEG_INV_E, 0.0), (-1.0, 0.0));
     assert_eq!(lambert_w(0, 1.0, 0.0), (OMEGA, 0.0));
