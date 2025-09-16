@@ -7,6 +7,11 @@
 //! It returns [`f64::NAN`] if the input is negative or `NAN`,
 //! ane [`f64::INFINITY`] if the input is positive infinity.
 
+// The coefficients in these rational minimax functions all have excessive precision.
+// By keeping the full precision in the source code we can ensure that there is no confusion
+// when comparing with the paper.
+#![allow(clippy::excessive_precision)]
+
 use crate::{
     generic_math::{ln, rational_function, sqrt},
     NEG_INV_E,

@@ -13,7 +13,6 @@
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![forbid(unsafe_code)]
-#![allow(clippy::excessive_precision)]
 
 #[cfg(feature = "std")]
 extern crate std;
@@ -51,6 +50,18 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 /// The omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1.
+// We include more digits than fit in an f64 because if we write
+// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
+// it looks as if we have rounded it incorrectly,
+// since the correctly rounded value to that many digits would be
+// 0.567_143_290_409_783_9.
+// However, if we write the correctly rounded value the compiler rounds it to
+// 0.567_143_290_409_784, which is further from the true value than
+// 0.567_143_290_409_783_8.
+// To avoid all this confusion for any potential readers of the docs
+// we just add more digits so that the compiler rounds it correctly and then
+// allow the clippy lint.
+#[allow(clippy::excessive_precision)]
 pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
