@@ -1,7 +1,7 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-// These ideas are taken from <https://linebender.org/blog/doc-include>.
+// These markdown ideas are taken from <https://linebender.org/blog/doc-include>.
 //
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
 //! <style>
@@ -84,7 +84,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 /// ```
 /// use lambert_w::{lambert_w0, NEG_INV_E};
 ///
-/// assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// ```
 ///
 /// # Reference
@@ -120,7 +120,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// ```
 /// use lambert_w::{lambert_w0f, NEG_INV_E};
 ///
-/// assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+/// assert!(lambert_w0f((NEG_INV_E as f32).next_down()).is_nan());
 /// ```
 ///
 /// # Reference
@@ -152,7 +152,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 /// ```
 /// use lambert_w::{sp_lambert_w0, NEG_INV_E};
 ///
-/// assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(sp_lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// ```
 ///
 /// # Reference
@@ -184,7 +184,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// ```
 /// use lambert_w::{lambert_wm1, NEG_INV_E};
 ///
-/// assert!(lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(lambert_wm1(NEG_INV_E.next_down()).is_nan());
 /// assert!(lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
@@ -221,7 +221,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// ```
 /// use lambert_w::{lambert_wm1f, NEG_INV_E};
 ///
-/// assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
+/// assert!(lambert_wm1f((NEG_INV_E as f32).next_down()).is_nan());
 /// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
 /// ```
 ///
@@ -254,7 +254,7 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 /// ```
 /// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
 ///
-/// assert!(sp_lambert_wm1(NEG_INV_E - f64::EPSILON).is_nan());
+/// assert!(sp_lambert_wm1(NEG_INV_E.next_down()).is_nan());
 /// assert!(sp_lambert_wm1(f64::MIN_POSITIVE).is_nan());
 /// ```
 ///
@@ -273,7 +273,8 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
-/// Close to the branch cut at -1/e this function may be slightly less accurate.
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
 ///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions instead.
@@ -322,7 +323,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
-/// Close to the branch cut at -1/e this function may be slightly less accurate.
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
 ///
 /// If you know you want the principal or secondary branches where they are real valued,
 /// take a look at the [`lambert_w0f`] or [`lambert_wm1f`] functions instead.
