@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.28 (unreleased)
 
 - Keep the full precision coefficients from the paper in the source code without
- truncating them according to clippy.
+ truncating away excessive precision.
 
 ## 1.2.27
 
