@@ -95,7 +95,7 @@ jobs:
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
-    needa: format
+    needs: format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
