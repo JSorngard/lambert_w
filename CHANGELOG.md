@@ -3,6 +3,12 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.28 (unreleased)
+
+- Keep the full precision coefficients from the paper in the source code without
+ truncating away excessive precision.
+ This makes it easier to compare with the paper  even though the numbers don't change in practice.
+
 ## 1.2.27
 
 - Return early from the complex Lambert W functions

@@ -14,7 +14,9 @@
 This crate provides fast and accurate evaluation of the real valued parts of the
 principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function),
 the inverse of x*e^x, with the method of Toshio Fukushima [^1].
-It also provides a slower iterative evaluation method for all branches
+The execution speed is of the same order as computing the natural logarithm,
+and the accuracy is either 24 or 50 bits depending on user choice.
+This crate also provides a slower iterative evaluation method for all branches
 on the complex plane.
 
 The crate is `no_std` compatible, but can optionally depend on the standard
@@ -140,8 +142,8 @@ it can be up to two orders of magnitude slower than them for comparable inputs.
 One of the below features must be enabled:
 
 `libm` *(enabled by default)*: use the [`libm`][]
-crate to compute square roots and logarithms during function evaluation instead
-of the standard library. Does nothing if the `std` feature is enabled.
+crate to compute square roots and logarithms during function evaluation.
+Does nothing if the `std` feature is enabled.
 
 `std`: use the standard library to compute square roots and logarithms for a
 potential performance gain. When this feature is disabled the crate is `no_std` compatible.
