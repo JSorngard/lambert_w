@@ -38,7 +38,7 @@ jobs:
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
       - name: cargo test --locked
-        run: cargo test-all-features --locked
+        run: cargo test-all-features -- --locked
   
   update:
     # This action checks that updating the dependencies of this crate to the latest available that
@@ -78,6 +78,6 @@ jobs:
         run: cargo update
       - name: cargo test
         if: hashFiles('Cargo.lock') != ''
-        run: cargo test-all-features --locked
+        run: cargo test-all-features -- --locked
         env:
           RUSTFLAGS: -D deprecated
