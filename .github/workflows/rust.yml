@@ -95,6 +95,7 @@ jobs:
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
+    needa: format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -112,6 +113,7 @@ jobs:
       run: cargo msrv verify --no-default-features --features libm,std
 
   run_examples:
+    needs: format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -130,6 +132,7 @@ jobs:
       run: cargo run --example plot --no-default-features --features libm,std
 
   coverage:
+    needs: format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -157,6 +160,7 @@ jobs:
           fail_ci_if_error: true
 
   semver-checks:
+    needs: format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -174,6 +178,7 @@ jobs:
         run: cargo semver-checks --only-explicit-features --features libm,std
 
   compile_benchmarks:
+    needs: format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -192,6 +197,7 @@ jobs:
       run: cargo bench --no-default-features --features libm,std --no-run
 
   ensure_no_panics:
+    needs: format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -211,6 +217,7 @@ jobs:
       run: cargo test-all-features -- --profile release-lto
 
   no_std:
+    needs: format
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -228,6 +235,7 @@ jobs:
       run: cargo build --target ${{ matrix.target }}
 
   minimal_dependencies:
+    needs: format
     # This action chooses the oldest version of the dependencies permitted by Cargo.toml to ensure
     # that this crate is compatible with the minimal version that this crate and its dependencies
     # require. This will pickup issues where this create relies on functionality that was introduced
