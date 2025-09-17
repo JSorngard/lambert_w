@@ -55,6 +55,7 @@ jobs:
       run: cargo clippy --no-default-features --features libm,std -- -D warnings
       
   test:
+    needs: format
     strategy:
       matrix:
         toolchain: [stable, beta]
