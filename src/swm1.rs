@@ -5,6 +5,7 @@
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the input is smaller than -1/e, is `NAN`, or is larger than 0.
+//! It is based on the Fortran implementation by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
 // By keeping the full precision in the source code we can ensure that there is no confusion
