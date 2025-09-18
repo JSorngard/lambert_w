@@ -6,7 +6,7 @@
 //! with 50 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the `zc` input is negative,
 //! or if the `z` input is `NAN`, or larger than 0.
-//! It is based on the Fortran implementation by Fukushima.
+//! It is based on the Fortran implementation by Fukushima of the same name.
 
 // The coefficients in these rational minimax functions all have excessive precision.
 // By keeping the full precision in the source code we can ensure that there is no confusion
