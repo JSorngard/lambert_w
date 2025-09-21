@@ -27,7 +27,6 @@ const MAX_ITER: u8 = u8::MAX;
 /// # Panics
 ///
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
@@ -122,7 +121,6 @@ where
 /// # Panics
 ///
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn determine_start_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,

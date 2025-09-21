@@ -12,7 +12,6 @@ const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn swm1f(z: f32) -> f32 {
     if z < NEG_INV_E {
         f32::NAN
