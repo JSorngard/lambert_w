@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Keep the full precision coefficients from the paper in the source code without
  truncating away excessive precision.
  This makes it easier to compare with the paper  even though the numbers don't change in practice.
+- Remove the build script, and thus the static check for panics.
+ This way there are fewer places in the crate that need to be audited by someone
+ that is interested in using it in a serious application.
+ I keep that ability on a separate branch, just in case.
 
 ## 1.2.27
 
