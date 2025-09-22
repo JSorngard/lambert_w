@@ -111,7 +111,7 @@ assert_relative_eq!(
 
 In case the input is outside the domain of the functions, they return `NaN`. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NaN`. 
 
-An input of positive infinity gives positive infinity on the principal branch.
+An input of positive infinity to the principal branch gives positive infinity.
 
 The macros in the examples above are from the [`approx`][]
 crate, and are used in the documentation examples of this crate.
