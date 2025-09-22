@@ -109,6 +109,11 @@ assert_relative_eq!(
 );
 ```
 
+The macros in the examples above are from the [`approx`][]
+crate, and are used in the documentation examples of this crate.
+The assertion passes if the two supplied values are the same to within floating
+point epsilon, or within an optional absolute or relative difference. 
+
 In case the input is outside the domain of the functions, they return `NaN`. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NaN`.
 
 ```rust
@@ -120,11 +125,6 @@ let too_big = lambert_wm1(1.0);
 assert!(too_small.is_nan());
 assert!(too_big.is_nan());
 ```
-
-The macros in the examples above are from the [`approx`][]
-crate, and are used in the documentation examples of this crate.
-The assertion passes if the two supplied values are the same to within floating
-point epsilon, or within an optional absolute or relative difference.
 
 ### Arbitrary branches in the complex plane
 
