@@ -109,7 +109,7 @@ assert_relative_eq!(
 );
 ```
 
-In case the input is outside the domain of the functions, they return [`NAN`][]. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NAN`.
+In case the input is outside the domain of the functions, they return `NaN`. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NaN`.
 
 ```rust
 use lambert_w::{lambert_w0, lambert_wm1};
@@ -183,7 +183,6 @@ dual licensed as above, without any additional terms or conditions.
 
 [`approx`]: https://crates.io/crates/approx
 [`libm`]: https://crates.io/crates/libm
-[`NAN`]: https://doc.rust-lang.org/core/primitive/f32.html#associatedconstant.NAN
 
 ## Reference
 
