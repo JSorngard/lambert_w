@@ -109,7 +109,7 @@ assert_relative_eq!(
 );
 ```
 
-In case the input is outside the domain of the functions, they return [`NAN`][]. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch.
+In case the input is outside the domain of the functions, they return [`NAN`][]. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NAN`.
 
 ```
 use lambert_w::{lambert_w0, lambert_wm1};
