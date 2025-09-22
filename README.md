@@ -114,17 +114,9 @@ crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
 point epsilon, or within an optional absolute or relative difference. 
 
-In case the input is outside the domain of the functions, they return `NaN`. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NaN`.
+In case the input is outside the domain of the functions, they return `NaN`. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch. It also happens if the input is `NaN`. 
 
-```rust
-use lambert_w::{lambert_w0, lambert_wm1};
-
-let too_small = lambert_w0(-1.0);
-let too_big = lambert_wm1(1.0);
-
-assert!(too_small.is_nan());
-assert!(too_big.is_nan());
-```
+An input of positive infinity gives positive infinity on the principal branch.
 
 ### Arbitrary branches in the complex plane
 
