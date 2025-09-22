@@ -109,6 +109,18 @@ assert_relative_eq!(
 );
 ```
 
+In case the input is outside the domain of the functions, they return [`NAN`][]. That happens for values smaller than -1/e on both branches, and values larger than 0 for the secondary branch.
+
+```
+use lambert_w::{lambert_w0, lambert_wm1};
+
+let too_small = lambert_w0(-1.0);
+let too_big = lambert_wm1(1.0);
+
+assert!(too_small.is_nan());
+assert!(too_big.is_nan());
+```
+
 The macros in the examples above are from the [`approx`][]
 crate, and are used in the documentation examples of this crate.
 The assertion passes if the two supplied values are the same to within floating
@@ -171,6 +183,7 @@ dual licensed as above, without any additional terms or conditions.
 
 [`approx`]: https://crates.io/crates/approx
 [`libm`]: https://crates.io/crates/libm
+[`NAN`]: https://doc.rust-lang.org/core/primitive/f32.html#associatedconstant.NAN
 
 ## Reference
 
