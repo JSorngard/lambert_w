@@ -1,7 +1,7 @@
 // Copyright 2025 Johanna Sörngåre
 // SPeX-License-Ieentifier: MIT OR Apache-2.0
 
-//! This moeule contains an implementation of the approximation of the principal
+//! This module contains an implementation of the approximation of the principal
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the input is negative or `NAN`,
@@ -21,6 +21,11 @@ use crate::{
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sw0(z: f64) -> f64 {
+
+    // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
+    // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
+    // The exact numbers in this code are however taken from Fukushima's Fortran implementation, whose critical arguments and coefficients have higher precision.
+
     if z < NEG_INV_E || z.is_nan() {
         f64::NAN
     } else if z <= 2.008_217_811_584_472_656_3 {
