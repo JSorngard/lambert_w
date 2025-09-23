@@ -16,7 +16,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 pub fn sw0f(z: f32) -> f32 {
 
     // The critical arguments and coefficients are the same as in the `sw0` module,
-    // but their precision has been truncated to fit in 32-bit floats. 
+    // but their precision has been truncated to fit in 32-bit floats.
 
     if z < NEG_INV_E || z.is_nan() {
         f32::NAN
