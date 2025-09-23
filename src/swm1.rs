@@ -20,6 +20,11 @@ use crate::{
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn swm1(z: f64) -> f64 {
+
+    // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.
+    // The coefficients in the rational functions are related from the tables 8 and 9 in the paper.
+    // The exact numbers in this code are however taken from Fukushima's Fortran implementation, whose critical arguments and coefficients have higher precision.
+
     if z < NEG_INV_E {
         f64::NAN
     } else if z <= -0.207_293_777_640_384_138_99 {
