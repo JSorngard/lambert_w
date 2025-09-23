@@ -19,7 +19,6 @@ use crate::generic_math::{ln, rational_function, sqrt};
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn dw0c(zc: f64) -> f64 {
-
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are taken from the tables 10 through 14 in the paper.
 
