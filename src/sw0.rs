@@ -23,7 +23,7 @@ use crate::{
 pub fn sw0(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
-    // The exact numbers in this code are however taken from Fukushima's Fortran implementation, whose critical arguments and coefficients have higher precision.
+    // The actual numbers are taken from Fukushima's Fortran implementation.
 
     if z < NEG_INV_E || z.is_nan() {
         f64::NAN
