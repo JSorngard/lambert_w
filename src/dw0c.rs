@@ -21,7 +21,7 @@ use crate::generic_math::{ln, rational_function, sqrt};
 pub fn dw0c(zc: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are related to the ones in the tables 10 through 14 in the paper.
-    // The actual numbers are takes from Fukushima's Fortran implementation.
+    // The actual numbers are taken from Fukushima's Fortran implementation.
 
     if zc < 0.0 || zc.is_nan() {
         f64::NAN
