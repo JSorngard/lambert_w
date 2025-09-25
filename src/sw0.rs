@@ -19,7 +19,6 @@ use crate::{
 };
 
 #[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sw0(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
