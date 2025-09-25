@@ -17,7 +17,6 @@ use crate::{
     INV_SQRT_E, NEG_INV_E,
 };
 
-#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn swm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.

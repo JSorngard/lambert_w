@@ -19,7 +19,6 @@ use crate::{
 };
 
 /// zc = z + 1/e
-#[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
