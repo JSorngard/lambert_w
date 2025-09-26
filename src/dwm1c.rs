@@ -22,9 +22,8 @@ use crate::{
 #[inline(always)]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn dwm1c(z: f64, zc: f64) -> f64 {
-    // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
-    // The coefficients in the rational functions are related to the tables 15 through 18 in the paper.
-    // The actual numbers are taken from Fukushima's Fortran implementation.
+    // The critical arguments used in the if statements are the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
+    // The coefficients in the rational functions are from tables 15 through 18 in the paper.
 
     if zc < 0.0 {
         f64::NAN
