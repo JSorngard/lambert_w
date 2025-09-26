@@ -37,6 +37,8 @@ mod unit_tests;
 // function in the crate can panic using the `no-panic` crate.
 // This is the source of all the `#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]` attributes.
 
+// The Fortran code by Fukushima for `dw0c`, `dwm1c`, `sw0`, and `swm1` can be found at <https://www.researchgate.net/publication/346096162_xlambwtxt_Fortran_90_test_program_package_of_sw0_swm1_dw0c_and_dwm1c_low-_and_high-precision_procedures_computing_primary_and_secondary_branch_of_Lambert_W_function_W_0z_or_W_-1z_by_piecewise_minimax_>.
+
 /// The negative inverse of e (-1/e).
 ///
 /// This is the branch point of the Lambert W function.
