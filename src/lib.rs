@@ -40,7 +40,6 @@ mod unit_tests;
 // function in the crate can panic using the `no-panic` crate.
 // This is the source of all the `#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]` attributes.
 
-
 /// The negative inverse of e (-1/e).
 ///
 /// This is the branch point of the Lambert W function.
