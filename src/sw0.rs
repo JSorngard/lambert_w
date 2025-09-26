@@ -23,7 +23,8 @@ use crate::{
 pub fn sw0(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
-    // The actual numbers are taken from Fukushima's Fortran implementation, which have higher precision.
+    // The actual numbers are taken from Fukushima's Fortran implementation, which have higher precision:
+    // <https://www.researchgate.net/publication/346096162_xlambwtxt_Fortran_90_test_program_package_of_sw0_swm1_dw0c_and_dwm1c_low-_and_high-precision_procedures_computing_primary_and_secondary_branch_of_Lambert_W_function_W_0z_or_W_-1z_by_piecewise_minimax_>.
 
     if z < NEG_INV_E || z.is_nan() {
         f64::NAN
