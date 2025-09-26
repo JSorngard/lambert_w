@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  truncating away excessive precision. The numbers do not change in practice,
  and this makes it easier to compare with the paper.
 - Improvements to documentation.
+- Update transitive dev-dependencies.
 
 ## 1.2.27
 
