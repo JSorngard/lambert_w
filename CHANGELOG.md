@@ -14,7 +14,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Return early from the complex Lambert W functions
  if the answer is computed to be NaN or infinity.
-- Hide license section on docs.rs.
+- Hide license section on docs.rs to not take up so much space for
+ someone just reading the docs.
 - Update transitive dev-dependencies.
 - Improvements to documentation.
 
