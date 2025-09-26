@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.28 (unreleased)
+## 1.2.28
 
 - Keep the full precision coefficients from the paper in the source code without
  truncating away excessive precision. The numbers do not change in practice,
