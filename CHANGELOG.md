@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Keep the full precision coefficients from the paper in the source code without
  truncating away excessive precision. The numbers do not change in practice,
- and this makes it easier to compare with the paper.
+ but this makes it easier to compare with the paper.
 - Improvements to documentation.
 - Update transitive dev-dependencies.
 
