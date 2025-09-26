@@ -1,7 +1,7 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-// The Fortran code by Fukushima for `dw0c`, `dwm1c`, `sw0`, and `swm1` can be found at
+// The Fortran code by Fukushima can be found at
 // <https://www.researchgate.net/publication/346096162_xlambwtxt_Fortran_90_test_program_package_of_sw0_swm1_dw0c_and_dwm1c_low-_and_high-precision_procedures_computing_primary_and_secondary_branch_of_Lambert_W_function_W_0z_or_W_-1z_by_piecewise_minimax_>.
 
 // These markdown ideas are taken from <https://linebender.org/blog/doc-include>.
