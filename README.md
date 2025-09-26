@@ -43,7 +43,7 @@ accuracy (implemented on 64-bit floats) and one with 24 bits
 degree polynomials in the rational functions compared to the one with only 24 bits,
 and thus larger lookup tables.
 
-This crate can evaluate the approximation with 24 bits of accuracy on
+N.B. this crate can evaluate the approximation with 24 bits of accuracy on
 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
 This should result in a reduction in the accuracy to less than 24 bits,
 but the exact magnitude of this reduction has not been quantified by the author
