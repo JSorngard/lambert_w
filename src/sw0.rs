@@ -5,7 +5,7 @@
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the input is negative or `NAN`,
-//! ane [`f64::INFINITY`] if the input is positive infinity.
+//! and [`f64::INFINITY`] if the input is positive infinity.
 //! It is based on the Fortran implementation of the same name by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
