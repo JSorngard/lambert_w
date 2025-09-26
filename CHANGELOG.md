@@ -8,8 +8,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Keep the full precision coefficients from the paper in the source code without
  truncating away excessive precision. The numbers do not change in practice,
  and this makes it easier to compare with the paper.
-- Add a code comment with a link to Fukushima's own Fortran implementation of
- the method.
 - Improvements to documentation.
 
 ## 1.2.27
