@@ -45,8 +45,9 @@ and thus larger lookup tables.
 
 This crate can evaluate the approximation with 24 bits of accuracy on
 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
-This may result in a reduction in the accuracy to less than 24 bits,
-but this reduction has not been quantified by the author of this crate.
+This should result in a reduction in the accuracy to less than 24 bits,
+but the exact magnitude of this reduction has not been quantified by the author
+of this crate.
 
 ## Examples
 
@@ -73,19 +74,6 @@ use approx::assert_abs_diff_eq;
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
 assert_abs_diff_eq!(mln4, -f64::ln(4.0));
-```
-
-Do it on 32-bit floats:
-
-```rust
-use lambert_w::{lambert_w0f, lambert_wm1f};
-use approx::assert_abs_diff_eq;
-
-let Ω = lambert_w0f(1.0);
-let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
-
-assert_abs_diff_eq!(Ω, 0.56714329);
-assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 ```
 
 The implementation can handle extreme inputs just as well:
@@ -126,11 +114,6 @@ use lambert_w::{lambert_w, lambert_wf};
 let w10 = lambert_w(10, 2.5, -3.0);
 
 assert_eq!(w10, (-2.738728537647321, 60.33964127931528));
-
-// Same but 32-bit
-let w10f = lambert_wf(10, 2.5, -3.0);
-
-assert_eq!(w10f, (-2.7387285, 60.33964));
 ```
 
 These functions use Halley's method to iteratively compute a solution.
