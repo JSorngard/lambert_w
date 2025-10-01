@@ -61,7 +61,7 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 /// The omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1:
-/// 
+///
 /// ```
 /// use lambert_w::OMEGA;
 /// use approx::assert_abs_diff_eq;
