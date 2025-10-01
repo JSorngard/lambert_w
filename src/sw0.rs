@@ -5,7 +5,7 @@
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the input is negative or `NAN`,
-//! ane [`f64::INFINITY`] if the input is positive infinity.
+//! and [`f64::INFINITY`] if the input is positive infinity.
 //! It is based on the Fortran implementation of the same name by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
@@ -22,7 +22,7 @@ use crate::{
 pub fn sw0(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
-    // The actual numbers are taken from Fukushima's Fortran implementation.
+    // The actual numbers are taken from Fukushima's Fortran implementation, which have higher precision.
 
     if z < NEG_INV_E || z.is_nan() {
         f64::NAN

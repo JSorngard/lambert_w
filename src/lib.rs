@@ -1,6 +1,9 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+// Fukushima's own Fortran implementation of the method in the paper can be found at
+// https://www.researchgate.net/publication/346096162_xlambwtxt_Fortran_90_test_program_package_of_sw0_swm1_dw0c_and_dwm1c_low-_and_high-precision_procedures_computing_primary_and_secondary_branch_of_Lambert_W_function_W_0z_or_W_-1z_by_piecewise_minimax_
+
 // These markdown ideas are taken from <https://linebender.org/blog/doc-include>.
 //
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
@@ -40,6 +43,14 @@ mod unit_tests;
 /// The negative inverse of e (-1/e).
 ///
 /// This is the branch point of the Lambert W function.
+///
+/// ```
+/// use lambert_w::{lambert_w0, NEG_INV_E};
+/// use approx::assert_abs_diff_eq;
+///
+/// assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
+/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
+/// ```
 //            Rounded from -0.367_879_441_171_442_322
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
 
@@ -49,7 +60,14 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 
 /// The omega constant (Ω).
 ///
-/// Fulfills the equation Ωe^Ω = 1.
+/// Fulfills the equation Ωe^Ω = 1:
+///
+/// ```
+/// use lambert_w::OMEGA;
+/// use approx::assert_abs_diff_eq;
+///
+/// assert_abs_diff_eq!(OMEGA * f64::exp(OMEGA), 1.0);
+/// ```
 // We include more digits than fit in an f64 because if we write
 // 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
 // it looks as if we have rounded it incorrectly,

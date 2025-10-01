@@ -3,17 +3,25 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.28 (unreleased)
+## 1.2.29 (unreleased)
+
+- Add doctests to the public constants.
+
+## 1.2.28
 
 - Keep the full precision coefficients from the paper in the source code without
- truncating away excessive precision.
- This makes it easier to compare with the paper  even though the numbers don't change in practice.
+ truncating away excessive precision. The numbers do not change in practice,
+ but this makes it easier to compare with the paper.
+- Improvements to documentation.
+- CI improvements.
+- Update transitive dev-dependencies.
 
 ## 1.2.27
 
 - Return early from the complex Lambert W functions
  if the answer is computed to be NaN or infinity.
-- Hide license section on docs.rs.
+- Hide license section on docs.rs to not take up so much space for
+ someone just reading the docs.
 - Update transitive dev-dependencies.
 - Improvements to documentation.
 
