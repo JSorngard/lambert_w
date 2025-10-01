@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add doctests to the public constants.
 - Remove all `inline(always)` annotations.
  The compiler is probably better than me at determining if there should be inlining.
+- Add handling of the special case where the input is -1/e.
 
 ## 1.2.28
 
