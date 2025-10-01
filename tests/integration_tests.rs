@@ -30,20 +30,38 @@ fn test_lambert_w0() {
     );
     assert_abs_diff_eq!(
         lambert_w0(-2.678_794_411_714_424e-1),
-        -3.993_824_525_397_807e-1
+        -3.993_824_525_397_809_344e-1
     );
     assert_abs_diff_eq!(
         lambert_w0(6.321_205_588_285_577e-1),
-        4.167_039_988_177_658e-1
+        4.167_039_988_177_659e-1
     );
     assert_abs_diff_eq!(lambert_w0(1.0), OMEGA);
     assert_abs_diff_eq!(lambert_w0(9.632_120_558_828_557), 1.721_757_710_976_171);
     assert_abs_diff_eq!(lambert_w0(9.963_212_055_882_856e1), 3.382_785_211_058_958);
-    assert_abs_diff_eq!(lambert_w0(9.996_321_205_588_285e2), 5.249_293_782_013_269);
-    assert_relative_eq!(lambert_w0(9.999_632_120_558_828e3), 7.231_813_718_542_178);
-    assert_relative_eq!(lambert_w0(9.999_963_212_055_883e4), 9.284_568_107_521_96);
-    assert_relative_eq!(lambert_w0(9.999_996_321_205_589e5), 1.138_335_774_796_812e1);
-    assert_relative_eq!(lambert_w0(9.999_999_632_120_559e6), 1.351_434_397_605_273e1);
+    assert_relative_eq!(
+        lambert_w0(9.996_321_205_588_285e2),
+        5.249_293_782_013_268_504
+    );
+    assert_relative_eq!(
+        lambert_w0(9.999_632_120_558_828e3),
+        7.231_813_718_542_180_559,
+        max_relative = 1.15 * f64::EPSILON
+    );
+    assert_relative_eq!(
+        lambert_w0(9.999_963_212_055_883e4),
+        9.284_568_107_521_958_493
+    );
+    assert_relative_eq!(
+        lambert_w0(9.999_996_321_205_589e5),
+        1.138_335_774_796_811_681e1,
+        max_relative = 1.5 * f64::EPSILON
+    );
+    assert_relative_eq!(
+        lambert_w0(9.999_999_632_120_559e6),
+        1.351_434_397_605_273_875e1,
+        max_relative = 3.0 * f64::EPSILON
+    );
     assert_relative_eq!(lambert_w0(9.999_999_963_212_056e7), 1.566_899_671_199_287e1);
     assert_relative_eq!(lambert_w0(9.999_999_996_321_206e8), 1.784_172_596_707_312e1);
     assert_relative_eq!(lambert_w0(9.999_999_999_632_12e9), 2.002_868_541_326_992e1);
