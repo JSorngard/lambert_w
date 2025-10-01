@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.29 (unreleased)
 
 - Add doctests to the public constants.
+- Remove all `inline(always)` annotations.
 
 ## 1.2.28
 
