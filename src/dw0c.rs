@@ -23,6 +23,8 @@ pub fn dw0c(zc: f64) -> f64 {
 
     if zc < 0.0 || zc.is_nan() {
         f64::NAN
+    } else if zc == -NEG_INV_E {
+        0.0
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 
