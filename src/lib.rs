@@ -43,6 +43,14 @@ mod unit_tests;
 /// The negative inverse of e (-1/e).
 ///
 /// This is the branch point of the Lambert W function.
+///
+/// ```
+/// use lambert_w::{lambert_w0, NEG_INV_E};
+/// use approx::assert_abs_diff_eq;
+///
+/// assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
+/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
+/// ```
 //            Rounded from -0.367_879_441_171_442_322
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
 
@@ -52,7 +60,14 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 
 /// The omega constant (Ω).
 ///
-/// Fulfills the equation Ωe^Ω = 1.
+/// Fulfills the equation Ωe^Ω = 1:
+///
+/// ```
+/// use lambert_w::OMEGA;
+/// use approx::assert_abs_diff_eq;
+///
+/// assert_abs_diff_eq!(OMEGA * f64::exp(OMEGA), 1.0);
+/// ```
 // We include more digits than fit in an f64 because if we write
 // 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
 // it looks as if we have rounded it incorrectly,
