@@ -13,7 +13,10 @@
 // when comparing with the paper.
 #![allow(clippy::excessive_precision)]
 
-use crate::generic_math::{ln, rational_function, sqrt};
+use crate::{
+    generic_math::{ln, rational_function, sqrt},
+    NEG_INV_E,
+};
 
 /// zc = z + 1/e
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
