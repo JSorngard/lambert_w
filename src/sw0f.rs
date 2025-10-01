@@ -18,7 +18,7 @@ pub fn sw0f(z: f32) -> f32 {
 
     if z < NEG_INV_E || z.is_nan() {
         f32::NAN
-    } else if z == NEG_INV_E as f32 {
+    } else if z == NEG_INV_E {
         -1.0
     } else if z <= 2.008_217_8 {
         // W <= 0.854, X_1

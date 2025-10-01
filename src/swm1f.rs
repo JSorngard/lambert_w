@@ -18,7 +18,7 @@ pub fn swm1f(z: f32) -> f32 {
 
     if z < NEG_INV_E {
         f32::NAN
-    } else if z == NEG_INV_E as f32 {
+    } else if z == NEG_INV_E {
         -1.0
     } else if z <= -0.207_293_78 {
         // W >= -2.483, Y_-1
