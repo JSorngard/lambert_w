@@ -13,7 +13,10 @@
 // when comparing with the paper.
 #![allow(clippy::excessive_precision)]
 
-use crate::generic_math::{ln, rational_function, sqrt};
+use crate::{
+    generic_math::{ln, rational_function, sqrt},
+    NEG_INV_E,
+};
 
 /// zc = z + 1/e
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
@@ -23,6 +26,8 @@ pub fn dw0c(zc: f64) -> f64 {
 
     if zc < 0.0 || zc.is_nan() {
         f64::NAN
+    } else if zc == -NEG_INV_E {
+        0.0
     } else if zc == 0.0 {
         -1.0
     } else if zc <= 2.549_893_906_503_473_571_6 {

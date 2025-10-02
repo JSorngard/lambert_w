@@ -28,6 +28,8 @@ pub fn sw0(z: f64) -> f64 {
         f64::NAN
     } else if z == NEG_INV_E {
         -1.0
+    } else if z == 0.0 {
+        0.0
     } else if z <= 2.008_217_811_584_472_656_3 {
         // W <= 0.854, X_1
 
