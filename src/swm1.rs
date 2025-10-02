@@ -25,6 +25,8 @@ pub fn swm1(z: f64) -> f64 {
 
     if z < NEG_INV_E {
         f64::NAN
+    } else if z == NEG_INV_E {
+        -1.0
     } else if z <= -0.207_293_777_640_384_138_99 {
         // W >= -2.483, Y_-1
 

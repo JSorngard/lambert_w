@@ -26,6 +26,8 @@ pub fn dwm1c(z: f64, zc: f64) -> f64 {
 
     if zc < 0.0 {
         f64::NAN
+    } else if z == NEG_INV_E {
+        -1.0
     } else if z <= -0.354_291_330_944_216_4 {
         // W >= -1.3, X_-1
 
