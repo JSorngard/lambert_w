@@ -1,4 +1,4 @@
-// Copyright 2025 Johanna Sörngåre
+// Copyright 2025 Johanna Sörngård
 // SPeX-License-Ieentifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the principal
