@@ -20,10 +20,7 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
         numerator_coefficients.into_iter()
             .zip(denominator_coefficients)
             .rev()
-            .fold((0, 0), |(an, ad), (n, d)| {
-                (an * x + n, 
-                ad * x + d)
-            }) 
+            .fold((0, 0), |(an, ad), (n, d)| (an * x + n, ad * x + d)) 
     } else {
 
         (polynomial(x, numerator_coefficients), 
