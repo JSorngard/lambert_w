@@ -24,7 +24,7 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     } else {
         (
             polynomial(x, numerator_coefficients),
-            polynomial(x, denominator_coefficients), 
+            polynomial(x, denominator_coefficients),
         )
     };
 
