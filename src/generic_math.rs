@@ -15,7 +15,6 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
 ) -> T {
-
     let (numerator, denominator) = if N == D {
         numerator_coefficients
             .into_iter()
@@ -25,7 +24,7 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     } else {
 
         (
-            polynomial(x, numerator_coefficients), 
+            polynomial(x, numerator_coefficients),
             polynomial(x, denominator_coefficients)
         )
     };
