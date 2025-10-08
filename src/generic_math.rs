@@ -22,7 +22,6 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
             .rev()
             .fold((0, 0), |(an, ad), (n, d)| (an * x + n, ad * x + d))
     } else {
-
         (
             polynomial(x, numerator_coefficients),
             polynomial(x, denominator_coefficients)
