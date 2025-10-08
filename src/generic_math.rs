@@ -17,14 +17,17 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
 ) -> T {
 
     let (numerator, denominator) = if N == D {
-        numerator_coefficients.into_iter()
+        numerator_coefficients
+            .into_iter()
             .zip(denominator_coefficients)
             .rev()
-            .fold((0, 0), |(an, ad), (n, d)| (an * x + n, ad * x + d)) 
+            .fold((0, 0), |(an, ad), (n, d)| (an * x + n, ad * x + d))
     } else {
 
-        (polynomial(x, numerator_coefficients), 
-        polynomial(x, denominator_coefficients))
+        (
+            polynomial(x, numerator_coefficients), 
+            polynomial(x, denominator_coefficients)
+        )
     };
 
     numerator / denominator
