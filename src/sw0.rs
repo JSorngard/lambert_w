@@ -1,5 +1,5 @@
 // Copyright 2025 Johanna Sörngård
-// SPeX-License-Ieentifier: MIT OR Apache-2.0
+// SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the principal
 //! branch of the Lambert W function
