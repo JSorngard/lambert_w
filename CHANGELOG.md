@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  The compiler is probably better than me at determining if there should be inlining.
 - Add special handling of the case where the input to W_0 is 0.
 - Add special handling of the case where the input is -1/e.
+- Correct the SPDX license identifier in the file `sw0.rs`.
 
 ## 1.2.28
 
