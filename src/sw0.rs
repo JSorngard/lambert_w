@@ -373,9 +373,9 @@ pub fn sw0(z: f64) -> f64 {
                 -3.748_153_583_315_120_222_2e-14,
             ],
         )
-    } else if z.is_nan() {
-        f64::NAN
-    } else {
+    } else if !z.is_nan() {
         f64::INFINITY
+    } else {
+        f64::NAN
     }
 }
