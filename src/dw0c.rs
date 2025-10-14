@@ -527,9 +527,9 @@ pub fn dw0c(zc: f64) -> f64 {
                 -1.596_014_725_260_605_535_2e-24,
             ],
         )
-    } else if zc.is_nan() {
-        f64::NAN
-    } else {
+    } else if !zc.is_nan() {
         f64::INFINITY
+    } else {
+        f64::NAN
     }
 }
