@@ -7,7 +7,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Add doctests to the public constants.
 - Remove all `inline(always)` annotations.
- The compiler is probably better than me at determining if there should be inlining.
+ The compiler is probably better than me at determining if there should be intra-crate inlining.
+ The decision to do inlining was based on benchmarks only on x86-64 on a fast CPU with a lot of cache,
+ as such that decision wasn't based on enough data for me to feel sure of it in all situations.
 - Add special handling of the case where the input to W_0 is 0.
 - Add special handling of the case where the input is -1/e.
 - Correct the SPDX license identifier in the file `sw0.rs`.
