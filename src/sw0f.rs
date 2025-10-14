@@ -16,7 +16,7 @@ pub fn sw0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
     // but their precision has been truncated to fit in 32-bit floats.
 
-    if z < NEG_INV_E || z.is_nan() {
+    if z < NEG_INV_E {
         f32::NAN
     } else if z == NEG_INV_E {
         -1.0
@@ -182,6 +182,8 @@ pub fn sw0f(z: f32) -> f32 {
             [-0.607_023_7, 0.698_287_2, 0.075_795_14, 0.000_516_692_6],
             [1.0, 0.079_048_43, 0.000_517_609_94, -4.243_840_3e-10],
         )
+    } else if z.is_nan() {
+        f32::NAN
     } else {
         f32::INFINITY
     }

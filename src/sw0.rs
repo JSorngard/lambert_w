@@ -24,7 +24,7 @@ pub fn sw0(z: f64) -> f64 {
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
     // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
 
-    if z < NEG_INV_E || z.is_nan() {
+    if z < NEG_INV_E {
         f64::NAN
     } else if z == NEG_INV_E {
         -1.0
@@ -373,6 +373,8 @@ pub fn sw0(z: f64) -> f64 {
                 -3.748_153_583_315_120_222_2e-14,
             ],
         )
+    } else if z.is_nan() {
+        f64::NAN
     } else {
         f64::INFINITY
     }

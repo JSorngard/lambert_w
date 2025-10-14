@@ -24,7 +24,7 @@ pub fn dw0c(zc: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
 
-    if zc < 0.0 || zc.is_nan() {
+    if zc < 0.0 {
         f64::NAN
     } else if zc == 0.0 {
         // If zc is 0 then z was -1/e
@@ -527,6 +527,8 @@ pub fn dw0c(zc: f64) -> f64 {
                 -1.596_014_725_260_605_535_2e-24,
             ],
         )
+    } else if zc.is_nan() {
+        f64::NAN
     } else {
         f64::INFINITY
     }
