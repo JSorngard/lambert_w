@@ -34,26 +34,6 @@ mod swm1f;
 #[cfg(test)]
 mod unit_tests;
 
-/// Holds a value of `z` and that value plus 1/e.
-///
-/// The crate uses this struct to enforce that the value of `z + 1/e` is
-/// accompanied by the value of `z` it was computed from.
-#[derive(Copy, Clone, PartialEq, PartialOrd, Debug)]
-struct ZAndZPlusInvE {
-    z: f64,
-    z_plus_inv_e: f64,
-}
-
-impl ZAndZPlusInvE {
-    #[inline]
-    pub fn new(z: f64) -> Self {
-        Self {
-            z,
-            z_plus_inv_e: z - NEG_INV_E,
-        }
-    }
-}
-
 // This crate uses a build script to check for an environment variable and sets
 // the `assert_no_panic` attribute if that variable is set to a specific value.
 // We then check for that attribute when testing and if so we statically ensure that no
@@ -131,7 +111,7 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
-    dw0c::dw0c(ZAndZPlusInvE::new(z))
+    dw0c::dw0c(z)
 }
 
 /// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method.
@@ -232,7 +212,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1(z: f64) -> f64 {
-    dwm1c::dwm1c(ZAndZPlusInvE::new(z))
+    dwm1c::dwm1c(z)
 }
 
 /// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method.
