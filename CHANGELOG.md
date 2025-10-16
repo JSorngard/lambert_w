@@ -7,8 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Add `inline` annotations to the math functions. This lets us keep the speedup
  in the benchmarks, but lets the compiler have more of a say if it thinks
- that there should not be inlining compared to `inline(always)` that was there
- before version 1.2.29.
+ that there should not be inlining compared to `inline(always)`,
+ which is what was used before version 1.2.29.
 - Internal code improvements.
 
 ## 1.2.30
