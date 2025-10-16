@@ -15,12 +15,15 @@
 
 use crate::{
     generic_math::{ln, rational_function, sqrt},
-    NEG_INV_E,
+    ZAndZPlusInvE, NEG_INV_E,
 };
 
-/// zc = z + 1/e
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn dw0c(zc: f64) -> f64 {
+pub(crate) fn dw0c(
+    ZAndZPlusInvE {
+        z_plus_inv_e: zc, ..
+    }: ZAndZPlusInvE,
+) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
 
