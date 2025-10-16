@@ -30,7 +30,7 @@ pub(crate) fn dw0c(
     if zc < 0.0 {
         f64::NAN
     } else if zc == 0.0 {
-        // If zc is 0 then z was -1/e
+        // If zc is 0 then z was -1/e.
         -1.0
     } else if zc == -NEG_INV_E {
         // If zc is 1/e then z was 0.
