@@ -8,6 +8,8 @@ use num_traits::Float;
 
 // The `inline` annotations are motivated by benchmarks on an AMD 5800X3D processor.
 // The `lambert_w0` function is sped up by around 50% when the inline annotations are present.
+// The reason it's not `inline(always)` is to let the compiler have more of a say on platforms where
+// it might decide that inlining is not a good idea.
 
 /// Evaluate a rational function at `x` using Horner's method.
 ///
