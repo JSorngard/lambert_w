@@ -19,7 +19,7 @@ use crate::{
 };
 
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn dwm1c(
+pub(crate) fn dwm1c(
     ZAndZPlusInvE {
         z,
         z_plus_inv_e: zc,
