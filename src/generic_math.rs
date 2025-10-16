@@ -9,6 +9,7 @@ use num_traits::Float;
 /// Evaluate a rational function at `x` using Horner's method.
 ///
 /// The coefficients are assumed to be sorted in ascending order by degree.
+#[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
@@ -25,6 +26,7 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
 /// Evaluate a polynomial at `x` using Horner's method.
 ///
 /// The coefficients are assumed to be sorted in ascending order by degree.
+#[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
@@ -40,12 +42,14 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
 // which means that the crate would produce warnings about the unused imports.
 
 /// Compute the square root of `x`.
+#[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn sqrt<T: Float>(x: T) -> T {
     Float::sqrt(x)
 }
 
 /// Compute the natural logarithm of `x`.
+#[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn ln<T: Float>(x: T) -> T {
     Float::ln(x)
