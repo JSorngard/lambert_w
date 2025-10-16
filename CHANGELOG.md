@@ -3,17 +3,27 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.31 (unreleased)
+
+- Add `inline` annotations to the math functions. This lets us keep the speedup
+ in the benchmarks, but lets the compiler have more of a say if it thinks
+ that there should not be inlining.
+
 ## 1.2.30
 
-- Move the check for `NAN` last so that most function calls don't have to pay for it.
+- Move the check for `NAN` last so that most function calls don't have to pay
+ for it.
 
 ## 1.2.29
 
 - Add doctests to the public constants.
 - Remove all `inline(always)` annotations.
- The compiler is probably better than me at determining if there should be intra-crate inlining.
- The decision to do inlining was based on benchmarks only on x86-64 on a fast CPU with a lot of cache,
- as such that decision wasn't based on enough data for me to feel sure of it in all situations.
+ The compiler is probably better than me at determining if there should be
+ intra-crate inlining.
+ The decision to do inlining was based on benchmarks only on x86-64 on a fast
+ CPU with a lot of cache,
+ as such that decision wasn't based on enough data for me to feel sure of it in
+ all situations.
 - Add special handling of the case where the input to W_0 is 0.
 - Add special handling of the case where the input is -1/e.
 - Correct the SPDX license identifier in the file `sw0.rs`.
