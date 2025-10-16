@@ -46,7 +46,7 @@ struct ZAndZPlusInvE {
 
 impl ZAndZPlusInvE {
     #[inline]
-    pub const fn new(z: f64) -> Self {
+    pub fn new(z: f64) -> Self {
         Self {
             z,
             z_plus_inv_e: z - NEG_INV_E,
