@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.31 (unreleased)
+## 1.2.31
 
 - Add `inline` annotations to the math functions. This lets us keep the speedup
  in the benchmarks, but lets the compiler have more of a say if it thinks
