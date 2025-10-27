@@ -1,6 +1,11 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+//! Benchmarks for random arguments generated at tunrim (from a fixed seed).
+
+// The call to `criterion_group!` generates items that we can not document.
+#![allow(missing_docs)]
+
 use core::hint::black_box;
 use core::ops::RangeBounds;
 use criterion::{
