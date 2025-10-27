@@ -1,6 +1,11 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+//! Benchmarks for fixed arguments known at compile time.
+
+// The call to `criterion_group!` generates items that we can not document.
+#![allow(missing_docs)]
+
 use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
 use lambert_w::{
