@@ -1,7 +1,7 @@
 // Copyright 2025 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-//! Benchmarks for random arguments generated at tunrim (from a fixed seed).
+//! Benchmarks for random arguments generated at runtime (from a fixed seed).
 
 // The call to `criterion_group!` generates items that we can not document,
 // and we can not mark the macro call itself.
