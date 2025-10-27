@@ -3,7 +3,8 @@
 
 //! Benchmarks for fixed arguments known at compile time.
 
-// The call to `criterion_group!` generates items that we can not document.
+// The call to `criterion_group!` generates items that we can not document,
+// and we can not mark the macro call itself.
 #![allow(missing_docs)]
 
 use core::hint::black_box;
