@@ -13,7 +13,7 @@ documentation = "https://docs.rs/lambert_w"
 exclude = ["tests/", ".github/", "CONTRIBUTING.md", "CHANGELOG.md", "benches", "examples"]
 
 [lints.rust]
-missing_docs = "warn"
+missing_docs = "deny"
 
 [dependencies]
 num-complex = { version = "0.4.6", default-features = false }
