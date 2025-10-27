@@ -32,11 +32,11 @@ jobs:
     - name: Cache
       uses: Swatinem/rust-cache@v2.8.0
     - name: Check with `libm`
-      run: cargo check --no-default-features -F libm
+      run: cargo check --no-default-features -F libm -- -D missing_docs
     - name: Check with `std`
-      run: cargo check --no-default-features -F std
+      run: cargo check --no-default-features -F std -- -D missing_docs 
     - name: Check with both
-      run: cargo check --no-default-features -F libm,std
+      run: cargo check --no-default-features -F libm,std -- -D missing_docs
 
   clippy:
     runs-on: ubuntu-latest
