@@ -23,9 +23,7 @@ pub(crate) fn dwm1c(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
     // The coefficients in the rational functions are from tables 15 through 18 in the paper.
 
-    let zc = z - NEG_INV_E;
-
-    if zc < 0.0 {
+    if z < NEG_INV_E {
         f64::NAN
     } else if z == NEG_INV_E {
         -1.0
