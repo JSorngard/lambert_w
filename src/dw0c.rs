@@ -25,13 +25,11 @@ pub(crate) fn dw0c(z: f64) -> f64 {
 
     let zc = z - NEG_INV_E;
 
-    if zc < 0.0 {
+    if z < NEG_INV_E {
         f64::NAN
-    } else if zc == 0.0 {
-        // If zc is 0 then z was -1/e.
+    } else if z == NEG_INV_E {
         -1.0
-    } else if zc == -NEG_INV_E {
-        // If zc is 1/e then z was 0.
+    } else if z == 0.0 {
         0.0
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1

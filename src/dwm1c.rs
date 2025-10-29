@@ -25,7 +25,7 @@ pub(crate) fn dwm1c(z: f64) -> f64 {
 
     let zc = z - NEG_INV_E;
 
-    if zc < 0.0 {
+    if z < NEG_INV_E {
         f64::NAN
     } else if z == NEG_INV_E {
         -1.0
