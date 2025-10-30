@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.32 (unreleased)
 
 - Lint for undocumented items, and catch such cases in CI.
+- Update transitive dev-dependencies.
 
 ## 1.2.31
 
