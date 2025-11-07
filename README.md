@@ -98,16 +98,16 @@ use approx::assert_relative_eq;
 let small = lambert_wm1(-f64::MIN_POSITIVE);
 let big = lambert_w0(f64::MAX);
 
-assert_relative_eq!(small, -714.9686572379665);
 assert_relative_eq!(
-    big,
-    703.2270331047702,
-    // Since the approximation used in this
-    // example is accurate to 50 bits
-    // it will sometimes have an
-    // error larger than epsilon.
-    max_relative = 1.5 * f64::EPSILON
+   small,
+   -714.9686572379665,
+   // Since the approximation used in this
+   // example is accurate to 50 bits
+   // it will sometimes have an
+   // error larger than epsilon.
+   max_relative = 1.5 * f64::EPSILON
 );
+assert_relative_eq!(big, 703.2270331047702);
 ```
 
 The macros in the examples above are from the [`approx`][]
