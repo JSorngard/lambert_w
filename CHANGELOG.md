@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Lint for undocumented items, and catch such cases in CI.
 - Update transitive dev-dependencies.
+- Use fused multiply-add instructions when they are available on the target.
 
 ## 1.2.31
 
