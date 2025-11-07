@@ -107,7 +107,7 @@ assert_relative_eq!(
    // error larger than epsilon.
    max_relative = 1.5 * f64::EPSILON
 );
-assert_relative_eq!(big, 703.2270331047702);
+assert_relative_eq!(big, 703.2270331047702, max_relative = 1.5 * f64::EPSILON);
 ```
 
 The macros in the examples above are from the [`approx`][]
