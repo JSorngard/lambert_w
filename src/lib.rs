@@ -82,7 +82,7 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 #[allow(clippy::excessive_precision)]
 pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 
-/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
+/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method[^1].
 ///
 /// # Examples
 ///
@@ -107,14 +107,14 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
     dw0c::dw0c(z)
 }
 
-/// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method.
+/// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
 ///
 /// Uses the same approximation as [`sp_lambert_w0`], but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
@@ -143,14 +143,14 @@ pub fn lambert_w0(z: f64) -> f64 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     sw0f::sw0f(z)
 }
 
-/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method.
+/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
 ///
 /// # Examples
 ///
@@ -175,14 +175,14 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     sw0::sw0(z)
 }
 
-/// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method.
+/// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method[^1].
 ///
 /// # Examples
 ///
@@ -208,14 +208,14 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1(z: f64) -> f64 {
     dwm1c::dwm1c(z)
 }
 
-/// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method.
+/// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
 ///
 /// Uses the same approximation as [`sp_lambert_wm1`], but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
@@ -245,14 +245,14 @@ pub fn lambert_wm1(z: f64) -> f64 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     swm1f::swm1f(z)
 }
 
-/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method.
+/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
 ///
 /// # Examples
 ///
@@ -278,7 +278,7 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 ///
 /// # Reference
 ///
-/// [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_wm1(z: f64) -> f64 {
