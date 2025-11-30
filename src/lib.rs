@@ -186,7 +186,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// let Ω = sp_lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
+/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = f64::from(f32::EPSILON));
 /// ```
 ///
 /// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
@@ -320,7 +320,7 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 ///
 /// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = f64::from(f32::EPSILON));
 /// ```
 ///
 /// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:

@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Use native markdown references in the documentation of the individual functions.
 - Add more information about the special cases and edge cases to the
  documentation of the functions.
+- Write the epsilon values in the doc examples of the `sp_lambert_w*` function
+ such that their origin is clearer.
 
 ## 1.2.31
 
