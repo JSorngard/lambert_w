@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  documentation of the functions.
 - Write the epsilon values in the doc examples of the `sp_lambert_w*` function
  such that their origin is clearer.
+- Update the `criterion` dev-dependency to version 0.8.0.
 
 ## 1.2.31
 
