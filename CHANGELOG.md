@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Lint for undocumented items, and catch such cases in CI.
 - Update transitive dev-dependencies.
+- Use fused multiply-add instructions when they are available on the target.
 - Use native markdown references in the documentation of the individual functions.
 - Add more information about the special cases and edge cases to the
  documentation of the functions.
