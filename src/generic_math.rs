@@ -37,7 +37,21 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
         .into_iter()
         .rev()
-        .fold(T::zero(), |acc, c| acc * x + c)
+        .fold(T::zero(), |acc, c| mul_add(acc, x, c))
+}
+
+#[inline]
+#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
+fn mul_add<T: Float>(x: T, mul: T, add: T) -> T {
+    #[cfg(not(target_feature = "fma"))]
+    {
+        x * mul + add
+    }
+
+    #[cfg(target_feature = "fma")]
+    {
+        x.mul_add(mul, add)
+    }
 }
 
 // The functions below are wrappers around the [`num-traits`] crate,
