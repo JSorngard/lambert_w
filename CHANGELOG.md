@@ -3,12 +3,21 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.32 (unreleased)
+## 1.2.33
+
+- Remove the use of LaTeX in the crate README. It doesn't look good on crates.io.
+
+## 1.2.32
 
 - Lint for undocumented items, and catch such cases in CI.
 - Update transitive dev-dependencies.
 - Use fused multiply-add instructions when they are available on the target.
 - Use native markdown references in the documentation of the individual functions.
+- Add more information about the special cases and edge cases to the
+ documentation of the functions.
+- Write the epsilon values in the doc examples of the `sp_lambert_w*` function
+ such that their origin is clearer.
+- Update the `criterion` dev-dependency to version 0.8.0.
 
 ## 1.2.31
 

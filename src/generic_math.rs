@@ -11,9 +11,9 @@ use num_traits::Float;
 // The reason it's not `inline(always)` is to let the compiler have more of a say on platforms where
 // it might decide that inlining is not a good idea.
 
-/// Evaluate a rational function at `x` using Horner's method.
+/// Evaluate a rational function at `x` using [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method).
 ///
-/// The coefficients are assumed to be sorted in ascending order by degree.
+/// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
 #[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub fn rational_function<T: Float, const N: usize, const D: usize>(
@@ -28,9 +28,9 @@ pub fn rational_function<T: Float, const N: usize, const D: usize>(
     numerator / denominator
 }
 
-/// Evaluate a polynomial at `x` using Horner's method.
+/// Evaluate a polynomial at `x` using [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method).
 ///
-/// The coefficients are assumed to be sorted in ascending order by degree.
+/// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
 #[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {

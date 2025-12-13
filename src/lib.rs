@@ -97,12 +97,24 @@ pub const OMEGA: f64 = 0.567_143_290_409_783_873;
 /// assert_abs_diff_eq!(Ω, 0.567143290409783873);
 /// ```
 ///
-/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
+/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
+/// while an infinite input gives [`INFINITY`](f64::INFINITY):
+///
+/// ```
+/// use lambert_w::{lambert_w0, NEG_INV_E};
+///
+/// assert_eq!(lambert_w0(NEG_INV_E), -1.0);
+/// assert_eq!(lambert_w0(0.0), 0.0);
+/// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_w0, NEG_INV_E};
 ///
 /// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
+/// assert!(lambert_w0(f64::NAN).is_nan());
 /// ```
 ///
 /// # Reference
@@ -133,12 +145,24 @@ pub fn lambert_w0(z: f64) -> f64 {
 /// assert_abs_diff_eq!(Ω, 0.56714329);
 /// ```
 ///
-/// Arguments smaller than -1/e (≈ -0.36787944) result in [`NAN`](f32::NAN):
+/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
+/// while an infinite input gives [`INFINITY`](f32::INFINITY):
+///
+/// ```
+/// use lambert_w::{lambert_w0f, NEG_INV_E};
+///
+/// assert_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
+/// assert_eq!(lambert_w0f(0.0), 0.0);
+/// assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_w0f, NEG_INV_E};
 ///
 /// assert!(lambert_w0f((NEG_INV_E as f32).next_down()).is_nan());
+/// assert!(lambert_w0f(f32::NAN).is_nan());
 /// ```
 ///
 /// # Reference
@@ -162,15 +186,27 @@ pub fn lambert_w0f(z: f32) -> f32 {
 ///
 /// let Ω = sp_lambert_w0(1.0);
 ///
-/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = 1e-7);
+/// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = f64::from(f32::EPSILON));
 /// ```
 ///
-/// Arguments smaller than -1/e (≈ -0.36787944117144233) result in [`NAN`](f64::NAN):
+/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
+/// while an infinite input gives [`INFINITY`](f64::INFINITY):
+///
+/// ```
+/// use lambert_w::{sp_lambert_w0, NEG_INV_E};
+///
+/// assert_eq!(sp_lambert_w0(NEG_INV_E), -1.0);
+/// assert_eq!(sp_lambert_w0(0.0), 0.0);
+/// assert_eq!(sp_lambert_w0(f64::INFINITY), f64::INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{sp_lambert_w0, NEG_INV_E};
 ///
 /// assert!(sp_lambert_w0(NEG_INV_E.next_down()).is_nan());
+/// assert!(sp_lambert_w0(f64::NAN).is_nan());
 /// ```
 ///
 /// # Reference
@@ -197,13 +233,23 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 /// ```
 ///
-/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
+/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:
+///
+/// ```
+/// use lambert_w::{lambert_wm1, NEG_INV_E};
+///
+/// assert_eq!(lambert_wm1(NEG_INV_E), -1.0);
+/// assert_eq!(lambert_wm1(0.0), f64::NEG_INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_wm1, NEG_INV_E};
 ///
 /// assert!(lambert_wm1(NEG_INV_E.next_down()).is_nan());
 /// assert!(lambert_wm1(f64::MIN_POSITIVE).is_nan());
+/// assert!(lambert_wm1(f64::NAN).is_nan());
 /// ```
 ///
 /// # Reference
@@ -234,13 +280,23 @@ pub fn lambert_wm1(z: f64) -> f64 {
 /// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 /// ```
 ///
-/// Arguments smaller than -1/e (≈ -0.36787944) or larger than 0 result in [`NAN`](f32::NAN):
+/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f32::NEG_INFINITY) respectively:
+///
+/// ```
+/// use lambert_w::{lambert_wm1f, NEG_INV_E};
+///
+/// assert_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
+/// assert_eq!(lambert_wm1f(0.0), f32::NEG_INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_wm1f, NEG_INV_E};
 ///
 /// assert!(lambert_wm1f((NEG_INV_E as f32).next_down()).is_nan());
 /// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
+/// assert!(lambert_wm1f(f32::NAN).is_nan());
 /// ```
 ///
 /// # Reference
@@ -264,16 +320,26 @@ pub fn lambert_wm1f(z: f32) -> f32 {
 ///
 /// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
 ///
-/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = 1e-9);
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = f64::from(f32::EPSILON));
 /// ```
 ///
-/// Arguments smaller than -1/e (≈ -0.36787944117144233) or larger than 0 result in [`NAN`](f64::NAN):
+/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:
+///
+/// ```
+/// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
+///
+/// assert_eq!(sp_lambert_wm1(NEG_INV_E), -1.0);
+/// assert_eq!(sp_lambert_wm1(0.0), f64::NEG_INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
 ///
 /// assert!(sp_lambert_wm1(NEG_INV_E.next_down()).is_nan());
 /// assert!(sp_lambert_wm1(f64::MIN_POSITIVE).is_nan());
+/// assert!(sp_lambert_wm1(f64::NAN).is_nan());
 /// ```
 ///
 /// # Reference
