@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.34 (unreleased)
+
+- Update transitive dev-dependencies.
+
 ## 1.2.33
 
 - Remove the use of LaTeX in the crate README. It doesn't look good on crates.io.
