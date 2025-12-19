@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Lint for undocumented items, and catch such cases in CI.
 - Update transitive dev-dependencies.
-- Use native markdown references in the documentation of the individual functions.
+- Use native Markdown references in the documentation of the individual functions.
 - Add more information about the special cases and edge cases to the
  documentation of the functions.
 - Write the epsilon values in the doc examples of the `sp_lambert_w*` function
@@ -38,7 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.29
 
-- Add doctests to the public constants.
+- Add documentation tests to the public constants.
 - Remove all `inline(always)` annotations.
  The compiler is probably better than me at determining if there should be
  intra-crate inlining.
@@ -81,7 +81,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  10^(-30) for the error tolerance in the complex Lambert W functions.
 - Improve the description about where the complex Lambert W functions
  can be inaccurate in the docs.
-- Use the native markdown reference functionality for the References section
+- Use the native Markdown reference functionality for the References section
  of the readme.
 - Link to the license files that are stored on docs.rs when the documentation
  is read on docs.rs.
@@ -413,10 +413,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 Yanked because 0.5.1 adds a default feature that hides previously included
 behavior.
-Therefore upgrading from 0.5.0 to 0.5.1 was a breaking change if the user
+Therefore, upgrading from 0.5.0 to 0.5.1 was a breaking change if the user
 had disabled default features. By yanking this version the breaking change
 happens when upgrading from 0.4.4 to 0.5.1, which requires an intentional
-choice by the user, and wont happen automatically with `cargo update` as before.
+choice by the user, and won't happen automatically with `cargo update` as before.
 
 ### Breaking changes
 
@@ -478,7 +478,7 @@ choice by the user, and wont happen automatically with `cargo update` as before.
 
 ## 0.2.1
 
-- Added github repository badge to `README.md`.
+- Added GitHub repository badge to `README.md`.
 
 ## 0.2.0
 
