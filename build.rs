@@ -6,8 +6,6 @@
 //! The crate uses this to statically check that no panics
 //! are introduced into the crate in CI.
 
-use std::env;
-
 fn main() {
     /// The name of the environment variable that can be set to enable the check for panics.
     // If you change this, remember to also change the environment variable
@@ -34,7 +32,7 @@ fn main() {
     // Make cargo aware of the `assert_no_panic` cfg option
     println!("cargo:rustc-check-cfg=cfg(assert_no_panic)");
 
-    let env_val = env::var(ENV_KEY);
+    let env_val = std::env::var(ENV_KEY);
 
     if env_val.as_ref().map(String::as_str) == Ok(ENV_VAL) {
         // Enable the `assert_no_panic` cfg option.
@@ -74,12 +72,12 @@ fn main() {
 /// If the environment variable could not be read by the standard library
 /// it returns an `Err(VarError)`, and if the profile name could not
 /// be determined it returns an `Ok(None)`.
-fn parse_build_profile_name_from_environment() -> Result<Option<String>, env::VarError> {
+fn parse_build_profile_name_from_environment() -> Result<Option<String>, std::env::VarError> {
     // Taken from <https://stackoverflow.com/a/73603419/3774277>.
 
     // The profile name is always the 3rd last part of the path (with 1 based indexing).
     // e.g. /code/core/target/cli/build/my-build-info-9f91ba6f99d7a061/out
-    env::var("OUT_DIR").map(|env_var_val| {
+    std::env::var("OUT_DIR").map(|env_var_val| {
         env_var_val
             .split(std::path::MAIN_SEPARATOR)
             .nth_back(3)
