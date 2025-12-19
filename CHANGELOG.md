@@ -18,6 +18,7 @@ but retains most of the panic-proofness.
 ### Additional changes
 
 - Update transitive dev-dependencies.
+- Internal code structure improvements.
 
 ## 1.2.33
 
