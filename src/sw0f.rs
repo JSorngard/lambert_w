@@ -11,7 +11,50 @@ use crate::generic_math::{ln, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-pub(crate) fn sw0f(z: f32) -> f32 {
+/// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
+///
+/// Uses the same approximation as [`sp_lambert_w0`](crate::sp_lambert_w0), but computes it with 32-bit floats,
+/// which may result in slightly reduced accuracy.
+/// This potential accuracy reduction has not been quantified.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_w0f;
+/// use approx::assert_abs_diff_eq;
+///
+/// let Ω = lambert_w0f(1.0);
+///
+/// assert_abs_diff_eq!(Ω, 0.56714329);
+/// ```
+///
+/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
+/// while an infinite input gives [`INFINITY`](f32::INFINITY):
+///
+/// ```
+/// use lambert_w::{lambert_w0f, NEG_INV_E};
+///
+/// assert_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
+/// assert_eq!(lambert_w0f(0.0), 0.0);
+/// assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
+///
+/// ```
+/// use lambert_w::{lambert_w0f, NEG_INV_E};
+///
+/// assert!(lambert_w0f((NEG_INV_E as f32).next_down()).is_nan());
+/// assert!(lambert_w0f(f32::NAN).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
     // but their precision has been truncated to fit in 32-bit floats.
 

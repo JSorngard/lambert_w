@@ -5,7 +5,7 @@
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
 //! It returns [`f64::NAN`] if the input is smaller than -1/e, is `NAN`, or is larger than 0.
-//! It is based on the Fortran implementation of the same name by Fukushima.
+//! It is based on the Fortran implementation of the name "swm1" by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
 // By keeping the full precision in the source code we can ensure that there is no confusion
@@ -17,7 +17,45 @@ use crate::{
     INV_SQRT_E, NEG_INV_E,
 };
 
-pub(crate) fn swm1(z: f64) -> f64 {
+/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::sp_lambert_wm1;
+/// use approx::assert_abs_diff_eq;
+///
+/// let mln4 = sp_lambert_wm1(-f64::ln(2.0) / 2.0);
+///
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = f64::from(f32::EPSILON));
+/// ```
+///
+/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:
+///
+/// ```
+/// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
+///
+/// assert_eq!(sp_lambert_wm1(NEG_INV_E), -1.0);
+/// assert_eq!(sp_lambert_wm1(0.0), f64::NEG_INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
+///
+/// ```
+/// use lambert_w::{sp_lambert_wm1, NEG_INV_E};
+///
+/// assert!(sp_lambert_wm1(NEG_INV_E.next_down()).is_nan());
+/// assert!(sp_lambert_wm1(f64::MIN_POSITIVE).is_nan());
+/// assert!(sp_lambert_wm1(f64::NAN).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn sp_lambert_wm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.
     // The coefficients in the rational functions are related to the tables 8 and 9 in the paper.
     // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
