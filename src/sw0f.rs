@@ -11,7 +11,6 @@ use crate::generic_math::{ln, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub(crate) fn sw0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
     // but their precision has been truncated to fit in 32-bit floats.

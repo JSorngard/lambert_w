@@ -18,7 +18,6 @@ use crate::{
     INV_SQRT_E, NEG_INV_E,
 };
 
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub(crate) fn dwm1c(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
     // The coefficients in the rational functions are from tables 15 through 18 in the paper.

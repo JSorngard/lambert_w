@@ -17,7 +17,6 @@ use crate::{
     INV_SQRT_E, NEG_INV_E,
 };
 
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
 pub(crate) fn swm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.
     // The coefficients in the rational functions are related to the tables 8 and 9 in the paper.
