@@ -196,26 +196,6 @@ jobs:
     - name: Compile benchmarks with both features, but do not run them
       run: cargo bench --no-default-features --features libm,std --no-run
 
-  ensure_no_panics:
-    needs: format
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@stable
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
-    - uses: taiki-e/install-action@v2
-      with:
-        tool: cargo-all-features
-    - name: Update apt package lists
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
-    - name: Set up the environment variable
-      run: echo "LAMBERT_W_ENSURE_NO_PANICS=1" >> $GITHUB_ENV
-    - name: Check the crate for panics
-      run: cargo test-all-features -- --profile release-lto
-
   no_std:
     needs: format
     runs-on: ubuntu-latest
@@ -238,7 +218,7 @@ jobs:
     needs: format
     # This action chooses the oldest version of the dependencies permitted by Cargo.toml to ensure
     # that this crate is compatible with the minimal version that this crate and its dependencies
-    # require. This will pickup issues where this create relies on functionality that was introduced
+    # require. This will pick up issues where this create relies on functionality that was introduced
     # later than the actual version specified (e.g., when we choose just a major version, but a
     # method was added after this version).
     #
