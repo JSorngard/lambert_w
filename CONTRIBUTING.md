@@ -15,7 +15,7 @@ implementation for an error type may not be necessary.
 If you add a feature then all possible feature combinations should be tested
 in CI.
 
-Unsafe code will not be accepted.
+Unsafe code will not be accepted, and neither will code that can panic.
 
 Also note that any code contribution will be dual licensed under both MIT and
 Apache-2.0 as stated in the readme.
