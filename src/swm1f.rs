@@ -11,7 +11,49 @@ use crate::generic_math::{ln, rational_function, sqrt};
 const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-pub(crate) fn swm1f(z: f32) -> f32 {
+/// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
+///
+/// Uses the same approximation as [`sp_lambert_wm1`](crate::sp_lambert_wm1), but computes it with 32-bit floats,
+/// which may result in slightly reduced accuracy.
+/// This potential accuracy reduction has not been quantified.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_wm1f;
+/// use approx::assert_abs_diff_eq;
+///
+/// let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
+///
+/// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+/// ```
+///
+/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f32::NEG_INFINITY) respectively:
+///
+/// ```
+/// use lambert_w::{lambert_wm1f, NEG_INV_E};
+///
+/// assert_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
+/// assert_eq!(lambert_wm1f(0.0), f32::NEG_INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
+///
+/// ```
+/// use lambert_w::{lambert_wm1f, NEG_INV_E};
+///
+/// assert!(lambert_wm1f((NEG_INV_E as f32).next_down()).is_nan());
+/// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
+/// assert!(lambert_wm1f(f32::NAN).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_wm1f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `swm1` module,
     // but their precision has been truncated to fit in 32-bit floats.
 

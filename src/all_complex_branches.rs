@@ -18,6 +18,104 @@ const MAX_ITER: u8 = u8::MAX;
 
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 64-bit floats with Halley's method.
+///
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
+///
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
+///
+/// If you know you want the principal or secondary branches where they are real-valued,
+/// take a look at the [`lambert_w0`](crate::lambert_w0) or [`lambert_wm1`](crate::lambert_wm1) functions instead.
+/// They can be up to two orders of magnitude faster.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_w;
+///
+/// // W_2(1 + 2i)
+/// let w = lambert_w(2, 1.0, 2.0);
+///
+/// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
+/// ```
+///
+/// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(-13, f64::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(1_000, 0.0, f64::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
+    let w = lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im));
+    (w.re, w.im)
+}
+
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 32-bit floats with Halley's method.
+///
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
+///
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
+///
+/// If you know you want the principal or secondary branches where they are real-valued,
+/// take a look at the [`lambert_w0f`](crate::lambert_w0f) or [`lambert_wm1f`](crate::lambert_wm1f) functions instead.
+/// They can be up to two orders of magnitude faster.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_wf;
+///
+/// // W_2(1 + 2i)
+/// let w = lambert_wf(2, 1.0, 2.0);
+///
+/// assert_eq!(w, (-1.6869138, 11.962631));
+/// ```
+///
+/// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
+///
+/// ```
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(-13, f32::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(1_000, 0.0, f32::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
+    let w = lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im));
+    (w.re, w.im)
+}
+
 /// This is a generic implementation of the Lambert W function.
 /// It is capable of computing the function at any point in the complex plane on any branch.
 ///
@@ -27,7 +125,7 @@ const MAX_ITER: u8 = u8::MAX;
 /// # Panics
 ///
 /// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
-pub(crate) fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
+fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
@@ -198,7 +296,7 @@ where
 /// an effort is made to represent the `f64`'s value
 /// in the new type, but it is allowed to be lossy,
 /// like when converting a [`f32`] to a `f64`.
-pub(crate) trait F64AsT {
+trait F64AsT {
     fn f64_as_t(x: f64) -> Self;
 }
 
