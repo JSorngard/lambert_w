@@ -16,6 +16,9 @@
 #![doc = include_str!("../README.md")]
 #![no_std]
 #![forbid(unsafe_code)]
+#![forbid(clippy::unwrap_used)]
+#![forbid(clippy::expect_used)]
+#![forbid(clippy::panic)]
 
 #[cfg(feature = "std")]
 extern crate std;

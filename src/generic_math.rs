@@ -16,7 +16,7 @@ use num_traits::Float;
 /// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
 #[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn rational_function<T: Float, const N: usize, const D: usize>(
+pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
@@ -49,13 +49,13 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
 /// Compute the square root of `x`.
 #[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn sqrt<T: Float>(x: T) -> T {
+pub(crate) fn sqrt<T: Float>(x: T) -> T {
     Float::sqrt(x)
 }
 
 /// Compute the natural logarithm of `x`.
 #[inline]
 #[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn ln<T: Float>(x: T) -> T {
+pub(crate) fn ln<T: Float>(x: T) -> T {
     Float::ln(x)
 }

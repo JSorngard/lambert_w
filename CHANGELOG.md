@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## 1.2.34 (unreleased)
 
 - Update transitive dev-dependencies.
+- Forbid the `clippy::unwrap_used`, `clippy::expect_used`, and `clippy::panic` lints at the crate level. 
 
 ## 1.2.33
 
