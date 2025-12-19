@@ -62,7 +62,7 @@ where
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
 
-    // This value is only constructed to help the compliler see that
+    // This value is only constructed to help the compiler see that
     // it is the same type as what Complex<T>::abs() returns.
     let epsilon = Complex::<T>::from(T::epsilon()).abs();
 
@@ -71,11 +71,11 @@ where
     // region: special cases
 
     if z == z_zero {
-        if k == i_zero {
-            return z_zero;
+        return if k == i_zero {
+            z_zero
         } else {
-            return T::neg_infinity().into();
-        }
+            T::neg_infinity().into()
+        };
     }
     if z == d_neg_inv_e.into() && (k == i_zero || k == -i_one) {
         return -z_one;
@@ -156,7 +156,7 @@ where
     let z_neg_inv_e = Complex::<T>::from(d_neg_inv_e);
     let z_half = z_one / z_two;
 
-    // These values are only constructed to help the compliler see that
+    // These values are only constructed to help the compiler see that
     // they are the same type as what Complex<T>::abs() returns.
     let abs_one = z_one.abs();
     let abs_half = z_half.abs();
