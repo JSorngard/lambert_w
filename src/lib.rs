@@ -4,13 +4,13 @@
 // Fukushima's own Fortran implementation of the method in the paper can be found at
 // https://www.researchgate.net/publication/346096162_xlambwtxt_Fortran_90_test_program_package_of_sw0_swm1_dw0c_and_dwm1c_low-_and_high-precision_procedures_computing_primary_and_secondary_branch_of_Lambert_W_function_W_0z_or_W_-1z_by_piecewise_minimax_
 
-// These markdown ideas are taken from <https://linebender.org/blog/doc-include>.
+// These Markdown ideas are taken from <https://linebender.org/blog/doc-include>.
 //
 // This style is used in the readme itself to hide specific parts of it when rendered on docs.rs.
 //! <style>
 //! .rustdoc-hidden { display: none; }
 //! </style>
-// These links take precendence over the ones in the readme since they occur first.
+// These links take precedence over the ones in the readme since they occur first.
 //! [`approx`]: https://docs.rs/approx/latest/approx/
 //! [`libm`]: https://docs.rs/libm/latest/libm/
 #![doc = include_str!("../README.md")]
@@ -360,7 +360,7 @@ pub fn sp_lambert_wm1(z: f64) -> f64 {
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
 ///
-/// If you know you want the principal or secondary branches where they are real valued,
+/// If you know you want the principal or secondary branches where they are real-valued,
 /// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions instead.
 /// They can be up to two orders of magnitude faster.
 ///
@@ -410,7 +410,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
 ///
-/// If you know you want the principal or secondary branches where they are real valued,
+/// If you know you want the principal or secondary branches where they are real-valued,
 /// take a look at the [`lambert_w0f`] or [`lambert_wm1f`] functions instead.
 /// They can be up to two orders of magnitude faster.
 ///
