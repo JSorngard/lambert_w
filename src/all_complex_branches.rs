@@ -195,7 +195,7 @@ where
     initial_point
 }
 
-/// A type that can be converted lossily from a [`f64`].
+/// A type that can be converted lossily from an [`f64`].
 /// This works like an `as`-cast conversion:
 /// an effort is made to represent the `f64`'s value
 /// in the new type, but it is allowed to be lossy,
