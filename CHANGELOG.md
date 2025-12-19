@@ -9,13 +9,15 @@ Some code in the crate used to contain explicit calls to `unwrap()` that should 
 A build script and the crate `no-panic` was used in CI to ensure that this was the case.
 That code has now been rewritten to not need those `unwraps`, and as a result this version:
 
-- Forbids the `clippy::unwrap_used` lint at the crate level.
+- Forbids the `clippy::unwrap_used`, `clippy::expect_used`, `clippy::panic`, and `clippy::indexing_slicing` lints at the crate level.
 - Removes the build script that was used to check for panics in CI.
+
+This removes the audit burden due to a build script from users of the crate,
+but retains most of the panic-proofness.
 
 ### Additional changes
 
 - Update transitive dev-dependencies.
-- Forbid the `clippy::expect_used`, `clippy::panic`, and `clippy::indexing_slicing` lints at the crate level.
 
 ## 1.2.33
 
