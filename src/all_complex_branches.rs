@@ -202,9 +202,6 @@ where
 /// # Panics
 ///
 /// Panics if a `T` cannot be created from a `f64`.
-fn t_from_f64<T>(x: f64) -> T
-where
-    T: FromPrimitive,
-{
+fn t_from_f64<T: FromPrimitive>(x: f64) -> T {
     T::from_f64(x).unwrap()
 }
