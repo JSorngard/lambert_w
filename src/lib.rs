@@ -19,6 +19,7 @@
 #![forbid(clippy::unwrap_used)]
 #![forbid(clippy::expect_used)]
 #![forbid(clippy::panic)]
+#![forbid(clippy::indexing_slicing)]
 
 #[cfg(feature = "std")]
 extern crate std;
