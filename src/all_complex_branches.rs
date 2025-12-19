@@ -56,8 +56,8 @@ where
     let d_zero = T::zero();
     let d_one = T::one();
     let d_two = d_one + d_one;
-    let d_e: T = t_from_f64_or_f32(E);
-    let d_neg_inv_e: T = t_from_f64_or_f32(NEG_INV_E);
+    let d_e: T = t_from_f64(E);
+    let d_neg_inv_e: T = t_from_f64(NEG_INV_E);
 
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
@@ -145,9 +145,9 @@ where
     let d_one = T::one();
     let d_two = d_one + d_one;
     let d_half = d_one / d_two;
-    let d_e: T = t_from_f64_or_f32(E);
-    let d_pi: T = t_from_f64_or_f32(PI);
-    let d_neg_inv_e: T = t_from_f64_or_f32(NEG_INV_E);
+    let d_e: T = t_from_f64(E);
+    let d_pi: T = t_from_f64(PI);
+    let d_neg_inv_e: T = t_from_f64(NEG_INV_E);
 
     let i = Complex::<T>::i();
     let z_one = Complex::<T>::from(d_one);
@@ -167,8 +167,8 @@ where
     // Choose the initial point more carefully when we are close to the branch cut.
     if (z - z_neg_inv_e).abs() <= abs_one {
         let p = (d_two * (d_e * z + d_one)).sqrt();
-        let p2 = t_from_f64_or_f32::<T>(1.0 / 3.0) * p * p;
-        let p3 = t_from_f64_or_f32::<T>(11.0 / 72.0) * p * p * p;
+        let p2 = t_from_f64::<T>(1.0 / 3.0) * p * p;
+        let p3 = t_from_f64::<T>(11.0 / 72.0) * p * p * p;
         if k == i_zero {
             initial_point = -d_one + p - p2 + p3;
         } else if (k == i_one && z.im < d_zero) || (k == -i_one && z.im > d_zero) {
@@ -178,38 +178,36 @@ where
 
     if k == i_zero && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the principal branch
-        initial_point = (t_from_f64_or_f32::<T>(0.351_733_71)
-            * (t_from_f64_or_f32::<T>(0.123_716_6) + t_from_f64_or_f32::<T>(7.061_302_897) * z))
-            / (d_two + t_from_f64_or_f32::<T>(0.827_184) * (d_one + d_two * z));
+        initial_point = (t_from_f64::<T>(0.351_733_71)
+            * (t_from_f64::<T>(0.123_716_6) + t_from_f64::<T>(7.061_302_897) * z))
+            / (d_two + t_from_f64::<T>(0.827_184) * (d_one + d_two * z));
     }
 
     if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        initial_point = -(((t_from_f64_or_f32::<T>(2.259_158_898_5)
-            + t_from_f64_or_f32::<T>(4.220_96) * i)
-            * ((t_from_f64_or_f32::<T>(-14.073_271)
-                - t_from_f64_or_f32::<T>(33.767_687_754) * i)
+        initial_point = -(((t_from_f64::<T>(2.259_158_898_5)
+            + t_from_f64::<T>(4.220_96) * i)
+            * ((t_from_f64::<T>(-14.073_271)
+                - t_from_f64::<T>(33.767_687_754) * i)
                 * z
-                - (t_from_f64_or_f32::<T>(12.712_7) - t_from_f64_or_f32::<T>(19.071_643) * i)
+                - (t_from_f64::<T>(12.712_7) - t_from_f64::<T>(19.071_643) * i)
                     * (d_one + d_two * z)))
             / (d_two
-                - (t_from_f64_or_f32::<T>(17.231_03) - t_from_f64_or_f32::<T>(10.629_721) * i)
+                - (t_from_f64::<T>(17.231_03) - t_from_f64::<T>(10.629_721) * i)
                     * (d_one + d_two * z)));
     }
 
     initial_point
 }
 
-/// Attempts to convert a `f64` to a `T`.
-///
-/// If that fails, it tries to convert the `f64` to a `f32` with `as` and then to a `T`.
+/// Attempts to convert a `f64` to a `T`, if `T` is a `f32` then this works as an `as`-cast.
 ///
 /// # Panics
 ///
-/// Panics if a `T` cannot be created from a `f32`.
-fn t_from_f64_or_f32<T>(x: f64) -> T
+/// Panics if a `T` cannot be created from a `f64`.
+fn t_from_f64<T>(x: f64) -> T
 where
     T: FromPrimitive,
 {
-    T::from_f64(x).unwrap_or_else(|| T::from_f32(x as f32).unwrap())
+    T::from_f64(x).unwrap()
 }
