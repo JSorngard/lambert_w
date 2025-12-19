@@ -185,11 +185,8 @@ where
 
     if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        initial_point = -(((t_from_f64::<T>(2.259_158_898_5)
-            + t_from_f64::<T>(4.220_96) * i)
-            * ((t_from_f64::<T>(-14.073_271)
-                - t_from_f64::<T>(33.767_687_754) * i)
-                * z
+        initial_point = -(((t_from_f64::<T>(2.259_158_898_5) + t_from_f64::<T>(4.220_96) * i)
+            * ((t_from_f64::<T>(-14.073_271) - t_from_f64::<T>(33.767_687_754) * i) * z
                 - (t_from_f64::<T>(12.712_7) - t_from_f64::<T>(19.071_643) * i)
                     * (d_one + d_two * z)))
             / (d_two
