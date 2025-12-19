@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
 A build script and the crate `no-panic` was used in CI to ensure that this was the case.
-That code has now been rewritten to not need those `unwrap`s, and as a result this version:
+That code has now been rewritten to not need those `unwraps`, and as a result this version:
 
 - Forbids the `clippy::unwrap_used`, `clippy::expect_used`, and `clippy::panic` lints at the crate level.
 - Removes the build script that was used to statically check for panics in CI.
