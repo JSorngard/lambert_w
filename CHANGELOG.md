@@ -10,7 +10,7 @@ A build script and the crate `no-panic` was used in CI to ensure that this was t
 That code has now been rewritten to not need those `unwraps`, and as a result this version:
 
 - Forbids the `clippy::unwrap_used`, `clippy::expect_used`, and `clippy::panic` lints at the crate level.
-- Removes the build script that was used to statically check for panics in CI.
+- Removes the build script that was used to check for panics in CI.
 
 ### Additional changes
 
