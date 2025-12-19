@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 1.2.34
 
-Some code in the crate used to contain explicit calls to `unwrap()` that should always optimize away in theory.
+Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
 A build script and the crate `no-panic` was used in CI to ensure that this was the case.
 That code has now been rewritten to not need those `unwrap`s, and as a result this version:
 
