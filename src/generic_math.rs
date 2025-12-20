@@ -45,12 +45,16 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
 // which means that the crate would produce warnings about the unused imports.
 
 /// Compute the square root of `x`.
+///
+/// Just wraps the [`sqrt`](Float::sqrt) function from [`num_traits`].
 #[inline]
 pub(crate) fn sqrt<T: Float>(x: T) -> T {
     Float::sqrt(x)
 }
 
 /// Compute the natural logarithm of `x`.
+///
+/// Just wraps the [`ln`](Float::ln) function from [`num_traits`].
 #[inline]
 pub(crate) fn ln<T: Float>(x: T) -> T {
     Float::ln(x)
