@@ -121,10 +121,6 @@ pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
 ///
 /// It performs a maximum of 255 iterations of Halley's method, and looks for a relative error
 /// of less than floating point epsilon.
-///
-/// # Panics
-///
-/// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
