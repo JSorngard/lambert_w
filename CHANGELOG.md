@@ -17,6 +17,7 @@ but retains most of the panic-proofness.
 
 ### Additional changes
 
+- Update dev-dependencies.
 - Update transitive dev-dependencies.
 - Internal code structure improvements.
 
