@@ -287,7 +287,7 @@ where
 /// This works like an `as`-cast conversion:
 /// an effort is made to represent the `f64`'s value
 /// in the new type, but it is allowed to be lossy,
-/// like when converting a [`f32`] to a `f64`.
+/// like when converting a `f64` to a [`f32`].
 trait F64AsT {
     fn f64_as_t(x: f64) -> Self;
 }
