@@ -45,7 +45,7 @@ always_include_features = ["libm"]
 inherits = "release"
 lto = "fat"
 codegen-units = 1
-# We do not want panic = "abort", as we want to be able to catch panics in the tests.
+panic="abort"
 
 [[bench]]
 name = "random"
