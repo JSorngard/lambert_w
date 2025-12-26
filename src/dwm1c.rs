@@ -4,8 +4,6 @@
 //! This module contains an implementation of the approximation of the secondary
 //! branch of the Lambert W function
 //! with 50 bits of accuracy from Fukushima's paper.
-//! It returns [`f64::NAN`] if the `zc` input is negative,
-//! or if the `z` input is `NAN`, or larger than 0.
 //! It is based on the Fortran implementation of the name "dwm1c" by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
