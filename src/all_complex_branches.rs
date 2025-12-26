@@ -211,10 +211,6 @@ where
 }
 
 /// Carefully determines the initial search point for Halley's method.
-///
-/// # Panics
-///
-/// Panics if `T` can not be losslessly created from either an `f64` or an `f32`.
 fn determine_start_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
