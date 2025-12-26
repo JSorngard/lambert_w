@@ -4,6 +4,7 @@
 //! This module contains an implementation of the approximation of the secondary
 //! branch of the Lambert W function
 //! with 24 bits of accuracy from Fukushima's paper.
+//! It is implemented here on 32-bit floats, which most likely reduces the accuracy in some cases.
 
 use crate::generic_math::{ln, rational_function, sqrt};
 
