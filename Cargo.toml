@@ -23,7 +23,7 @@ num-traits = { version = "0.2.19", default-features = false }
 approx = { version = "0.5.1", default-features = false }
 criterion = { version = "0.8.1", features = ["html_reports"] }
 rand = { version = "0.9.2", default-features = false, features = ["small_rng"] }
-plotters = { version = "0.3.0", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"] }
+plotters = { version = "0.3.7", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"] }
 
 [features]
 default = ["libm"]
