@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.34 (unreleased)
+## 1.2.34
 
 Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
 A build script and the crate [`no-panic`](https://crates.io/crates/no_panic) was used in CI to ensure that this was the case.
