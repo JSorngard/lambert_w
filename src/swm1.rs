@@ -20,7 +20,7 @@ use crate::{
 ///
 /// # Examples
 ///
-/// Basic usage:
+/// #### Basic usage
 ///
 /// ```
 /// use lambert_w::sp_lambert_wm1;
@@ -30,6 +30,8 @@ use crate::{
 ///
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0), epsilon = f64::from(f32::EPSILON));
 /// ```
+///
+/// #### Special cases
 ///
 /// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:
 ///

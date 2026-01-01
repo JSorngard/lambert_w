@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.35 (unreleased)
+
+- Documentation improvements.
+
 ## 1.2.34
 
 Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
