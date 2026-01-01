@@ -18,7 +18,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// # Examples
 ///
-/// Basic usage:
+/// #### Basic usage
 ///
 /// ```
 /// use lambert_w::lambert_w0f;
@@ -28,6 +28,8 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// assert_abs_diff_eq!(Ω, 0.56714329);
 /// ```
+///
+/// #### Special cases
 ///
 /// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
 /// while an infinite input gives [`INFINITY`](f32::INFINITY):
