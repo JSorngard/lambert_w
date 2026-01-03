@@ -108,12 +108,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wf(
-    k: i16,
-    z_re: f32,
-    z_im: f32,
-    error_tolerance: f32,
-) -> (f32, f32) {
+pub fn lambert_wf(k: i16, z_re: f32, z_im: f32, error_tolerance: f32) -> (f32, f32) {
     let w = lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im), error_tolerance);
     (w.re, w.im)
 }

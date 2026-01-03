@@ -519,12 +519,7 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(0, 0.0, 0.0, err_tol), (0.0, 0.0));
     assert_eq!(lambert_w(1, 0.0, 0.0, err_tol), (f64::NEG_INFINITY, 0.0));
 
-    assert!(
-        (lambert_w(0, 10.0, 0.0, 0.01).0
-            - lambert_w(0, 10.0, 0.0, err_tol).0)
-            .abs()
-            <= 0.01
-    );
+    assert!((lambert_w(0, 10.0, 0.0, 0.01).0 - lambert_w(0, 10.0, 0.0, err_tol).0).abs() <= 0.01);
 
     assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0, err_tol),
