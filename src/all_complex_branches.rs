@@ -21,6 +21,9 @@ const MAX_ITERS: u8 = 255;
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
+/// The function iterates until it either reaches the requested error tolerance (relative difference between two iterations),
+/// or has iterated a maximum number of times.
+///
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
 ///
@@ -69,6 +72,9 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 ///
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
+///
+/// The function iterates until it either reaches the requested error tolerance (relative difference between two iterations),
+/// or has iterated a maximum number of times.
 ///
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
