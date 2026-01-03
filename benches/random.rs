@@ -7,13 +7,13 @@
 // and we can not mark the macro call itself.
 #![allow(missing_docs)]
 
-use core::{hint::black_box, num::NonZeroU64, ops::RangeBounds};
+use core::{hint::black_box, ops::RangeBounds};
 use criterion::{
     criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
-    sp_lambert_wm1, ErrorTolerance, NEG_INV_E,
+    sp_lambert_wm1, NEG_INV_E,
 };
 use rand::{
     distr::uniform::{SampleRange, SampleUniform},
@@ -80,8 +80,8 @@ fn random_benches(c: &mut Criterion) {
 
     let mut halley_group = c.benchmark_group("random inputs (Halley's method)");
 
-    let tol: ErrorTolerance<f64> = ErrorTolerance::epsilon();
-    let tolf: ErrorTolerance<f32> = ErrorTolerance::epsilon();
+    let tol = f64::EPSILON;
+    let tolf = f32::EPSILON;
 
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
