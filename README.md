@@ -121,15 +121,15 @@ Functions are provided that can evaluate any arbitrary branch at any arbitrary
 complex input:
 
 ```rust
-use lambert_w::{lambert_w, lambert_wf};
+use lambert_w::{lambert_w, lambert_wf, ErrorTolerance};
 
 // W_10(2.5 - 3i)
-let w10 = lambert_w(10, 2.5, -3.0);
+let w10 = lambert_w(10, 2.5, -3.0, ErrorTolerance::epsilon());
 
 assert_eq!(w10, (-2.738728537647321, 60.33964127931528));
 
 // Same but 32-bit
-let w10f = lambert_wf(10, 2.5, -3.0);
+let w10f = lambert_wf(10, 2.5, -3.0, ErrorTolerance::epsilon());
 
 assert_eq!(w10f, (-2.7387285, 60.33964));
 ```

@@ -11,6 +11,7 @@ use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1,
+    ErrorTolerance,
 };
 
 fn fixed_benches(c: &mut Criterion) {
@@ -42,7 +43,9 @@ fn fixed_benches(c: &mut Criterion) {
         }
         drop(group);
         let mut group = c.benchmark_group(format!("W_0 with Halley's method fixed at {z}"));
-        group.bench_function("branch 0", |b| b.iter(|| black_box(lambert_w(0, z, 0.0))));
+        group.bench_function("branch 0", |b| {
+            b.iter(|| black_box(lambert_w(0, z, 0.0, ErrorTolerance::epsilon())))
+        });
     }
     for z in small_args {
         let mut group = c.benchmark_group(format!("W_-1 with Fukushima's method fixed at {z}"));
@@ -58,7 +61,9 @@ fn fixed_benches(c: &mut Criterion) {
         }
         drop(group);
         let mut group = c.benchmark_group(format!("W_-1 with Halley's method fixed at {z}"));
-        group.bench_function("branch -1", |b| b.iter(|| black_box(lambert_w(-1, z, 0.0))));
+        group.bench_function("branch -1", |b| {
+            b.iter(|| black_box(lambert_w(-1, z, 0.0, ErrorTolerance::epsilon())))
+        });
     }
 }
 

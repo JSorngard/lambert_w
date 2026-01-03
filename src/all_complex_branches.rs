@@ -7,16 +7,31 @@
 use num_complex::{Complex, ComplexFloat};
 use num_traits::{Float, Signed};
 
+use crate::NEG_INV_E;
+use core::num::NonZeroU64;
 use core::{
     f64::consts::{E, PI},
     ops::{Add, Mul, Sub, SubAssign},
 };
 
-use crate::NEG_INV_E;
+const MAX_ITERS: u8 = 255;
 
-const MAX_ITER: u8 = u8::MAX;
+#[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
+pub struct ErrorTolerance<T>(T);
 
-// Remember to change the docstring of `lambert_w_generic` if you change the above value.
+impl<T: Float> ErrorTolerance<T> {
+    pub fn new(value: T) -> Option<Self> {
+        if !value.is_nan() && value >= T::zero() {
+            Some(ErrorTolerance(value))
+        } else {
+            None
+        }
+    }
+
+    pub fn epsilon() -> Self {
+        ErrorTolerance(T::epsilon())
+    }
+}
 
 /// Branch `k` of the complex valued Lambert W function computed
 /// on 64-bit floats with Halley's method.
@@ -36,10 +51,10 @@ const MAX_ITER: u8 = u8::MAX;
 /// Basic usage:
 ///
 /// ```
-/// use lambert_w::lambert_w;
+/// use lambert_w::{lambert_w, ErrorTolerance};
 ///
 /// // W_2(1 + 2i)
-/// let w = lambert_w(2, 1.0, 2.0);
+/// let w = lambert_w(2, 1.0, 2.0, ErrorTolerance::epsilon());
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
@@ -47,8 +62,8 @@ const MAX_ITER: u8 = u8::MAX;
 /// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
 ///
 /// ```
-/// # use lambert_w::lambert_w;
-/// let w = lambert_w(-13, f64::INFINITY, 0.0);
+/// # use lambert_w::{lambert_w, ErrorTolerance};
+/// let w = lambert_w(-13, f64::INFINITY, 0.0, ErrorTolerance::epsilon());
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -56,14 +71,14 @@ const MAX_ITER: u8 = u8::MAX;
 /// or `NAN`:
 ///
 /// ```
-/// # use lambert_w::lambert_w;
-/// let w = lambert_w(1_000, 0.0, f64::NAN);
+/// # use lambert_w::{lambert_w, ErrorTolerance};
+/// let w = lambert_w(1_000, 0.0, f64::NAN, ErrorTolerance::epsilon());
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
-    let w = lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im));
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: ErrorTolerance<f64>) -> (f64, f64) {
+    let w = lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im), error_tolerance);
     (w.re, w.im)
 }
 
@@ -85,10 +100,10 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// Basic usage:
 ///
 /// ```
-/// use lambert_w::lambert_wf;
+/// use lambert_w::{lambert_wf, ErrorTolerance};
 ///
 /// // W_2(1 + 2i)
-/// let w = lambert_wf(2, 1.0, 2.0);
+/// let w = lambert_wf(2, 1.0, 2.0, ErrorTolerance::epsilon());
 ///
 /// assert_eq!(w, (-1.6869138, 11.962631));
 /// ```
@@ -96,8 +111,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
 ///
 /// ```
-/// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(-13, f32::INFINITY, 0.0);
+/// # use lambert_w::{lambert_wf, ErrorTolerance};
+/// let w = lambert_wf(-13, f32::INFINITY, 0.0, ErrorTolerance::epsilon());
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -105,14 +120,19 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// or `NAN`:
 ///
 /// ```
-/// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(1_000, 0.0, f32::NAN);
+/// # use lambert_w::{lambert_wf, ErrorTolerance};
+/// let w = lambert_wf(1_000, 0.0, f32::NAN, ErrorTolerance::epsilon());
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
-    let w = lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im));
+pub fn lambert_wf(
+    k: i16,
+    z_re: f32,
+    z_im: f32,
+    error_tolerance: ErrorTolerance<f32>,
+) -> (f32, f32) {
+    let w = lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im), error_tolerance);
     (w.re, w.im)
 }
 
@@ -121,7 +141,7 @@ pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
 ///
 /// It performs a maximum of 255 iterations of Halley's method, and looks for a relative error
 /// of less than floating point epsilon.
-fn lambert_w_generic<T, U>(k: U, z: Complex<T>) -> Complex<T>
+fn lambert_w_generic<T, U>(k: U, z: Complex<T>, error_tolerance: ErrorTolerance<T>) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
@@ -157,7 +177,7 @@ where
 
     // This value is only constructed to help the compiler see that
     // it is the same type as what Complex<T>::abs() returns.
-    let epsilon = Complex::<T>::from(T::epsilon()).abs();
+    let z_tolerance_abs = Complex::<T>::from(error_tolerance.0).abs();
 
     // endregion: construct constants of the generic type
 
@@ -200,7 +220,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= epsilon || iter == MAX_ITER || !w.is_finite() {
+        if ((w - w_prev) / w).abs() <= z_tolerance_abs || iter >= MAX_ITERS || !w.is_finite() {
             return w;
         }
 
