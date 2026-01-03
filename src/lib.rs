@@ -38,7 +38,7 @@ mod swm1f;
 #[cfg(test)]
 mod unit_tests;
 
-pub use all_complex_branches::{lambert_w, lambert_wf, ErrorTolerance};
+pub use all_complex_branches::{lambert_w, lambert_wf};
 pub use dw0c::lambert_w0;
 pub use dwm1c::lambert_wm1;
 pub use sw0::sp_lambert_w0;

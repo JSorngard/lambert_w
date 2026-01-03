@@ -15,68 +15,6 @@ use core::{
 
 const MAX_ITERS: u8 = 255;
 
-/// The error tolerance of a call to one of the complex Lambert W functions.
-#[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
-pub struct ErrorTolerance<T>(T);
-
-impl<T: Float> ErrorTolerance<T> {
-    /// Create a new instance. Returns [`None`] if the given value is NaN or negative.
-    ///
-    /// An error tolerance of 0.0 means that you can not accept any error, no matter how small.
-    /// A tolerance of infinity means that you are okay with any error.
-    /// Finite values in between mean that you can accept at most that large of a relative error.
-    #[inline]
-    pub fn new(value: T) -> Option<Self> {
-        if !value.is_nan() && value >= T::zero() {
-            Some(ErrorTolerance(value))
-        } else {
-            None
-        }
-    }
-
-    /// Returns an instance that represents an error tolerance of floating point epsilon.
-    #[inline]
-    pub fn epsilon() -> Self {
-        ErrorTolerance(T::epsilon())
-    }
-
-    /// Multiply the error tolerance by the given value
-    /// and return the result if it is not NaN or negative.
-    #[inline]
-    pub fn checked_mul(&self, value: T) -> Option<Self> {
-        Self::new(self.0 * value)
-    }
-
-    /// Divide the error tolerance with the given value and
-    /// return the result if it is not NaN or negative.
-    #[inline]
-    pub fn checked_div(&self, value: T) -> Option<Self> {
-        Self::new(self.0 / value)
-    }
-
-    /// Add the given value to the error tolerance and
-    /// return the result if it is not NaN or negative.
-    #[inline]
-    pub fn checked_add(&self, value: T) -> Option<Self> {
-        Self::new(self.0 + value)
-    }
-
-    /// Subtract the given value from the error tolerance and
-    /// return the result if it is not NaN or negative.
-    #[inline]
-    pub fn checked_sub(&self, value: T) -> Option<Self> {
-        Self::new(self.0 - value)
-    }
-}
-
-impl<T> ErrorTolerance<T> {
-    /// Returns the inner value.
-    #[inline]
-    pub fn into_inner(self) -> T {
-        self.0
-    }
-}
-
 /// Branch `k` of the complex valued Lambert W function computed
 /// on 64-bit floats with Halley's method.
 ///
@@ -95,10 +33,10 @@ impl<T> ErrorTolerance<T> {
 /// Basic usage:
 ///
 /// ```
-/// use lambert_w::{lambert_w, ErrorTolerance};
+/// use lambert_w::lambert_w;
 ///
 /// // W_2(1 + 2i)
-/// let w = lambert_w(2, 1.0, 2.0, ErrorTolerance::epsilon());
+/// let w = lambert_w(2, 1.0, 2.0, f64::EPSILON);
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
@@ -106,8 +44,8 @@ impl<T> ErrorTolerance<T> {
 /// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
 ///
 /// ```
-/// # use lambert_w::{lambert_w, ErrorTolerance};
-/// let w = lambert_w(-13, f64::INFINITY, 0.0, ErrorTolerance::epsilon());
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(-13, f64::INFINITY, 0.0, f64::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -115,13 +53,13 @@ impl<T> ErrorTolerance<T> {
 /// or `NAN`:
 ///
 /// ```
-/// # use lambert_w::{lambert_w, ErrorTolerance};
-/// let w = lambert_w(1_000, 0.0, f64::NAN, ErrorTolerance::epsilon());
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(1_000, 0.0, f64::NAN, f64::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: ErrorTolerance<f64>) -> (f64, f64) {
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f64) {
     let w = lambert_w_generic(k, num_complex::Complex64::new(z_re, z_im), error_tolerance);
     (w.re, w.im)
 }
@@ -144,10 +82,10 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: ErrorTolerance<f
 /// Basic usage:
 ///
 /// ```
-/// use lambert_w::{lambert_wf, ErrorTolerance};
+/// use lambert_w::lambert_wf;
 ///
 /// // W_2(1 + 2i)
-/// let w = lambert_wf(2, 1.0, 2.0, ErrorTolerance::epsilon());
+/// let w = lambert_wf(2, 1.0, 2.0, f32::EPSILON);
 ///
 /// assert_eq!(w, (-1.6869138, 11.962631));
 /// ```
@@ -155,8 +93,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: ErrorTolerance<f
 /// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
 ///
 /// ```
-/// # use lambert_w::{lambert_wf, ErrorTolerance};
-/// let w = lambert_wf(-13, f32::INFINITY, 0.0, ErrorTolerance::epsilon());
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(-13, f32::INFINITY, 0.0, f32::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -164,8 +102,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: ErrorTolerance<f
 /// or `NAN`:
 ///
 /// ```
-/// # use lambert_w::{lambert_wf, ErrorTolerance};
-/// let w = lambert_wf(1_000, 0.0, f32::NAN, ErrorTolerance::epsilon());
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(1_000, 0.0, f32::NAN, f32::EPSILON);
 ///
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
@@ -174,7 +112,7 @@ pub fn lambert_wf(
     k: i16,
     z_re: f32,
     z_im: f32,
-    error_tolerance: ErrorTolerance<f32>,
+    error_tolerance: f32,
 ) -> (f32, f32) {
     let w = lambert_w_generic(k, num_complex::Complex32::new(z_re, z_im), error_tolerance);
     (w.re, w.im)
@@ -185,7 +123,7 @@ pub fn lambert_wf(
 ///
 /// It performs a maximum of 255 iterations of Halley's method, and looks for a relative error
 /// of less than floating point epsilon.
-fn lambert_w_generic<T, U>(k: U, z: Complex<T>, error_tolerance: ErrorTolerance<T>) -> Complex<T>
+fn lambert_w_generic<T, U>(k: U, z: Complex<T>, error_tolerance: T) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
@@ -205,6 +143,10 @@ where
         return Complex::<T>::new(T::nan(), T::nan());
     }
 
+    if error_tolerance.is_nan() {
+        return Complex::<T>::new(T::nan(), T::nan());
+    }
+
     // region: construct constants of the generic type
 
     let i_zero = U::zero();
@@ -221,7 +163,7 @@ where
 
     // This value is only constructed to help the compiler see that
     // it is the same type as what Complex<T>::abs() returns.
-    let z_tolerance_abs = Complex::<T>::from(error_tolerance.0).abs();
+    let z_tolerance_abs = Complex::<T>::from(error_tolerance).abs();
 
     // endregion: construct constants of the generic type
 

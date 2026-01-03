@@ -8,7 +8,7 @@
 
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
-    sp_lambert_wm1, ErrorTolerance, NEG_INV_E, OMEGA,
+    sp_lambert_wm1, NEG_INV_E, OMEGA,
 };
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
@@ -504,14 +504,14 @@ macro_rules! assert_complex_approx_eq {
 #[test]
 fn test_iterative_close_to_zero() {
     // Very close to zero on branches != 0 this function is much less accurate.
-    let w = lambert_w(-1, -1e-80, 0.0, ErrorTolerance::epsilon());
+    let w = lambert_w(-1, -1e-80, 0.0, f64::EPSILON);
     assert_relative_eq!(w.0, -189.450_937_525_646_627_592, max_relative = 0.00001);
     assert_relative_eq!(w.1, 0.0, max_relative = 1.0);
 }
 
 #[test]
 fn test_iterative_version() {
-    let err_tol = ErrorTolerance::epsilon();
+    let err_tol = f64::EPSILON;
     assert_eq!(lambert_w(0, NEG_INV_E, 0.0, err_tol), (-1.0, 0.0));
     assert_eq!(lambert_w(0, 1.0, 0.0, err_tol), (OMEGA, 0.0));
     assert_eq!(lambert_w(0, core::f64::consts::E, 0.0, err_tol), (1.0, 0.0));
@@ -520,7 +520,7 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(1, 0.0, 0.0, err_tol), (f64::NEG_INFINITY, 0.0));
 
     assert!(
-        (lambert_w(0, 10.0, 0.0, ErrorTolerance::new(0.01).unwrap()).0
+        (lambert_w(0, 10.0, 0.0, 0.01).0
             - lambert_w(0, 10.0, 0.0, err_tol).0)
             .abs()
             <= 0.01
@@ -602,7 +602,7 @@ fn test_iterative_version() {
 
 #[test]
 fn test_32_bit_iterative_version() {
-    let err_tol = ErrorTolerance::epsilon();
+    let err_tol = f32::EPSILON;
     assert_eq!(lambert_wf(0, NEG_INV_E as f32, 0.0, err_tol), (-1.0, 0.0));
     assert_eq!(lambert_wf(0, 1.0, 0.0, err_tol), (OMEGA as f32, 0.0));
     assert_eq!(
