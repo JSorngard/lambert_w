@@ -201,7 +201,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= z_tolerance_abs || iter >= MAX_ITERS || !w.is_finite() {
+        if ((w - w_prev) / w).abs() <= z_tolerance_abs || iter == MAX_ITERS || !w.is_finite() {
             return w;
         }
 
