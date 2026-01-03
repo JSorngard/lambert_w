@@ -6,7 +6,6 @@
 //! Every test function utilizes [`assert_abs_diff_eq!`] for as long as possible,
 //! and then switches to [`assert_relative_eq!`] when the first assertion would fail.
 
-use core::num::NonZeroU64;
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
     sp_lambert_wm1, ErrorTolerance, NEG_INV_E, OMEGA,
@@ -519,6 +518,13 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(0, 2.0, 0.0, err_tol), (0.8526055020137255, 0.0));
     assert_eq!(lambert_w(0, 0.0, 0.0, err_tol), (0.0, 0.0));
     assert_eq!(lambert_w(1, 0.0, 0.0, err_tol), (f64::NEG_INFINITY, 0.0));
+
+    assert!(
+        (lambert_w(0, 10.0, 0.0, ErrorTolerance::new(0.01).unwrap()).0
+            - lambert_w(0, 10.0, 0.0, err_tol).0)
+            .abs()
+            <= 0.01
+    );
 
     assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0, err_tol),

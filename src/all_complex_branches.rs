@@ -8,7 +8,6 @@ use num_complex::{Complex, ComplexFloat};
 use num_traits::{Float, Signed};
 
 use crate::NEG_INV_E;
-use core::num::NonZeroU64;
 use core::{
     f64::consts::{E, PI},
     ops::{Add, Mul, Sub, SubAssign},
@@ -16,10 +15,17 @@ use core::{
 
 const MAX_ITERS: u8 = 255;
 
+/// The error tolerance of a call to one of the complex Lambert W functions.
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub struct ErrorTolerance<T>(T);
 
 impl<T: Float> ErrorTolerance<T> {
+    /// Create a new instance. Returns [`None`] if the given value is NaN or negative.
+    ///
+    /// An error tolerance of 0.0 means that you can not accept any error, no matter how small.
+    /// A tolerance of infinity means that you are okay with any error.
+    /// Finite values in between mean that you can accept at most that large of a relative error.
+    #[inline]
     pub fn new(value: T) -> Option<Self> {
         if !value.is_nan() && value >= T::zero() {
             Some(ErrorTolerance(value))
@@ -28,8 +34,46 @@ impl<T: Float> ErrorTolerance<T> {
         }
     }
 
+    /// Returns an instance that represents an error tolerance of floating point epsilon.
+    #[inline]
     pub fn epsilon() -> Self {
         ErrorTolerance(T::epsilon())
+    }
+
+    /// Multiply the error tolerance by the given value
+    /// and return the result if it is not NaN or negative.
+    #[inline]
+    pub fn checked_mul(&self, value: T) -> Option<Self> {
+        Self::new(self.0 * value)
+    }
+
+    /// Divide the error tolerance with the given value and
+    /// return the result if it is not NaN or negative.
+    #[inline]
+    pub fn checked_div(&self, value: T) -> Option<Self> {
+        Self::new(self.0 / value)
+    }
+
+    /// Add the given value to the error tolerance and
+    /// return the result if it is not NaN or negative.
+    #[inline]
+    pub fn checked_add(&self, value: T) -> Option<Self> {
+        Self::new(self.0 + value)
+    }
+
+    /// Subtract the given value from the error tolerance and
+    /// return the result if it is not NaN or negative.
+    #[inline]
+    pub fn checked_sub(&self, value: T) -> Option<Self> {
+        Self::new(self.0 - value)
+    }
+}
+
+impl<T> ErrorTolerance<T> {
+    /// Returns the inner value.
+    #[inline]
+    pub fn into_inner(self) -> T {
+        self.0
     }
 }
 
