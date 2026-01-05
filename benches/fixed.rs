@@ -1,4 +1,4 @@
-// Copyright 2025 Johanna Sörngård
+// Copyright 2026 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! Benchmarks for fixed arguments known at compile time.
