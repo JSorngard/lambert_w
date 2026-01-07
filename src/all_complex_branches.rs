@@ -5,7 +5,7 @@
 //! This implementation is capable of computing the function at any point in the complex plane on any branch.
 
 use num_complex::{Complex, ComplexFloat};
-use num_traits::{Float, Signed};
+use num_traits::{Float, Signed, Zero};
 
 use crate::NEG_INV_E;
 use core::{
@@ -21,8 +21,8 @@ const MAX_ITERS: u8 = 255;
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
-/// The function iterates until it either reaches the requested error tolerance (relative difference between two iterations),
-/// or has iterated a maximum number of times.
+/// The function iterates until the current and previous iterations are close according to the given tolerance,
+/// or it has iterated a maximum number of times.
 ///
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
@@ -73,8 +73,8 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// The return value is a tuple where the first element is the
 /// real part and the second element is the imaginary part.
 ///
-/// The function iterates until it either reaches the requested error tolerance (relative difference between two iterations),
-/// or has iterated a maximum number of times.
+/// The function iterates until the current and previous iterations are close according to the given tolerance,
+/// or it has iterated a maximum number of times.
 ///
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
@@ -130,6 +130,7 @@ where
     T: Float
         + F64AsT
         + From<U>
+        + From<<Complex<T> as ComplexFloat>::Real>
         + Mul<Complex<T>, Output = Complex<T>>
         + Add<Complex<T>, Output = Complex<T>>
         + Sub<Complex<T>, Output = Complex<T>>,
@@ -161,10 +162,6 @@ where
 
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
-
-    // This value is only constructed to help the compiler see that
-    // it is the same type as what Complex<T>::abs() returns.
-    let z_tolerance_abs = Complex::<T>::from(error_tolerance).abs();
 
     // endregion: construct constants of the generic type
 
@@ -207,7 +204,7 @@ where
             return w_prev;
         }
 
-        if ((w - w_prev) / w).abs() <= z_tolerance_abs || iter == MAX_ITERS || !w.is_finite() {
+        if are_nearly_equal(w, w_prev, error_tolerance) || iter == MAX_ITERS || !w.is_finite() {
             return w;
         }
 
@@ -215,6 +212,33 @@ where
     }
 
     // endregion: Halley iteration
+}
+
+/// Checks if `a` and `b` are close within a margin of `epsilon`.
+///
+/// Inspired by <https://floating-point-gui.de/errors/comparison/>.
+fn are_nearly_equal<T>(a: Complex<T>, b: Complex<T>, epsilon: T) -> bool
+where
+    T: Float + From<<Complex<T> as ComplexFloat>::Real>,
+    Complex<T>: ComplexFloat,
+{
+    if a == b {
+        true
+    } else if a.is_nan() || b.is_nan() {
+        false
+    } else {
+        // An "Indicator of Relative Change": https://en.wikipedia.org/wiki/Relative_change#Indicators_of_relative_change
+        let indicator: T = a.abs().max(b.abs()).into();
+        let diff: T = (a - b).abs().into();
+        let zero = Complex::<T>::zero();
+
+        if a == zero || b == zero || indicator < T::min_positive_value()
+        {
+            diff < epsilon * T::min_positive_value()
+        } else {
+            diff / indicator.min(T::max_value()) < epsilon
+        }
+    }
 }
 
 /// Carefully determines the initial search point for Halley's method.
