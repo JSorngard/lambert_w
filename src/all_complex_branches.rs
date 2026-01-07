@@ -232,8 +232,7 @@ where
         let diff: T = (a - b).abs().into();
         let zero = Complex::<T>::zero();
 
-        if a == zero || b == zero || indicator < T::min_positive_value()
-        {
+        if a == zero || b == zero || indicator < T::min_positive_value() {
             diff < epsilon * T::min_positive_value()
         } else {
             diff / indicator.min(T::max_value()) < epsilon
