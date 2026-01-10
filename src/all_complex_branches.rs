@@ -128,7 +128,7 @@ fn lambert_w_generic<T, U>(k: U, z: Complex<T>, error_tolerance: T) -> Complex<T
 where
     U: Signed + Copy,
     T: Float
-        + F64AsT
+        + AsCastFrom<f64>
         + From<U>
         + From<<Complex<T> as ComplexFloat>::Real>
         + Mul<Complex<T>, Output = Complex<T>>
@@ -157,8 +157,8 @@ where
     let d_zero = T::zero();
     let d_one = T::one();
     let d_two = d_one + d_one;
-    let d_e: T = T::f64_as_t(E);
-    let d_neg_inv_e: T = T::f64_as_t(NEG_INV_E);
+    let d_e: T = T::as_cast_from(E);
+    let d_neg_inv_e: T = T::as_cast_from(NEG_INV_E);
 
     let z_zero = Complex::<T>::from(d_zero);
     let z_one = Complex::<T>::from(d_one);
@@ -245,7 +245,7 @@ fn determine_start_point<T, U>(k: U, z: Complex<T>) -> Complex<T>
 where
     U: Signed + Copy,
     T: Float
-        + F64AsT
+        + AsCastFrom<f64>
         + From<U>
         + Mul<Complex<T>, Output = Complex<T>>
         + Add<Complex<T>, Output = Complex<T>>
@@ -263,9 +263,9 @@ where
     let d_one = T::one();
     let d_two = d_one + d_one;
     let d_half = d_one / d_two;
-    let d_e: T = T::f64_as_t(E);
-    let d_pi: T = T::f64_as_t(PI);
-    let d_neg_inv_e: T = T::f64_as_t(NEG_INV_E);
+    let d_e: T = T::as_cast_from(E);
+    let d_pi: T = T::as_cast_from(PI);
+    let d_neg_inv_e: T = T::as_cast_from(NEG_INV_E);
 
     let i = Complex::<T>::i();
     let z_one = Complex::<T>::from(d_one);
@@ -285,8 +285,8 @@ where
     // Choose the initial point more carefully when we are close to the branch cut.
     if (z - z_neg_inv_e).abs() <= abs_one {
         let p = (d_two * (d_e * z + d_one)).sqrt();
-        let p2 = T::f64_as_t(1.0 / 3.0) * p * p;
-        let p3 = T::f64_as_t(11.0 / 72.0) * p * p * p;
+        let p2 = T::as_cast_from(1.0 / 3.0) * p * p;
+        let p3 = T::as_cast_from(11.0 / 72.0) * p * p * p;
         if k == i_zero {
             initial_point = -d_one + p - p2 + p3;
         } else if (k == i_one && z.im < d_zero) || (k == -i_one && z.im > d_zero) {
@@ -296,18 +296,20 @@ where
 
     if k == i_zero && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the principal branch
-        initial_point = (T::f64_as_t(0.351_733_71)
-            * (T::f64_as_t(0.123_716_6) + T::f64_as_t(7.061_302_897) * z))
-            / (d_two + T::f64_as_t(0.827_184) * (d_one + d_two * z));
+        initial_point = (T::as_cast_from(0.351_733_71)
+            * (T::as_cast_from(0.123_716_6) + T::as_cast_from(7.061_302_897) * z))
+            / (d_two + T::as_cast_from(0.827_184) * (d_one + d_two * z));
     }
 
     if k == -i_one && (z - d_half).abs() <= abs_half {
         // Order (1,1) Padé approximant for the secondary branch
-        initial_point = -(((T::f64_as_t(2.259_158_898_5) + T::f64_as_t(4.220_96) * i)
-            * ((T::f64_as_t(-14.073_271) - T::f64_as_t(33.767_687_754) * i) * z
-                - (T::f64_as_t(12.712_7) - T::f64_as_t(19.071_643) * i) * (d_one + d_two * z)))
+        initial_point = -(((T::as_cast_from(2.259_158_898_5) + T::as_cast_from(4.220_96) * i)
+            * ((T::as_cast_from(-14.073_271) - T::as_cast_from(33.767_687_754) * i) * z
+                - (T::as_cast_from(12.712_7) - T::as_cast_from(19.071_643) * i)
+                    * (d_one + d_two * z)))
             / (d_two
-                - (T::f64_as_t(17.231_03) - T::f64_as_t(10.629_721) * i) * (d_one + d_two * z)));
+                - (T::as_cast_from(17.231_03) - T::as_cast_from(10.629_721) * i)
+                    * (d_one + d_two * z)));
     }
 
     initial_point
@@ -318,22 +320,22 @@ where
 /// an effort is made to represent the `f64`'s value
 /// in the new type, but it is allowed to be lossy,
 /// like when converting a `f64` to a [`f32`].
-trait F64AsT {
-    fn f64_as_t(x: f64) -> Self;
+trait AsCastFrom<U> {
+    fn as_cast_from(x: f64) -> Self;
 }
 
-impl F64AsT for f32 {
+impl AsCastFrom<f64> for f32 {
     /// Does `x as f32`.
     #[inline]
-    fn f64_as_t(x: f64) -> f32 {
+    fn as_cast_from(x: f64) -> f32 {
         x as f32
     }
 }
 
-impl F64AsT for f64 {
+impl AsCastFrom<f64> for f64 {
     /// Just returns the input.
     #[inline]
-    fn f64_as_t(x: f64) -> f64 {
+    fn as_cast_from(x: f64) -> f64 {
         x
     }
 }
