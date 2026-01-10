@@ -323,6 +323,7 @@ trait F64AsT {
 }
 
 impl F64AsT for f32 {
+    /// Does `x as f32`.
     #[inline]
     fn f64_as_t(x: f64) -> f32 {
         x as f32
@@ -330,6 +331,7 @@ impl F64AsT for f32 {
 }
 
 impl F64AsT for f64 {
+    /// Just returns the input.
     #[inline]
     fn f64_as_t(x: f64) -> f64 {
         x
