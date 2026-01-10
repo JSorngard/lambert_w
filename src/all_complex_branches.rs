@@ -315,11 +315,11 @@ where
     initial_point
 }
 
-/// A type that can be converted lossily from an [`f64`].
+/// A type that can be converted lossily from a `U`.
 /// This works like an `as`-cast conversion:
-/// an effort is made to represent the `f64`'s value
+/// an effort is made to represent the `U`'s value
 /// in the new type, but it is allowed to be lossy,
-/// like when converting a `f64` to a [`f32`].
+/// like when converting a [`f64`] to a [`f32`].
 trait AsCastFrom<U> {
     fn as_cast_from(x: f64) -> Self;
 }
