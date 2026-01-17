@@ -22,7 +22,7 @@ const MAX_ITERS: u8 = 255;
 /// real part and the second element is the imaginary part.
 ///
 /// The function iterates until the current and previous iterations are close according to the given tolerance,
-/// or it has iterated a maximum number of times.
+/// or it has iterated a maximum number of times. The sign of the error tolerance is ignored.
 ///
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
@@ -74,7 +74,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// real part and the second element is the imaginary part.
 ///
 /// The function iterates until the current and previous iterations are close according to the given tolerance,
-/// or it has iterated a maximum number of times.
+/// or it has iterated a maximum number of times. The sign of the error tolerance is ignored.
 ///
 /// This function may be slightly less accurate close to the branch cut at -1/e,
 /// as well as close to zero on branches other than k=0.
