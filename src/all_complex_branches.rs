@@ -121,10 +121,10 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// # let k = 0;
 /// # let z_re = 0.0;
 /// # let z_im = 0.0;
-/// # let eps = f64::EPSILON;
+/// # let eps = f32::EPSILON;
 /// let w1 = lambert_wf(k, f32::NAN, z_im, eps);
-/// let w1 = lambert_wf(k, z_re, f32::NAN, eps);
-/// let w1 = lambert_wf(k, z_re, z_im, f32::NAN);
+/// let w2 = lambert_wf(k, z_re, f32::NAN, eps);
+/// let w3 = lambert_wf(k, z_re, z_im, f32::NAN);
 ///
 /// assert!(w1.0.is_nan() && w1.1.is_nan());
 /// assert!(w2.0.is_nan() && w2.1.is_nan());
