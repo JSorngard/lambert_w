@@ -57,9 +57,18 @@ const MAX_ITERS: u8 = 255;
 ///
 /// ```
 /// # use lambert_w::lambert_w;
-/// let w = lambert_w(1_000, 0.0, f64::NAN, f64::EPSILON);
+/// # let k = 0;
+/// # let z_re = 0.0;
+/// # let z_im = 0.0;
+/// # let eps = f64::EPSILON;
+/// let w1 = lambert_w(k, f64::NAN, z_im, eps);
+/// let w2 = lambert_w(k, z_re, f64::NAN, eps);
+/// let w3 = lambert_w(k, z_re, z_im, f64::NAN);
+/// // or any other combination of NANs.
 ///
-/// assert!(w.0.is_nan() && w.1.is_nan());
+/// assert!(w1.0.is_nan() && w1.1.is_nan());
+/// assert!(w2.0.is_nan() && w2.1.is_nan());
+/// assert!(w3.0.is_nan() && w3.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f64) {
@@ -109,9 +118,17 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 ///
 /// ```
 /// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(1_000, 0.0, f32::NAN, f32::EPSILON);
+/// # let k = 0;
+/// # let z_re = 0.0;
+/// # let z_im = 0.0;
+/// # let eps = f64::EPSILON;
+/// let w1 = lambert_wf(k, f32::NAN, z_im, eps);
+/// let w1 = lambert_wf(k, z_re, f32::NAN, eps);
+/// let w1 = lambert_wf(k, z_re, z_im, f32::NAN);
 ///
-/// assert!(w.0.is_nan() && w.1.is_nan());
+/// assert!(w1.0.is_nan() && w1.1.is_nan());
+/// assert!(w2.0.is_nan() && w2.1.is_nan());
+/// assert!(w3.0.is_nan() && w3.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wf(k: i16, z_re: f32, z_im: f32, error_tolerance: f32) -> (f32, f32) {
