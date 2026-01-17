@@ -519,7 +519,13 @@ fn test_iterative_version() {
     assert_eq!(lambert_w(0, 0.0, 0.0, err_tol), (0.0, 0.0));
     assert_eq!(lambert_w(1, 0.0, 0.0, err_tol), (f64::NEG_INFINITY, 0.0));
 
-    assert!((lambert_w(0, 10.0, 0.0, 0.01).0 - lambert_w(0, 10.0, 0.0, err_tol).0).abs() <= 0.01);
+    for err_tol_pow in 1..10 {
+        let err_tol = f64::powi(10.0, -err_tol_pow);
+        assert!(
+            (lambert_w(0, 10.0, 0.0, err_tol).0 - lambert_w(0, 10.0, 0.0, err_tol).0).abs()
+                <= err_tol
+        );
+    }
 
     assert_complex_approx_eq!(
         lambert_w(0, NEG_INV_E + 0.1, 0.0, err_tol),
@@ -607,6 +613,14 @@ fn test_32_bit_iterative_version() {
     assert_eq!(lambert_wf(0, 2.0, 0.0, err_tol), (0.852_605_5, 0.0));
     assert_eq!(lambert_wf(0, 0.0, 0.0, err_tol), (0.0, 0.0));
     assert_eq!(lambert_wf(1, 0.0, 0.0, err_tol), (f32::NEG_INFINITY, 0.0));
+
+    for err_tol_pow in 1..10 {
+        let err_tol = f32::powi(10.0, -err_tol_pow);
+        assert!(
+            (lambert_wf(0, 10.0, 0.0, err_tol).0 - lambert_wf(0, 10.0, 0.0, err_tol).0).abs()
+                <= err_tol
+        );
+    }
 
     assert_complex_approx_eq!(
         lambert_wf(0, NEG_INV_E as f32 + 0.1, 0.0, err_tol),
