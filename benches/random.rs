@@ -7,8 +7,7 @@
 // and we can not mark the macro call itself.
 #![allow(missing_docs)]
 
-use core::hint::black_box;
-use core::ops::RangeBounds;
+use core::{hint::black_box, ops::RangeBounds};
 use criterion::{
     criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
@@ -81,10 +80,13 @@ fn random_benches(c: &mut Criterion) {
 
     let mut halley_group = c.benchmark_group("random inputs (Halley's method)");
 
+    let tol = f64::EPSILON;
+    let tolf = f32::EPSILON;
+
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_0",
-        |z| lambert_w(0, z, 0.0),
+        |z| lambert_w(0, z, 0.0, tol),
         NEG_INV_E..=f64::from(u32::MAX),
         &mut rng,
     );
@@ -92,7 +94,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_0 on 32-bit",
-        |z| lambert_wf(0, z, 0.0),
+        |z| lambert_wf(0, z, 0.0, tolf),
         NEG_INV_E as f32..=f32::from(u16::MAX),
         &mut rng,
     );
@@ -100,7 +102,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_-1",
-        |z| lambert_w(-1, z, 0.0),
+        |z| lambert_w(-1, z, 0.0, tol),
         NEG_INV_E..=0.0,
         &mut rng,
     );
@@ -108,7 +110,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_-1 on 32-bit",
-        |z| lambert_wf(-1, z, 0.0),
+        |z| lambert_wf(-1, z, 0.0, tolf),
         NEG_INV_E as f32..=0.0,
         &mut rng,
     );
@@ -116,7 +118,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_1000",
-        |z| lambert_w(1_000, z, 0.0),
+        |z| lambert_w(1_000, z, 0.0, tol),
         NEG_INV_E..=f64::from(u32::MAX),
         &mut rng,
     );

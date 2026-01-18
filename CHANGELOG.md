@@ -3,7 +3,14 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.2.35 (unreleased)
+## 2.0.0
+
+### Breaking changes
+
+- The `LambertW` trait has been removed.
+- The complex Lambert W functions now take an error tolerance parameter.
+
+### Other changes
 
 - Documentation improvements.
 - Update transitive dev-dependencies.

@@ -124,12 +124,12 @@ complex input:
 use lambert_w::{lambert_w, lambert_wf};
 
 // W_10(2.5 - 3i)
-let w10 = lambert_w(10, 2.5, -3.0);
+let w10 = lambert_w(10, 2.5, -3.0, f64::EPSILON);
 
 assert_eq!(w10, (-2.738728537647321, 60.33964127931528));
 
 // Same but 32-bit
-let w10f = lambert_wf(10, 2.5, -3.0);
+let w10f = lambert_wf(10, 2.5, -3.0, f32::EPSILON);
 
 assert_eq!(w10f, (-2.7387285, 60.33964));
 ```
