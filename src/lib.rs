@@ -46,7 +46,7 @@ pub use sw0f::lambert_w0f;
 pub use swm1::sp_lambert_wm1;
 pub use swm1f::lambert_wm1f;
 
-/// The negative inverse of e (-1/e).
+/// The negative reciprocal of e (-1/e).
 ///
 /// This is the branch point of the Lambert W function.
 ///
