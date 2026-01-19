@@ -122,4 +122,3 @@ fn sanity_check_sqrtf() {
     assert_relative_eq!(sqrt(f32::MAX), 1.844_674_4e19);
     assert_eq!(sqrt(f32::INFINITY), f32::INFINITY);
 }
-
