@@ -26,7 +26,7 @@ fn test_are_nearly_equal() {
         0.1,
     ));
 
-    assert!(are_nearly_equal(c64(0.0, 0.0), c32(0.0, 0.0), f64::EPSILON));
+    assert!(are_nearly_equal(c64(0.0, 0.0), c64(0.0, 0.0), f64::EPSILON));
     assert!(!are_nearly_equal(
         c64(0.0, f64::NAN),
         c64(0.0, 0.0),
