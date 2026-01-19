@@ -13,11 +13,7 @@ use num_complex::{c32, c64};
 
 #[test]
 fn test_are_nearly_equal() {
-    assert!(are_nearly_equal(
-        c32(0.0, 0.0),
-        c32(0.0, 0.0),
-        f32::EPSILON
-    ));
+    assert!(are_nearly_equal(c32(0.0, 0.0), c32(0.0, 0.0), f32::EPSILON));
     assert!(!are_nearly_equal(
         c32(0.0, f32::NAN),
         c32(0.0, 0.0),
