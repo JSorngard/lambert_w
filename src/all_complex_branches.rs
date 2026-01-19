@@ -234,7 +234,7 @@ where
 /// Checks if `a` and `b` are close within a margin of `epsilon`.
 ///
 /// Inspired by <https://floating-point-gui.de/errors/comparison/>.
-fn are_nearly_equal<T>(a: Complex<T>, b: Complex<T>, epsilon: T) -> bool
+pub(crate) fn are_nearly_equal<T>(a: Complex<T>, b: Complex<T>, epsilon: T) -> bool
 where
     T: Float + From<<Complex<T> as ComplexFloat>::Real>,
     Complex<T>: ComplexFloat,
