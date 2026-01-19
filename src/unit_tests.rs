@@ -3,7 +3,10 @@
 
 //! This file contains unit tests for non-public functions.
 
-use crate::{generic_math::{ln, rational_function, sqrt}, all_complex_branches::are_nearly_equal};
+use crate::{
+    all_complex_branches::are_nearly_equal,
+    generic_math::{ln, rational_function, sqrt}
+};
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 use num_complex::{c32, c64};
