@@ -13,11 +13,16 @@ fn test_are_nearly_equal() {
     assert!(are_nearly_equal(
         c32(0.0, 0.0),
         c32(0.0, 0.0),
-        f32::EPSILON));
-    assert!(!are_nearly_equal(c32(0.0, f32::NAN), c32(0.0, 0.0), f32::EPSILON));
+        f32::EPSILON
+    ));
+    assert!(!are_nearly_equal(
+        c32(0.0, f32::NAN),
+        c32(0.0, 0.0),
+        f32::EPSILON
+    ));
     assert!(are_nearly_equal(c32(10.0, 0.0), c32(10.000001, 0.0), 0.01));
     assert!(!are_nearly_equal(
-        c32(f32::MIN_POSITIVE / 3.0, 0.0), 
+        c32(f32::MIN_POSITIVE / 3.0, 0.0),
         c32(f32::MIN_POSITIVE / 6.0, 0.0), 0.1));
 }
 
