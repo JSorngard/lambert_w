@@ -3,9 +3,18 @@
 
 //! This file contains unit tests for non-public functions.
 
-use crate::generic_math::{ln, rational_function, sqrt};
+use crate::{generic_math::{ln, rational_function, sqrt}, all_complex_branches::are_nearly_equal};
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
+use num_complex::{c32, c64};
+
+#[test]
+fn test_are_nearly_equal() {
+    assert!(are_nearly_equal(c32(0.0, 0.0), c32(0.0, 0.0), f32::EPSILON);
+    assert!(!are_nearly_equal(c32(0.0, f32::NAN), c32(0.0, 0.0), f32::EPSILON);
+    assert!(are_nearly_equal(c32(10.0, 0.0), c32(10.000001, 0.0), 0.01));
+    assert!(are_nearly_equal(c32(f32::MIN_POSITIVE/3.0, 0.0), c32(f32::MIN_POSITIVE/6.0, 0.0), 0.1));
+}
 
 #[test]
 fn sanity_check_rational_3_over_3() {
@@ -102,3 +111,4 @@ fn sanity_check_sqrtf() {
     assert_relative_eq!(sqrt(f32::MAX), 1.844_674_4e19);
     assert_eq!(sqrt(f32::INFINITY), f32::INFINITY);
 }
+
