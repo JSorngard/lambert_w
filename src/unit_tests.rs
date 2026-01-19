@@ -22,7 +22,9 @@ fn test_are_nearly_equal() {
     assert!(are_nearly_equal(c32(10.0, 0.0), c32(10.000001, 0.0), 0.01));
     assert!(!are_nearly_equal(
         c32(f32::MIN_POSITIVE / 3.0, 0.0),
-        c32(f32::MIN_POSITIVE / 6.0, 0.0), 0.1));
+        c32(f32::MIN_POSITIVE / 6.0, 0.0), 
+        0.1,
+    ));
 }
 
 #[test]
