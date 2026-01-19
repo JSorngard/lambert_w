@@ -25,6 +25,19 @@ fn test_are_nearly_equal() {
         c32(f32::MIN_POSITIVE / 6.0, 0.0),
         0.1,
     ));
+
+    assert!(are_nearly_equal(c64(0.0, 0.0), c32(0.0, 0.0), f64::EPSILON));
+    assert!(!are_nearly_equal(
+        c64(0.0, f64::NAN),
+        c64(0.0, 0.0),
+        f64::EPSILON
+    ));
+    assert!(are_nearly_equal(c64(10.0, 0.0), c64(10.000001, 0.0), 0.01));
+    assert!(!are_nearly_equal(
+        c64(f64::MIN_POSITIVE / 3.0, 0.0),
+        c64(f64::MIN_POSITIVE / 6.0, 0.0),
+        0.1,
+    ));
 }
 
 #[test]
