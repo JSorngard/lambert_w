@@ -588,6 +588,7 @@ fn test_iterative_version() {
     assert!(lambert_w(0, 0.0, f64::NAN, err_tol).1.is_nan());
     assert!(lambert_w(0, f64::NAN, f64::NAN, err_tol).0.is_nan());
     assert!(lambert_w(0, f64::NAN, f64::NAN, err_tol).1.is_nan());
+    assert!(lambert_w(0, 0.0, 0.0, f64::NAN).is_nan());
     // Infinity
     assert!(lambert_w(0, f64::INFINITY, 0.0, err_tol).0.is_nan());
     assert!(lambert_w(0, f64::INFINITY, 0.0, err_tol).1.is_nan());
@@ -664,6 +665,7 @@ fn test_32_bit_iterative_version() {
     assert!(lambert_wf(0, 0.0, f32::NAN, err_tol).1.is_nan());
     assert!(lambert_wf(0, f32::NAN, f32::NAN, err_tol).0.is_nan());
     assert!(lambert_wf(0, f32::NAN, f32::NAN, err_tol).1.is_nan());
+    assert!(lambert_wf(0, 0.0, 0.0, f32::NAN).is_nan());
     // Infinity
     assert!(lambert_wf(0, f32::INFINITY, 0.0, err_tol).0.is_nan());
     assert!(lambert_wf(0, f32::INFINITY, 0.0, err_tol).1.is_nan());
