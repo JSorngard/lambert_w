@@ -111,7 +111,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// assert_eq!(w, (-1.6869138, 11.962631));
 /// ```
 ///
-/// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
+/// Returns [`NAN`](f32::NAN)s if any of the components of `z` are infinite:
 ///
 /// ```
 /// # use lambert_w::lambert_wf;
