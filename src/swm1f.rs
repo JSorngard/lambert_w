@@ -53,7 +53,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// # Reference
 ///
-/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**. DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `swm1` module,
