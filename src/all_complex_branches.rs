@@ -70,7 +70,6 @@ const MAX_ITERS: u8 = 255;
 /// let w1 = lambert_w(k, f64::NAN, z_im, eps);
 /// let w2 = lambert_w(k, z_re, f64::NAN, eps);
 /// let w3 = lambert_w(k, z_re, z_im, f64::NAN);
-/// // or any other combination of NANs.
 ///
 /// assert!(w1.0.is_nan() && w1.1.is_nan());
 /// assert!(w2.0.is_nan() && w2.1.is_nan());
