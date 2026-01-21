@@ -121,6 +121,9 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// # let eps = f32::EPSILON;
 /// let w1 = lambert_wf(k, f32::INFINITY, z_im, eps);
 /// let w2 = lambert_wf(k, z_re, f32::INFINITY, eps);
+///
+/// assert!(w1.0.is_nan() && w1.1.is_nan());
+/// assert!(w2.0.is_nan() && w2.1.is_nan());
 /// ```
 ///
 /// or `NAN`:
