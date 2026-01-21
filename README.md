@@ -118,12 +118,12 @@ point epsilon, or within an optional absolute or relative difference.
 ### Arbitrary branches in the complex plane
 
 Functions are provided that can evaluate any arbitrary branch at any arbitrary
-complex input:
+complex input to a given error tolerance:
 
 ```rust
 use lambert_w::{lambert_w, lambert_wf};
 
-// W_10(2.5 - 3i)
+// W_10(2.5 - 3i) with an error tolerance of at most floating point epsilon.
 let w10 = lambert_w(10, 2.5, -3.0, f64::EPSILON);
 
 assert_eq!(w10, (-2.738728537647321, 60.33964127931528));
