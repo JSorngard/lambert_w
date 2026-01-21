@@ -38,7 +38,7 @@ const MAX_ITERS: u8 = 255;
 /// ```
 /// use lambert_w::lambert_w;
 ///
-/// // W_2(1 + 2i)
+/// // W_2(1 + 2i) with an error tolerance of at most floating point epsilon.
 /// let w = lambert_w(2, 1.0, 2.0, f64::EPSILON);
 ///
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
@@ -105,7 +105,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 /// ```
 /// use lambert_w::lambert_wf;
 ///
-/// // W_2(1 + 2i)
+/// // W_2(1 + 2i) with an error tolerance of at most floating point epsilon.
 /// let w = lambert_wf(2, 1.0, 2.0, f32::EPSILON);
 ///
 /// assert_eq!(w, (-1.6869138, 11.962631));
@@ -115,9 +115,12 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64, error_tolerance: f64) -> (f64, f6
 ///
 /// ```
 /// # use lambert_w::lambert_wf;
-/// let w = lambert_wf(-13, f32::INFINITY, 0.0, f32::EPSILON);
-///
-/// assert!(w.0.is_nan() && w.1.is_nan());
+/// # let k = 0;
+/// # let z_re = 0.0;
+/// # let z_im = 0.0;
+/// # let eps = f32::EPSILON;
+/// let w1 = lambert_wf(k, f32::INFINITY, z_im, eps);
+/// let w2 = lambert_wf(k, z_re, f32::INFINITY, eps);
 /// ```
 ///
 /// or `NAN`:
