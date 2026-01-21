@@ -44,13 +44,19 @@ const MAX_ITERS: u8 = 255;
 /// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
 ///
-/// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
+/// Returns [`NAN`](f64::NAN)s if any of the components of `z` are infinite:
 ///
 /// ```
 /// # use lambert_w::lambert_w;
-/// let w = lambert_w(-13, f64::INFINITY, 0.0, f64::EPSILON);
+/// # let k = 0;
+/// # let z_re = 0.0;
+/// # let z_im = 0.0;
+/// # let eps = f64::EPSILON;
+/// let w1 = lambert_w(k, f64::INFINITY, z_im, eps);
+/// let w2 = lambert_w(k, z_re, f64::INFINITY, eps);
 ///
-/// assert!(w.0.is_nan() && w.1.is_nan());
+/// assert!(w1.0.is_nan() && w1.1.is_nan());
+/// assert!(w2.0.is_nan() && w2.1.is_nan());
 /// ```
 ///
 /// or `NAN`:
