@@ -54,7 +54,7 @@ use crate::{
 ///
 /// # Reference
 ///
-/// [^1]: [Toshio Fukushima, Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation](https://www.researchgate.net/publication/346309410_Precise_and_fast_computation_of_Lambert_W_function_by_piecewise_minimax_rational_function_approximation_with_variable_transformation).
+/// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**. DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_wm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.
