@@ -1,4 +1,4 @@
-// Copyright 2026 Johanna Sörngård
+// Copyright 2024-2026 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 // Fukushima's own Fortran implementation of the method in the paper can be found at
