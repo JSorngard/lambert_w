@@ -163,6 +163,9 @@ jobs:
     needs: format
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+    - uses: Swatinem/rust-cache@v2.8.0
     - uses: obi1kenobi/cargo-semver-checks-action@v2
 
   compile_benchmarks:
