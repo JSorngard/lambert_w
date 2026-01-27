@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 2.0.0-beta.1 (unreleased)
+## [Unreleased, 2.0.0-beta.1]
 
 ### Breaking changes
 
@@ -16,7 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update transitive dev-dependencies.
 - Update the copyright year to 2026.
 
-## 1.2.34
+## [1.2.34] - 2025-12-28
 
 Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
 A build script and the crate [`no-panic`](https://crates.io/crates/no_panic) was used in CI to ensure that this was the case.
@@ -35,11 +35,11 @@ but retains most of the panic-proofness.
 - Internal code structure improvements,
 - Internal documentation improvements.
 
-## 1.2.33
+## [1.2.33] - 2025-12-01
 
 - Remove the use of LaTeX in the crate README. It doesn't look good on crates.io.
 
-## 1.2.32
+## [1.2.32] - 2025-12-01
 
 - Lint for undocumented items, and catch such cases in CI.
 - Update transitive dev-dependencies.
@@ -50,7 +50,7 @@ but retains most of the panic-proofness.
  such that their origin is clearer.
 - Update the `criterion` dev-dependency to version 0.8.0.
 
-## 1.2.31
+## [1.2.31] - 2025-10-16
 
 - Add `inline` annotations to the math functions. This lets us keep the speedup
  that inlining grants on the target platform and CPU that I can test on,
@@ -59,12 +59,12 @@ but retains most of the panic-proofness.
  which is what was used before version 1.2.29.
 - Internal code improvements.
 
-## 1.2.30
+## [1.2.30] - 2025-10-14
 
 - Move the check for `NAN` last so that most function calls don't have to pay
  for it.
 
-## 1.2.29
+## [1.2.29] - 2025-10-14
 
 - Add documentation tests to the public constants.
 - Remove all `inline(always)` annotations.
@@ -79,7 +79,7 @@ but retains most of the panic-proofness.
 - Correct the SPDX license identifier in the file `sw0.rs`.
 - Update transitive dependencies.
 
-## 1.2.28
+## [1.2.28] - 2025-09-26
 
 - Keep the full precision coefficients from the paper in the source code without
  truncating away excessive precision. The numbers do not change in practice,
@@ -88,7 +88,7 @@ but retains most of the panic-proofness.
 - CI improvements.
 - Update transitive dev-dependencies.
 
-## 1.2.27
+## [1.2.27] - 2025-09-15
 
 - Return early from the complex Lambert W functions
  if the answer is computed to be NaN or infinity.
@@ -97,7 +97,7 @@ but retains most of the panic-proofness.
 - Update transitive dev-dependencies.
 - Improvements to documentation.
 
-## 1.2.26
+## [1.2.26] - 2025-09-01
 
 - Return early from the complex Lambert W functions
  if the iterations get stuck in a loop.
@@ -114,7 +114,7 @@ but retains most of the panic-proofness.
 - Link to the license files that are stored on docs.rs when the documentation
  is read on docs.rs.
 
-## 1.2.25
+## [1.2.25] - 2025-08-15
 
 - Don't package the benchmarks or examples to crates.io.
 - Update `criterion` dev-dependency to 0.7.0.
@@ -124,46 +124,46 @@ but retains most of the panic-proofness.
 - Skip installing the unneeded `jq` library in CI.
 - Minor improvements to the benchmarks CI job.
 
-## 1.2.24
+## [1.2.24] - 2025-06-10
 
 - Link to crate pages on crates.io when on crates.io and on docs.rs when on docs.rs.
 
-## 1.2.23
+## [1.2.23] - 2025-06-10
 
 - Remove the Back to Top button on docs.rs since it doesn't work without the header.
 
-## 1.2.22
+## [1.2.22] - 2025-06-10
 
 - Updated the criterion dev-dependency.
 - Internal code structure improvements.
 - Documentation improvements.
 - Hide the crate name, badges, and license sections of the readme on docs.rs.
 
-## 1.2.21
+## [1.2.21] - 2025-05-14
 
 - Included more digits in the omega constant for clarity.
 
-## 1.2.20
+## [1.2.20] - 2025-05-14
 
 - Updated the copyright year in the source files to 2025.
 
-## 1.2.19
+## [1.2.19] - 2025-05-12
 
 - Corrected a bug that made the secondary branch functions return `NAN`
  for inputs of 0, when the correct value is -infinity.
 
-## 1.2.18
+## [1.2.18] - 2025-05-11
 
 - Updated the year in the license files to 2025.
 - Documentation improvements.
 - Updated transitive dev-dependencies.
 
-## 1.2.17
+## [1.2.17] - 2025-05-01
 
 - Excluded unneeded files from being packaged to crates.io.
 - Updated transitive dev-dependencies.
 
-## 1.2.16
+## [1.2.16] - 2025-04-27
 
 - Enabled documentation of dependencies in the documentation CI job in order to find
  broken cross-crate doc-links.
@@ -172,7 +172,7 @@ but retains most of the panic-proofness.
  this small, but it was fun to do!
 - Added more exhaustive information in the log of the semver-checks CI job
 
-## 1.2.15
+## [1.2.15] - 2025-04-26
 
 - Added a note to the readme that the implementation of Fukushima's method is
  simple enough that if the input is known at compile time the optimizer can
@@ -182,23 +182,23 @@ but retains most of the panic-proofness.
 - Documentation improvements.
 - Updated transitive dev-dependencies.
 
-## 1.2.14
+## [1.2.14] - 2025-04-17
 
 - Internal documentation improvements.
 
-## 1.2.13
+## [1.2.13] - 2025-04-15
 
 - Documentation improvements.
 
-## 1.2.12
+## [1.2.12] - 2025-04-15
 
 - Small improvements to the implementation of the complex Lambert W functions.
 
-## 1.2.11
+## [1.2.11] - 2025-04-13
 
 - Documentation improvements.
 
-## 1.2.10
+## [1.2.10] - 2025-04-09
 
 - Fixed a bug that could result in incorrect outputs from the complex `lambert_w`
  and `lambert_wf` functions near 0 on branch 1.
@@ -206,58 +206,58 @@ but retains most of the panic-proofness.
  omega constant has the claimed properties.
 - Internal code improvements.
 
-## 1.2.9
+## [1.2.9] - 2025-04-04
 
 - Show the import from the `approx` crate in the doc-examples of the functions.
 - Test the crate on multiple operating systems in CI.
 
-## 1.2.8
+## [1.2.8] - 2025-04-04
 
 - Internal code structure improvements.
 - Internal doc improvements.
 - Update transitive dev-dependencies.
 
-## 1.2.7
+## [1.2.7] - 2025-04-03
 
 - Internal code improvements.
 - Internal doc improvements.
 - Improvements to CI.
 
-## 1.2.6
+## [1.2.6] - 2025-04-03
 
 - Internal code improvements.
 - Internal doc improvements.
 - Update transitive dev-dependencies.
 
-## 1.2.5
+## [1.2.5] - 2025-03-25
 
 - Remove `libm` as a direct dependency.
  It is only used through the `num-traits` and `num-complex` crates now.
 - Updated transitive dev-dependencies.
 
-## 1.2.4
+## [1.2.4] - 2025-03-23
 
 - Improvements to docs.
 - Return early in the complex-valued functions if we know we will not be able to
  compute an answer
 
-## 1.2.3
+## [1.2.3] - 2025-03-23
 
 - Improvements to docs.
 
-## 1.2.2
+## [1.2.2] - 2025-03-23
 
 - Improvements to docs.
 
-## 1.2.1
+## [1.2.1] - 2025-03-23
 
 - Internal improvements to the implementation of the complex Lambert W functions.
 
-## 1.2.0
+## [1.2.0] - 2025-03-23
 
 - Added a `f32` version of the complex valued Lambert W function.
 
-## 1.1.0
+## [1.1.0] - 2025-03-22
 
 - Added an implementation that can compute any branch in the whole complex plane.
 - Added the `must_use` attribute to all pure functions.
@@ -269,15 +269,15 @@ but retains most of the panic-proofness.
  general implementation.
 - Updated transitive dev-dependencies.
 
-## 1.0.20
+## [1.0.20] - 2025-03-15
 
 - Updated transitive dev-dependencies.
 
-## 1.0.19
+## [1.0.19] - 2025-03-10
 
 - Documentation improvements.
 
-## 1.0.18
+## [1.0.18] - 2025-03-09
 
 - Made the error bounds in tests stricter and clearer.
 - Made small improvements to the examples in the readme.
@@ -289,15 +289,15 @@ but retains most of the panic-proofness.
 - Added the "no-std" category.
 - Updated transitive dev-dependencies.
 
-## 1.0.17
+## [1.0.17] - 2025-02-17
 
 - Clarified information in README.
 
-## 1.0.16
+## [1.0.16] - 2025-02-17
 
 - Mentioned some interesting properties of the method in the readme.
 
-## 1.0.15
+## [1.0.15] - 2025-02-17
 
 - Don't panic!
  Enabled static verification that this crate can not panic using the [`no-panic`](https://crates.io/crates/no_panic)
@@ -317,31 +317,31 @@ but retains most of the panic-proofness.
 - Made the docs.rs badge use a different color and display the crate name
  instead of "passing".
 
-## 1.0.14
+## [1.0.14] - 2025-02-03
 
 - Updated the dev-dependency on `rand` to v0.9.0.
 - Added a CI job that compiles the benchmarks.
 - Added a CI job that tests the crate on the Rust beta branch.
 - Updated transitive dev-dependencies.
 
-## 1.0.13
+## [1.0.13] - 2025-01-14
 
 - Removed the note about the accuracy on the trait functions,
  as that is different depending on the type that the trait is invoked on.
 - Updated transitive dev-dependencies.
 
-## 1.0.12
+## [1.0.12] - 2025-01-12
 
 - Noted the accuracy of the functions on the trait in the example.
 - Improvements to CI jobs.
 - Updated dev-dependencies.
 
-## 1.0.11
+## [1.0.11] - 2025-01-11
 
 - Removed unnecessary import in `integration_tests.rs`.
 - Improvements to CI jobs.
 
-## 1.0.10
+## [1.0.10] - 2025-01-09
 
 - Moved unit tests to their own module.
 - Corrected some information in code comments.
@@ -350,55 +350,57 @@ but retains most of the panic-proofness.
  function clearer in the final image.
 - Note adherence to semver in this log.
 
-## 1.0.9
+## [1.0.9] - 2025-01-03
 
 - Switched the way the crate depends on the standard library such that the
  implicit prelude is always the same.
 - Sped up CI runs by using `taiki-e/install-action`.
 - Added an example program that plots both branches of the function.
 
-## 1.0.8
+## [1.0.8] - 2024-12-26
 
 - Fixed a bug where the principal branch functions would return NaN when given
  infinite input.
 
-## 1.0.7
+## [1.0.7] - 2024-12-19
 
 - Moved tests to their own file.
 - Made the accuracy of the tests clearer.
 
-## 1.0.6
+## [1.0.6] - 2024-12-12
 
 - Added more unit tests that verify and showcase the accuracy of the
  functions also at the branch point.
 - Verify the MSRV in CI using `cargo-msrv`.
 - Check semver compatibility in CI using `cargo-semver-checks`.
 
-## 1.0.5
+## [1.0.5] - 2024-12-04
 
 - Added a "References" section to the readme and docs.
 - Added a "⬆️ Back to top" link to the end of the readme and docs, just after
  the references section.
 
-## 1.0.4
+## [1.0.4] - 2024-11-23
 
 - Added the "No standard library" category to the crate.
 
-## 1.0.3
+## [1.0.3] - 2024-10-28
 
 - Clarified that we do not depend on a specific `libm` patch version.
 - Changed the `rust-version` field in `Cargo.toml` to 1.63
  since that is now the MSRV of `libm`.
 
-## 1.0.2
+## [1.0.2] - 2024-10-27
 
 - Updated `libm` dependency.
 
-## 1.0.1
+## [1.0.1] - 2024-10-24
 
 - Documentation improvements.
 
-## 1.0.0
+## [1.0.0] - 2024-10-11
+
+First stable version! 🎉
 
 - Removed the `estrin` feature.
  If it was activated anywhere in the dependency tree the crate became less
@@ -409,26 +411,42 @@ but retains most of the panic-proofness.
  of the crate if they didn't use them. However, the crate is small and very quick
  to compile, and the unused code should be removed during dead code elimination anyway.
 
-## 0.5.9
+## [0.5.9] - 2024-10-05
 
 - Added the `LambertW` trait that lets the user call the Lambert W functions
  with postfix notation.
 
-## 0.5.5 - 0.5.8
+## [0.5.8] - 2024-09-07
 
 - Documentation improvements.
 
-## 0.5.4
+## [0.5.7] - 2024-09-06
+
+- Documentation improvements.
+
+## [0.5.6] - 2024-09-02
+
+- Documentation improvements.
+
+## [0.5.5] - 2024-09-02
+
+- Documentation improvements.
+
+## [0.5.4] - 2024-09-02
 
 - Added `lambert_w0f` and `lambert_wm1f` functions that evaluate the 24-bit accurate
  approximation on 32-bit floats (though the approximation is expected to be
  slightly less accurate then).
 
-## 0.5.2 and 0.5.3
+## [0.5.3] - 2024-08-09
 
 - Documentation improvements.
 
-## 0.5.1
+## [0.5.2] - 2024-08-06
+
+- Documentation improvements.
+
+## [0.5.1] - 2024-08-06
 
 - Added `std` and `libm` features to match the features on the optional
  dependency `fast_polynomial`.
@@ -437,7 +455,7 @@ but retains most of the panic-proofness.
  `libm` by disabling default features and enabling the `std` feature. This can
  result in a performance gain.
 
-## 🗑️~~0.5.0~~
+## [0.5.0] - 2024-08-05 [YANKED]
 
 Yanked because 0.5.1 adds a default feature that hides previously included
 behavior.
@@ -452,16 +470,20 @@ choice by the user, and won't happen automatically with `cargo update` as before
  to `lambert_w0`. This makes them easier to type and the new names are similar
  to the names given to these functions in libraries in other languages.
 
-## 0.4.4
+## [0.4.4] - 2024-08-02
 
 - Documentation improvements.
 - Updated the optional `fast_polynomial` dependency.
 
-## 0.4.2 and 0.4.3
+## [0.4.3] - 2024-08-02
 
 - Corrected a mistake in doc information.
 
-## 0.4.1
+## [0.4.2] - 2024-08-01
+
+- Corrected a mistake in doc information.
+
+## [0.4.1] - 2024-08-01
 
 - Added the optional `estrin` feature that computes the Lambert W function faster
  on modern hardware by using [Estrin's scheme](https://en.wikipedia.org/wiki/Estrin's_scheme)
@@ -473,7 +495,7 @@ choice by the user, and won't happen automatically with `cargo update` as before
  `50bits` features.
 - Documentation improvements.
 
-## 0.4.0
+## [0.4.0] - 2024-07-31
 
 ### Breaking changes
 
@@ -484,31 +506,39 @@ choice by the user, and won't happen automatically with `cargo update` as before
 
 - Now exports the constants `NEG_INV_E` and `OMEGA`.
 
-## 0.3.0
+## [0.3.0] - 2024-07-29
 
 ### Breaking changes
 
 - Removed the `fast` and `accurate` modules and instead export the functions directly.
 - Add sp_* prefix to the 24 bit versions.
 
-## 0.2.6
+## [0.2.6] - 2024-07-29
 
 - Minor documentation improvements.
 
-## 0.2.5
+## [0.2.5] - 2024-07-29
 
 - Corrected the domain bounds in the function documentation strings.
 - Other minor documentation improvements.
 
-## 0.2.2, 0.2.3, and 0.2.4
+## [0.2.4] - 2024-07-28
 
 - Documentation improvements.
 
-## 0.2.1
+## [0.2.3]  - 2024-07-28
+
+- Documentation improvements.
+
+## [0.2.2]
+
+- Documentation improvements.
+
+## [0.2.1] - 2024-07-28
 
 - Added GitHub repository badge to `README.md`.
 
-## 0.2.0
+## [0.2.0] - 2024-07-28
 
 ### Breaking changes
 
