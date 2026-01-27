@@ -8,6 +8,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Documentation improvements.
 - Update transitive dev-dependencies.
 - Update the copyright year to 2026.
+- Use the semver trick (<https://github.com/dtolnay/semver-trick>)
+ to re-export the functions from version 2.0.0 of this crate.
 
 ## 1.2.34
 

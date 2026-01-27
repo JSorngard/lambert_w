@@ -28,23 +28,16 @@ extern crate std;
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
 mod all_complex_branches;
-mod dw0c;
-mod dwm1c;
-mod generic_math;
-mod sw0;
-mod sw0f;
-mod swm1;
-mod swm1f;
-#[cfg(test)]
-mod unit_tests;
 
 pub use all_complex_branches::{lambert_w, lambert_wf};
-pub use dw0c::lambert_w0;
-pub use dwm1c::lambert_wm1;
-pub use sw0::sp_lambert_w0;
-pub use sw0f::lambert_w0f;
-pub use swm1::sp_lambert_wm1;
-pub use swm1f::lambert_wm1f;
+// Use the semver trick to ease refactoring of dependents when they with to upgrade.
+// https://github.com/dtolnay/semver-trick
+pub use lambert_w::lambert_w0;
+pub use lambert_w::lambert_wm1;
+pub use lambert_w::sp_lambert_w0;
+pub use lambert_w::lambert_w0f;
+pub use lambert_w::sp_lambert_wm1;
+pub use lambert_w::lambert_wm1f;
 
 /// The negative reciprocal of e (-1/e).
 ///
