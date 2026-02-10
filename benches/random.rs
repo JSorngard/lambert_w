@@ -18,7 +18,7 @@ use lambert_w::{
 use rand::{
     distr::uniform::{SampleRange, SampleUniform},
     rngs::SmallRng,
-    Rng, SeedableRng,
+    RngExt, SeedableRng,
 };
 use std::time::Instant;
 
@@ -37,19 +37,19 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, U, Prng>(
     R: Clone + RangeBounds<T> + SampleRange<T>,
     T: Copy + PartialOrd + SampleUniform,
     F: Fn(T) -> U,
-    Prng: Rng,
+    Prng: RngExt,
 {
     group.bench_function(id, |b| {
         b.iter_custom(|iters| {
-            let datas: Vec<T> = (0..iters)
+            let data: Vec<T> = (0..iters)
                 .map(|_| rng.random_range(range.clone()))
                 .collect();
             let start = Instant::now();
-            for &z in &datas {
+            for &z in &data {
                 black_box(f(z));
             }
             let duration = start.elapsed();
-            drop(datas);
+            drop(data);
             duration
         })
     });
