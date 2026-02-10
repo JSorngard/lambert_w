@@ -13,7 +13,7 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq};
 
-use rand::{distr::Uniform, rngs::SmallRng, Rng, SeedableRng};
+use rand::{distr::Uniform, rngs::SmallRng, RngExt, SeedableRng};
 
 const RANDOM_TEST_SIZE: usize = 1_000_000;
 
