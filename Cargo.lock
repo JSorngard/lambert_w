@@ -505,10 +505,19 @@ version = "1.2.35"
 dependencies = [
  "approx",
  "criterion",
- "num-complex",
- "num-traits",
+ "lambert_w 2.0.0-beta.1",
  "plotters",
  "rand",
+]
+
+[[package]]
+name = "lambert_w"
+version = "2.0.0-beta.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c678b468c2727635c33d674d6e5a4d39dacc3b0f7fb5f4d40e4373e0b3cdeeaf"
+dependencies = [
+ "num-complex",
+ "num-traits",
 ]
 
 [[package]]
