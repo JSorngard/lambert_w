@@ -29,16 +29,14 @@ compile_error!("at least one of the `std` or `libm` features must be enabled");
 
 // Use the semver trick to ease refactoring of dependents when they with to upgrade.
 // https://github.com/dtolnay/semver-trick
-pub use lambert_w::lambert_w0;
-pub use lambert_w::lambert_wm1;
-pub use lambert_w::sp_lambert_w0;
-pub use lambert_w::lambert_w0f;
-pub use lambert_w::sp_lambert_wm1;
-pub use lambert_w::lambert_wm1f;
-pub use lambert_w::NEG_INV_E;
-pub use lambert_w::OMEGA;
-
-const MAX_ITER: u8 = u8::MAX;
+pub use lambert_w2::lambert_w0;
+pub use lambert_w2::lambert_w0f;
+pub use lambert_w2::lambert_wm1;
+pub use lambert_w2::lambert_wm1f;
+pub use lambert_w2::sp_lambert_w0;
+pub use lambert_w2::sp_lambert_wm1;
+pub use lambert_w2::NEG_INV_E;
+pub use lambert_w2::OMEGA;
 
 // Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
@@ -86,8 +84,9 @@ const MAX_ITER: u8 = u8::MAX;
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
+#[inline]
 pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
-    lambert_w::lambert_w(k, z_re, z_im, f64::EPSILON)
+    lambert_w2::lambert_w(k, z_re, z_im, f64::EPSILON)
 }
 
 /// Branch `k` of the complex valued Lambert W function computed
@@ -134,10 +133,10 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// assert!(w.0.is_nan() && w.1.is_nan());
 /// ```
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
+#[inline]
 pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
-    lambert_w::lambert_wf(k, z_re, z_im, f32::EPSILON)
+    lambert_w2::lambert_wf(k, z_re, z_im, f32::EPSILON)
 }
-
 
 /// Enables evaluation of the principal and secondary branches of the Lambert W function
 /// on the types that implement this trait.
