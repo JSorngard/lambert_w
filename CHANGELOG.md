@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.0-beta.1] - 2026-02-13
 
+This release removes functionality that has been deprecated for several versions and almost a year.
+
 ### Breaking changes
 
 - The `LambertW` trait has been removed.
