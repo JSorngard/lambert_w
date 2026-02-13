@@ -3,7 +3,7 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased, 2.0.0-beta.1]
+## [2.0.0-beta.1] - 2026-02-13
 
 ### Breaking changes
 
