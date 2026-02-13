@@ -27,9 +27,6 @@ extern crate std;
 #[cfg(not(any(feature = "std", feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
-mod all_complex_branches;
-
-pub use all_complex_branches::{lambert_w, lambert_wf};
 // Use the semver trick to ease refactoring of dependents when they with to upgrade.
 // https://github.com/dtolnay/semver-trick
 pub use lambert_w::lambert_w0;
@@ -38,48 +35,109 @@ pub use lambert_w::sp_lambert_w0;
 pub use lambert_w::lambert_w0f;
 pub use lambert_w::sp_lambert_wm1;
 pub use lambert_w::lambert_wm1f;
+pub use lambert_w::NEG_INV_E;
+pub use lambert_w::OMEGA;
 
-/// The negative reciprocal of e (-1/e).
-///
-/// This is the branch point of the Lambert W function.
-///
-/// ```
-/// use lambert_w::{lambert_w0, NEG_INV_E};
-/// use approx::assert_abs_diff_eq;
-///
-/// assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
-/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
-/// ```
-//            Rounded from -0.367_879_441_171_442_322
-pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
+const MAX_ITER: u8 = u8::MAX;
 
-/// 1/sqrt(e)
-//         Rounded from 0.606_530_659_712_633_423
-const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
+// Remember to change the docstring of `lambert_w_generic` if you change the above value.
 
-/// The omega constant (Ω).
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 64-bit floats with Halley's method.
 ///
-/// Fulfills the equation Ωe^Ω = 1:
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
+///
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
+///
+/// If you know you want the principal or secondary branches where they are real-valued,
+/// take a look at the [`lambert_w0`](crate::lambert_w0) or [`lambert_wm1`](crate::lambert_wm1) functions instead.
+/// They can be up to two orders of magnitude faster.
+///
+/// # Examples
+///
+/// Basic usage:
 ///
 /// ```
-/// use lambert_w::OMEGA;
-/// use approx::assert_abs_diff_eq;
+/// use lambert_w::lambert_w;
 ///
-/// assert_abs_diff_eq!(OMEGA * f64::exp(OMEGA), 1.0);
+/// // W_2(1 + 2i)
+/// let w = lambert_w(2, 1.0, 2.0);
+///
+/// assert_eq!(w, (-1.6869138779375397, 11.962631435322813));
 /// ```
-// We include more digits than fit in an f64 because if we write
-// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
-// it looks as if we have rounded it incorrectly,
-// since the correctly rounded value to that many digits would be
-// 0.567_143_290_409_783_9.
-// However, if we write the correctly rounded value the compiler rounds it to
-// 0.567_143_290_409_784, which is further from the true value than
-// 0.567_143_290_409_783_8.
-// To avoid all this confusion for any potential readers of the docs
-// we just add more digits so that the compiler rounds it correctly and then
-// allow the clippy lint.
-#[allow(clippy::excessive_precision)]
-pub const OMEGA: f64 = 0.567_143_290_409_783_873;
+///
+/// Returns [`NAN`](f64::NAN)s if any of the inputs are infinite:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(-13, f64::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_w;
+/// let w = lambert_w(1_000, 0.0, f64::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
+    lambert_w::lambert_w(k, z_re, z_im, f64::EPSILON)
+}
+
+/// Branch `k` of the complex valued Lambert W function computed
+/// on 32-bit floats with Halley's method.
+///
+/// The return value is a tuple where the first element is the
+/// real part and the second element is the imaginary part.
+///
+/// This function may be slightly less accurate close to the branch cut at -1/e,
+/// as well as close to zero on branches other than k=0.
+///
+/// If you know you want the principal or secondary branches where they are real-valued,
+/// take a look at the [`lambert_w0f`](crate::lambert_w0f) or [`lambert_wm1f`](crate::lambert_wm1f) functions instead.
+/// They can be up to two orders of magnitude faster.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// use lambert_w::lambert_wf;
+///
+/// // W_2(1 + 2i)
+/// let w = lambert_wf(2, 1.0, 2.0);
+///
+/// assert_eq!(w, (-1.6869138, 11.962631));
+/// ```
+///
+/// Returns [`NAN`](f32::NAN)s if any of the inputs are infinite:
+///
+/// ```
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(-13, f32::INFINITY, 0.0);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+///
+/// or `NAN`:
+///
+/// ```
+/// # use lambert_w::lambert_wf;
+/// let w = lambert_wf(1_000, 0.0, f32::NAN);
+///
+/// assert!(w.0.is_nan() && w.1.is_nan());
+/// ```
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_wf(k: i16, z_re: f32, z_im: f32) -> (f32, f32) {
+    lambert_w::lambert_wf(k, z_re, z_im, f32::EPSILON)
+}
+
 
 /// Enables evaluation of the principal and secondary branches of the Lambert W function
 /// on the types that implement this trait.
