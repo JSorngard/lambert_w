@@ -3,6 +3,8 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased, 2.0.0]
+
 ## [2.0.0-beta.1] - 2026-02-13
 
 This release removes functionality that has been deprecated for several versions and almost a year.
@@ -19,6 +21,10 @@ This release removes functionality that has been deprecated for several versions
 - Update the copyright year to 2026.
 - Update the `rand` dev-dependency from 0.9.2 to 0.10.0.
 - Update transitive dependencies.
+
+## [Unreleased, 1.2.35]
+
+- Simply re-exports the functions from version 2.0.0 (see https://github.com/dtolnay/semver-trick).
 
 ## [1.2.34] - 2025-12-28
 
