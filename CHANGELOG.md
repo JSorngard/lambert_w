@@ -20,6 +20,11 @@ This release removes functionality that has been deprecated for several versions
 - Update the `rand` dev-dependency from 0.9.2 to 0.10.0.
 - Update transitive dependencies.
 
+[Unreleased, 1.2.35]
+
+- Simply re-exports the functions from version 2.0.0 (see https://github.com/dtolnay/semver-trick).
+
+
 ## [1.2.34] - 2025-12-28
 
 Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
