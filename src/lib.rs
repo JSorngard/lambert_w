@@ -27,7 +27,7 @@ extern crate std;
 #[cfg(not(any(feature = "std", feature = "libm")))]
 compile_error!("at least one of the `std` or `libm` features must be enabled");
 
-// Use the semver trick to ease refactoring of dependents when they with to upgrade.
+// Use the semver trick to ease refactoring of dependents when they decide to upgrade.
 // https://github.com/dtolnay/semver-trick
 pub use lambert_w2::lambert_w0;
 pub use lambert_w2::lambert_w0f;
