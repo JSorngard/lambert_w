@@ -16,7 +16,7 @@ exclude = ["tests/", ".github/", "CONTRIBUTING.md", "CHANGELOG.md", "benches", "
 missing_docs = "warn"
 
 [dependencies]
-lambert_w2 = { version = "2.0.0-beta.1", default-features = false, package = "lambert_w" }
+lambert_w2 = { version = "2.0.0", default-features = false, package = "lambert_w" }
 
 [dev-dependencies]
 approx = { version = "0.5.1", default-features = false }
