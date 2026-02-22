@@ -11,6 +11,7 @@
 //! .rustdoc-hidden { display: none; }
 //! </style>
 // These links take precedence over the ones in the readme since they occur first.
+// This allows us to switch where the listed hyperlinks take the user depending on whether the docs are read on crates.io or docs.rs.
 //! [`approx`]: https://docs.rs/approx/latest/approx/
 //! [`libm`]: https://docs.rs/libm/latest/libm/
 #![doc = include_str!("../README.md")]
