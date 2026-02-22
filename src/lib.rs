@@ -50,7 +50,7 @@ pub use lambert_w2::OMEGA;
 /// as well as close to zero on branches other than k=0.
 ///
 /// If you know you want the principal or secondary branches where they are real-valued,
-/// take a look at the [`lambert_w0`](crate::lambert_w0) or [`lambert_wm1`](crate::lambert_wm1) functions instead.
+/// take a look at the [`lambert_w0`] or [`lambert_wm1`] functions instead.
 /// They can be up to two orders of magnitude faster.
 ///
 /// # Examples
@@ -99,7 +99,7 @@ pub fn lambert_w(k: i32, z_re: f64, z_im: f64) -> (f64, f64) {
 /// as well as close to zero on branches other than k=0.
 ///
 /// If you know you want the principal or secondary branches where they are real-valued,
-/// take a look at the [`lambert_w0f`](crate::lambert_w0f) or [`lambert_wm1f`](crate::lambert_wm1f) functions instead.
+/// take a look at the [`lambert_w0f`] or [`lambert_wm1f`] functions instead.
 /// They can be up to two orders of magnitude faster.
 ///
 /// # Examples
