@@ -23,6 +23,7 @@ This release removes functionality that has been deprecated for several versions
 ## [Unreleased, 1.2.35]
 
 - Simply re-exports the functions from version 2.0.0 (see https://github.com/dtolnay/semver-trick).
+ [`cargo-semver-trick`](https://github.com/obi1kenobi/cargo-semver-checks) flags this as an API-break, but that is a false detection: <https://github.com/obi1kenobi/cargo-semver-checks/issues/1586>.
 
 
 ## [1.2.34] - 2025-12-28
