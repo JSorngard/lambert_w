@@ -38,8 +38,6 @@ pub use lambert_w2::sp_lambert_wm1;
 pub use lambert_w2::NEG_INV_E;
 pub use lambert_w2::OMEGA;
 
-// Remember to change the docstring of `lambert_w_generic` if you change the above value.
-
 /// Branch `k` of the complex valued Lambert W function computed
 /// on 64-bit floats with Halley's method.
 ///
