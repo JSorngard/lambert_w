@@ -3,7 +3,7 @@
 
 //! This example is intended to be ran more than studied.
 //! It generates a plot of the two branches of the function
-//! and saves it as a png file.
+//! and saves it as an svg file.
 
 use kuva::{
     backend::svg::SvgBackend,
