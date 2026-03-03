@@ -38,7 +38,7 @@ jobs:
     # This action checks that updating the dependencies of this crate to the latest available that
     # satisfy the versions in Cargo.toml does not break this crate. This is important as consumers
     # of this crate will generally use the latest available crates. This is subject to the standard
-    # Cargo semver rules (i.e cargo does not update to a new major version unless explicitly told
+    # Cargo semver rules (i.e. cargo does not update to a new major version unless explicitly told
     # to).
     strategy:
       matrix:
