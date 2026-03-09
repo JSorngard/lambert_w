@@ -20,10 +20,13 @@ This release removes functionality that has been deprecated for several versions
 - Update the `rand` dev-dependency from 0.9.2 to 0.10.0.
 - Update transitive dependencies.
 
-## [Unreleased, 1.2.35]
+## [1.2.35-beta.1] - 2026-03-06
 
 - Simply re-exports the functions from version 2.0.0 (see https://github.com/dtolnay/semver-trick).
  [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks) flags this as an API-break, but that is a false detection: <https://github.com/obi1kenobi/cargo-semver-checks/issues/1586>.
+- Updates transitive dev-dependencies.
+- Documentation improvements.
+- Update the copyright year to 2026.
 
 
 ## [1.2.34] - 2025-12-28
