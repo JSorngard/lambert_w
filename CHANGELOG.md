@@ -22,6 +22,8 @@ This release removes functionality that has been deprecated for several versions
 
 ## [1.2.35-beta.1] - 2026-03-06
 
+This version can be depended on if you use version 1 and want the improvements from future releases of version 2, without the API break.
+
 - Simply re-exports the functions from version 2.0.0 (see https://github.com/dtolnay/semver-trick).
  [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks) flags this as an API-break, but that is a false detection: <https://github.com/obi1kenobi/cargo-semver-checks/issues/1586>.
 - Updates transitive dev-dependencies.
