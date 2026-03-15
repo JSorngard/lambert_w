@@ -66,12 +66,6 @@ jobs:
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
-    - name: Update apt package lists
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
       uses: Swatinem/rust-cache@v2
     - name: Test with `libm`
@@ -118,10 +112,6 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
-    - name: Update apt package lists
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
       uses: Swatinem/rust-cache@v2
     - name: Run plot example with `libm`
@@ -139,10 +129,6 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
-      - name: Update apt package lists
-        run: sudo apt update 
-      - name: Install libfontconfig1-dev
-        run: sudo apt-get -y install libfontconfig1-dev
       - name: Cache
         uses: Swatinem/rust-cache@v2
       - name: Install cargo-llvm-cov
@@ -183,10 +169,6 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
-    - name: Update apt package lists
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
       uses: Swatinem/rust-cache@v2
     - name: Compile benchmarks with `libm`, but do not run them
