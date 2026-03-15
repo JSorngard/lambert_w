@@ -17,7 +17,7 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: rustfmt
@@ -27,10 +27,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Check with `libm`
       run: cargo check --no-default-features -F libm
     - name: Check with `std`
@@ -41,12 +41,12 @@ jobs:
   clippy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Run clippy with `libm`
       run: cargo clippy --no-default-features --features libm -- -D warnings
     - name: Run clippy with `std`
@@ -62,12 +62,12 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Test with `libm`
       run: cargo test --no-default-features -F libm
     - name: Test with `std`
@@ -81,10 +81,10 @@ jobs:
       RUSTFLAGS: -D warnings
       RUSTDOCFLAGS: --cfg docsrs
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@nightly
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Generate documentation
       run: cargo +nightly doc --all-features
 
@@ -92,10 +92,10 @@ jobs:
     needs: format
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0 
+      uses: Swatinem/rust-cache@v2
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-msrv
@@ -110,10 +110,10 @@ jobs:
     needs: format
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Run plot example with `libm`
       run: cargo run --example plot
     - name: Run plot example with `std`
@@ -125,12 +125,12 @@ jobs:
     needs: format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
       - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
       - name: Generate lockfile
@@ -149,10 +149,10 @@ jobs:
     needs: format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0 
+        uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-semver-checks
@@ -167,10 +167,10 @@ jobs:
     needs: format
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Compile benchmarks with `libm`, but do not run them
       run: cargo bench --no-run
     - name: Compile benchmarks with `std`, but do not run them
@@ -185,12 +185,12 @@ jobs:
       matrix:
         target: [thumbv7m-none-eabi, aarch64-unknown-none]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
       with:
         target: ${{ matrix.target }}
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Check
       run: cargo check --target ${{ matrix.target }}
     - name: Build
@@ -222,13 +222,13 @@ jobs:
     # This action is run on ubuntu with the stable toolchain, as it is not expected to fail
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - uses: dtolnay/rust-toolchain@nightly
       - name: Set stable Rust as the default
         run: rustup default stable
       - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-all-features 

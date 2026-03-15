@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: nightly
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
       - name: Install cargo-all-features
@@ -49,13 +49,13 @@ jobs:
     # just redo what happened in the regular test job. Unfortunately, hashFiles only works in if on
     # steps, so we repeat it.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install beta
         if: hashFiles('Cargo.lock') != ''
         uses: dtolnay/rust-toolchain@beta
       - name: Cache
         if: hashFiles('Cargo.lock') != ''
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2
       - name: Install cargo-all-features
         if: hashFiles('Cargo.lock') != ''
         uses: taiki-e/install-action@v2
