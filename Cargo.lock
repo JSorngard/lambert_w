@@ -258,12 +258,13 @@ dependencies = [
 
 [[package]]
 name = "kuva"
-version = "0.1.2"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "592cc5b43ca300504194809866a4cf0a0552b1bc6ae6d5b1e884cbe443023098"
+checksum = "23b0d726a04ca7d6365892ccb2e6ec736d85bfd0b9001c4c6e98d8a038a83a95"
 dependencies = [
  "chrono",
  "colorous",
+ "ryu",
 ]
 
 [[package]]
@@ -452,6 +453,12 @@ name = "rustversion"
 version = "1.0.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
+
+[[package]]
+name = "ryu"
+version = "1.0.23"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f"
 
 [[package]]
 name = "same-file"
