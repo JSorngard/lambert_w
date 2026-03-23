@@ -26,7 +26,7 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
     // Note the vector instructions with names of the form "v*pd", the "pd" at the end means "packed doubles".
     // That they are operating on the 128-bit xmm registers means that two 64-bit floats are operated on at once,
     // and thus this is a way of formulating this operation that makes the compiler likely to vectorize it.
-    
+
     let numerator = polynomial(x, numerator_coefficients);
 
     let denominator = polynomial(x, denominator_coefficients);
