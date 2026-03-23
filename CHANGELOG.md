@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 - Use [`kuva`](https://crates.io/crates/kuva) instead of [`plotters`](https://crates.io/crates/plotters/) as the plot backend in the plot example.
- This removes the need to install a system font package for every CI job that needs to compile the dev-dependencies.
+ This removes the need to install a system font package for every CI job that needs to compile the dev-dependencies on linux.
 
 ## [2.0.0] - 2026-02-22 (pre-released as 2.0.0-beta.1 on 2026-02-13)
 
