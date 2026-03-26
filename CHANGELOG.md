@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
  This removes the need to install a system font package for every CI job that needs to compile the dev-dependencies on linux.
 - Note the fact that the implementation uses SIMD vectorization for parts of the computation in the readme and the docs.
 - Update transitive dev-dependencies.
+- CI improvements.
 
 ## [2.0.0] - 2026-02-22 (pre-released as 2.0.0-beta.1 on 2026-02-13)
 
