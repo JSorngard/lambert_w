@@ -18,6 +18,8 @@ use crate::{
 
 /// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
 ///
+/// If you need higher accuracy, take a look at [`lambert_wm1`](crate::lambert_wm1).
+///
 /// # Examples
 ///
 /// #### Basic usage
