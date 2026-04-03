@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Add explicit permissions to the CI jobs.
+
 ## [2.0.1] - 2026-03-26
 
 - Use [`kuva`](https://crates.io/crates/kuva) instead of [`plotters`](https://crates.io/crates/plotters/) as the plot backend in the plot example.
