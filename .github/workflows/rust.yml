@@ -16,6 +16,8 @@ env:
 jobs:
   format:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
@@ -26,6 +28,8 @@ jobs:
 
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
@@ -40,6 +44,8 @@ jobs:
 
   clippy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
@@ -61,6 +67,8 @@ jobs:
         toolchain: [stable, beta]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@master
@@ -77,6 +85,8 @@ jobs:
       
   doc:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       RUSTFLAGS: -D warnings
       RUSTDOCFLAGS: --cfg docsrs
@@ -90,6 +100,8 @@ jobs:
 
   verify_rust_version:
     needs: format
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -108,6 +120,8 @@ jobs:
 
   run_examples:
     needs: format
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -123,6 +137,8 @@ jobs:
 
   coverage:
     needs: format
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -148,6 +164,8 @@ jobs:
   semver-checks:
     needs: format
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
@@ -166,6 +184,8 @@ jobs:
   compile_benchmarks:
     needs: format
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
@@ -181,6 +201,8 @@ jobs:
   no_std:
     needs: format
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         target: [thumbv7m-none-eabi, aarch64-unknown-none]
@@ -221,6 +243,8 @@ jobs:
     # https://github.com/jonhoo/fantoccini/blob/fde336472b712bc7ebf5b4e772023a7ba71b2262/Cargo.toml#L47-L49.
     # This action is run on ubuntu with the stable toolchain, as it is not expected to fail
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
