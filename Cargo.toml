@@ -1,6 +1,6 @@
 [package]
 name = "lambert_w"
-version = "1.2.28"
+version = "2.0.2"
 edition = "2021"
 authors = ["Johanna Sörngård <jsorngard@gmail.com>"]
 categories = ["mathematics", "no-std", "no-std::no-alloc"]
@@ -12,16 +12,18 @@ repository = "https://github.com/JSorngard/lambert_w"
 documentation = "https://docs.rs/lambert_w"
 exclude = ["tests/", ".github/", "CONTRIBUTING.md", "CHANGELOG.md", "benches", "examples"]
 
+[lints.rust]
+missing_docs = "warn"
+
 [dependencies]
 num-complex = { version = "0.4.6", default-features = false }
 num-traits = { version = "0.2.19", default-features = false }
 
 [dev-dependencies]
 approx = { version = "0.5.1", default-features = false }
-criterion = { version = "0.7.0", features = ["html_reports"] }
-rand = { version = "0.9.0", default-features = false, features = ["small_rng"] }
-plotters = { version = "0.3.0", default-features = false, features = ["bitmap_encoder", "bitmap_backend", "ttf"] }
-no-panic = "0.1.0"
+criterion = { version = "0.8.2", features = ["html_reports"] }
+rand = { version = "0.10.0", default-features = false }
+kuva = "0.1.6"
 
 [features]
 default = ["libm"]
@@ -43,7 +45,7 @@ always_include_features = ["libm"]
 inherits = "release"
 lto = "fat"
 codegen-units = 1
-# We do not want panic = "abort", as we want to be able to catch panics in the tests.
+panic="abort"
 
 [[bench]]
 name = "random"

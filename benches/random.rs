@@ -1,8 +1,13 @@
-// Copyright 2025 Johanna Sörngård
+// Copyright 2024-2026 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-use core::hint::black_box;
-use core::ops::RangeBounds;
+//! Benchmarks for random arguments generated at runtime (from a fixed seed).
+
+// The call to `criterion_group!` generates items that we can not document,
+// and we can not mark the macro call itself.
+#![allow(missing_docs)]
+
+use core::{hint::black_box, ops::RangeBounds};
 use criterion::{
     criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
@@ -13,7 +18,7 @@ use lambert_w::{
 use rand::{
     distr::uniform::{SampleRange, SampleUniform},
     rngs::SmallRng,
-    Rng, SeedableRng,
+    RngExt, SeedableRng,
 };
 use std::time::Instant;
 
@@ -32,19 +37,19 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, U, Prng>(
     R: Clone + RangeBounds<T> + SampleRange<T>,
     T: Copy + PartialOrd + SampleUniform,
     F: Fn(T) -> U,
-    Prng: Rng,
+    Prng: RngExt,
 {
     group.bench_function(id, |b| {
         b.iter_custom(|iters| {
-            let datas: Vec<T> = (0..iters)
+            let data: Vec<T> = (0..iters)
                 .map(|_| rng.random_range(range.clone()))
                 .collect();
             let start = Instant::now();
-            for &z in &datas {
+            for &z in &data {
                 black_box(f(z));
             }
             let duration = start.elapsed();
-            drop(datas);
+            drop(data);
             duration
         })
     });
@@ -75,10 +80,13 @@ fn random_benches(c: &mut Criterion) {
 
     let mut halley_group = c.benchmark_group("random inputs (Halley's method)");
 
+    let tol = f64::EPSILON;
+    let tolf = f32::EPSILON;
+
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_0",
-        |z| lambert_w(0, z, 0.0),
+        |z| lambert_w(0, z, 0.0, tol),
         NEG_INV_E..=f64::from(u32::MAX),
         &mut rng,
     );
@@ -86,7 +94,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_0 on 32-bit",
-        |z| lambert_wf(0, z, 0.0),
+        |z| lambert_wf(0, z, 0.0, tolf),
         NEG_INV_E as f32..=f32::from(u16::MAX),
         &mut rng,
     );
@@ -94,7 +102,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_-1",
-        |z| lambert_w(-1, z, 0.0),
+        |z| lambert_w(-1, z, 0.0, tol),
         NEG_INV_E..=0.0,
         &mut rng,
     );
@@ -102,7 +110,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_-1 on 32-bit",
-        |z| lambert_wf(-1, z, 0.0),
+        |z| lambert_wf(-1, z, 0.0, tolf),
         NEG_INV_E as f32..=0.0,
         &mut rng,
     );
@@ -110,7 +118,7 @@ fn random_benches(c: &mut Criterion) {
     bench_on_vec_of_random_values_in_range(
         &mut halley_group,
         "W_1000",
-        |z| lambert_w(1_000, z, 0.0),
+        |z| lambert_w(1_000, z, 0.0, tol),
         NEG_INV_E..=f64::from(u32::MAX),
         &mut rng,
     );

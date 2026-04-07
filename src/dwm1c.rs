@@ -1,11 +1,10 @@
-// Copyright 2025 Johanna Sörngård
+// Copyright 2024-2026 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the secondary
 //! branch of the Lambert W function
 //! with 50 bits of accuracy from Fukushima's paper.
-//! It returns [`f64::NAN`] if the `zc` input is negative,
-//! or if the `z` input is `NAN`, or larger than 0.
+//! It is based on the Fortran implementation of the name "dwm1c" by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
 // By keeping the full precision in the source code we can ensure that there is no confusion
@@ -17,17 +16,59 @@ use crate::{
     INV_SQRT_E, NEG_INV_E,
 };
 
-/// zc = z + 1/e
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn dwm1c(z: f64, zc: f64) -> f64 {
-    if zc < 0.0 {
+/// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method[^1].
+///
+/// # Examples
+///
+/// #### Basic usage
+///
+/// ```
+/// use lambert_w::lambert_wm1;
+/// use approx::assert_abs_diff_eq;
+///
+/// let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
+///
+/// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+/// ```
+///
+/// #### Special cases
+///
+/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:
+///
+/// ```
+/// use lambert_w::{lambert_wm1, NEG_INV_E};
+///
+/// assert_eq!(lambert_wm1(NEG_INV_E), -1.0);
+/// assert_eq!(lambert_wm1(0.0), f64::NEG_INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
+///
+/// ```
+/// use lambert_w::{lambert_wm1, NEG_INV_E};
+///
+/// assert!(lambert_wm1(NEG_INV_E.next_down()).is_nan());
+/// assert!(lambert_wm1(f64::MIN_POSITIVE).is_nan());
+/// assert!(lambert_wm1(f64::NAN).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**. DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_wm1(z: f64) -> f64 {
+    // The critical arguments used in the if statements are the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
+    // The coefficients in the rational functions are from tables 15 through 18 in the paper.
+
+    if z < NEG_INV_E {
         f64::NAN
+    } else if z == NEG_INV_E {
+        -1.0
     } else if z <= -0.354_291_330_944_216_4 {
         // W >= -1.3, X_-1
 
         rational_function(
-            sqrt(zc),
+            sqrt(z - NEG_INV_E),
             [
                 -1.000_000_000_000_000_111_0,
                 4.296_301_617_877_712_700_9,

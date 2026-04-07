@@ -1,25 +1,74 @@
-// Copyright 2025 Johanna Sörngård
+// Copyright 2024-2026 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 //! This module contains an implementation of the approximation of the principal
 //! branch of the Lambert W function
 //! with 50 bits of accuracy from Fukushima's paper.
-//! It returns [`f64::NAN`] if the input is negative or `NAN`,
-//! and [`f64::INFINITY`] if the input is positive infinity.
+//! It is based on the Fortran implementation of the name "dw0c" by Fukushima.
 
 // The coefficients in these rational minimax functions all have excessive precision.
 // By keeping the full precision in the source code we can ensure that there is no confusion
 // when comparing with the paper.
 #![allow(clippy::excessive_precision)]
 
-use crate::generic_math::{ln, rational_function, sqrt};
+use crate::{
+    generic_math::{ln, rational_function, sqrt},
+    NEG_INV_E,
+};
 
-/// zc = z + 1/e
-#[inline(always)]
-#[cfg_attr(all(test, assert_no_panic), no_panic::no_panic)]
-pub fn dw0c(zc: f64) -> f64 {
-    if zc < 0.0 || zc.is_nan() {
+/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method[^1].
+///
+/// # Examples
+///
+/// #### Basic usage
+///
+/// ```
+/// use lambert_w::lambert_w0;
+/// use approx::assert_abs_diff_eq;
+///
+/// let Ω = lambert_w0(1.0);
+///
+/// assert_abs_diff_eq!(Ω, 0.567143290409783873);
+/// ```
+///
+/// #### Special cases
+///
+/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
+/// while an infinite input gives [`INFINITY`](f64::INFINITY):
+///
+/// ```
+/// use lambert_w::{lambert_w0, NEG_INV_E};
+///
+/// assert_eq!(lambert_w0(NEG_INV_E), -1.0);
+/// assert_eq!(lambert_w0(0.0), 0.0);
+/// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
+/// ```
+///
+/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
+///
+/// ```
+/// use lambert_w::{lambert_w0, NEG_INV_E};
+///
+/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
+/// assert!(lambert_w0(f64::NAN).is_nan());
+/// ```
+///
+/// # Reference
+///
+/// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**. DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_w0(z: f64) -> f64 {
+    // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
+    // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
+
+    let zc = z - NEG_INV_E;
+
+    if z < NEG_INV_E {
         f64::NAN
+    } else if z == NEG_INV_E {
+        -1.0
+    } else if z == 0.0 {
+        0.0
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 
@@ -515,6 +564,8 @@ pub fn dw0c(zc: f64) -> f64 {
                 -1.596_014_725_260_605_535_2e-24,
             ],
         )
+    } else if zc.is_nan() {
+        f64::NAN
     } else {
         f64::INFINITY
     }

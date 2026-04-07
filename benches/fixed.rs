@@ -1,5 +1,11 @@
-// Copyright 2025 Johanna Sörngård
+// Copyright 2024-2026 Johanna Sörngård
 // SPDX-License-Identifier: MIT OR Apache-2.0
+
+//! Benchmarks for fixed arguments known at compile time.
+
+// The call to `criterion_group!` generates items that we can not document,
+// and we can not mark the macro call itself.
+#![allow(missing_docs)]
 
 use core::hint::black_box;
 use criterion::{criterion_group, criterion_main, Criterion};
@@ -36,7 +42,9 @@ fn fixed_benches(c: &mut Criterion) {
         }
         drop(group);
         let mut group = c.benchmark_group(format!("W_0 with Halley's method fixed at {z}"));
-        group.bench_function("branch 0", |b| b.iter(|| black_box(lambert_w(0, z, 0.0))));
+        group.bench_function("branch 0", |b| {
+            b.iter(|| black_box(lambert_w(0, z, 0.0, f64::EPSILON)))
+        });
     }
     for z in small_args {
         let mut group = c.benchmark_group(format!("W_-1 with Fukushima's method fixed at {z}"));
@@ -52,7 +60,9 @@ fn fixed_benches(c: &mut Criterion) {
         }
         drop(group);
         let mut group = c.benchmark_group(format!("W_-1 with Halley's method fixed at {z}"));
-        group.bench_function("branch -1", |b| b.iter(|| black_box(lambert_w(-1, z, 0.0))));
+        group.bench_function("branch -1", |b| {
+            b.iter(|| black_box(lambert_w(-1, z, 0.0, f64::EPSILON)))
+        });
     }
 }
 

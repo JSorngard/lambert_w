@@ -16,8 +16,10 @@ env:
 jobs:
   format:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: rustfmt
@@ -26,11 +28,13 @@ jobs:
 
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Check with `libm`
       run: cargo check --no-default-features -F libm
     - name: Check with `std`
@@ -40,13 +44,15 @@ jobs:
 
   clippy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Run clippy with `libm`
       run: cargo clippy --no-default-features --features libm -- -D warnings
     - name: Run clippy with `std`
@@ -61,19 +67,15 @@ jobs:
         toolchain: [stable, beta]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.toolchain }}
-    - name: Update apt package lists
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Test with `libm`
       run: cargo test --no-default-features -F libm
     - name: Test with `std`
@@ -83,25 +85,29 @@ jobs:
       
   doc:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       RUSTFLAGS: -D warnings
       RUSTDOCFLAGS: --cfg docsrs
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@nightly
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Generate documentation
       run: cargo +nightly doc --all-features
 
   verify_rust_version:
     needs: format
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0 
+      uses: Swatinem/rust-cache@v2
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-msrv
@@ -114,16 +120,14 @@ jobs:
 
   run_examples:
     needs: format
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
-    - name: Update apt package lists
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Run plot example with `libm`
       run: cargo run --example plot
     - name: Run plot example with `std`
@@ -133,18 +137,16 @@ jobs:
 
   coverage:
     needs: format
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
-      - name: Update apt package lists
-        run: sudo apt update 
-      - name: Install libfontconfig1-dev
-        run: sudo apt-get -y install libfontconfig1-dev
       - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
       - name: Generate lockfile
@@ -153,7 +155,7 @@ jobs:
       - name: Create coverage report
         run: cargo llvm-cov --locked --all-features --lcov --output-path lcov.info
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
@@ -162,11 +164,13 @@ jobs:
   semver-checks:
     needs: format
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0 
+        uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-semver-checks
@@ -180,15 +184,13 @@ jobs:
   compile_benchmarks:
     needs: format
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
-    - name: Update apt package lists
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Compile benchmarks with `libm`, but do not run them
       run: cargo bench --no-run
     - name: Compile benchmarks with `std`, but do not run them
@@ -196,39 +198,21 @@ jobs:
     - name: Compile benchmarks with both features, but do not run them
       run: cargo bench --no-default-features --features libm,std --no-run
 
-  ensure_no_panics:
-    needs: format
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@stable
-    - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
-    - uses: taiki-e/install-action@v2
-      with:
-        tool: cargo-all-features
-    - name: Update apt package lists
-      run: sudo apt update
-    - name: Install libfontconfig1-dev
-      run: sudo apt-get -y install libfontconfig1-dev
-    - name: Set up the environment variable
-      run: echo "LAMBERT_W_ENSURE_NO_PANICS=1" >> $GITHUB_ENV
-    - name: Check the crate for panics
-      run: cargo test-all-features -- --profile release-lto
-
   no_std:
     needs: format
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         target: [thumbv7m-none-eabi, aarch64-unknown-none]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
       with:
         target: ${{ matrix.target }}
     - name: Cache
-      uses: Swatinem/rust-cache@v2.8.0
+      uses: Swatinem/rust-cache@v2
     - name: Check
       run: cargo check --target ${{ matrix.target }}
     - name: Build
@@ -238,7 +222,7 @@ jobs:
     needs: format
     # This action chooses the oldest version of the dependencies permitted by Cargo.toml to ensure
     # that this crate is compatible with the minimal version that this crate and its dependencies
-    # require. This will pickup issues where this create relies on functionality that was introduced
+    # require. This will pick up issues where this create relies on functionality that was introduced
     # later than the actual version specified (e.g., when we choose just a major version, but a
     # method was added after this version).
     #
@@ -259,14 +243,16 @@ jobs:
     # https://github.com/jonhoo/fantoccini/blob/fde336472b712bc7ebf5b4e772023a7ba71b2262/Cargo.toml#L47-L49.
     # This action is run on ubuntu with the stable toolchain, as it is not expected to fail
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - uses: dtolnay/rust-toolchain@nightly
       - name: Set stable Rust as the default
         run: rustup default stable
       - name: Cache
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-all-features 

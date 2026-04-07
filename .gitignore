@@ -5,9 +5,10 @@
 /mutants.out.old
 /.vs
 .markdownlint.json
-lambert_w_plot.png
+lambert_w_plot.svg
 /.vscode
 about.hbs
 about.toml
 deny.toml
 license.html
+.idea/
