@@ -39,6 +39,8 @@ This implementation is simple enough that if the input argument
 is known at compile time the optimizer can often evaluate the entire function
 at compile time as well.
 
+## Accuracy
+
 This crate provides two approximations of each branch, a more accurate one
 with 50 bits of accuracy (implemented on 64-bit floats) and a faster one with 24
 bits (implemented on 32- and 64-bit floats). The one with 50 bits of accuracy
