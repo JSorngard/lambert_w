@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 - Add explicit permissions to the CI jobs.
+- Update dev-dependencies.
 
 ## [2.0.1] - 2026-03-26
 
