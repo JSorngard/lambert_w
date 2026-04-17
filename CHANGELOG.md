@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.3] - 2026-04-17
 
-- Update `rand` to version 0.10.1.
+- Update the `rand` dev-dependency to version 0.10.1.
 
 ## [2.0.2] - 2026-04-16
 
