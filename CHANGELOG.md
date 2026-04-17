@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.3] - 2026-04-17
+
+- Update `rand` to version 0.10.1.
+
 ## [2.0.2] - 2026-04-16
 
 - Add explicit permissions to the CI jobs.
