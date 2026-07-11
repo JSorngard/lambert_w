@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.4] - 2026-07-11
 
-- Update transitive dev-dependencies.
+- Update dev-dependencies.
 - Update `codecov` action to version 7.
 - Documentation improvements.
 - Improvements in unit tests that fixes a future incompatibility.
