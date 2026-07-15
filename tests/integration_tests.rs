@@ -278,7 +278,7 @@ fn test_lambert_w0f() {
     assert_relative_eq!(lambert_w0f(1e16), 3.333_476_3e1);
     assert_relative_eq!(lambert_w0f(1e17), 3.557_237_6e1);
     assert_relative_eq!(lambert_w0f(5.939_799_6e17), 3.730_645_559e1);
-    assert_relative_eq!(lambert_w0f(5.939_799_6e17.next_down()), 3.730_645_559e1);
+    assert_relative_eq!(lambert_w0f(5.939_799_6e17_f32.next_down()), 3.730_645_559e1);
     assert_relative_eq!(lambert_w0f(1e18), 3.781_385_4e1);
     assert_relative_eq!(lambert_w0f(1e19), 4.005_877e1);
     assert_relative_eq!(lambert_w0f(1e20), 4.230_675_5e1);
