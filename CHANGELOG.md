@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+- Speed up function evaluations slightly (5 to 10 percent) by skipping an unnecessary multiplication by 0 in the implementation of Horner's method.
 - Improvements to the integration tests.
 - Update transitive dev-dependencies.
 
