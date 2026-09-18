@@ -40,9 +40,11 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
 #[inline]
 fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
-        .into_iter()
+        .iter()
+        .copied()
         .rev()
-        .fold(T::zero(), |acc, c| acc * x + c)
+        .skip(1)
+        .fold(coefficients.last().unwrap_or(0), |acc, c| acc * x + c)
 }
 
 // The functions below are wrappers around the [`num-traits`] crate,
