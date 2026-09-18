@@ -44,7 +44,9 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
         .copied()
         .rev()
         .skip(1)
-        .fold(*coefficients.last().unwrap_or(&T::zero()), |acc, c| acc * x + c)
+        .fold(*coefficients.last().unwrap_or(&T::zero()), |acc, c| {
+            acc * x + c
+        })
 }
 
 // The functions below are wrappers around the [`num-traits`] crate,
