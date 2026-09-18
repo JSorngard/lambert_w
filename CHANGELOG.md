@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
    by skipping an unnecessary multiplication by 0 in the implementation of Horner's method.
 - Improvements to the integration tests.
 - Update transitive dev-dependencies.
+- Increase MSRV to 1.71.1 due to increased MSRV in transitive dev-dependencies.
 
 ## [2.0.4] - 2026-07-11
 
