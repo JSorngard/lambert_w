@@ -5,7 +5,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.5] - 2026-09-18
 
-- Speed up function evaluations slightly (up to 10 percent) by skipping an unnecessary multiplication by 0 in the implementation of Horner's method.
+- Speed up the Lambert W functions that use Fukushima's method slightly (by up to 10 percent)
+  by skipping an unnecessary multiplication by 0 in the implementation of Horner's method.
 - Improvements to the integration tests.
 - Update transitive dev-dependencies.
 
