@@ -43,7 +43,7 @@ fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
         .iter()
         .rev()
         .skip(1)
-        .fold(coefficients.last().unwrap_or(&T::zero()), |acc, &c| {
+        .fold(*coefficients.last().unwrap_or(&T::zero()), |acc, &c| {
             acc * x + c
         })
 }
