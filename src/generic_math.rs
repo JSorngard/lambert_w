@@ -41,10 +41,9 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
 fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
         .iter()
-        .copied()
         .rev()
         .skip(1)
-        .fold(*coefficients.last().unwrap_or(&T::zero()), |acc, c| {
+        .fold(coefficients.last().unwrap_or(&T::zero()), |acc, &c| {
             acc * x + c
         })
 }
