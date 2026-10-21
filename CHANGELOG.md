@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Use `reduce` instead of `fold` in the polynomial evaluation function.
+
 ## [2.0.5] - 2026-09-18
 
 - Speed up the Lambert W functions that use Fukushima's method slightly (by up to 10 percent)
