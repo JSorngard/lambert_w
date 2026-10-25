@@ -17,7 +17,8 @@ from pathlib import Path
 import mpmath as mp
 
 
-def f32(x):
+def f32(x: float):
+    """Truncates a float value to 32-bits in the same way that C does"""
     return struct.unpack("f", struct.pack("f", x))[0]
 
 
