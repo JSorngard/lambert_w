@@ -18,7 +18,7 @@ import mpmath as mp
 
 
 def f32(x: float):
-    """Truncates a float value to 32-bits in the same way that C does"""
+    """Truncates a float value to 32-bits in the same way that C does and returns the resulting value"""
     return struct.unpack("f", struct.pack("f", x))[0]
 
 
