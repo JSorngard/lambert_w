@@ -6,7 +6,7 @@
 //! with 24 bits of accuracy from Fukushima's paper.
 //! It is implemented here on 32-bit floats, which most likely reduces the accuracy in some cases.
 
-use crate::generic_math::{ln, rational_function, sqrt};
+use crate::generic_math::{ln, polynomial, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
@@ -15,6 +15,11 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// Uses the same approximation as [`sp_lambert_w0`](crate::sp_lambert_w0), but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
 /// This potential accuracy reduction has not been quantified.
+///
+/// For |z| ≤ 0.05, a degree-8 Taylor polynomial is used instead of the
+/// rational approximation to avoid cancellation near zero. The zero's sign is
+/// preserved. The truncation error is less than 6e-9 relative before
+/// floating-point rounding. See [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
 ///
 /// # Examples
 ///
@@ -64,8 +69,22 @@ pub fn lambert_w0f(z: f32) -> f32 {
         f32::NAN
     } else if z == NEG_INV_E {
         -1.0
-    } else if z == 0.0 {
-        0.0
+    } else if (-0.05..=0.05).contains(&z) {
+        // W0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n! (DLMF 4.13.5).
+        // Factoring out z avoids cancellation and preserves signed zero and subnormals.
+        z * polynomial(
+            z,
+            [
+                1.0,
+                -1.0,
+                3.0 / 2.0,
+                -8.0 / 3.0,
+                125.0 / 24.0,
+                -54.0 / 5.0,
+                16807.0 / 720.0,
+                -16384.0 / 315.0,
+            ],
+        )
     } else if z <= 2.008_217_8 {
         // W <= 0.854, X_1
 

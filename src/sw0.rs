@@ -12,11 +12,16 @@
 #![allow(clippy::excessive_precision)]
 
 use crate::{
-    generic_math::{ln, rational_function, sqrt},
+    generic_math::{ln, polynomial, rational_function, sqrt},
     NEG_INV_E,
 };
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
+///
+/// For |z| ≤ 0.05, a degree-8 Taylor polynomial is used instead of the
+/// rational approximation to avoid cancellation near zero. The zero's sign is
+/// preserved. The truncation error is less than 6e-9 relative before
+/// floating-point rounding. See [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
 ///
 /// # Examples
 ///
@@ -67,8 +72,22 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         f64::NAN
     } else if z == NEG_INV_E {
         -1.0
-    } else if z == 0.0 {
-        0.0
+    } else if (-0.05..=0.05).contains(&z) {
+        // W0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n! (DLMF 4.13.5).
+        // Factoring out z avoids cancellation and preserves signed zero and subnormals.
+        z * polynomial(
+            z,
+            [
+                1.0,
+                -1.0,
+                3.0 / 2.0,
+                -8.0 / 3.0,
+                125.0 / 24.0,
+                -54.0 / 5.0,
+                16807.0 / 720.0,
+                -16384.0 / 315.0,
+            ],
+        )
     } else if z <= 2.008_217_811_584_472_656_3 {
         // W <= 0.854, X_1
 
