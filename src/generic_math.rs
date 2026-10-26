@@ -38,7 +38,7 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
 ///
 /// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
 #[inline]
-fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
+pub(crate) fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
         .iter()
         .rev()
