@@ -55,7 +55,7 @@ of this crate.
 
 For arguments with a magnitude less than or equal to 0.05,
 the principal-branch functions use the Taylor series at zero [^2],
-this way the crate can offer a more intuitive API.
+this way the crate can offer a more intuitive API by taking the argument directly instead of a shifted argument.
 
 ## Examples
 
