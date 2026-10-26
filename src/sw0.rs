@@ -71,8 +71,15 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
     } else if z == NEG_INV_E {
         -1.0
     } else if (-0.05..=0.05).contains(&z) {
-        // W0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n! (DLMF 4.13.5).
+        // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
+        //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
+        // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
+        // In the article by Fuskushima he does not do this special near-zero branch.
+        // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
+        // We want to take z directly because it makes the API much more intuitive.
+        //
         // Factoring out z avoids cancellation and preserves signed zero and subnormals.
+
         z * polynomial(
             z,
             [
