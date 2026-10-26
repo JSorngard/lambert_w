@@ -12,6 +12,8 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 /// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
 ///
+/// The implementation follows the description in [^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial [^2].
+///
 /// Uses the same approximation as [`sp_lambert_w0`](crate::sp_lambert_w0), but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
 /// This potential accuracy reduction has not been quantified.
@@ -60,6 +62,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
+/// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
@@ -70,8 +73,15 @@ pub fn lambert_w0f(z: f32) -> f32 {
     } else if z == NEG_INV_E {
         -1.0
     } else if (-0.05..=0.05).contains(&z) {
-        // W0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n! (DLMF 4.13.5).
+        // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
+        //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
+        // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
+        // In the article by Fuskushima he does not do this special near-zero branch.
+        // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
+        // We want to take z directly because it makes the API much more intuitive.
+        //
         // Factoring out z avoids cancellation and preserves signed zero and subnormals.
+
         z * polynomial(
             z,
             [
@@ -245,9 +255,9 @@ pub fn lambert_w0f(z: f32) -> f32 {
             [-0.607_023_7, 0.698_287_2, 0.075_795_14, 0.000_516_692_6],
             [1.0, 0.079_048_43, 0.000_517_609_94, -4.243_840_3e-10],
         )
-    } else if z.is_nan() {
-        f32::NAN
     } else {
-        f32::INFINITY
+        // In the branch the input was either +infinity or NaN,
+        // in both cases the output of the W function happens to match the input.
+        z
     }
 }
