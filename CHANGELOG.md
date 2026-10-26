@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.7] - 2026-10-26
+
+- Documentation improvements.
+
 ## [2.0.6] - 2026-10-26
 
 - Improve accuracy for inputs near zero on the principal branch.
