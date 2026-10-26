@@ -20,6 +20,11 @@ use crate::{
 ///
 /// The implementation follows the description in [^1] except around zero, where the function is implemented in terms of a degree 17 Taylor polynomial [^2].
 ///
+/// For |z| ≤ 0.05, a degree-17 Taylor polynomial is used instead of the
+/// rational approximation to avoid cancellation near zero. The zero's sign is
+/// preserved. The truncation error is less than 4e-17 relative before
+/// floating-point rounding. See [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
+///
 /// # Examples
 ///
 /// #### Basic usage
