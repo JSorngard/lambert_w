@@ -54,7 +54,7 @@ but the exact magnitude of this reduction has not been quantified by the author
 of this crate.
 
 For principal-branch arguments with a magnitude less than or equal to 0.05,
-the real functions use the Taylor series at zero [^2].
+the real functions use the Taylor series at zero [^2], this way the crate can offer a more intuitive API.
 
 ## Examples
 
