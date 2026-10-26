@@ -41,11 +41,6 @@ at compile time as well.
 
 ## Accuracy
 
-For principal-branch arguments in `[-0.05, 0.05]`, the real functions use the
-[Taylor series at zero](https://dlmf.nist.gov/4.13.E5), evaluated with Horner's
-method, to avoid cancellation in the rational approximation. This also
-preserves signed zero and handles subnormal arguments.
-
 This crate provides two approximations of each branch, a more accurate one
 with 50 bits of accuracy (implemented on 64-bit floats) and a faster one with 24
 bits (implemented on 32- and 64-bit floats). The one with 50 bits of accuracy
@@ -60,7 +55,7 @@ of this crate.
 
 For arguments with a magnitude less than or equal to 0.05,
 the principal-branch functions use the Taylor series at zero [^2],
-this way the crate can offer a more intuitive API by taking the argument directly instead of a shifted argument.
+this way the crate can offer a more intuitive API by taking the argument directly instead of a shifted argument that is used in [^1].
 
 ## Examples
 
