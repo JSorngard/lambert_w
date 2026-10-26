@@ -598,9 +598,9 @@ pub fn lambert_w0(z: f64) -> f64 {
                 -1.596_014_725_260_605_535_2e-24,
             ],
         )
-    } else if zc.is_nan() {
-        f64::NAN
     } else {
-        f64::INFINITY
+        // In the branch the input was either +infinity or NaN,
+        // in both cases the output of the W function happens to match the input.
+        z
     }
 }
