@@ -2,7 +2,7 @@
 # requires-python = ">=3.9"
 # dependencies = ["mpmath==1.3.0"]
 # ///
-"""Regenerate near_zero.csv with `uv run scripts/generate_near_zero.py`.
+"""Regenerate the W0(F)_NEAR_ZERO_ANSWERS statics with `uv run scripts/generate_near_zero_answers.py`.
 
 Inputs are binary64/binary32 values, converted exactly to mpmath. References
 are evaluated independently at 100 and 180 decimal digits and must round to
