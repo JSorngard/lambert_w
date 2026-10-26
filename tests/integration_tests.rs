@@ -725,12 +725,12 @@ fn principal_branches_satisfy_inverse_identity_near_zero() {
         }
         let x = f64::from(i) * 0.05 / 1000.0;
         let w = lambert_w0(x);
-        assert_relative_eq!(w * w.exp(), x, max_relative = 8.0 * f64::EPSILON);
+        assert_relative_eq!(w * w.exp(), x);
         let w = sp_lambert_w0(x);
         assert_relative_eq!(w * w.exp(), x, max_relative = f64::from(f32::EPSILON) / 2.0);
         let x = x as f32;
         let w = lambert_w0f(x);
-        assert_relative_eq!(w * w.exp(), x, max_relative = 8.0 * f32::EPSILON);
+        assert_relative_eq!(w * w.exp(), x);
     }
 }
 
