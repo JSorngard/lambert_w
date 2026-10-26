@@ -18,11 +18,6 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// which may result in slightly reduced accuracy.
 /// This potential accuracy reduction has not been quantified.
 ///
-/// For |z| ≤ 0.05, a degree-8 Taylor polynomial is used instead of the
-/// rational approximation to avoid cancellation near zero. The zero's sign is
-/// preserved. The truncation error is less than 6e-9 relative before
-/// floating-point rounding. See [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
-///
 /// # Examples
 ///
 /// #### Basic usage
