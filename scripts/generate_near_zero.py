@@ -22,25 +22,40 @@ def f32(x: float):
     return struct.unpack("f", struct.pack("f", x))[0]
 
 
-with Path(__file__).with_name("near_zero.csv").open("w", newline="") as output:
-    writer = csv.writer(output, lineterminator="\n")
-    writer.writerow(["type", "x", "w0"])
-    for kind, cast, tiny, normal in [
-        ("f64", float, float.fromhex("0x0.0000000000001p-1022"), float.fromhex("0x1p-1022")),
-        ("f32", f32, 2.0**-149, 2.0**-126),
-    ]:
-        cutoff = cast(0.05)
-        if kind == "f64":
-            neighbors = [math.nextafter(cutoff, 0), cutoff, math.nextafter(cutoff, math.inf)]
-        else:
-            bits = struct.unpack("I", struct.pack("f", cutoff))[0]
-            neighbors = [struct.unpack("f", struct.pack("I", bits + i))[0] for i in [-1, 0, 1]]
-        values = [tiny, 2 * tiny, normal - tiny, normal, *neighbors]
-        values += [cast(10.0**e) for e in [-300, -100, -30, -20, -12, -8, -6, -4, -3, -2]]
-        values += [cast(i / 1000) for i in range(1, 50, 3)]
-        for x in sorted({sign * v for v in values if v != 0 for sign in [-1, 1]}):
-            with mp.workdps(100):
-                expected = cast(mp.lambertw(mp.mpf(x)))
-            with mp.workdps(180):
-                assert expected == cast(mp.lambertw(mp.mpf(x)))
-            writer.writerow([kind, repr(x), repr(expected)])
+tiny = float.fromhex("0x0.0000000000001p-1022")
+normal = float.fromhex("0x1p-1022")
+cutoff = float(0.05)
+neighbors = [math.nextafter(cutoff, 0), cutoff, math.nextafter(cutoff, math.inf)]
+
+values = [tiny, 2 * tiny, normal - tiny, normal, *neighbors]
+values += [float(10.0**e) for e in [-300, -100, -30, -20, -12, -8, -6, -4, -3, -2]]
+values += [float(i / 1000) for i in range(1, 50, 3)]
+set = {sign * v for v in values if v != 0 for sign in [-1, 1]}
+print(f"static W0_ANSWERS: [(f64, f64); {len(set)}] = [")
+for x in sorted(set):
+    with mp.workdps(100):
+        expected = float(mp.lambertw(mp.mpf(x)))
+    with mp.workdps(180):
+        assert expected == float(mp.lambertw(mp.mpf(x)))
+    print(f"    ({repr(x)}, {repr(expected)}),")
+print("];")
+
+
+tiny = 2.0**-149
+normal = 2.0**-126
+cutoff = f32(0.05)
+bits = struct.unpack("I", struct.pack("f", cutoff))[0]
+neighbors = [struct.unpack("f", struct.pack("I", bits + i))[0] for i in [-1, 0, 1]]
+
+values = [tiny, 2 * tiny, normal - tiny, normal, *neighbors]
+values += [f32(10.0**e) for e in [-300, -100, -30, -20, -12, -8, -6, -4, -3, -2]]
+values += [f32(i / 1000) for i in range(1, 50, 3)]
+set = {sign * v for v in values if v != 0 for sign in [-1, 1]}
+print(f"static W0F_ANSWERS: [(f32, f32); {len(set)}] = [")
+for x in sorted(set):
+    with mp.workdps(100):
+        expected = f32(mp.lambertw(mp.mpf(x)))
+    with mp.workdps(180):
+        assert expected == f32(mp.lambertw(mp.mpf(x)))
+    print(f"    ({repr(x)}, {repr(expected)}),")
+print("];")
