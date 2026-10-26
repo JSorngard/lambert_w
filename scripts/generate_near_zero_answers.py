@@ -22,7 +22,7 @@ def f32(x: float):
 
 def f64(x: float):
     """Does the same as `f32` but for a 64-bit float"""
-    return float(x)
+    return struct.unpack("d", struct.pack("d", x))[0]
 
 
 tiny = float.fromhex("0x0.0000000000001p-1022")
