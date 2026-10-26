@@ -10,9 +10,9 @@ use crate::generic_math::{ln, polynomial, rational_function, sqrt};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-/// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
+/// The principal branch of the Lambert W function, computed on 32-bit floats with a method derived from Fukushima's[^1].
 ///
-/// The implementation follows the description in [^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial [^2].
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial[^2].
 ///
 /// Uses the same approximation as [`sp_lambert_w0`](crate::sp_lambert_w0), but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
