@@ -4,9 +4,8 @@
 # ///
 """Regenerate the W0(F)_NEAR_ZERO_ANSWERS statics with `uv run scripts/generate_near_zero_answers.py`.
 
-Inputs are binary64/binary32 values, converted exactly to mpmath. References
-are evaluated independently at 100 and 180 decimal digits and must round to
-the same target float. The CSV is consumed by ordinary Rust tests.
+Inputs are binary64/binary32 values, converted exactly to mpmath, and evaluated to give the expected answer.
+The evaluation is done at 100 and 180 decimal digits, and it is asserted that they round to the same float.
 """
 
 import csv
