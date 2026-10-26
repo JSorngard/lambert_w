@@ -12,14 +12,11 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 /// The principal branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
 ///
+/// The implementation follows the description in [^1] except around zero, where the function is implemented in terms of a degree 17 Taylor polynomial [^2].
+///
 /// Uses the same approximation as [`sp_lambert_w0`](crate::sp_lambert_w0), but computes it with 32-bit floats,
 /// which may result in slightly reduced accuracy.
 /// This potential accuracy reduction has not been quantified.
-///
-/// For |z| ≤ 0.05, a degree-8 Taylor polynomial is used instead of the
-/// rational approximation to avoid cancellation near zero. The zero's sign is
-/// preserved. The truncation error is less than 6e-9 relative before
-/// floating-point rounding. See [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
 ///
 /// # Examples
 ///
@@ -60,6 +57,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
+/// [^2]: Equation (5) in [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
