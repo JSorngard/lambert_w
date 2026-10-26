@@ -39,6 +39,10 @@ This implementation is simple enough that if the input argument
 is known at compile time the optimizer can often evaluate the entire function
 at compile time as well.
 
+For arguments with a magnitude less than or equal to 0.05,
+the principal-branch functions use the Taylor series at zero [^2] instead of the rational function given in Fukushima's paper.
+This way the crate can offer a more intuitive API by taking the argument directly instead of the shifted argument that the paper uses.
+
 ## Accuracy
 
 This crate provides two approximations of each branch, a more accurate one
@@ -52,10 +56,6 @@ This crate can evaluate the approximation with 24 bits of accuracy on
 This should result in a reduction in the accuracy to less than 24 bits,
 but the exact magnitude of this reduction has not been quantified by the author
 of this crate.
-
-For arguments with a magnitude less than or equal to 0.05,
-the principal-branch functions use the Taylor series at zero [^2],
-this way the crate can offer a more intuitive API by taking the argument directly instead of a shifted argument that is used in [^1].
 
 ## Examples
 
