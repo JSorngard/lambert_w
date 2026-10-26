@@ -21,22 +21,26 @@ def f32(x: float):
     """Truncates a float value to 32-bits in the same way that C does and returns the resulting value"""
     return struct.unpack("f", struct.pack("f", x))[0]
 
+def f64(x: float):
+    """Does the same as `f32` but for a 64-bit float"""
+    return float(x)
+
 
 tiny = float.fromhex("0x0.0000000000001p-1022")
 normal = float.fromhex("0x1p-1022")
-cutoff = float(0.05)
+cutoff = f64(0.05)
 neighbors = [math.nextafter(cutoff, 0), cutoff, math.nextafter(cutoff, math.inf)]
 
 values = [tiny, 2 * tiny, normal - tiny, normal, *neighbors]
-values += [float(10.0**e) for e in [-300, -100, -30, -20, -12, -8, -6, -4, -3, -2]]
-values += [float(i / 1000) for i in range(1, 50, 3)]
+values += [f64(10.0**e) for e in [-300, -100, -30, -20, -12, -8, -6, -4, -3, -2]]
+values += [f64(i / 1000) for i in range(1, 50, 3)]
 set = {sign * v for v in values if v != 0 for sign in [-1, 1]}
 print(f"static W0_NEAR_ZERO_ANSWERS: [(f64, f64); {len(set)}] = [")
 for x in sorted(set):
     with mp.workdps(100):
-        expected = float(mp.lambertw(mp.mpf(x)))
+        expected = f64(mp.lambertw(mp.mpf(x)))
     with mp.workdps(180):
-        assert expected == float(mp.lambertw(mp.mpf(x)))
+        assert expected == f64(mp.lambertw(mp.mpf(x)))
     print(f"    ({repr(x)}, {repr(expected)}),")
 print("];")
 
