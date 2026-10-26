@@ -7,7 +7,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Improve accuracy for inputs near zero on the principal branch.
 
-
 ## [2.0.5] - 2026-09-18
 
 - Speed up the Lambert W functions that use Fukushima's method slightly (by up to 10 percent)
