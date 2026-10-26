@@ -177,9 +177,7 @@ dual licensed as above, without any additional terms or conditions.
 [`approx`]: https://crates.io/crates/approx
 [`libm`]: https://crates.io/crates/libm
 
-## References
+## Reference
 
 [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
-
-[^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5)
