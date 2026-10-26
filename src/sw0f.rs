@@ -53,7 +53,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// assert!(lambert_w0f(f32::NAN).is_nan());
 /// ```
 ///
-/// # Reference
+/// # References
 ///
 /// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
