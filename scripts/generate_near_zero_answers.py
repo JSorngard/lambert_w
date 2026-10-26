@@ -41,7 +41,7 @@ for x in sorted(set):
     with mp.workdps(180):
         assert expected == f64(mp.lambertw(mp.mpf(x)))
     print(f"    ({repr(x)}, {repr(expected)}),")
-print("];")
+print("];\n")
 
 
 tiny = 2.0**-149
