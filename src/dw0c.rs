@@ -79,8 +79,6 @@ pub fn lambert_w0(z: f64) -> f64 {
         // In the article by Fuskushima he does not do this special near-zero branch.
         // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
         // We want to take z directly because it makes the API much more intuitive.
-        //
-        // Factoring out z avoids cancellation and preserves signed zero and subnormals.
 
         z * polynomial(
             z,
