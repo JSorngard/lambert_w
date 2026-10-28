@@ -4,8 +4,10 @@
 //! This file contains tests of the public API of the crate.
 
 mod near_zero_test_cases;
+mod random_test_cases;
 
-use near_zero_test_cases::{W0_NEAR_ZERO_ANSWERS, W0F_NEAR_ZERO_ANSWERS};
+use near_zero_test_cases::{W0F_NEAR_ZERO_ANSWERS, W0_NEAR_ZERO_ANSWERS};
+use random_test_cases::W0_RANDOM_ANSWERS;
 
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
@@ -895,5 +897,16 @@ fn principal_branches_satisfy_inverse_identity_near_zero() {
         let x = x as f32;
         let w = lambert_w0f(x);
         assert_relative_eq!(w * w.exp(), x);
+    }
+}
+
+#[test]
+fn test_lambert_w0_at_random_values() {
+    for (x, expected) in Box::new(W0_RANDOM_ANSWERS) {
+        assert_only_ulps_eq!(
+            lambert_w0(x),
+            expected,
+            max_ulps = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS)
+        );
     }
 }
