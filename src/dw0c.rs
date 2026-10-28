@@ -18,7 +18,7 @@ use crate::{
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's [^1].
 ///
-/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 17 Taylor polynomial[^2].
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 18 Taylor polynomial[^2].
 ///
 /// # Examples
 ///
@@ -102,7 +102,7 @@ pub fn lambert_w0(z: f64) -> f64 {
                 320361328125.0 / 14350336.0,
                 -35184372088832.0 / 638512875.0,
                 2862423051509815793.0 / 20922789888000.0,
-                -5083731656658.0/14889875.0,
+                -5083731656658.0 / 14889875.0,
                 //5480386857784802185939.0/6402373705728000.0,
             ],
         )
