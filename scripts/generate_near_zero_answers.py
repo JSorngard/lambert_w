@@ -8,10 +8,8 @@ Inputs are binary64/binary32 values, converted exactly to mpmath, and evaluated 
 The evaluation is done at 100 and 180 decimal digits, and it is asserted that they round to the same float.
 """
 
-import csv
 import math
 import struct
-from pathlib import Path
 
 import mpmath as mp
 
