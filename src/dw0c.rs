@@ -109,6 +109,9 @@ pub fn lambert_w0(z: f64) -> f64 {
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 
+        // THIS BRANCH HAS POOR ACCURACY CLOSE TO THE BRANCH POINT.
+        // ARGH, FUKUSHIMA!
+
         rational_function(
             sqrt(zc),
             [
