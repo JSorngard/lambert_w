@@ -2,7 +2,7 @@
 # requires-python = ">=3.9"
 # dependencies = ["mpmath==1.3.0"]
 # ///
-"""Regenerate the file "near_zero_test_cases.rs" with `uv run scripts/generate_near_zero_answers.py`.
+"""Regenerate the file "tests/near_zero_test_cases.rs" with `uv run scripts/generate_near_zero_answers.py`.
 
 Inputs are binary64/binary32 values, converted exactly to mpmath, and evaluated to give the expected answer.
 The evaluation is done at 100 and 180 decimal digits, and it is asserted that they round to the same float.
