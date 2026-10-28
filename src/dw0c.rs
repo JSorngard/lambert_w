@@ -66,7 +66,7 @@ pub fn lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
 
-    const NEAR_ZERO_THRESHOLD: f64 = 0.05;
+    const NEAR_ZERO_THRESHOLD: f64 = 0.0675;
 
     let zc = z - NEG_INV_E;
 
@@ -102,6 +102,8 @@ pub fn lambert_w0(z: f64) -> f64 {
                 320361328125.0 / 14350336.0,
                 -35184372088832.0 / 638512875.0,
                 2862423051509815793.0 / 20922789888000.0,
+                -5083731656658.0/14889875.0,
+                //5480386857784802185939.0/6402373705728000.0,
             ],
         )
     } else if zc <= 2.549_893_906_503_473_571_6 {

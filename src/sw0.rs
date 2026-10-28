@@ -67,11 +67,13 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
     // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
 
+    const NEAR_ZERO_THRESHOLD: f64 = 0.0675;
+
     if z < NEG_INV_E {
         f64::NAN
     } else if z == NEG_INV_E {
         -1.0
-    } else if (-0.05..=0.05).contains(&z) {
+    } else if (-NEAR_ZERO_THRESHOLD..=NEAR_ZERO_THRESHOLD).contains(&z) {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.

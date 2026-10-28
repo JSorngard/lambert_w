@@ -64,11 +64,13 @@ pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
     // but their precision has been truncated to fit in 32-bit floats.
 
+    const NEAR_ZERO_THRESHOLD: f32 = 0.0675;
+
     if z < NEG_INV_E {
         f32::NAN
     } else if z == NEG_INV_E {
         -1.0
-    } else if (-0.05..=0.05).contains(&z) {
+    } else if (-NEAR_ZERO_THRESHOLD..=NEAR_ZERO_THRESHOLD).contains(&z) {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
