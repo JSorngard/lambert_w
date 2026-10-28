@@ -903,10 +903,22 @@ fn principal_branches_satisfy_inverse_identity_near_zero() {
 #[test]
 fn test_lambert_w0_at_random_values() {
     for (x, expected) in Box::new(W0_RANDOM_ANSWERS) {
+        println!("{} error at {x}", ulp_err(lambert_w0(x), expected));
         assert_only_ulps_eq!(
             lambert_w0(x),
             expected,
             max_ulps = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS)
         );
     }
+}
+
+const fn ulp_err(got: f64, exact: f64) -> f64 {
+    if got == exact {
+        return 0.0;
+    }
+    let ulp = {
+        let b = exact.abs().to_bits();
+        f64::from_bits(b + 1) - exact.abs()
+    };
+    ((got - exact) / ulp).abs()
 }
