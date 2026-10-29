@@ -96,6 +96,8 @@ const NEG_INV_E_CORRECTION_32_BIT: f32 = -9.149_756e-9;
 /// ```
 pub const SMALLEST_F64_IN_DOMAIN: f64 = -0.367_879_441_171_442_3;
 
+/// Same as [`SMALLEST_F64_IN_DOMAIN`] but for 32-bit floats.
+///
 /// ```text
 /// 32-bit floats:   f--          f-           f+           f++
 /// real line:     --|------------|---x--------|------------|-------> z
