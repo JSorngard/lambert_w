@@ -71,7 +71,7 @@ pub const NEG_INV_E: f64 = -0.367_879_441_171_442_321_595_523_770;
 /// The distance between `NEG_INV_E` and the true value of -1/e.
 const NEG_INV_E_CORRECTION: f64 = -1.2428753672788363e-17;
 
-/// Same as `NEG_INV_E_CORRECTION` but for 32-bit floats.
+/// Same as [`NEG_INV_E_CORRECTION`] but for 32-bit floats.
 ///
 /// The value that this constant corrects is then `NEG_INV_E as f32`, equal to -0.367_879_45.
 const NEG_INV_E_CORRECTION_32_BIT: f32 = -9.149_756e-9;
