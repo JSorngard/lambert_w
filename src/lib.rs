@@ -50,12 +50,12 @@ pub use swm1f::lambert_wm1f;
 /// The floating point value closest to the negative reciprocal of e (-1/e), the branch point of the W function.
 ///
 /// ```text
-/// floats:      f--          f-           f+           f++
-/// real line: --|------------|---x--------|------------|-------> z
-///                             -1/e
+/// 64-bit floats:   f--          f-           f+           f++
+/// real line:     --|------------|---x--------|------------|-------> z
+///                                 -1/e
 /// ```
 /// f- is this constant and x marks the location of the true value of -1/e.
-/// f+, the next `f64` up, is the smallest value for which the W functions in this crate return a real answer.
+/// f+ is the constant [`SMALLEST_F64_IN_DOMAIN`].
 ///
 /// # Example
 ///
@@ -79,18 +79,39 @@ const NEG_INV_E_CORRECTION_32_BIT: f32 = -9.149_755_619_830_557e-09;
 /// This floating point value is the smallest one that is larger than or equal to -1/e.
 /// It is *not* the one that is the closest to -1/e, rather this value is one step further in the direction towards positive infinity.
 ///
-/// Calculated with the `python` library `mpmath`.
-///
 /// ```text
-/// floats:      f--          f-           f+           f++
-/// real line: --|------------|---x--------|------------|-------> z
-///                             -1/e
+/// 64-bit floats:   f--          f-           f+           f++
+/// real line:     --|------------|---x--------|------------|-------> z
+///                                 -1/e
 /// ```
 /// f- is the constant [`NEG_INV_E`], f+ is this constant, and x marks the location of the true value of -1/e.
-const SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN: f64 = -0.367_879_441_171_442_3;
+///
+/// # Example
+///
+/// ```
+/// use lambert_w::{lambert_w0, SMALLEST_F64_IN_DOMAIN};
+///
+/// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
+/// assert!(lambert_w0(SMALLEST_F64_IN_DOMAIN.next_down()).is_nan());
+/// ```
+pub const SMALLEST_F64_IN_DOMAIN: f64 = -0.367_879_441_171_442_3;
 
-/// Same as [`SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN`], but for 32-bit floats.
-const SMALLEST_32_BIT_FLOAT_IN_W0_DOMAIN: f32 = -0.367_879_42;
+/// ```text
+/// 32-bit floats:   f--          f-           f+           f++
+/// real line:     --|------------|---x--------|------------|-------> z
+///                                 -1/e
+/// ```
+/// f- is the constant [`NEG_INV_E`] cast to `f32`, f+ is this constant, and x marks the location of the true value of -1/e.
+///
+/// # Example
+///
+/// ```
+/// use lambert_w::{lambert_w0f, SMALLEST_F32_IN_DOMAIN};
+///
+/// assert!(!lambert_w0f(SMALLEST_F32_IN_DOMAIN).is_nan());
+/// assert!(lambert_w0f(SMALLEST_F32_IN_DOMAIN.next_down()).is_nan());
+/// ```
+pub const SMALLEST_F32_IN_DOMAIN: f32 = -0.367_879_42;
 
 /// Closer to zero than this we use the Taylor expansion on the principal branch.
 ///

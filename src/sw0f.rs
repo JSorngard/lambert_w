@@ -8,8 +8,7 @@
 
 use crate::generic_math::{ln, polynomial, rational_function, sqrt};
 use crate::{
-    NEG_INV_E_CORRECTION_32_BIT, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
-    SMALLEST_32_BIT_FLOAT_IN_W0_DOMAIN,
+    NEG_INV_E_CORRECTION_32_BIT, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F32_IN_DOMAIN,
 };
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
@@ -39,24 +38,22 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// #### Edge cases
 ///
-/// For an input of `NEG_INV_E as f32` the function returns [`NAN`](f32::NAN) (because `NEG_INV_E as f32` is slightly smaller than -1/e due to the nature of floating point numbers),
-/// while an input of the float one step up from `NEG_INV_E as f32` (a value of -0.367_879_42) gives a finite result.
-/// An input of +∞ gives [`INFINITY`](f64::INFINITY):
+/// For an input of [`NEG_INV_E`](crate::NEG_INV_E) the function returns [`NAN`](f32::NAN),
+/// while an input of [`SMALLEST_F32_IN_DOMAIN`] gives a finite result:
 ///
 /// ```
-/// use lambert_w::{lambert_w0f, NEG_INV_E};
+/// use lambert_w::{lambert_w0f, NEG_INV_E, SMALLEST_F32_IN_DOMAIN};
 ///
 /// assert!(lambert_w0f(NEG_INV_E as f32).is_nan());
-/// assert!(!lambert_w0f((NEG_INV_E as f32).next_up()).is_nan());
+/// assert!(!lambert_w0f(SMALLEST_F32_IN_DOMAIN).is_nan());
+/// ```
+///
+/// An input of [`INFINITY`](f32::INFINITY) gives [`INFINITY`](f32::INFINITY) and an input of [`NAN`](f32::NAN) result in [`NAN`](f32::NAN):
+///
+/// ```
+/// use lambert_w::lambert_w0f;
+///
 /// assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
-/// ```
-///
-/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
-///
-/// ```
-/// use lambert_w::{lambert_w0f, NEG_INV_E};
-///
-/// assert!(lambert_w0f((NEG_INV_E as f32).next_down()).is_nan());
 /// assert!(lambert_w0f(f32::NAN).is_nan());
 /// ```
 ///
@@ -73,7 +70,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
     // but their precision has been truncated to fit in 32-bit floats.
 
-    if z < SMALLEST_32_BIT_FLOAT_IN_W0_DOMAIN {
+    if z < SMALLEST_F32_IN_DOMAIN {
         f32::NAN
     } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD as f32
         ..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD as f32)

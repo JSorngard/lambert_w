@@ -13,7 +13,7 @@
 
 use crate::{
     generic_math::{ln, rational_function, sqrt},
-    INV_SQRT_E, NEG_INV_E,
+    INV_SQRT_E, NEG_INV_E, NEG_INV_E_CORRECTION, SMALLEST_F64_IN_DOMAIN,
 };
 
 /// The secondary branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with Fukushima's method[^1].
@@ -31,18 +31,28 @@ use crate::{
 /// assert_abs_diff_eq!(mln4, -f64::ln(4.0));
 /// ```
 ///
-/// #### Special cases
+/// #### Edge cases
 ///
-/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f64::NEG_INFINITY) respectively:
+/// The smallest value for which this function returns a valid float is -0.3678794411714423:
 ///
 /// ```
-/// use lambert_w::{lambert_wm1, NEG_INV_E};
+/// use lambert_w::lambert_wm1;
 ///
-/// assert_eq!(lambert_wm1(NEG_INV_E), -1.0);
+/// const SMALLEST_VALID_INPUT: f32 = -0.3678794411714423;
+///
+/// assert!(!lambert_wm1(SMALLEST_VALID_INPUT).is_nan());
+/// assert!(lambert_wm1(SMALLEST_VALID_INPUT.next_down()).is_nan());
+/// ```
+///
+/// For inputs of 0 the function returns [`NEG_INFINITY`](f64::NEG_INFINITY):
+///
+/// ```
+/// use lambert_w::lambert_wm1;
+///
 /// assert_eq!(lambert_wm1(0.0), f64::NEG_INFINITY);
 /// ```
 ///
-/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
+/// Inputs larger than 0, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_wm1, NEG_INV_E};
@@ -61,15 +71,13 @@ pub fn lambert_wm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 4 of the paper, column two, with 1/e added, as well as equation 20.
     // The coefficients in the rational functions are from tables 15 through 18 in the paper.
 
-    if z < NEG_INV_E {
+    if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
-    } else if z == NEG_INV_E {
-        -1.0
     } else if z <= -0.354_291_330_944_216_4 {
         // W >= -1.3, X_-1
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION),
             [
                 -1.000_000_000_000_000_111_0,
                 4.296_301_617_877_712_700_9,
@@ -95,7 +103,7 @@ pub fn lambert_wm1(z: f64) -> f64 {
         // W >= -2.637, Y_-1
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
+            -z / (INV_SQRT_E + sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION)),
             [
                 -8.225_315_526_444_684_485_4,
                 -813.207_067_320_014_871_78,

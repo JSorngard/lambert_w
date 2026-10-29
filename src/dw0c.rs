@@ -13,8 +13,7 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
-    SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN,
+    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN,
 };
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's[^1].
@@ -37,23 +36,22 @@ use crate::{
 ///
 /// #### Edge cases
 ///
-/// For an input of [`NEG_INV_E`] the function returns [`NAN`](f64::NAN) (because `NEG_INV_E` is slightly smaller than -1/e due to the nature of floating point numbers),
-/// while an input of the value one step up from `NEG_INV_E` (a value of -0.367_879_441_171_442_3) gives a finite result.
-/// An input of +∞ gives [`INFINITY`](f64::INFINITY):
+/// For an input of [`NEG_INV_E`] the function returns [`NAN`](f64::NAN),
+/// while an input of [`SMALLEST_F64_IN_DOMAIN`] gives a finite result:
 ///
 /// ```
-/// use lambert_w::{lambert_w0, NEG_INV_E};
+/// use lambert_w::{lambert_w0, NEG_INV_E, SMALLEST_F64_IN_DOMAIN};
 ///
 /// assert!(lambert_w0(NEG_INV_E).is_nan());
-/// assert!(!lambert_w0(NEG_INV_E.next_up()).is_nan());
-/// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
+/// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
 /// ```
 ///
-/// Inputs of [`NAN`](f64::NAN) result in [`NAN`](f64::NAN):
+/// An input of [`INFINITY`](f64::INFINITY) gives [`INFINITY`](f64::INFINITY) and an input of [`NAN`](f64::NAN) result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::lambert_w0;
 ///
+/// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
 /// assert!(lambert_w0(f64::NAN).is_nan());
 /// ```
 ///
@@ -72,7 +70,7 @@ pub fn lambert_w0(z: f64) -> f64 {
 
     let zc = z - NEG_INV_E;
 
-    if z < SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN {
+    if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
     } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
         .contains(&z)
