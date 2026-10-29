@@ -11,7 +11,7 @@ use random_test_cases::W0_RANDOM_ANSWERS;
 
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
-    sp_lambert_wm1, NEG_INV_E, OMEGA,
+    sp_lambert_wm1, NEG_INV_E, OMEGA, SMALLEST_F32_IN_DOMAIN, SMALLEST_F64_IN_DOMAIN,
 };
 
 use approx::{assert_abs_diff_eq, assert_relative_eq, assert_ulps_eq};
@@ -54,7 +54,7 @@ macro_rules! assert_only_ulps_eq {
 fn test_lambert_w0_near_branch() {
     assert!(lambert_w0(NEG_INV_E).is_nan());
     assert_only_ulps_eq!(
-        lambert_w0(NEG_INV_E.next_up()),
+        lambert_w0(SMALLEST_F64_IN_DOMAIN),
         -0.999_999_984_695_745_87,
         max_ulps = W_MAX_ULPS
     );
@@ -231,7 +231,7 @@ fn test_lambert_w0_finiteness_at_random_points() {
 fn test_sp_lambert_w0_near_branch_point() {
     assert!(sp_lambert_w0(NEG_INV_E).is_nan());
     assert_only_ulps_eq!(
-        sp_lambert_w0(NEG_INV_E.next_up()),
+        sp_lambert_w0(SMALLEST_F64_IN_DOMAIN),
         -0.999_999_984_695_745_87,
         max_ulps = SP_W_MAX_ULPS
     );
@@ -393,12 +393,12 @@ fn test_sp_lambert_w0_finiteness_at_random_points() {
 fn test_lambert_w0f_near_branch_point() {
     assert!(lambert_w0f(NEG_INV_E as f32).is_nan());
     assert_only_ulps_eq!(
-        lambert_w0f((NEG_INV_E as f32).next_up()),
+        lambert_w0f(SMALLEST_F32_IN_DOMAIN),
         -0.999_660_774_607_975,
         max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - 17)
     );
     assert_only_ulps_eq!(
-        lambert_w0f((NEG_INV_E as f32).next_up().next_up()),
+        lambert_w0f(SMALLEST_F32_IN_DOMAIN.next_up()),
         -0.999_526_966_607_568,
         max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - 14)
     );
@@ -473,7 +473,7 @@ fn test_lambert_w0f_finiteness_at_random_points() {
 fn test_lambert_wm1_near_branch_point() {
     assert!(lambert_wm1(NEG_INV_E).is_nan());
     assert_only_ulps_eq!(
-        lambert_wm1(NEG_INV_E.next_up()),
+        lambert_wm1(SMALLEST_F64_IN_DOMAIN),
         -1.000_000_010_835_379_113,
         max_ulps = W_MAX_ULPS
     );
