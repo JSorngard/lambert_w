@@ -13,12 +13,14 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E,
+    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
+    SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN,
 };
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with a method derived from Fukushima's [^1].
 ///
-/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial[^2].
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial[^2],
+/// and close to the branch point where we correct the value of z + 1/e by adding the back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^3].
 ///
 /// # Examples
 ///
@@ -33,25 +35,25 @@ use crate::{
 /// assert_abs_diff_eq!(Ω, 0.5671432904097839, epsilon = f64::from(f32::EPSILON));
 /// ```
 ///
-/// #### Special cases
+/// #### Edge cases
 ///
-/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
-/// while an infinite input gives [`INFINITY`](f64::INFINITY):
+/// For an input of [`NEG_INV_E`] the function returns [`NAN`](f64::NAN) (because `NEG_INV_E` is slightly smaller than -1/e due to the nature of floating point numbers),
+/// while an input of the float one step up from `NEG_INV_E` (a value of -0.367_879_441_171_442_3) gives a finite result.
+/// An input of +∞ gives [`INFINITY`](f64::INFINITY):
 ///
 /// ```
 /// use lambert_w::{sp_lambert_w0, NEG_INV_E};
 ///
-/// assert_eq!(sp_lambert_w0(NEG_INV_E), -1.0);
-/// assert_eq!(sp_lambert_w0(0.0), 0.0);
+/// assert!(sp_lambert_w0(NEG_INV_E).is_nan());
+/// assert!(!sp_lambert_w0(NEG_INV_E.next_up()).is_nan());
 /// assert_eq!(sp_lambert_w0(f64::INFINITY), f64::INFINITY);
 /// ```
 ///
-/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
+/// Inputs of [`NAN`](f64::NAN) result in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{sp_lambert_w0, NEG_INV_E};
 ///
-/// assert!(sp_lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// assert!(sp_lambert_w0(f64::NAN).is_nan());
 /// ```
 ///
@@ -61,19 +63,19 @@ use crate::{
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 ///
 /// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
+///
+/// [^3]: `d_lambertw` in the Fast Library for Number Theory, [FLINT::d_lambertw](https://fredrikj.net/fdoc/html/double_extras/d_lambertw.html).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
     // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
 
-    const NEAR_ZERO_THRESHOLD: f64 = 0.0675;
-
-    if z < NEG_INV_E {
+    if z < SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN {
         f64::NAN
-    } else if z == NEG_INV_E {
-        -1.0
-    } else if (-NEAR_ZERO_THRESHOLD..=NEAR_ZERO_THRESHOLD).contains(&z) {
+    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
+        .contains(&z)
+    {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
@@ -98,7 +100,10 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 0.854, X_1
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            // Another artifact of taking z instead of z + 1/e as input.
+            // When we add 1/e we introduce a cancellation error.
+            // We compensate for that here.
+            sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION),
             [
                 -0.999_999_940_395_401_883_3,
                 0.055_730_052_161_777_802_73,

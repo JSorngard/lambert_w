@@ -16,13 +16,16 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq, assert_ulps_eq};
 
+use crate::random_test_cases::{SP_W0_RANDOM_ANSWERS, W0F_RANDOM_ANSWERS};
 use rand::{distr::Uniform, rngs::SmallRng, RngExt, SeedableRng};
 
 const RANDOM_TEST_SIZE: usize = 1_000_000;
 
 /// The number of bits that are accurate in the 32-bit functions.
 /// Raising this any higher causes some tests to fail.
-const WF_ACCURACY_BITS: u32 = 23;
+///
+/// The tests of lambert_w0f near the branch point use their own constant.
+const WF_ACCURACY_BITS: u32 = 20;
 /// The number of ulps that the functions on 32-bit floats should get from the true answer.
 const WF_MAX_ULPS: u32 = u32::pow(2, f32::MANTISSA_DIGITS - WF_ACCURACY_BITS);
 
@@ -225,15 +228,23 @@ fn test_lambert_w0_finiteness_at_random_points() {
 }
 
 #[test]
-fn test_sp_lambert_w0() {
-    assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
-    assert!(sp_lambert_w0(f64::NAN).is_nan());
-    assert_eq!(sp_lambert_w0(NEG_INV_E), -1.0);
+fn test_sp_lambert_w0_near_branch_point() {
+    assert!(sp_lambert_w0(NEG_INV_E).is_nan());
+    assert_only_ulps_eq!(
+        sp_lambert_w0(NEG_INV_E.next_up()),
+        -0.999_999_984_695_745_87,
+        max_ulps = SP_W_MAX_ULPS
+    );
     assert_only_ulps_eq!(
         sp_lambert_w0(-2.678_794_411_714_424e-1),
         -3.993_824_525_397_807e-1,
         max_ulps = SP_W_MAX_ULPS
     );
+}
+
+#[test]
+fn test_sp_lambert_w0() {
+    assert!(sp_lambert_w0(f64::NAN).is_nan());
     assert_eq!(sp_lambert_w0(0.0), 0.0);
     assert_only_ulps_eq!(
         sp_lambert_w0(6.321_205_588_285_577e-1),
@@ -379,10 +390,23 @@ fn test_sp_lambert_w0_finiteness_at_random_points() {
 }
 
 #[test]
+fn test_lambert_w0f_near_branch_point() {
+    assert!(lambert_w0f(NEG_INV_E as f32).is_nan());
+    assert_only_ulps_eq!(
+        lambert_w0f((NEG_INV_E as f32).next_up()),
+        -0.999_660_774_607_975,
+        max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - 17)
+    );
+    assert_only_ulps_eq!(
+        lambert_w0f((NEG_INV_E as f32).next_up().next_up()),
+        -0.999_526_966_607_568,
+        max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - 14)
+    );
+}
+
+#[test]
 fn test_lambert_w0f() {
-    assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
     assert!(lambert_w0f(f32::NAN).is_nan());
-    assert_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
     assert_only_ulps_eq!(lambert_w0f(-2.678_794_3e-1), -3.993_824_4e-1,);
     assert_eq!(lambert_w0f(0.0), 0.0);
     assert_only_ulps_eq!(
@@ -909,18 +933,51 @@ fn principal_branches_satisfy_inverse_identity_near_zero() {
 #[test]
 fn test_lambert_w0_at_random_values() {
     for (x, expected) in Box::new(W0_RANDOM_ANSWERS) {
-        println!("{} error at {x}", ulp_err(lambert_w0(x), expected));
         assert_only_ulps_eq!(lambert_w0(x), expected, max_ulps = W_MAX_ULPS);
     }
 }
 
-const fn ulp_err(got: f64, exact: f64) -> f64 {
+#[test]
+fn test_sp_lambert_w0_at_random_values() {
+    for (x, expected) in Box::new(SP_W0_RANDOM_ANSWERS) {
+        assert_only_ulps_eq!(sp_lambert_w0(x), expected, max_ulps = SP_W_MAX_ULPS);
+    }
+}
+
+#[test]
+fn test_lambert_w0f_at_random_values() {
+    for (x, expected) in Box::new(W0F_RANDOM_ANSWERS) {
+        println!(
+            "{} out of {WF_MAX_ULPS} at {x}",
+            ulp_err32(lambert_w0f(x), expected)
+        );
+        assert_only_ulps_eq!(lambert_w0f(x), expected, max_ulps = WF_MAX_ULPS);
+    }
+}
+
+/// Returns the distance between `got` and `exact` in ulps.
+/// Sometimes useful when debugging the tests.
+#[allow(dead_code)]
+const fn ulp_err64(got: f64, exact: f64) -> f64 {
     if got == exact {
         return 0.0;
     }
     let ulp = {
         let b = exact.abs().to_bits();
         f64::from_bits(b + 1) - exact.abs()
+    };
+    ((got - exact) / ulp).abs()
+}
+
+/// Same as [`ulp_err64`] but for 32-bit floats.
+#[allow(dead_code)]
+const fn ulp_err32(got: f32, exact: f32) -> f32 {
+    if got == exact {
+        return 0.0;
+    }
+    let ulp = {
+        let b = exact.abs().to_bits();
+        f32::from_bits(b + 1) - exact.abs()
     };
     ((got - exact) / ulp).abs()
 }

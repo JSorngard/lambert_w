@@ -13,7 +13,8 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E, NEG_INV_E_CORRECTION,
+    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
+    SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN,
 };
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's[^1].
@@ -34,10 +35,10 @@ use crate::{
 /// assert_abs_diff_eq!(Ω, 0.567143290409783873);
 /// ```
 ///
-/// #### Special cases
+/// #### Edge cases
 ///
-/// For an input of [`NEG_INV_E`] the function returns [`NAN`](f64::NAN),
-/// while an input of the `f64` one step uf from `NEG_INV_E` gives a finite value.
+/// For an input of [`NEG_INV_E`] the function returns [`NAN`](f64::NAN) (because `NEG_INV_E` is slightly smaller than -1/e due to the nature of floating point numbers),
+/// while an input of the value one step up from `NEG_INV_E` (a value of -0.367_879_441_171_442_3) gives a finite result.
 /// An input of +∞ gives [`INFINITY`](f64::INFINITY):
 ///
 /// ```
@@ -69,29 +70,13 @@ pub fn lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
 
-    /// Closer to zero than this we use the Taylor expansion.
-    const NEAR_ZERO_THRESHOLD: f64 = 0.0675;
-
-    /// This floating point value is the smallest one that is still in the domain of this function.
-    /// It is *not* the one that is the closest to -1/e, rather this value is one step further in the direction towards positive infinity.
-    ///
-    /// Calculated with `mpmath`.
-    ///
-    /// ```text
-    /// floats:      f--          f-           f+           f++
-    /// real line: --|------------|---x--------|------------|-------> z
-    ///                             -1/e
-    /// ```
-    /// f- is the constant NEG_INV_E, f+ is this constant, and x marks the location of the true value of -1/e.
-    const SMALLEST_FLOAT_IN_DOMAIN: f64 = -0.367_879_441_171_442_3;
-
     let zc = z - NEG_INV_E;
 
-    if z < SMALLEST_FLOAT_IN_DOMAIN {
+    if z < SMALLEST_64_BIT_FLOAT_IN_W0_DOMAIN {
         f64::NAN
-    //} else if z == NEG_INV_E {
-    //-1.0
-    } else if (-NEAR_ZERO_THRESHOLD..=NEAR_ZERO_THRESHOLD).contains(&z) {
+    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
+        .contains(&z)
+    {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
@@ -127,6 +112,9 @@ pub fn lambert_w0(z: f64) -> f64 {
         // W <= 0.893, X_1
 
         rational_function(
+            // Another artifact of taking z instead of z + 1/e as input.
+            // When we add 1/e we introduce a cancellation error.
+            // We compensate for that here.
             sqrt(zc + NEG_INV_E_CORRECTION),
             [
                 -0.999_999_999_999_999_889_0,
