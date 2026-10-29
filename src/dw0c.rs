@@ -13,12 +13,13 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E,
+    NEG_INV_E, NEG_INV_E_CORRECTION,
 };
 
-/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's [^1].
+/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's[^1].
 ///
-/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 18 Taylor polynomial[^2].
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 18 Taylor polynomial[^2],
+/// and close to the branch point where we correct the value of z + 1/e by adding the back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^3].
 ///
 /// # Examples
 ///
@@ -35,23 +36,23 @@ use crate::{
 ///
 /// #### Special cases
 ///
-/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
-/// while an infinite input gives [`INFINITY`](f64::INFINITY):
+/// For an input of [`NEG_INV_E`] the function returns [`NAN`](f64::NAN),
+/// while an input of the `f64` one step uf from `NEG_INV_E` gives a finite value.
+/// An input of +∞ gives [`INFINITY`](f64::INFINITY):
 ///
 /// ```
 /// use lambert_w::{lambert_w0, NEG_INV_E};
 ///
-/// assert_eq!(lambert_w0(NEG_INV_E), -1.0);
-/// assert_eq!(lambert_w0(0.0), 0.0);
+/// assert!(lambert_w0(NEG_INV_E).is_nan());
+/// assert!(!lambert_w0(NEG_INV_E.next_up()).is_nan());
 /// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
 /// ```
 ///
-/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
+/// Inputs of [`NAN`](f64::NAN) result in [`NAN`](f64::NAN):
 ///
 /// ```
-/// use lambert_w::{lambert_w0, NEG_INV_E};
+/// use lambert_w::lambert_w0;
 ///
-/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// assert!(lambert_w0(f64::NAN).is_nan());
 /// ```
 ///
@@ -61,19 +62,35 @@ use crate::{
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 ///
 /// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
+///
+/// [^3]: `d_lambertw` in the Fast Library for Number Theory, [FLINT::d_lambertw](https://fredrikj.net/fdoc/html/double_extras/d_lambertw.html).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
 
+    /// Closer to zero than this we use the Taylor expansion.
     const NEAR_ZERO_THRESHOLD: f64 = 0.0675;
+
+    /// This floating point value is the smallest one that is still in the domain of this function.
+    /// It is *not* the one that is the closest to -1/e, rather this value is one step further in the direction towards positive infinity.
+    ///
+    /// Calculated with `mpmath`.
+    ///
+    /// ```text
+    /// floats:      f--          f-           f+           f++
+    /// real line: --|------------|---x--------|------------|-------> z
+    ///                             -1/e
+    /// ```
+    /// f- is the constant NEG_INV_E, f+ is this constant, and x marks the location of the true value of -1/e.
+    const SMALLEST_FLOAT_IN_DOMAIN: f64 = -0.367_879_441_171_442_3;
 
     let zc = z - NEG_INV_E;
 
-    if z < NEG_INV_E {
+    if z < SMALLEST_FLOAT_IN_DOMAIN {
         f64::NAN
-    } else if z == NEG_INV_E {
-        -1.0
+    //} else if z == NEG_INV_E {
+    //-1.0
     } else if (-NEAR_ZERO_THRESHOLD..=NEAR_ZERO_THRESHOLD).contains(&z) {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
@@ -109,11 +126,8 @@ pub fn lambert_w0(z: f64) -> f64 {
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 
-        // THIS BRANCH HAS POOR ACCURACY CLOSE TO THE BRANCH POINT.
-        // ARGH, FUKUSHIMA!
-
         rational_function(
-            sqrt(zc),
+            sqrt(zc + NEG_INV_E_CORRECTION),
             [
                 -0.999_999_999_999_999_889_0,
                 -2.739_966_866_820_365_930_4,

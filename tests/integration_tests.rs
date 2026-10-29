@@ -23,12 +23,20 @@ const RANDOM_TEST_SIZE: usize = 1_000_000;
 /// The number of bits that are accurate in the 32-bit functions.
 /// Raising this any higher causes some tests to fail.
 const WF_ACCURACY_BITS: u32 = 23;
+/// The number of ulps that the functions on 32-bit floats should get from the true answer.
+const WF_MAX_ULPS: u32 = u32::pow(2, f32::MANTISSA_DIGITS - WF_ACCURACY_BITS);
+
 /// The number of bits that are accurate in the high precision 64-bit functions.
 /// Raising this any higher causes some tests to fail.
 const W_ACCURACY_BITS: u32 = 50;
+/// The number of ulps that the 50-bit functions should get from the true answer.
+const W_MAX_ULPS: u32 = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS);
+
 /// The number of bits that are accurate in the low precision 64-bit functions.
 /// Raising this any higher causes some tests to fail.
 const SP_W_ACCURACY_BITS: u32 = 24;
+/// The number of ulps that the 24-bit functions should get from the true answer.
+const SP_W_MAX_ULPS: u32 = u32::pow(2, f64::MANTISSA_DIGITS - SP_W_ACCURACY_BITS);
 
 macro_rules! assert_only_ulps_eq {
     ($left:expr, $right:expr $(,)?) => {
@@ -40,168 +48,169 @@ macro_rules! assert_only_ulps_eq {
 }
 
 #[test]
-fn test_lambert_w0() {
-    const MAX_ULPS: u32 = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS);
-
-    assert!(lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
-    assert!(lambert_w0(f64::NAN).is_nan());
-    assert_eq!(lambert_w0(NEG_INV_E), -1.0);
+fn test_lambert_w0_near_branch() {
+    assert!(lambert_w0(NEG_INV_E).is_nan());
     assert_only_ulps_eq!(
-        lambert_w0(NEG_INV_E + f64::EPSILON),
-        -0.999_999_965_255_797_6,
-        max_ulps = MAX_ULPS
+        lambert_w0(NEG_INV_E.next_up()),
+        -0.999_999_984_695_745_87,
+        max_ulps = W_MAX_ULPS
     );
+}
+
+#[test]
+fn test_lambert_w0() {
+    assert!(lambert_w0(f64::NAN).is_nan());
     assert_only_ulps_eq!(
         lambert_w0(-2.678_794_411_714_424e-1),
         -3.993_824_525_397_807e-1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_eq!(lambert_w0(0.0), 0.0);
     assert_only_ulps_eq!(
         lambert_w0(6.321_205_588_285_577e-1),
         4.167_039_988_177_658e-1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
-    assert_only_ulps_eq!(lambert_w0(1.0), OMEGA, max_ulps = MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0(1.0), OMEGA, max_ulps = W_MAX_ULPS);
     assert_only_ulps_eq!(
         lambert_w0(9.632_120_558_828_557),
         1.721_757_710_976_171,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.963_212_055_882_856e1),
         3.382_785_211_058_958,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.996_321_205_588_285e2),
         5.249_293_782_013_269,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_632_120_558_828e3),
         7.231_813_718_542_178,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_963_212_055_883e4),
         9.284_568_107_521_96,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_996_321_205_589e5),
         1.138_335_774_796_812e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_632_120_559e6),
         1.351_434_397_605_273e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_963_212_056e7),
         1.566_899_671_199_287e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_996_321_206e8),
         1.784_172_596_707_312e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_999_632_12e9),
         2.002_868_541_326_992e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_999_963_213e10),
         2.222_712_273_495_755e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_999_996_321e11),
         2.443_500_440_493_456e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_999_999_633e12),
         2.665_078_750_870_219e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_999_999_963e13),
         2.887_327_487_929_93e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(9.999_999_999_999_996e14),
         3.110_151_971_159_478e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e15),
         3.110_151_971_159_477_699_1e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e16),
         3.333_476_076_844_818e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e17),
         3.557_237_716_651_325e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e18),
         3.781_385_607_558_877e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e19),
         4.005_876_916_198_432e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e20),
         4.230_675_509_173_839e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e30),
         6.490_463_377_004_612e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e40),
         8.763_027_715_194_72e1,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e60),
         1.332_627_825_918_033e2,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e80),
         1.790_193_137_415_062e2,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e120),
         2.707_091_661_024_979e2,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(1e160),
         3.625_205_337_614_976e2,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0(f64::MAX),
         703.227_033_104_770_2,
-        max_ulps = MAX_ULPS
+        max_ulps = W_MAX_ULPS
     );
     assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
 }
@@ -217,147 +226,145 @@ fn test_lambert_w0_finiteness_at_random_points() {
 
 #[test]
 fn test_sp_lambert_w0() {
-    const MAX_ULPS: u32 = u32::pow(2, f64::MANTISSA_DIGITS - SP_W_ACCURACY_BITS);
-
     assert!(sp_lambert_w0(NEG_INV_E - f64::EPSILON).is_nan());
     assert!(sp_lambert_w0(f64::NAN).is_nan());
     assert_eq!(sp_lambert_w0(NEG_INV_E), -1.0);
     assert_only_ulps_eq!(
         sp_lambert_w0(-2.678_794_411_714_424e-1),
         -3.993_824_525_397_807e-1,
-        max_ulps = MAX_ULPS
+        max_ulps = SP_W_MAX_ULPS
     );
     assert_eq!(sp_lambert_w0(0.0), 0.0);
     assert_only_ulps_eq!(
         sp_lambert_w0(6.321_205_588_285_577e-1),
         4.167_039_988_177_658e-1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
-    assert_only_ulps_eq!(sp_lambert_w0(1.0), OMEGA, max_ulps = MAX_ULPS);
+    assert_only_ulps_eq!(sp_lambert_w0(1.0), OMEGA, max_ulps = SP_W_MAX_ULPS);
     assert_only_ulps_eq!(
         sp_lambert_w0(9.632120558828557),
         1.721_757_710_976_171,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.963_212_055_882_856e1),
         3.382785211058958,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.996_321_205_588_285e2),
         5.249_293_782_013_269,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_632_120_558_828e3),
         7.231_813_718_542_178,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_963_212_055_883e4),
         9.284_568_107_521_96,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_996_321_205_589e5),
         1.138_335_774_796_812e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_632_120_559e6),
         1.351_434_397_605_273e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_963_212_056e7),
         1.566_899_671_199_287e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_996_321_206e8),
         1.784_172_596_707_312e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_999_632_12e9),
         2.002_868_541_326_992e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_999_963_213e10),
         2.222_712_273_495_755e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_999_996_321e11),
         2.443_500_440_493_456e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_999_999_633e12),
         2.665_078_750_870_219e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_999_999_963e13),
         2.887_327_487_929_93e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(9.999_999_999_999_996e14),
         3.110_151_971_159_478e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e16),
         3.333_476_076_844_818e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e17),
         3.557_237_716_651_325e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e18),
         3.781_385_607_558_877e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e19),
         4.005_876_916_198_432e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e20),
         4.230_675_509_173_839e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e40),
         8.763_027_715_194_72e1,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e80),
         1.790_193_137_415_062e2,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e120),
         2.707_091_661_024_979e2,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(1e160),
         3.625_205_337_614_976e2,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_only_ulps_eq!(
         sp_lambert_w0(f64::MAX),
         703.227_033_104_770_2,
-        max_ulps = MAX_ULPS,
+        max_ulps = SP_W_MAX_ULPS,
     );
     assert_eq!(sp_lambert_w0(f64::INFINITY), f64::INFINITY);
 }
@@ -373,7 +380,6 @@ fn test_sp_lambert_w0_finiteness_at_random_points() {
 
 #[test]
 fn test_lambert_w0f() {
-    const MAX_ULPS: u32 = u32::pow(2, f32::MANTISSA_DIGITS - WF_ACCURACY_BITS);
     assert!(lambert_w0f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
     assert!(lambert_w0f(f32::NAN).is_nan());
     assert_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
@@ -382,39 +388,51 @@ fn test_lambert_w0f() {
     assert_only_ulps_eq!(
         lambert_w0f(6.321_205_5e-1),
         4.167_04e-1,
-        max_ulps = MAX_ULPS
+        max_ulps = WF_MAX_ULPS
     );
-    assert_only_ulps_eq!(lambert_w0f(9.632_12), 1.721_757_8, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(9.963_212e1), 3.382_785_3, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(9.996_321_4e2), 5.249_294, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(9.999_632e3), 7.231_814, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(9.999_963e4), 9.284_568, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(9.999_996e5), 1.138_335_8e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e7), 1.351_434_4e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e8), 1.566_899_7e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e9), 1.784_172_6e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e10), 2.002_868_5e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e11), 2.222_712_3e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e12), 2.443_500_5e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e13), 2.665_078_7e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e14), 2.887_327_6e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e15), 3.110_152e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e16), 3.333_476_3e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e17), 3.557_237_6e1, max_ulps = MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(9.632_12), 1.721_757_8, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(
+        lambert_w0f(9.963_212e1),
+        3.382_785_3,
+        max_ulps = WF_MAX_ULPS
+    );
+    assert_only_ulps_eq!(
+        lambert_w0f(9.996_321_4e2),
+        5.249_294,
+        max_ulps = WF_MAX_ULPS
+    );
+    assert_only_ulps_eq!(lambert_w0f(9.999_632e3), 7.231_814, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(9.999_963e4), 9.284_568, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(
+        lambert_w0f(9.999_996e5),
+        1.138_335_8e1,
+        max_ulps = WF_MAX_ULPS
+    );
+    assert_only_ulps_eq!(lambert_w0f(1e7), 1.351_434_4e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e8), 1.566_899_7e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e9), 1.784_172_6e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e10), 2.002_868_5e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e11), 2.222_712_3e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e12), 2.443_500_5e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e13), 2.665_078_7e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e14), 2.887_327_6e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e15), 3.110_152e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e16), 3.333_476_3e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e17), 3.557_237_6e1, max_ulps = WF_MAX_ULPS);
     assert_only_ulps_eq!(
         lambert_w0f(5.939_799_6e17),
         3.730_645_559e1,
-        max_ulps = MAX_ULPS
+        max_ulps = WF_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_w0f(5.939_799_6e17_f32.next_down()),
         3.730_645_549e1,
-        max_ulps = MAX_ULPS
+        max_ulps = WF_MAX_ULPS
     );
-    assert_only_ulps_eq!(lambert_w0f(1e18), 3.781_385_4e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e19), 4.005_877e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(1e20), 4.230_675_5e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_w0f(f32::MAX), 84.288_59, max_ulps = MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e18), 3.781_385_4e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e19), 4.005_877e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(1e20), 4.230_675_5e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0f(f32::MAX), 84.288_59, max_ulps = WF_MAX_ULPS);
     assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
 }
 
@@ -846,29 +864,17 @@ fn principal_branches_match_high_precision_near_zero() {
         let actual = lambert_w0(x);
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
         println!("at {x}");
-        assert_only_ulps_eq!(
-            actual,
-            expected,
-            max_ulps = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS)
-        );
+        assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
 
         let actual = sp_lambert_w0(x);
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
-        assert_only_ulps_eq!(
-            actual,
-            expected,
-            max_ulps = 2_u32.pow(f64::MANTISSA_DIGITS - SP_W_ACCURACY_BITS)
-        );
+        assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
 
     for (x, expected) in W0F_NEAR_ZERO_ANSWERS {
         let actual = lambert_w0f(x);
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
-        assert_only_ulps_eq!(
-            actual,
-            expected,
-            max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - WF_ACCURACY_BITS)
-        );
+        assert_only_ulps_eq!(actual, expected, max_ulps = WF_MAX_ULPS);
     }
 }
 
@@ -904,11 +910,7 @@ fn principal_branches_satisfy_inverse_identity_near_zero() {
 fn test_lambert_w0_at_random_values() {
     for (x, expected) in Box::new(W0_RANDOM_ANSWERS) {
         println!("{} error at {x}", ulp_err(lambert_w0(x), expected));
-        assert_only_ulps_eq!(
-            lambert_w0(x),
-            expected,
-            max_ulps = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS)
-        );
+        assert_only_ulps_eq!(lambert_w0(x), expected, max_ulps = W_MAX_ULPS);
     }
 }
 
