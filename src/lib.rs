@@ -117,9 +117,7 @@ pub const SMALLEST_F32_IN_DOMAIN: f32 = -0.367_879_42;
 
 /// Closer to zero than this we use the Taylor expansion on the principal branch.
 ///
-/// This value was determined empirically by growing it and regenerating the tests near zero
-/// until they passed.
-/// It could maybe be made slightly smaller by adding more precision, but I have not bothered.
+/// This value was determined empirically.
 const PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD: f64 = 0.0675;
 
 /// The floating point value closest to 1/sqrt(e).
