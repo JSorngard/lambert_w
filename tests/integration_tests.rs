@@ -17,7 +17,8 @@ use lambert_w::{
 use approx::{assert_abs_diff_eq, assert_relative_eq, assert_ulps_eq};
 
 use crate::random_test_cases::{
-    SP_W0_RANDOM_ANSWERS, SP_WM1_RANDOM_ANSWERS, W0F_RANDOM_ANSWERS, WM1_RANDOM_ANSWERS,
+    SP_W0_RANDOM_ANSWERS, SP_WM1_RANDOM_ANSWERS, W0F_RANDOM_ANSWERS, WM1F_RANDOM_ANSWERS,
+    WM1_RANDOM_ANSWERS,
 };
 use rand::{distr::Uniform, rngs::SmallRng, RngExt, SeedableRng};
 
@@ -656,31 +657,43 @@ fn test_sp_lambert_wm1_finiteness_at_random_points() {
 }
 
 #[test]
+fn test_lambert_wm1f_near_branch_point() {
+    assert!(lambert_wm1f(NEG_INV_E as f32).is_nan());
+    assert_only_ulps_eq!(
+        lambert_wm1f(SMALLEST_F32_IN_DOMAIN),
+        -1.000_339_302_125_189,
+        max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - 18)
+    );
+    assert_only_ulps_eq!(
+        lambert_wm1f(SMALLEST_F32_IN_DOMAIN.next_up()),
+        -1.000_473_182_613_085,
+        max_ulps = u32::pow(2, f32::MANTISSA_DIGITS - 15)
+    );
+}
+
+#[test]
 fn test_lambert_wm1f() {
-    const MAX_ULPS: u32 = u32::pow(2, WF_ACCURACY_BITS);
-    assert!(lambert_wm1f(NEG_INV_E as f32 - f32::EPSILON).is_nan());
     assert!(lambert_wm1f(f32::NAN).is_nan());
-    assert_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
     assert_only_ulps_eq!(
         lambert_wm1f(-3.578_794_3e-1),
         -1.253_493_8,
-        max_ulps = MAX_ULPS
+        max_ulps = WF_MAX_ULPS
     );
     assert_only_ulps_eq!(
         lambert_wm1f(-2.678_794_3e-1),
         -2.020_625,
-        max_ulps = MAX_ULPS
+        max_ulps = WF_MAX_ULPS
     );
-    assert_only_ulps_eq!(lambert_wm1f(-1e-1), -3.577_152, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-3e-2), -5.144_482_6, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-1e-2), -6.472_775, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-3e-3), -7.872_521_4, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-1e-3), -9.118_007, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-3e-4), -1.045_921_1e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-1e-4), -1.166_711_4e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1, max_ulps = MAX_ULPS);
-    assert_only_ulps_eq!(lambert_wm1f(-1e-20), -49.962_986, max_ulps = MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-1e-1), -3.577_152, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-3e-2), -5.144_482_6, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-1e-2), -6.472_775, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-3e-3), -7.872_521_4, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-1e-3), -9.118_007, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-3e-4), -1.045_921_1e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-1e-4), -1.166_711_4e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-3e-5), -1.297_753_2e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-1e-5), -1.416_360_1e1, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_wm1f(-1e-20), -49.962_986, max_ulps = WF_MAX_ULPS);
     assert_eq!(lambert_wm1f(0.0), f32::NEG_INFINITY);
     assert!(lambert_wm1f(f32::EPSILON).is_nan());
     assert!(lambert_wm1f(f32::INFINITY).is_nan());
@@ -976,6 +989,14 @@ fn test_lambert_wm1_at_random_values() {
 fn test_sp_lambert_wm1_at_random_values() {
     for (x, expected) in SP_WM1_RANDOM_ANSWERS {
         assert_only_ulps_eq!(sp_lambert_wm1(x), expected, max_ulps = SP_W_MAX_ULPS);
+    }
+}
+
+#[test]
+fn test_lambert_wm1f_at_random_values() {
+    for (x, expected) in WM1F_RANDOM_ANSWERS {
+        println!("{} at {x}", ulp_err32(lambert_wm1f(x), expected));
+        assert_only_ulps_eq!(lambert_wm1f(x), expected, max_ulps = WF_MAX_ULPS);
     }
 }
 

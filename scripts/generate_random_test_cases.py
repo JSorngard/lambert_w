@@ -37,15 +37,16 @@ def print_test_cases(critical_z_values: list[float], cast, next_down, next_up, n
     for lower_value, upper_value in zip(critical_z_values, critical_z_values[1:] + [branch_stop], strict = True):
         z_values += [cast(lower_value), cast(next_up(cast(lower_value))), cast(next_down(cast(upper_value)))]
         z_values += sorted(list(map(cast, (np.random.rand(1_000)*(upper_value - lower_value) + lower_value).tolist())))
-    z_set = sorted({z for z in z_values if z != math.inf and not np.isnan(z) and not (z == 0 and branch == -1)})
+    z_set = sorted({z for z in z_values if z != math.inf and not np.isnan(z) and not (z >= 0 and branch == -1)})
     output.write("/// z-values and the corresponding values of W0(z) evaluated with mpmath in python.\n")
     output.write(f"pub const {name}: [({rust_type}, {rust_type}); {len(z_set)}] = [\n")
     for x in z_set:
         with mp.workdps(100):
             try:
-                w = float(mp.lambertw(mp.mpf(x), k=branch))
+                mpw = mp.lambertw(mp.mpf(x), k=branch)
+                w = float(mpw)
             except TypeError as e:
-                print(f"failed at {x=}")
+                print(f"failed at {x=}, {mpw=}")
                 raise e
             expected = cast(w)
         output.write(f"    ({repr(x)}, {repr(expected)}),\n")
@@ -144,3 +145,7 @@ with open("tests/random_test_cases.rs", "w") as f:
 
     print("Writing test cases for `sp_lambert_wm1` to file")
     print_test_cases(critical_z_values, f64, f64_next_down, f64_next_up, "SP_WM1_RANDOM_ANSWERS", "f64", f, branch=-1)
+
+    critical_z_values = [f32(z) for z in critical_z_values[:-1]]
+    print("Writing test cases for `lambert_wm1f` to file")
+    print_test_cases(critical_z_values, f32, f32_next_down, f32_next_up, "WM1F_RANDOM_ANSWERS", "f32", f, branch=-1)

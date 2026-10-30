@@ -7,6 +7,7 @@
 //! It is implemented here on 32-bit floats, which most likely reduces the accuracy in some cases.
 
 use crate::generic_math::{ln, rational_function, sqrt};
+use crate::{NEG_INV_E_CORRECTION_32_BIT, SMALLEST_F32_IN_DOMAIN};
 
 const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
@@ -14,8 +15,9 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
 ///
 /// Uses the same approximation as [`sp_lambert_wm1`](crate::sp_lambert_wm1), but computes it with 32-bit floats,
-/// which may result in slightly reduced accuracy.
-/// This potential accuracy reduction has not been quantified.
+/// which results in reduced accuracy.
+/// The function has around 20-23 bits of precision, but degrades as the input approaches the branch point.
+/// Results with 15 bits of precision have been observed very close to the branch point.
 ///
 /// # Examples
 ///
@@ -30,26 +32,34 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// assert_abs_diff_eq!(mln4, -f32::ln(4.0));
 /// ```
 ///
-/// #### Special cases
+/// #### Edge cases
 ///
-/// For inputs of -1/e and 0 the function returns exactly -1 and [`NEG_INFINITY`](f32::NEG_INFINITY) respectively:
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F32_IN_DOMAIN`],
+/// the constant [`NEG_INV_E`], which is the next float down, gives [`NAN`](f32::NAN):
 ///
 /// ```
-/// use lambert_w::{lambert_wm1f, NEG_INV_E};
+/// use lambert_w::{lambert_wm1f, NEG_INV_E, SMALLEST_F32_IN_DOMAIN};
 ///
-/// assert_eq!(lambert_wm1f(NEG_INV_E as f32), -1.0);
+/// assert!(lambert_wm1f(NEG_INV_E).is_nan());
+/// assert!(!lambert_wm1f(SMALLEST_F32_IN_DOMAIN).is_nan());
+/// ```
+///
+/// For inputs of 0 the function returns [`NEG_INFINITY`](f32::NEG_INFINITY):
+///
+/// ```
+/// use lambert_w::lambert_wm1f;
+///
 /// assert_eq!(lambert_wm1f(0.0), f32::NEG_INFINITY);
 /// ```
 ///
-/// Inputs smaller than -1/e or larger than 0, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
+/// Inputs larger than 0, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_wm1f, NEG_INV_E};
 ///
-/// assert!(lambert_wm1f((NEG_INV_E as f32).next_down()).is_nan());
 /// assert!(lambert_wm1f(f32::MIN_POSITIVE).is_nan());
 /// assert!(lambert_wm1f(f32::NAN).is_nan());
-/// ```
+///```
 ///
 /// # Reference
 ///
@@ -60,15 +70,13 @@ pub fn lambert_wm1f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `swm1` module,
     // but their precision has been truncated to fit in 32-bit floats.
 
-    if z < NEG_INV_E {
+    if z < SMALLEST_F32_IN_DOMAIN {
         f32::NAN
-    } else if z == NEG_INV_E {
-        -1.0
     } else if z <= -0.207_293_78 {
         // W >= -2.483, Y_-1
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
+            -z / (INV_SQRT_E + sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION_32_BIT)),
             [-6.383_723, -74.968_65, -19.714_82, 70.677_33],
             [1.0, 24.295_837, 64.112_46, 17.994_497],
         )
