@@ -49,9 +49,7 @@ with only 24 bits, and thus larger lookup tables.
 
 This crate can evaluate the approximation with 24 bits of accuracy on
 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
-This should result in a reduction in the accuracy to less than 24 bits,
-but the exact magnitude of this reduction has not been quantified by the author
-of this crate.
+This results in an accuracy reduction to 20-23 bits far from the branch point, and lower still close to it.
 
 ## Examples
 
