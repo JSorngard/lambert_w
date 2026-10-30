@@ -16,7 +16,7 @@ use crate::{
     NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN,
 };
 
-/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with a method derived from Fukushima's [^1].
+/// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
 ///
 /// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial[^2],
 /// and close to the branch point where the value of z + 1/e is corrected by adding back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^3].
