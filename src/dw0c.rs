@@ -13,12 +13,13 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E,
+    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN,
 };
 
-/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's [^1].
+/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method derived from Fukushima's[^1].
 ///
-/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 17 Taylor polynomial[^2].
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 18 Taylor polynomial[^2],
+/// and close to the branch point where the value of z + 1/e is corrected by adding back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^3].
 ///
 /// # Examples
 ///
@@ -33,25 +34,24 @@ use crate::{
 /// assert_abs_diff_eq!(Ω, 0.567143290409783873);
 /// ```
 ///
-/// #### Special cases
+/// #### Edge cases
 ///
-/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
-/// while an infinite input gives [`INFINITY`](f64::INFINITY):
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
+/// the constant [`NEG_INV_E`], which is the next float down, gives [`NAN`](f64::NAN):
 ///
 /// ```
-/// use lambert_w::{lambert_w0, NEG_INV_E};
+/// use lambert_w::{lambert_w0, NEG_INV_E, SMALLEST_F64_IN_DOMAIN};
 ///
-/// assert_eq!(lambert_w0(NEG_INV_E), -1.0);
-/// assert_eq!(lambert_w0(0.0), 0.0);
+/// assert!(lambert_w0(NEG_INV_E).is_nan());
+/// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
+/// ```
+///
+/// An input of [`INFINITY`](f64::INFINITY) gives [`INFINITY`](f64::INFINITY) and an input of [`NAN`](f64::NAN) results in [`NAN`](f64::NAN):
+///
+/// ```
+/// use lambert_w::lambert_w0;
+///
 /// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
-/// ```
-///
-/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f64::NAN), result in [`NAN`](f64::NAN):
-///
-/// ```
-/// use lambert_w::{lambert_w0, NEG_INV_E};
-///
-/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
 /// assert!(lambert_w0(f64::NAN).is_nan());
 /// ```
 ///
@@ -61,6 +61,8 @@ use crate::{
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 ///
 /// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
+///
+/// [^3]: `d_lambertw` in the Fast Library for Number Theory, [FLINT::d_lambertw](https://fredrikj.net/fdoc/html/double_extras/d_lambertw.html).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
@@ -68,11 +70,11 @@ pub fn lambert_w0(z: f64) -> f64 {
 
     let zc = z - NEG_INV_E;
 
-    if z < NEG_INV_E {
+    if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
-    } else if z == NEG_INV_E {
-        -1.0
-    } else if (-0.05..=0.05).contains(&z) {
+    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
+        .contains(&z)
+    {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
@@ -100,13 +102,18 @@ pub fn lambert_w0(z: f64) -> f64 {
                 320361328125.0 / 14350336.0,
                 -35184372088832.0 / 638512875.0,
                 2862423051509815793.0 / 20922789888000.0,
+                -5083731656658.0 / 14889875.0,
+                //5480386857784802185939.0/6402373705728000.0,
             ],
         )
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 
         rational_function(
-            sqrt(zc),
+            // Another artifact of taking z instead of z + 1/e as input.
+            // When we add 1/e we introduce a cancellation error.
+            // We compensate for that here.
+            sqrt(zc + NEG_INV_E_CORRECTION),
             [
                 -0.999_999_999_999_999_889_0,
                 -2.739_966_866_820_365_930_4,

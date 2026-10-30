@@ -47,25 +47,84 @@ pub use sw0f::lambert_w0f;
 pub use swm1::sp_lambert_wm1;
 pub use swm1f::lambert_wm1f;
 
-/// The negative reciprocal of e (-1/e).
+/// The floating point value closest to the negative reciprocal of e (-1/e), the branch point of the W function.
 ///
-/// This is the branch point of the Lambert W function.
+/// ```text
+/// 64-bit floats:   f--          f-           f+           f++
+/// real line:     --|------------|---x--------|------------|-------> z
+///                                 -1/e
+/// ```
+/// f- is this constant and x marks the location of the true value of -1/e.
+/// f+ is the constant [`SMALLEST_F64_IN_DOMAIN`].
+///
+/// # Example
 ///
 /// ```
 /// use lambert_w::{lambert_w0, NEG_INV_E};
-/// use approx::assert_abs_diff_eq;
 ///
-/// assert_abs_diff_eq!(lambert_w0(NEG_INV_E), -1.0);
-/// assert!(lambert_w0(NEG_INV_E.next_down()).is_nan());
+/// assert!(lambert_w0(NEG_INV_E).is_nan());
+/// assert!(!lambert_w0(NEG_INV_E.next_up()).is_nan())
 /// ```
-//            Rounded from -0.367_879_441_171_442_322
-pub const NEG_INV_E: f64 = -0.367_879_441_171_442_32;
+#[allow(clippy::excessive_precision)]
+pub const NEG_INV_E: f64 = -0.367_879_441_171_442_321_595_523_770;
 
-/// 1/sqrt(e)
-//         Rounded from 0.606_530_659_712_633_423
-const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
+/// The distance between `NEG_INV_E` and the true value of -1/e.
+const NEG_INV_E_CORRECTION: f64 = -1.2428753672788363e-17;
 
-/// The omega constant (Ω).
+/// Same as [`NEG_INV_E_CORRECTION`] but for 32-bit floats.
+///
+/// The value that this constant corrects is then `NEG_INV_E as f32`, equal to -0.367_879_45.
+const NEG_INV_E_CORRECTION_32_BIT: f32 = -9.149_756e-9;
+
+/// This floating point value is the smallest one that is larger than or equal to -1/e.
+/// It is *not* the one that is the closest to -1/e, rather this value is one step further in the direction towards positive infinity.
+///
+/// ```text
+/// 64-bit floats:   f--          f-           f+           f++
+/// real line:     --|------------|---x--------|------------|-------> z
+///                                 -1/e
+/// ```
+/// f- is the constant [`NEG_INV_E`], f+ is this constant, and x marks the location of the true value of -1/e.
+///
+/// # Example
+///
+/// ```
+/// use lambert_w::{lambert_w0, SMALLEST_F64_IN_DOMAIN};
+///
+/// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
+/// assert!(lambert_w0(SMALLEST_F64_IN_DOMAIN.next_down()).is_nan());
+/// ```
+pub const SMALLEST_F64_IN_DOMAIN: f64 = -0.367_879_441_171_442_3;
+
+/// Same as [`SMALLEST_F64_IN_DOMAIN`] but for 32-bit floats.
+///
+/// ```text
+/// 32-bit floats:   f--          f-           f+           f++
+/// real line:     --|------------|---x--------|------------|-------> z
+///                                 -1/e
+/// ```
+/// f- is the constant [`NEG_INV_E`] cast to `f32`, f+ is this constant, and x marks the location of the true value of -1/e.
+///
+/// # Example
+///
+/// ```
+/// use lambert_w::{lambert_w0f, SMALLEST_F32_IN_DOMAIN};
+///
+/// assert!(!lambert_w0f(SMALLEST_F32_IN_DOMAIN).is_nan());
+/// assert!(lambert_w0f(SMALLEST_F32_IN_DOMAIN.next_down()).is_nan());
+/// ```
+pub const SMALLEST_F32_IN_DOMAIN: f32 = -0.367_879_42;
+
+/// Closer to zero than this we use the Taylor expansion on the principal branch.
+///
+/// This value was determined empirically.
+const PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD: f64 = 0.0675;
+
+/// The floating point value closest to 1/sqrt(e).
+#[allow(clippy::excessive_precision)]
+const INV_SQRT_E: f64 = 0.606_530_659_712_633_423_603_799_535;
+
+/// The floating point value closest to the omega constant (Ω).
 ///
 /// Fulfills the equation Ωe^Ω = 1:
 ///
@@ -75,16 +134,5 @@ const INV_SQRT_E: f64 = 0.606_530_659_712_633_4;
 ///
 /// assert_abs_diff_eq!(OMEGA * f64::exp(OMEGA), 1.0);
 /// ```
-// We include more digits than fit in an f64 because if we write
-// 0.567_143_290_409_783_8 (clippy's suggestion without excessive precision)
-// it looks as if we have rounded it incorrectly,
-// since the correctly rounded value to that many digits would be
-// 0.567_143_290_409_783_9.
-// However, if we write the correctly rounded value the compiler rounds it to
-// 0.567_143_290_409_784, which is further from the true value than
-// 0.567_143_290_409_783_8.
-// To avoid all this confusion for any potential readers of the docs
-// we just add more digits so that the compiler rounds it correctly and then
-// allow the clippy lint.
 #[allow(clippy::excessive_precision)]
 pub const OMEGA: f64 = 0.567_143_290_409_783_873;

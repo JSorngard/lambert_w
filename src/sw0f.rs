@@ -7,16 +7,21 @@
 //! It is implemented here on 32-bit floats, which most likely reduces the accuracy in some cases.
 
 use crate::generic_math::{ln, polynomial, rational_function, sqrt};
+use crate::{
+    NEG_INV_E_CORRECTION_32_BIT, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F32_IN_DOMAIN,
+};
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
 /// The principal branch of the Lambert W function, computed on 32-bit floats with a method derived from Fukushima's[^1].
 ///
-/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial[^2].
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of a degree 8 Taylor polynomial[^2],
+/// and close to the branch point where the value of z + 1/e is corrected by adding back the distance between the floating point representation and the true value of 1/e to reduce cancellation error, as done in FLINT[^3].
 ///
 /// Uses the same approximation as [`sp_lambert_w0`](crate::sp_lambert_w0), but computes it with 32-bit floats,
-/// which may result in slightly reduced accuracy.
-/// This potential accuracy reduction has not been quantified.
+/// which results in reduced accuracy.
+/// The function has around 20-23 bits of precision, but degrades as the input approaches the branch point.
+/// Results with 14 bits of precision have been observed very close to the branch point.
 ///
 /// # Examples
 ///
@@ -31,25 +36,24 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// assert_abs_diff_eq!(Ω, 0.56714329);
 /// ```
 ///
-/// #### Special cases
+/// #### Edge cases
 ///
-/// For inputs of -1/e and 0 the function returns exactly -1 and 0 respectively,
-/// while an infinite input gives [`INFINITY`](f32::INFINITY):
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F32_IN_DOMAIN`],
+/// the constant `NEG_INV_E as f32`, which is the next float down, gives [`NAN`](f64::NAN):
 ///
 /// ```
-/// use lambert_w::{lambert_w0f, NEG_INV_E};
+/// use lambert_w::{lambert_w0f, NEG_INV_E, SMALLEST_F32_IN_DOMAIN};
 ///
-/// assert_eq!(lambert_w0f(NEG_INV_E as f32), -1.0);
-/// assert_eq!(lambert_w0f(0.0), 0.0);
+/// assert!(lambert_w0f(NEG_INV_E as f32).is_nan());
+/// assert!(!lambert_w0f(SMALLEST_F32_IN_DOMAIN).is_nan());
+/// ```
+///
+/// An input of [`INFINITY`](f32::INFINITY) gives [`INFINITY`](f32::INFINITY) and an input of [`NAN`](f32::NAN) results in [`NAN`](f32::NAN):
+///
+/// ```
+/// use lambert_w::lambert_w0f;
+///
 /// assert_eq!(lambert_w0f(f32::INFINITY), f32::INFINITY);
-/// ```
-///
-/// Inputs smaller than -1/e, as well as inputs of [`NAN`](f32::NAN), result in [`NAN`](f32::NAN):
-///
-/// ```
-/// use lambert_w::{lambert_w0f, NEG_INV_E};
-///
-/// assert!(lambert_w0f((NEG_INV_E as f32).next_down()).is_nan());
 /// assert!(lambert_w0f(f32::NAN).is_nan());
 /// ```
 ///
@@ -59,16 +63,19 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 ///
 /// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
+///
+/// [^3]: `d_lambertw` in the Fast Library for Number Theory, [FLINT::d_lambertw](https://fredrikj.net/fdoc/html/double_extras/d_lambertw.html).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
     // but their precision has been truncated to fit in 32-bit floats.
 
-    if z < NEG_INV_E {
+    if z < SMALLEST_F32_IN_DOMAIN {
         f32::NAN
-    } else if z == NEG_INV_E {
-        -1.0
-    } else if (-0.05..=0.05).contains(&z) {
+    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD as f32
+        ..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD as f32)
+        .contains(&z)
+    {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
@@ -93,7 +100,10 @@ pub fn lambert_w0f(z: f32) -> f32 {
         // W <= 0.854, X_1
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            // Another artifact of taking z instead of z + 1/e as input.
+            // When we add 1/e we introduce a cancellation error.
+            // We compensate for that here.
+            sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION_32_BIT),
             [
                 -0.999_999_94,
                 0.055_730_052,
