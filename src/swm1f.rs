@@ -12,7 +12,7 @@ use crate::{NEG_INV_E_CORRECTION_32_BIT, SMALLEST_F32_IN_DOMAIN};
 const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-/// The secondary branch of the Lambert W function, computed on 32-bit floats with a method based on Fukushima's[^1].
+/// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
 ///
 /// Close to the branch point the value of z + 1/e is corrected by adding back the distance between the floating point representation and the true value of -1/e to reduce cancellation error, as done in FLINT[^2].
 ///
