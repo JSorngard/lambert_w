@@ -3,6 +3,15 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-10-30
+
+- Improve the accuracy of the W-functions close to the branch point.
+- Documentation improvements.
+- The functions now return `NAN` when given an input of `NEG_INV_E`,
+ because the floating point value closest to -1/e is smaller than -1/e.
+ The new constants `SMALLEST_F64_IN_DOMAIN` and `SMALLEST_F32_IN_DOMAIN` are the
+ smallest value for which the W-functions in this crate return a real value.
+
 ## [2.0.8] - 2026-10-26
 
 - Documentation improvements.
