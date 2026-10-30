@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2026-10-30
+
+- Documentation improvements.
+
 ## [2.1.0] - 2026-10-30
 
 - Improve the accuracy of the W-functions based on Fukushima's method close to the branch point.
