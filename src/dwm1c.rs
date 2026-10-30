@@ -34,7 +34,7 @@ use crate::{
 /// #### Edge cases
 ///
 /// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
-/// the constant [`NEG_INV_E`], which is the next `f64` down gives [`NAN`](f64::NAN).
+/// the constant [`NEG_INV_E`], which is the next `f64` down gives [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_wm1, NEG_INV_E, SMALLEST_F64_IN_DOMAIN};
