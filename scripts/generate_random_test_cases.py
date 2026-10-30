@@ -31,17 +31,22 @@ def f64_next_down(x: float) -> float:
 def f64_next_up(x: float) -> float:
     return math.nextafter(x, math.inf)
 
-def print_test_cases(critical_z_values: list[float], cast, next_down, next_up, name: str, rust_type: str, output):
+def print_test_cases(critical_z_values: list[float], cast, next_down, next_up, name: str, rust_type: str, output, branch=0):
     z_values = []
-    for lower_value, upper_value in zip(critical_z_values, critical_z_values[1:] + [math.inf], strict = True):
+    branch_stop = math.inf if branch == 0 else 0
+    for lower_value, upper_value in zip(critical_z_values, critical_z_values[1:] + [branch_stop], strict = True):
         z_values += [cast(lower_value), cast(next_up(cast(lower_value))), cast(next_down(cast(upper_value)))]
         z_values += sorted(list(map(cast, (np.random.rand(1_000)*(upper_value - lower_value) + lower_value).tolist())))
-    z_set = sorted({z for z in z_values if z != math.inf and not np.isnan(z)})
+    z_set = sorted({z for z in z_values if z != math.inf and not np.isnan(z) and not (z == 0 and branch == -1)})
     output.write("/// z-values and the corresponding values of W0(z) evaluated with mpmath in python.\n")
     output.write(f"pub const {name}: [({rust_type}, {rust_type}); {len(z_set)}] = [\n")
     for x in z_set:
         with mp.workdps(100):
-            w = float(mp.lambertw(mp.mpf(x)))
+            try:
+                w = float(mp.lambertw(mp.mpf(x), k=branch))
+            except TypeError as e:
+                print(f"failed at {x=}")
+                raise e
             expected = cast(w)
         output.write(f"    ({repr(x)}, {repr(expected)}),\n")
     output.write("];\n")
@@ -107,3 +112,20 @@ with open("tests/random_test_cases.rs", "w") as f:
     critical_z_values[0] = f32(-0.367_879_42)
     print("Writing the test cases for `lambert_w0f` to file")
     print_test_cases(critical_z_values, f32, f32_next_down, f32_next_up, "W0F_RANDOM_ANSWERS", "f32", f)
+
+    critical_z_values= [
+        -0.3678794411714423,
+        -0.354_291_330_944_216_4,
+        -0.188_726_882_822_894_340_49,
+        -0.060_497_597_226_958_343_647,
+        -0.017_105_334_740_676_008_194,
+        -0.004_595_496_212_794_370_643_3,
+        -0.001_200_161_067_219_772_417_3,
+        -0.000_307_288_059_321_914_998_44,
+        -0.000_077_447_159_838_062_184_354,
+        -4.580_811_969_815_817_317_4e-17,
+        -6.107_367_223_659_479_298_2e-79,
+    ]
+
+    print("Writing test cases for `lambert_wm1` to file")
+    print_test_cases(critical_z_values, f64, f64_next_down, f64_next_up, "WM1_RANDOM_ANSWERS", "f64", f, branch=-1)

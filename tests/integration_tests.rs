@@ -16,7 +16,7 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq, assert_ulps_eq};
 
-use crate::random_test_cases::{SP_W0_RANDOM_ANSWERS, W0F_RANDOM_ANSWERS};
+use crate::random_test_cases::{SP_W0_RANDOM_ANSWERS, W0F_RANDOM_ANSWERS, WM1_RANDOM_ANSWERS};
 use rand::{distr::Uniform, rngs::SmallRng, RngExt, SeedableRng};
 
 const RANDOM_TEST_SIZE: usize = 1_000_000;
@@ -469,15 +469,15 @@ fn test_lambert_w0f_finiteness_at_random_points() {
     }
 }
 
-/*#[test]
+#[test]
 fn test_lambert_wm1_near_branch_point() {
     assert!(lambert_wm1(NEG_INV_E).is_nan());
     assert_only_ulps_eq!(
         lambert_wm1(SMALLEST_F64_IN_DOMAIN),
-        -1.000_000_010_835_379_113,
+        -1.000_000_015_304_254,
         max_ulps = W_MAX_ULPS
     );
-}*/
+}
 
 #[test]
 fn test_lambert_wm1() {
@@ -953,11 +953,15 @@ fn test_sp_lambert_w0_at_random_values() {
 #[test]
 fn test_lambert_w0f_at_random_values() {
     for (x, expected) in Box::new(W0F_RANDOM_ANSWERS) {
-        println!(
-            "{} out of {WF_MAX_ULPS} at {x}",
-            ulp_err32(lambert_w0f(x), expected)
-        );
         assert_only_ulps_eq!(lambert_w0f(x), expected, max_ulps = WF_MAX_ULPS);
+    }
+}
+
+#[test]
+fn test_lambert_wm1_at_random_values() {
+    for (x, expected) in WM1_RANDOM_ANSWERS {
+        println!("{} at {x}", ulp_err64(lambert_wm1(x), expected));
+        assert_only_ulps_eq!(lambert_wm1(x), expected, max_ulps = W_MAX_ULPS);
     }
 }
 
