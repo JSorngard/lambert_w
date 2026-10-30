@@ -129,3 +129,18 @@ with open("tests/random_test_cases.rs", "w") as f:
 
     print("Writing test cases for `lambert_wm1` to file")
     print_test_cases(critical_z_values, f64, f64_next_down, f64_next_up, "WM1_RANDOM_ANSWERS", "f64", f, branch=-1)
+
+    critical_z_values = [
+        -0.207_293_777_640_384_138_99,
+        -0.071_507_705_083_841_949_275,
+        -0.020_704_412_621_717_479_786,
+        -0.005_480_012_945_209_443_573_3,
+        -0.001_367_466_989_250_804_268_7,
+        -0.000_326_142_267_310_725_659_15,
+        -0.000_074_906_612_036_101_435_088,
+        -1.096_244_452_641_099_391_9e-19,
+        -2.509_609_929_994_590_145_5e-136,
+    ]
+
+    print("Writing test cases for `sp_lambert_wm1` to file")
+    print_test_cases(critical_z_values, f64, f64_next_down, f64_next_up, "SP_WM1_RANDOM_ANSWERS", "f64", f, branch=-1)
