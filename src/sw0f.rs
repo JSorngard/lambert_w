@@ -38,8 +38,8 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// #### Edge cases
 ///
-/// For an input of [`NEG_INV_E`](crate::NEG_INV_E) the function returns [`NAN`](f32::NAN),
-/// while an input of [`SMALLEST_F32_IN_DOMAIN`] gives a finite result:
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
+/// the constant `NEG_INV_E as f32`, which is the next float down, gives [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::{lambert_w0f, NEG_INV_E, SMALLEST_F32_IN_DOMAIN};
