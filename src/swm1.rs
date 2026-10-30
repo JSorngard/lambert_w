@@ -16,7 +16,7 @@ use crate::{
     INV_SQRT_E, NEG_INV_E, NEG_INV_E_CORRECTION, SMALLEST_F64_IN_DOMAIN,
 };
 
-/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
+/// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
 ///
 /// Close to the branch point the value of z + 1/e is corrected by adding back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^2].
 ///
