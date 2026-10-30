@@ -27,7 +27,7 @@ const RANDOM_TEST_SIZE: usize = 1_000_000;
 /// The number of bits that are accurate in the 32-bit functions.
 /// Raising this any higher causes some tests to fail.
 ///
-/// The tests of lambert_w0f near the branch point use their own constant.
+/// The tests of the 32-bit functions near the branch point use their own constant.
 const WF_ACCURACY_BITS: u32 = 20;
 /// The number of ulps that the functions on 32-bit floats should get from the true answer.
 const WF_MAX_ULPS: u32 = u32::pow(2, f32::MANTISSA_DIGITS - WF_ACCURACY_BITS);
