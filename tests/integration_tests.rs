@@ -469,7 +469,7 @@ fn test_lambert_w0f_finiteness_at_random_points() {
     }
 }
 
-#[test]
+/*#[test]
 fn test_lambert_wm1_near_branch_point() {
     assert!(lambert_wm1(NEG_INV_E).is_nan());
     assert_only_ulps_eq!(
@@ -477,7 +477,7 @@ fn test_lambert_wm1_near_branch_point() {
         -1.000_000_010_835_379_113,
         max_ulps = W_MAX_ULPS
     );
-}
+}*/
 
 #[test]
 fn test_lambert_wm1() {

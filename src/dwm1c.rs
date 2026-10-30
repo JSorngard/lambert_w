@@ -33,15 +33,13 @@ use crate::{
 ///
 /// #### Edge cases
 ///
-/// The smallest value for which this function returns a valid float is -0.3678794411714423:
+/// The smallest value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`]:
 ///
 /// ```
-/// use lambert_w::lambert_wm1;
+/// use lambert_w::{lambert_wm1, SMALLEST_F64_IN_DOMAIN};
 ///
-/// const SMALLEST_VALID_INPUT: f32 = -0.3678794411714423;
-///
-/// assert!(!lambert_wm1(SMALLEST_VALID_INPUT).is_nan());
-/// assert!(lambert_wm1(SMALLEST_VALID_INPUT.next_down()).is_nan());
+/// assert!(!lambert_wm1(SMALLEST_F64_IN_DOMAIN).is_nan());
+/// assert!(lambert_wm1(SMALLEST_F64_IN_DOMAIN.next_down()).is_nan());
 /// ```
 ///
 /// For inputs of 0 the function returns [`NEG_INFINITY`](f64::NEG_INFINITY):
