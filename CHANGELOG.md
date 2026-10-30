@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.1.0] - 2026-10-30
 
-- Improve the accuracy of the W-functions close to the branch point.
+- Improve the accuracy of the W-functions based on Fukushima's method close to the branch point.
 - Documentation improvements.
 - The functions now return `NAN` when given an input of `NEG_INV_E`,
  because the floating point value closest to -1/e is smaller than -1/e.
