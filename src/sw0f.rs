@@ -38,7 +38,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// #### Edge cases
 ///
-/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F32_IN_DOMAIN`],
 /// the constant `NEG_INV_E as f32`, which is the next float down, gives [`NAN`](f64::NAN):
 ///
 /// ```
