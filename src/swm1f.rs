@@ -12,7 +12,9 @@ use crate::{NEG_INV_E_CORRECTION_32_BIT, SMALLEST_F32_IN_DOMAIN};
 const INV_SQRT_E: f32 = super::INV_SQRT_E as f32;
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 
-/// The secondary branch of the Lambert W function, computed on 32-bit floats with Fukushima's method[^1].
+/// The secondary branch of the Lambert W function, computed on 32-bit floats with a method based on Fukushima's[^1].
+///
+/// Close to the branch point the value of z + 1/e is corrected by adding back the distance between the floating point representation and the true value of -1/e to reduce cancellation error, as done in FLINT[^2].
 ///
 /// Uses the same approximation as [`sp_lambert_wm1`](crate::sp_lambert_wm1), but computes it with 32-bit floats,
 /// which results in reduced accuracy.
@@ -65,6 +67,8 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
+///
+/// [^2]: `d_lambertw` in the Fast Library for Number Theory, [FLINT::d_lambertw](https://fredrikj.net/fdoc/html/double_extras/d_lambertw.html).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `swm1` module,
