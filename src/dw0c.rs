@@ -46,7 +46,7 @@ use crate::{
 /// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
 /// ```
 ///
-/// An input of [`INFINITY`](f64::INFINITY) gives [`INFINITY`](f64::INFINITY) and an input of [`NAN`](f64::NAN) result in [`NAN`](f64::NAN):
+/// An input of [`INFINITY`](f64::INFINITY) gives [`INFINITY`](f64::INFINITY) and an input of [`NAN`](f64::NAN) results in [`NAN`](f64::NAN):
 ///
 /// ```
 /// use lambert_w::lambert_w0;

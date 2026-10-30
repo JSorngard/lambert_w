@@ -48,7 +48,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// assert!(!lambert_w0f(SMALLEST_F32_IN_DOMAIN).is_nan());
 /// ```
 ///
-/// An input of [`INFINITY`](f32::INFINITY) gives [`INFINITY`](f32::INFINITY) and an input of [`NAN`](f32::NAN) result in [`NAN`](f32::NAN):
+/// An input of [`INFINITY`](f32::INFINITY) gives [`INFINITY`](f32::INFINITY) and an input of [`NAN`](f32::NAN) results in [`NAN`](f32::NAN):
 ///
 /// ```
 /// use lambert_w::lambert_w0f;
