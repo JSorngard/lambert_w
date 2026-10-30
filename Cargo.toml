@@ -10,7 +10,7 @@ rust-version = "1.63.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/JSorngard/lambert_w"
 documentation = "https://docs.rs/lambert_w"
-exclude = ["tests/", ".github/", "CONTRIBUTING.md", "CHANGELOG.md", "benches", "examples"]
+exclude = ["tests/", ".github/", "CONTRIBUTING.md", "CHANGELOG.md", "benches", "examples", "scripts"]
 
 [lints.rust]
 missing_docs = "warn"
