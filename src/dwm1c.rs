@@ -33,13 +33,14 @@ use crate::{
 ///
 /// #### Edge cases
 ///
-/// The smallest value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`]:
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
+/// the constant [`NEG_INV_E`], which is the next `f64` down gives [`NAN`](f64::NAN).
 ///
 /// ```
-/// use lambert_w::{lambert_wm1, SMALLEST_F64_IN_DOMAIN};
+/// use lambert_w::{lambert_wm1, NEG_INV_E, SMALLEST_F64_IN_DOMAIN};
 ///
 /// assert!(!lambert_wm1(SMALLEST_F64_IN_DOMAIN).is_nan());
-/// assert!(lambert_wm1(SMALLEST_F64_IN_DOMAIN.next_down()).is_nan());
+/// assert!(lambert_wm1(NEG_INV_E).is_nan());
 /// ```
 ///
 /// For inputs of 0 the function returns [`NEG_INFINITY`](f64::NEG_INFINITY):
