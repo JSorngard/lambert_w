@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - The functions now return `NAN` when given an input of `NEG_INV_E`,
  because the floating point value closest to -1/e is smaller than -1/e.
  The new constants `SMALLEST_F64_IN_DOMAIN` and `SMALLEST_F32_IN_DOMAIN` are the
- smallest value for which the W-functions in this crate return a real value.
+ smallest (most negative) values for which the W-functions in this crate return a real value.
 
 ## [2.0.8] - 2026-10-26
 
