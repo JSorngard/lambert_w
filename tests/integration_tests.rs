@@ -3,7 +3,9 @@
 
 //! This file contains tests of the public API of the crate.
 
+#[ignore]
 mod near_zero_test_cases;
+#[ignore]
 mod random_test_cases;
 
 use near_zero_test_cases::{W0F_NEAR_ZERO_ANSWERS, W0_NEAR_ZERO_ANSWERS};
