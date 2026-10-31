@@ -738,7 +738,7 @@ fn test_iterative_close_to_zero() {
 }
 
 #[test]
-fn test_iterative_version() {
+fn test_lambert_w() {
     let err_tol = f64::EPSILON;
     assert_eq!(lambert_w(0, NEG_INV_E, 0.0, err_tol), (-1.0, 0.0));
     assert_eq!(lambert_w(0, 1.0, 0.0, err_tol), (OMEGA, 0.0));
@@ -832,7 +832,7 @@ fn test_iterative_version() {
 }
 
 #[test]
-fn test_32_bit_iterative_version() {
+fn test_lambert_wf() {
     let err_tol = f32::EPSILON;
     assert_eq!(lambert_wf(0, NEG_INV_E as f32, 0.0, err_tol), (-1.0, 0.0));
     assert_eq!(lambert_wf(0, 1.0, 0.0, err_tol), (OMEGA as f32, 0.0));
