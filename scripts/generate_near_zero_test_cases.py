@@ -39,7 +39,7 @@ def print_test_data(cast, cutoff: float, tiny: float, normal: float, neighbors, 
     output.write("];\n")
 
 THRESHOLD: float = 0.0675
-OUTPUT_FILE_NAME: str = "tests/near_zero_test_cases.rs"
+OUTPUT_FILE_NAME: str = "tests/test_data/near_zero_test_cases.rs"
 
 tiny = float.fromhex("0x0.0000000000001p-1022")
 normal = float.fromhex("0x1p-1022")
