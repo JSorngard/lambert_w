@@ -78,6 +78,7 @@ fn test_lambert_w0() {
         max_ulps = W_MAX_ULPS
     );
     assert_only_ulps_eq!(lambert_w0(1.0), OMEGA, max_ulps = W_MAX_ULPS);
+    assert_only_ulps_eq!(lambert_w0(core::f64::consts::E), 1.0, max_ulps = W_MAX_ULPS);
     assert_only_ulps_eq!(
         lambert_w0(9.632_120_558_828_557),
         1.721_757_710_976_171,
@@ -256,6 +257,11 @@ fn test_sp_lambert_w0() {
     );
     assert_only_ulps_eq!(sp_lambert_w0(1.0), OMEGA, max_ulps = SP_W_MAX_ULPS);
     assert_only_ulps_eq!(
+        sp_lambert_w0(core::f64::consts::E),
+        1.0,
+        max_ulps = SP_W_MAX_ULPS
+    );
+    assert_only_ulps_eq!(
         sp_lambert_w0(9.632120558828557),
         1.721_757_710_976_171,
         max_ulps = SP_W_MAX_ULPS,
@@ -415,6 +421,12 @@ fn test_lambert_w0f() {
     assert_only_ulps_eq!(
         lambert_w0f(6.321_205_5e-1),
         4.167_04e-1,
+        max_ulps = WF_MAX_ULPS
+    );
+    assert_only_ulps_eq!(lambert_w0f(1.0), OMEGA as f32, max_ulps = WF_MAX_ULPS);
+    assert_only_ulps_eq!(
+        lambert_w0f(core::f32::consts::E),
+        1.0,
         max_ulps = WF_MAX_ULPS
     );
     assert_only_ulps_eq!(lambert_w0f(9.632_12), 1.721_757_8, max_ulps = WF_MAX_ULPS);
