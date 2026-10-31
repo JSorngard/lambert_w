@@ -3,11 +3,12 @@
 
 //! This file contains tests of the public API of the crate.
 
-mod near_zero_test_cases;
-mod random_test_cases;
+mod test_data;
 
-use near_zero_test_cases::{W0F_NEAR_ZERO_ANSWERS, W0_NEAR_ZERO_ANSWERS};
-use random_test_cases::W0_RANDOM_ANSWERS;
+use test_data::{
+    SP_W0_RANDOM_ANSWERS, SP_WM1_RANDOM_ANSWERS, W0F_NEAR_ZERO_ANSWERS, W0F_RANDOM_ANSWERS,
+    W0_NEAR_ZERO_ANSWERS, W0_RANDOM_ANSWERS, WM1F_RANDOM_ANSWERS, WM1_RANDOM_ANSWERS,
+};
 
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
@@ -16,10 +17,6 @@ use lambert_w::{
 
 use approx::{assert_abs_diff_eq, assert_relative_eq, assert_ulps_eq};
 
-use crate::random_test_cases::{
-    SP_W0_RANDOM_ANSWERS, SP_WM1_RANDOM_ANSWERS, W0F_RANDOM_ANSWERS, WM1F_RANDOM_ANSWERS,
-    WM1_RANDOM_ANSWERS,
-};
 use rand::{distr::Uniform, rngs::SmallRng, RngExt, SeedableRng};
 
 const RANDOM_TEST_SIZE: usize = 1_000_000;
