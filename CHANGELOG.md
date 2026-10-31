@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 - Add CodeQL analysis to CI.
+- Improvements to the code organization of the test suite.
 
 ## [2.1.2] - 2026-10-30
 
