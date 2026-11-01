@@ -3,11 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.3] - 2026-11-01
 
+- Documentation improvements.
 - Add CodeQL analysis to CI.
 - Improvements to the code organization of the test suite.
-- Documentation improvements.
 
 ## [2.1.2] - 2026-10-30
 
