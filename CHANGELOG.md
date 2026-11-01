@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.4] - 2026-11-01
+
+- Split the tests that operate on the big files with generated data from the ones that don't.
+- Upload the integration tests that don't use the big data files to crates.io.
+
 ## [2.1.3] - 2026-11-01
 
 - Approximate the principal branch of the W function as z - z^2 very close to zero.
