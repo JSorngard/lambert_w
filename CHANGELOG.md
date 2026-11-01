@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.1.3] - 2026-11-01
 
+- Approximate the principal branch of the W function as z - z^2 very close to zero.
 - Documentation improvements.
 - Add CodeQL analysis to CI.
 - Improvements to the code organization of the test suite.
