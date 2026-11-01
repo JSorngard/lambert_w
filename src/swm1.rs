@@ -67,7 +67,7 @@ use crate::{
 /// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 ///
-/// [^2]: The FLINT team, ["d_lambertw (double_extras.h)", FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026](https://flintlib.org/doc/double_extras/d_lambertw.html) (generated 2026-10-20), visited 2026-11-01.
+/// [^2]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_wm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.
