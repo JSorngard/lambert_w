@@ -68,7 +68,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 /// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
 /// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
 ///
-/// [^2]: The FLINT team, "d_lambertw (double_extras.h)", [FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026](https://flintlib.org/doc/double_extras/d_lambertw.html) (generated 2026-10-20).
+/// [^2]: The FLINT team, ["d_lambertw (double_extras.h)", FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026](https://flintlib.org/doc/double_extras/d_lambertw.html) (generated 2026-10-20).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `swm1` module,

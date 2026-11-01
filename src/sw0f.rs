@@ -64,7 +64,7 @@ const NEG_INV_E: f32 = super::NEG_INV_E as f32;
 ///
 /// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
 ///
-/// [^3]: The FLINT team, "d_lambertw (double_extras.h)", [FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026](https://flintlib.org/doc/double_extras/d_lambertw.html) (generated 2026-10-20).
+/// [^3]: The FLINT team, ["d_lambertw (double_extras.h)", FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026](https://flintlib.org/doc/double_extras/d_lambertw.html) (generated 2026-10-20).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0f(z: f32) -> f32 {
     // The critical arguments and coefficients are the same as in the `sw0` module,
