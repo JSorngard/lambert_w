@@ -5,7 +5,7 @@
 
 mod common;
 
-use common::*;
+use common::{SP_W_MAX_ULPS, WF_MAX_ULPS, W_MAX_ULPS};
 
 use lambert_w::{
     lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,

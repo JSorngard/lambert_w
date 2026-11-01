@@ -14,7 +14,7 @@ use test_data::{
     W0_NEAR_ZERO_ANSWERS, W0_RANDOM_ANSWERS, WM1F_RANDOM_ANSWERS, WM1_RANDOM_ANSWERS,
 };
 
-use common::*;
+use common::{ulp_err32, SP_W_MAX_ULPS, WF_MAX_ULPS, W_MAX_ULPS};
 
 use approx::assert_ulps_eq;
 
