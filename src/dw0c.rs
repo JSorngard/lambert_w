@@ -80,7 +80,7 @@ pub fn lambert_w0(z: f64) -> f64 {
         // The first two terms of the Taylor polynomial in the branch below.
         // All that's needed this close to zero.
 
-        z * (1.0 - z)
+        z * polynomial(z, [1.0, -1.0])
     } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
         .contains(&z)
     {
