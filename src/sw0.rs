@@ -62,7 +62,7 @@ use crate::{
 ///
 /// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
 ///
-/// [^3]: `d_lambertw` in the Fast Library for Number Theory, [FLINT::d_lambertw](https://fredrikj.net/fdoc/html/double_extras/d_lambertw.html).
+/// [^3]: The FLINT team, "d_lambertw (double_extras.h)", [FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026](https://flintlib.org/doc/double_extras/d_lambertw.html) (generated 2026-10-20).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
