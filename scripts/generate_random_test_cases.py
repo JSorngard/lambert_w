@@ -2,6 +2,10 @@
 # requires-python = ">=3.9"
 # dependencies = ["numpy==2.5.1", "mpmath==1.3.0"]
 # ///
+
+# Copyright 2024-2026 Johanna Sörngård
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
 import math
 import os
 import struct

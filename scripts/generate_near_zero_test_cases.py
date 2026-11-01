@@ -2,6 +2,10 @@
 # requires-python = ">=3.9"
 # dependencies = ["mpmath==1.3.0"]
 # ///
+
+# Copyright 2024-2026 Johanna Sörngård
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
 """Regenerate the file "tests/near_zero_test_cases.rs" with `uv run scripts/generate_near_zero_test_cases.py`.
 
 Inputs are binary64/binary32 values, converted exactly to mpmath, and evaluated to give the expected answer.
