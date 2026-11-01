@@ -73,14 +73,6 @@ pub fn lambert_w0(z: f64) -> f64 {
 
     if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
-    } else if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD
-        ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
-        .contains(&z)
-    {
-        // The first two terms of the Taylor polynomial in the branch below.
-        // All that's needed this close to zero.
-
-        z * polynomial(z, [1.0, -1.0])
     } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
         .contains(&z)
     {
@@ -91,30 +83,40 @@ pub fn lambert_w0(z: f64) -> f64 {
         // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
         // We want to take z directly because it makes the API much more intuitive.
 
-        z * polynomial(
-            z,
-            [
-                1.0,
-                -1.0,
-                3.0 / 2.0,
-                -8.0 / 3.0,
-                125.0 / 24.0,
-                -54.0 / 5.0,
-                16807.0 / 720.0,
-                -16384.0 / 315.0,
-                531441.0 / 4480.0,
-                -156250.0 / 567.0,
-                2357947691.0 / 3628800.0,
-                -2985984.0 / 1925.0,
-                1792160394037.0 / 479001600.0,
-                -7909306972.0 / 868725.0,
-                320361328125.0 / 14350336.0,
-                -35184372088832.0 / 638512875.0,
-                2862423051509815793.0 / 20922789888000.0,
-                -5083731656658.0 / 14889875.0,
-                //5480386857784802185939.0/6402373705728000.0,
-            ],
-        )
+        if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD
+            ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
+            .contains(&z)
+        {
+            // The first two terms of the Taylor polynomial in the branch below.
+            // All that's needed this close to zero.
+
+            z * polynomial(z, [1.0, -1.0])
+        } else {
+            z * polynomial(
+                z,
+                [
+                    1.0,
+                    -1.0,
+                    3.0 / 2.0,
+                    -8.0 / 3.0,
+                    125.0 / 24.0,
+                    -54.0 / 5.0,
+                    16807.0 / 720.0,
+                    -16384.0 / 315.0,
+                    531441.0 / 4480.0,
+                    -156250.0 / 567.0,
+                    2357947691.0 / 3628800.0,
+                    -2985984.0 / 1925.0,
+                    1792160394037.0 / 479001600.0,
+                    -7909306972.0 / 868725.0,
+                    320361328125.0 / 14350336.0,
+                    -35184372088832.0 / 638512875.0,
+                    2862423051509815793.0 / 20922789888000.0,
+                    -5083731656658.0 / 14889875.0,
+                    //5480386857784802185939.0/6402373705728000.0,
+                ],
+            )
+        }
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 

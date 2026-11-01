@@ -73,14 +73,6 @@ pub fn lambert_w0f(z: f32) -> f32 {
 
     if z < SMALLEST_F32_IN_DOMAIN {
         f32::NAN
-    } else if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD as f32
-        ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD as f32)
-        .contains(&z)
-    {
-        // The first two terms of the Taylor polynomial in the branch below.
-        // All that's needed this close to zero.
-
-        z * polynomial(z, [1.0, -1.0])
     } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD as f32
         ..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD as f32)
         .contains(&z)
@@ -92,19 +84,29 @@ pub fn lambert_w0f(z: f32) -> f32 {
         // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
         // We want to take z directly because it makes the API much more intuitive.
 
-        z * polynomial(
-            z,
-            [
-                1.0,
-                -1.0,
-                3.0 / 2.0,
-                -8.0 / 3.0,
-                125.0 / 24.0,
-                -54.0 / 5.0,
-                16807.0 / 720.0,
-                -16384.0 / 315.0,
-            ],
-        )
+        if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD as f32
+            ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD as f32)
+            .contains(&z)
+        {
+            // The first two terms of the Taylor polynomial in the branch below.
+            // All that's needed this close to zero.
+
+            z * polynomial(z, [1.0, -1.0])
+        } else {
+            z * polynomial(
+                z,
+                [
+                    1.0,
+                    -1.0,
+                    3.0 / 2.0,
+                    -8.0 / 3.0,
+                    125.0 / 24.0,
+                    -54.0 / 5.0,
+                    16807.0 / 720.0,
+                    -16384.0 / 315.0,
+                ],
+            )
+        }
     } else if z <= 2.008_217_8 {
         // W <= 0.854, X_1
 
