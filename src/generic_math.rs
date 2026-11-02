@@ -15,7 +15,7 @@ use num_traits::{Float, MulAdd};
 ///
 /// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
 #[inline]
-pub(crate) fn rational_function<T: Float + MulAdd, const N: usize, const D: usize>(
+pub(crate) fn rational_function<T: Float + MulAdd<Output = T>, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
