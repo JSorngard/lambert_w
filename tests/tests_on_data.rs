@@ -16,6 +16,7 @@ use test_data::{
 
 use common::{ulp_err32, SP_W_MAX_ULPS, WF_MAX_ULPS, W_MAX_ULPS};
 
+use crate::common::ulp_err64;
 use approx::assert_ulps_eq;
 
 #[test]
@@ -23,16 +24,18 @@ fn principal_branches_match_high_precision_near_zero() {
     for (x, expected) in W0_NEAR_ZERO_ANSWERS {
         let actual = lambert_w0(x);
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
-        println!("at {x}");
+        println!("{} ulps error in w0 at {x}", ulp_err64(actual, expected));
         assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
 
         let actual = sp_lambert_w0(x);
+        println!("{} ulps error in sp_w0 at {x}", ulp_err64(actual, expected));
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
         assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
 
     for (x, expected) in W0F_NEAR_ZERO_ANSWERS {
         let actual = lambert_w0f(x);
+        println!("{} ulps error in w0f at {x}", ulp_err32(actual, expected));
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
         assert_only_ulps_eq!(actual, expected, max_ulps = WF_MAX_ULPS);
     }
@@ -41,42 +44,56 @@ fn principal_branches_match_high_precision_near_zero() {
 #[test]
 fn test_lambert_w0_at_random_values() {
     for (x, expected) in Box::new(W0_RANDOM_ANSWERS) {
-        assert_only_ulps_eq!(lambert_w0(x), expected, max_ulps = W_MAX_ULPS);
+        let actual = lambert_w0(x);
+        println!("{} ulps error in w0 at {x}", ulp_err64(actual, expected));
+        assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
     }
 }
 
 #[test]
 fn test_sp_lambert_w0_at_random_values() {
     for (x, expected) in Box::new(SP_W0_RANDOM_ANSWERS) {
-        assert_only_ulps_eq!(sp_lambert_w0(x), expected, max_ulps = SP_W_MAX_ULPS);
+        let actual = sp_lambert_w0(x);
+        println!("{} ulps error in sp_w0 at {x}", ulp_err64(actual, expected));
+        assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
 }
 
 #[test]
 fn test_lambert_w0f_at_random_values() {
     for (x, expected) in Box::new(W0F_RANDOM_ANSWERS) {
-        assert_only_ulps_eq!(lambert_w0f(x), expected, max_ulps = WF_MAX_ULPS);
+        let actual = lambert_w0f(x);
+        println!("{} ulps error in w0f at {x}", ulp_err32(actual, expected));
+        assert_only_ulps_eq!(actual, expected, max_ulps = WF_MAX_ULPS);
     }
 }
 
 #[test]
 fn test_lambert_wm1_at_random_values() {
     for (x, expected) in WM1_RANDOM_ANSWERS {
-        assert_only_ulps_eq!(lambert_wm1(x), expected, max_ulps = W_MAX_ULPS);
+        let actual = lambert_wm1(x);
+        println!("{} ulps error in wm1 at {x}", ulp_err64(actual, expected));
+        assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
     }
 }
 
 #[test]
 fn test_sp_lambert_wm1_at_random_values() {
     for (x, expected) in SP_WM1_RANDOM_ANSWERS {
-        assert_only_ulps_eq!(sp_lambert_wm1(x), expected, max_ulps = SP_W_MAX_ULPS);
+        let actual = sp_lambert_wm1(x);
+        println!(
+            "{} ulps error in sp_wm1 at {x}",
+            ulp_err64(actual, expected)
+        );
+        assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
 }
 
 #[test]
 fn test_lambert_wm1f_at_random_values() {
     for (x, expected) in WM1F_RANDOM_ANSWERS {
-        println!("{} at {x}", ulp_err32(lambert_wm1f(x), expected));
+        let actual = lambert_wm1f(x);
+        println!("{} ulps error in wm1f at {x}", ulp_err32(actual, expected));
         assert_only_ulps_eq!(lambert_wm1f(x), expected, max_ulps = WF_MAX_ULPS);
     }
 }
