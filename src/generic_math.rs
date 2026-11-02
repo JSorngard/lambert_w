@@ -4,7 +4,7 @@
 //! This module contains elementary and rational functions used in the Lambert W function approximations.
 //! They are generic over all types that implement the [`Float`] trait.
 
-use num_traits::Float;
+use num_traits::{Float, MulAdd};
 
 // The `inline` annotations are motivated by benchmarks on an AMD 5800X3D processor.
 // The `lambert_w0` function is sped up by around 50% when the inline annotations are present.
@@ -15,7 +15,7 @@ use num_traits::Float;
 ///
 /// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
 #[inline]
-pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
+pub(crate) fn rational_function<T: Float + MulAdd, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
     denominator_coefficients: [T; D],
