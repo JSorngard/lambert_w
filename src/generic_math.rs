@@ -27,13 +27,18 @@ pub(crate) fn rational_function<T: Float + MulAdd<Output = T>, const N: usize, c
     // That they are operating on the 128-bit xmm registers means that two 64-bit floats are operated on at once,
     // and thus this is a way of formulating this operation that makes the compiler likely to vectorize it.
 
-    use fast_polynomial::poly_array;
+    
+    fast_polynomial::rational_array(
+        x,
+        &numerator_coefficients,
+        &denominator coefficients,
+    )
 
-    let numerator = poly_array(x, &numerator_coefficients);
+    /*let numerator = fast_polynomial::poly_array(x, &numerator_coefficients);
 
-    let denominator = poly_array(x, &denominator_coefficients);
+    let denominator = fast_polynomial::poly_array(x, &denominator_coefficients);
 
-    numerator / denominator
+    numerator / denominator*/
 }
 
 /// Evaluate a polynomial at `x` using [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method).
