@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 - Use fused multiply-add instructions when available on the target.
+- Fix the plot example.
 
 ## [2.1.5] - 2026-11-01
 
