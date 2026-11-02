@@ -64,63 +64,53 @@ principal branch of the Lambert W function:
 
 ```rust
 use lambert_w::lambert_w0;
-use approx::assert_abs_diff_eq;
+use approx::assert_ulps_eq;
 
 let Ω = lambert_w0(1.0);
 
-assert_abs_diff_eq!(Ω, 0.567143290409783873);
-assert_abs_diff_eq!(Ω * f64::exp(Ω), 1.0);
+assert_ulps_eq!(Ω, 0.567143290409783873, epsilon = 0.0, max_ulps = 8);
+assert_ulps_eq!(Ω * f64::exp(Ω), 1.0, epsilon = 0.0, max_ulps = 8);
 ```
 
 Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 
 ```rust
 use lambert_w::lambert_wm1;
-use approx::assert_abs_diff_eq;
+use approx::assert_ulps_eq;
 
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
-assert_abs_diff_eq!(mln4, -f64::ln(4.0));
+assert_ulps_eq!(mln4, -f64::ln(4.0));
 ```
 
 Do it on 32-bit floats:
 
 ```rust
 use lambert_w::{lambert_w0f, lambert_wm1f};
-use approx::assert_abs_diff_eq;
+use approx::assert_ulps_eq;
 
 let Ω = lambert_w0f(1.0);
 let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
 
-assert_abs_diff_eq!(Ω, 0.56714329);
-assert_abs_diff_eq!(mln4, -f32::ln(4.0));
+assert_ulps_eq!(Ω, 0.56714329);
+assert_ulps_eq!(mln4, -f32::ln(4.0));
 ```
 
 The implementation can handle extreme inputs just as well:
 
 ```rust
 use lambert_w::{lambert_w0, lambert_wm1};
-use approx::assert_relative_eq;
+use approx::assert_ulps_eq;
 
 let small = lambert_wm1(-f64::MIN_POSITIVE);
 let big = lambert_w0(f64::MAX);
 
-assert_relative_eq!(small, -714.9686572379665);
-assert_relative_eq!(
-    big,
-    703.2270331047702,
-    // Since the approximation used in this
-    // example is accurate to 50 bits
-    // it will sometimes have an
-    // error larger than epsilon.
-    max_relative = 1.5 * f64::EPSILON
-);
+assert_ulps_eq!(small, -714.9686572379665);
+assert_ulps_eq!(big, 703.2270331047702);
 ```
 
-The macros in the examples above are from the [`approx`][]
-crate, and are used in the documentation examples of this crate.
-The assertion passes if the two supplied values are the same to within floating
-point epsilon, or within an optional absolute or relative difference.
+The macros in the examples above that compare floating point values are from the [`approx`][] crate,
+and are used in the documentation examples of this crate.
 
 ### Arbitrary branches in the complex plane
 
