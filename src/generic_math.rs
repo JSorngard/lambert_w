@@ -27,7 +27,6 @@ pub(crate) fn rational_function<T: Float + MulAdd<Output = T>, const N: usize, c
     // That they are operating on the 128-bit xmm registers means that two 64-bit floats are operated on at once,
     // and thus this is a way of formulating this operation that makes the compiler likely to vectorize it.
 
-    
     fast_polynomial::rational_array(x, &numerator_coefficients, &denominator_coefficients)
 
     /*let numerator = fast_polynomial::poly_array(x, &numerator_coefficients);
