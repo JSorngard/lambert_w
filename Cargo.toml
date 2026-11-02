@@ -18,7 +18,7 @@ missing_docs = "warn"
 [dependencies]
 num-complex = { version = "0.4.6", default-features = false }
 num-traits = { version = "0.2.19", default-features = false }
-fast_polynomial = { version = "0.4", default_features = false }
+fast_polynomial = { version = "0.4", default-features = false }
 
 [dev-dependencies]
 approx = { version = "0.5.1", default-features = false }
