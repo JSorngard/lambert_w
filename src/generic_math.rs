@@ -27,9 +27,11 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
     // That they are operating on the 128-bit xmm registers means that two 64-bit floats are operated on at once,
     // and thus this is a way of formulating this operation that makes the compiler likely to vectorize it.
 
-    let numerator = polynomial(x, numerator_coefficients);
+    use fast_polynomial::poly_array;
 
-    let denominator = polynomial(x, denominator_coefficients);
+    let numerator = poly_array(x, & numerator_coefficients);
+
+    let denominator = poly_array(x, & denominator_coefficients);
 
     numerator / denominator
 }
