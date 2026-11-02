@@ -28,11 +28,7 @@ pub(crate) fn rational_function<T: Float + MulAdd<Output = T>, const N: usize, c
     // and thus this is a way of formulating this operation that makes the compiler likely to vectorize it.
 
     
-    fast_polynomial::rational_array(
-        x,
-        &numerator_coefficients,
-        &denominator_coefficients,
-    )
+    fast_polynomial::rational_array(x, &numerator_coefficients, &denominator_coefficients)
 
     /*let numerator = fast_polynomial::poly_array(x, &numerator_coefficients);
 
