@@ -29,9 +29,9 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
 
     use fast_polynomial::poly_array;
 
-    let numerator = poly_array(x, & numerator_coefficients);
+    let numerator = poly_array(x, &numerator_coefficients);
 
-    let denominator = poly_array(x, & denominator_coefficients);
+    let denominator = poly_array(x, &denominator_coefficients);
 
     numerator / denominator
 }
