@@ -31,7 +31,7 @@ pub(crate) fn rational_function<T: Float + MulAdd<Output = T>, const N: usize, c
     fast_polynomial::rational_array(
         x,
         &numerator_coefficients,
-        &denominator coefficients,
+        &denominator_coefficients,
     )
 
     /*let numerator = fast_polynomial::poly_array(x, &numerator_coefficients);
