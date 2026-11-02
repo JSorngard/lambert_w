@@ -21,79 +21,131 @@ use approx::assert_ulps_eq;
 
 #[test]
 fn principal_branches_match_high_precision_near_zero() {
+    let mut max_w0_err = 0.0;
+    let mut max_sp_w0_err = 0.0;
+    let mut max_w0f_err = 0.0;
     for (x, expected) in W0_NEAR_ZERO_ANSWERS {
         let actual = lambert_w0(x);
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
-        println!("{} ulps error in w0 at {x}", ulp_err64(actual, expected));
+        let w0_err = ulp_err64(actual, expected);
+        if w0_err > max_w0_err {
+            max_w0_err = w0_err;
+        }
+        // println!("{w0_err} ulps error in w0 at {x}");
         assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
 
         let actual = sp_lambert_w0(x);
-        println!("{} ulps error in sp_w0 at {x}", ulp_err64(actual, expected));
+        let sp_w0_err = ulp_err64(actual, expected);
+        if sp_w0_err > max_sp_w0_err {
+            max_sp_w0_err = sp_w0_err;
+        };
+        // println!("{sp_w0_err} ulps error in sp_w0 at {x}");
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
         assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
 
     for (x, expected) in W0F_NEAR_ZERO_ANSWERS {
         let actual = lambert_w0f(x);
-        println!("{} ulps error in w0f at {x}", ulp_err32(actual, expected));
+        let w0f_err = ulp_err32(actual, expected);
+        if w0f_err > max_w0f_err {
+            max_w0f_err = w0f_err;
+        };
+        // println!("{w0f_err} ulps error in w0f at {x}");
         assert_eq!(actual.is_sign_negative(), x.is_sign_negative());
         assert_only_ulps_eq!(actual, expected, max_ulps = WF_MAX_ULPS);
     }
+
+    println!("max ulps error in w0 near zero: {max_w0_err}");
+    println!("max ulps error in sp_w0 near zero: {max_sp_w0_err}");
+    println!("max ulps error in w0f near zero: {max_w0f_err}");
 }
 
 #[test]
 fn test_lambert_w0_at_random_values() {
+    let mut max_err = 0.0;
     for (x, expected) in Box::new(W0_RANDOM_ANSWERS) {
         let actual = lambert_w0(x);
-        println!("{} ulps error in w0 at {x}", ulp_err64(actual, expected));
+        let w0_err = ulp_err64(actual, expected);
+        if w0_err > max_err {
+            max_err = w0_err;
+        }
+        //println!("{w0_err} ulps error in w0 at {x}");
         assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
     }
+    println!("max ulps error in w0 at random values: {max_err}");
 }
 
 #[test]
 fn test_sp_lambert_w0_at_random_values() {
+    let mut max_err = 0.0;
     for (x, expected) in Box::new(SP_W0_RANDOM_ANSWERS) {
         let actual = sp_lambert_w0(x);
-        println!("{} ulps error in sp_w0 at {x}", ulp_err64(actual, expected));
+        let sp_w0_err = ulp_err64(actual, expected);
+        if sp_w0_err > max_err {
+            max_err = sp_w0_err;
+        }
+        //println!("{} ulps error in sp_w0 at {x}", ulp_err64(actual, expected));
         assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
+    println!("max ulps error in sp_w0 at random values: {max_err}");
 }
 
 #[test]
 fn test_lambert_w0f_at_random_values() {
+    let mut max_err = 0.0;
     for (x, expected) in Box::new(W0F_RANDOM_ANSWERS) {
         let actual = lambert_w0f(x);
-        println!("{} ulps error in w0f at {x}", ulp_err32(actual, expected));
+        let w0f_err = ulp_err32(actual, expected);
+        if w0f_err > max_err {
+            max_err = w0f_err;
+        }
+        //println!("{} ulps error in w0f at {x}", ulp_err32(actual, expected));
         assert_only_ulps_eq!(actual, expected, max_ulps = WF_MAX_ULPS);
     }
+    println!("max ulps error in w0f at random values: {max_err}");
 }
 
 #[test]
 fn test_lambert_wm1_at_random_values() {
+    let mut max_err = 0.0;
     for (x, expected) in WM1_RANDOM_ANSWERS {
         let actual = lambert_wm1(x);
-        println!("{} ulps error in wm1 at {x}", ulp_err64(actual, expected));
+        let wm1_err = ulp_err64(actual, expected);
+        if wm1_err > max_err {
+            max_err = wm1_err;
+        }
+        //println!("{} ulps error in wm1 at {x}", ulp_err64(actual, expected));
         assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
     }
+    println!("max ulps error in wm1 at random values: {max_err}");
 }
 
 #[test]
 fn test_sp_lambert_wm1_at_random_values() {
+    let mut max_err = 0.0;
     for (x, expected) in SP_WM1_RANDOM_ANSWERS {
         let actual = sp_lambert_wm1(x);
-        println!(
-            "{} ulps error in sp_wm1 at {x}",
-            ulp_err64(actual, expected)
-        );
+        let sp_wm1_err = ulp_err64(actual, expected);
+        if sp_wm1_err > max_err {
+            max_err = sp_wm1_err;
+        }
+        //println!("{} ulps error in sp_wm1 at {x}", ulp_err64(actual, expected));
         assert_only_ulps_eq!(actual, expected, max_ulps = SP_W_MAX_ULPS);
     }
+    println!("max ulps error in sp_wm1 at random values: {max_err}");
 }
 
 #[test]
 fn test_lambert_wm1f_at_random_values() {
+    let mut max_err = 0.0;
     for (x, expected) in WM1F_RANDOM_ANSWERS {
         let actual = lambert_wm1f(x);
-        println!("{} ulps error in wm1f at {x}", ulp_err32(actual, expected));
+        let wm1f_err = ulp_err32(actual, expected);
+        if wm1f_err > max_err {
+            max_err = wm1f_err;
+        }
+        //println!("{} ulps error in wm1f at {x}", ulp_err32(actual, expected));
         assert_only_ulps_eq!(lambert_wm1f(x), expected, max_ulps = WF_MAX_ULPS);
     }
+    println!("max ulps error in wm1f at random values: {max_err}");
 }
