@@ -10,11 +10,11 @@ use kuva::{
     plot::LinePlot,
     render::{layout::Layout, plots::Plot, render::render_multiple},
 };
-use lambert_w::{lambert_w0, lambert_wm1, NEG_INV_E};
+use lambert_w::{lambert_w0, lambert_wm1, SMALLEST_F64_IN_DOMAIN};
 
 fn main() {
     const X_MAX: f64 = 5.0;
-    const X_MIN: f64 = NEG_INV_E;
+    const X_MIN: f64 = SMALLEST_F64_IN_DOMAIN;
     const NUM_PLOT_POINTS: u32 = 1000;
 
     let x_coords: Vec<f64> = (0..NUM_PLOT_POINTS)

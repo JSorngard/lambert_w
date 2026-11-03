@@ -3,6 +3,11 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.6] - 2026-11-02
+
+- Use fused multiply-add instructions when available on the target.
+- Fix the plot example.
+
 ## [2.1.5] - 2026-11-01
 
 - Actually exclude the file with the tests. The file name was misspelled in the last version.

@@ -68,7 +68,7 @@ pub use swm1f::lambert_wm1f;
 #[allow(clippy::excessive_precision)]
 pub const NEG_INV_E: f64 = -0.367_879_441_171_442_321_595_523_770;
 
-/// The distance between `NEG_INV_E` and the true value of -1/e.
+/// The difference between the true value of -1/e and `NEG_INV_E`.
 const NEG_INV_E_CORRECTION: f64 = -1.2428753672788363e-17;
 
 /// Same as [`NEG_INV_E_CORRECTION`] but for 32-bit floats.
