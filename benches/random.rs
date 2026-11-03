@@ -176,8 +176,11 @@ fn random_benches(c: &mut Criterion) {
     );
 
     drop(group);
+}
 
+fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within blocks (Fukushima's method)");
+    let mut rng = SmallRng::seed_from_u64(0b1010101010101);
 
     bench_on_vec_of_random_values_in_range(
         &mut group,
@@ -215,7 +218,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 24 bits early block",
         sp_lambert_w0,
-        2.008_217_811_584_472_656_3_f64.next_up()..30.539_142_109_510_895_244,
+        2.008_217_811_584_472_656_3_f64.next_up()..=30.539_142_109_510_895_244,
         &mut rng,
     );
 
@@ -223,7 +226,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 24 bits middle block",
         sp_lambert_w0,
-        4.995_018_739_704_194_635_5e9_f64.next_up()..9.791_115_441_672_696_027_7e10,
+        4.995_018_739_704_194_635_5e9_f64.next_up()..=9.791_115_441_672_696_027_7e10,
         &mut rng,
     );
 
@@ -239,7 +242,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 24 bits on f32 early block",
         lambert_w0f,
-        2.008_217_8_f32.next_up()..30.539_143,
+        2.008_217_8_f32.next_up()..=30.539_143,
         &mut rng,
     );
 
@@ -247,7 +250,7 @@ fn random_benches(c: &mut Criterion) {
         &mut group,
         "W_0 24 bits on f32 middle block",
         lambert_w0f,
-        4.995_019e9_f32.next_up()..9.791_115e10,
+        4.995_019e9_f32.next_up()..=9.791_115e10,
         &mut rng,
     );
 
@@ -258,7 +261,79 @@ fn random_benches(c: &mut Criterion) {
         4.103_566e20_f32.next_up()..f32::MAX,
         &mut rng,
     );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 50 bits early block",
+        lambert_wm1,
+        -0.354_291_330_944_216_4_f64.next_up()..=-0.188_726_882_822_894_340_49,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 50 bits middle block",
+        lambert_wm1,
+        -0.000_307_288_059_321_914_998_44_f64.next_up()..=-0.000_077_447_159_838_062_184_354,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 50 bits late block",
+        lambert_wm1,
+        -4.580_811_969_815_817_317_4e-17_f64.next_up()..=-6.107_367_223_659_479_298_2e-79,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 24 bits early block",
+        sp_lambert_wm1,
+        -0.207_293_777_640_384_138_99_f64.next_up()..=-0.071_507_705_083_841_949_275,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 24 bits middle block",
+        sp_lambert_wm1,
+        -0.001_367_466_989_250_804_268_7_f64.next_up()..=-0.000_326_142_267_310_725_659_15,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 24 bits late block",
+        sp_lambert_wm1,
+        -1.096_244_452_641_099_391_9e-19_f64.next_up()..=-2.509_609_929_994_590_145_5e-136,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 24 bits on f32 early block",
+        lambert_wm1f,
+        -0.207_293_78_f32.next_up()..=-0.071_507_71,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 24 bits on f32 middle block",
+        lambert_wm1f,
+        -0.001_367_467_f32.next_up()..=-0.000_326_142_27,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_-1 24 bits on f32 late block",
+        lambert_wm1f,
+        -1.096_244_5e-19_f32.next_up()..=0.0,
+        &mut rng,
+    );
 }
 
-criterion_group!(benches, random_benches);
+criterion_group!(benches, random_benches, random_benches_within_blocks);
 criterion_main!(benches);
