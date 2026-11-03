@@ -177,6 +177,8 @@ where
         return Complex::<T>::new(T::nan(), T::nan());
     }
 
+    let error_tolerance = error_tolerance.abs();
+
     // region: construct constants of the generic type
 
     let i_zero = U::zero();
