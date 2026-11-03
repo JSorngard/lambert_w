@@ -174,6 +174,90 @@ fn random_benches(c: &mut Criterion) {
         NEG_INV_E as f32..=0.0,
         &mut rng,
     );
+
+    drop(group);
+
+    let mut group = c.benchmark_group("random inputs within blocks (Fukushima's method)");
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 50 bits around zero",
+        lambert_w0,
+        -0.0675..=0.0675,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 50 bits early block",
+        lambert_w0,
+        2.549_893_906_503_473_571_6_f64.next_up()..=43.613_924_462_669_367_895,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 50 bits middle block",
+        lambert_w0,
+        5.550_171_629_616_362_785_4e9_f64.next_up()..=8.867_470_483_965_777_533_1e10,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 50 bits late block",
+        lambert_w0,
+        1.412_707_514_527_465_206_9e104_f64.next_up()..f64::MAX,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 24 bits early block",
+        sp_lambert_w0,
+        2.008_217_811_584_472_656_3_f64.next_up()..30.539_142_109_510_895_244,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 24 bits middle block",
+        sp_lambert_w0,
+        4.995_018_739_704_194_635_5e9_f64.next_up()..9.791_115_441_672_696_027_7e10,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 24 bits late block",
+        sp_lambert_w0,
+        4.103_565_939_888_539_413_5e20_f64.next_up()..f64::MAX,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 24 bits on f32 early block",
+        lambert_w0f,
+        2.008_217_8_f32.next_up()..30.539_143,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 24 bits on f32 middle block",
+        lambert_w0f,
+        4.995_019e9_f32.next_up()..9.791_115e10,
+        &mut rng,
+    );
+
+    bench_on_vec_of_random_values_in_range(
+        &mut group,
+        "W_0 24 bits on f32 late block",
+        lambert_w0f,
+        4.103_566e20_f32.next_up()..f32::MAX,
+        &mut rng,
+    );
 }
 
 criterion_group!(benches, random_benches);
