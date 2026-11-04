@@ -3,9 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.7] - 2026-11-04
 
 - Binary search the input domain.
+- Fix a bug where the complex W-functions can fail to converge when given a negative error tolerance.
 
 ## [2.1.6] - 2026-11-02
 
