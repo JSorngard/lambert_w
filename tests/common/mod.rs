@@ -19,19 +19,19 @@ macro_rules! assert_only_ulps_eq {
 ///
 /// The tests of the 32-bit functions near the branch point use their own constant.
 pub const WF_ACCURACY_BITS: u32 = 20;
-/// The number of ulps that the functions on 32-bit floats should get from the true answer.
+/// The number of ulps that the functions on 32-bit floats may get from the true answer.
 pub const WF_MAX_ULPS: u32 = u32::pow(2, f32::MANTISSA_DIGITS - WF_ACCURACY_BITS);
 
 /// The number of bits that are accurate in the high precision 64-bit functions.
 /// Raising this any higher causes some tests to fail.
 pub const W_ACCURACY_BITS: u32 = 50;
-/// The number of ulps that the 50-bit functions should get from the true answer.
+/// The number of ulps that the high-accuracy functions may get from the true answer.
 pub const W_MAX_ULPS: u32 = u32::pow(2, f64::MANTISSA_DIGITS - W_ACCURACY_BITS);
 
 /// The number of bits that are accurate in the low precision 64-bit functions.
 /// Raising this any higher causes some tests to fail.
 pub const SP_W_ACCURACY_BITS: u32 = 24;
-/// The number of ulps that the 24-bit functions should get from the true answer.
+/// The number of ulps that the 24-bit functions may get from the true answer.
 pub const SP_W_MAX_ULPS: u32 = u32::pow(2, f64::MANTISSA_DIGITS - SP_W_ACCURACY_BITS);
 
 /// Returns the distance between `got` and `exact` in ulps.

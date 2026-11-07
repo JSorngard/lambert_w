@@ -35,12 +35,14 @@ def f64_next_down(x: float) -> float:
 def f64_next_up(x: float) -> float:
     return math.nextafter(x, math.inf)
 
+NUM_RANDOM_VALUES_PER_SECTION: int = 1_000
+
 def print_test_cases(critical_z_values: list[float], cast, next_down, next_up, name: str, rust_type: str, output, branch=0):
     z_values = []
     branch_stop = math.inf if branch == 0 else 0
     for lower_value, upper_value in zip(critical_z_values, critical_z_values[1:] + [branch_stop], strict = True):
         z_values += [cast(lower_value), cast(next_up(cast(lower_value))), cast(next_down(cast(upper_value)))]
-        z_values += sorted(list(map(cast, (np.random.rand(1_000)*(upper_value - lower_value) + lower_value).tolist())))
+        z_values += sorted(list(map(cast, (np.random.rand(NUM_RANDOM_VALUES_PER_SECTION)*(upper_value - lower_value) + lower_value).tolist())))
     z_set = sorted({z for z in z_values if z != math.inf and not np.isnan(z) and not (z >= 0 and branch == -1)})
     output.write("/// z-values and the corresponding values of W0(z) evaluated with mpmath in python.\n")
     output.write(f"pub const {name}: [({rust_type}, {rust_type}); {len(z_set)}] = [\n")
@@ -64,6 +66,8 @@ with open("tests/test_data/random_test_cases.rs", "w") as f:
         -0.3678794411714423,
         -0.0675,
         0.0675,
+        0.15,
+        1.0,
         2.549_893_906_503_473_571_6,
         43.613_924_462_669_367_895,
         598.453_533_718_782_769_46,

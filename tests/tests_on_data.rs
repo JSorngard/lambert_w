@@ -69,7 +69,7 @@ fn test_lambert_w0_at_random_values() {
         if w0_err > max_err {
             max_err = w0_err;
         }
-        //println!("{w0_err} ulps error in w0 at {x}");
+        println!("{w0_err} ulps error in w0 at {x}");
         assert_only_ulps_eq!(actual, expected, max_ulps = W_MAX_ULPS);
     }
     println!("max ulps error in w0 at random values: {max_err}");

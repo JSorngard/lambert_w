@@ -123,6 +123,8 @@ const PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD: f64 = 0.0675;
 /// Closer to zero than this we approximate the principal branch as z - z^2.
 const PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD: f64 = 1e-9;
 
+const PRINCIPAL_BRANCH_MAX_TRICKY_REGION: f64 = 0.15;
+
 /// The floating point value closest to 1/sqrt(e).
 #[allow(clippy::excessive_precision)]
 const INV_SQRT_E: f64 = 0.606_530_659_712_633_423_603_799_535;
