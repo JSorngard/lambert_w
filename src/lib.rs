@@ -262,3 +262,14 @@ const fn w0_taylor_coefficients<const DEGREE: usize>() -> [f64; DEGREE] {
     }
     arr
 }
+
+/// Same as w0_taylor_coefficients but returns f32 values instead of f64 values.
+const fn w0f_taylor_coefficients<const DEGREE: usize>() -> [f32; DEGREE] {
+    let mut arr = [0.0; DEGREE];
+    let mut i = 0;
+    while i < DEGREE {
+        arr[i] = w0_taylor_coefficients::<DEGREE>()[i] as f32;
+        i += 1;
+    }
+    arr
+}

@@ -93,9 +93,6 @@ fn sw0(z: f64) -> f64 {
     // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
     // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
 
-    // Another artifact of taking z instead of z + 1/e as input.
-    // When we add 1/e we introduce a cancellation error.
-    // We compensate for that here.
     let zc = (z - NEG_INV_E) + NEG_INV_E_CORRECTION;
 
     if zc < 0.0 {
