@@ -13,8 +13,8 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD,
-    PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN,
+    w0_taylor_coefficients, NEG_INV_E, NEG_INV_E_CORRECTION,
+    PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
 };
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
@@ -66,15 +66,7 @@ use crate::{
 /// [^3]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_w0(z: f64) -> f64 {
-    // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
-    // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
-    // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
-
-    if z < SMALLEST_F64_IN_DOMAIN {
-        f64::NAN
-    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
-        .contains(&z)
-    {
+    if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD).contains(&z) {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
@@ -86,33 +78,33 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
             ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
             .contains(&z)
         {
-            // The first two terms of the Taylor polynomial in the branch below.
-            // All that's needed this close to zero.
-
-            z * polynomial(z, [1.0, -1.0])
+            z * polynomial(z, w0_taylor_coefficients::<2>())
         } else {
-            z * polynomial(
-                z,
-                [
-                    1.0,
-                    -1.0,
-                    3.0 / 2.0,
-                    -8.0 / 3.0,
-                    125.0 / 24.0,
-                    -54.0 / 5.0,
-                    16807.0 / 720.0,
-                    -16384.0 / 315.0,
-                ],
-            )
+            z * polynomial(z, w0_taylor_coefficients::<8>())
         }
+    } else {
+        sw0(z)
+    }
+}
+
+/// Fukushima's 24 bit accurate approximation.
+fn sw0(z: f64) -> f64 {
+    // The critical arguments used in the if statements are related to the numbers in table 3 of the paper, column one.
+    // The coefficients in the rational functions are related from the tables 5 through 7 in the paper.
+    // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
+
+    // Another artifact of taking z instead of z + 1/e as input.
+    // When we add 1/e we introduce a cancellation error.
+    // We compensate for that here.
+    let zc = (z - NEG_INV_E) + NEG_INV_E_CORRECTION;
+
+    if zc < 0.0 {
+        f64::NAN
     } else if z <= 2.008_217_811_584_472_656_3 {
         // W <= 0.854, X_1
 
         rational_function(
-            // Another artifact of taking z instead of z + 1/e as input.
-            // When we add 1/e we introduce a cancellation error.
-            // We compensate for that here.
-            sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION),
+            sqrt(zc),
             [
                 -0.999_999_940_395_401_883_3,
                 0.055_730_052_161_777_802_73,
@@ -131,7 +123,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 2.502, X_2
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 -0.985_519_709_059_990_933_51,
                 1.077_497_573_381_351_625_9,
@@ -149,7 +141,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 4.430, X_3
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 -0.762_397_113_463_688_842_39,
                 1.231_773_161_336_359_583_3,
@@ -167,7 +159,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 6.574, X_4
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 0.085_801_247_434_391_388_025,
                 0.825_397_980_997_483_437_22,
@@ -185,7 +177,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 8.892, X_5
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 1.621_924_538_347_016_874_2,
                 0.388_691_451_325_166_635_64,
@@ -203,7 +195,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 11.351, X_6
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 3.621_899_608_569_591_996_9,
                 0.148_846_467_548_801_598_69,
@@ -221,7 +213,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 13.928, X_7
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 5.907_336_973_960_809_058_9,
                 0.050_053_653_594_737_112_977,
@@ -239,7 +231,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 16.605, X_8
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 8.382_600_584_819_551_267_1,
                 0.015_360_346_475_232_500_605,
@@ -257,7 +249,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 19.368, X_9
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 10.996_674_803_992_550_975,
                 0.004_394_213_889_867_383_245_6,
@@ -275,7 +267,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 22.207, X_10
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 13.719_833_802_350_861_158,
                 0.001_187_444_380_520_229_142_9,
@@ -293,7 +285,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 25.114, X_11
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 16.533_119_481_561_616_886,
                 0.000_305_831_257_519_080_406_46,
@@ -311,7 +303,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 28.082, X_12
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 19.423_519_260_478_579_324,
                 0.000_075_559_269_761_977_808_773,
@@ -329,7 +321,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 31.106, X_13
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 22.381_576_050_041_913_103,
                 0.000_017_994_724_029_162_552_053,
@@ -347,7 +339,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 34.182, X_14
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 25.400_105_417_092_068_195,
                 4.146_737_838_657_924_601_5e-6,
@@ -365,7 +357,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 37.306, X_15
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 28.473_455_626_379_917_708,
                 9.274_682_469_309_405_901_9e-7,
@@ -383,7 +375,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 40.475, X_16
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 31.597_055_437_846_359_378,
                 2.018_422_527_678_632_549_6e-7,
@@ -401,7 +393,7 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
         // W <= 43.687, X_17
 
         rational_function(
-            sqrt(z - NEG_INV_E),
+            sqrt(zc),
             [
                 34.767_124_490_414_517_175,
                 4.283_079_924_069_894_293_2e-8,

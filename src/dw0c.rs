@@ -13,8 +13,9 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD,
-    PRINCIPAL_BRANCH_MAX_TRICKY_REGION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
+    w0_taylor_coefficients, NEG_INV_E, NEG_INV_E_CORRECTION,
+    PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD, PRINCIPAL_BRANCH_MAX_TRICKY_REGION,
+    PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
 };
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
@@ -78,17 +79,17 @@ pub fn lambert_w0(z: f64) -> f64 {
             ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
             .contains(&z)
         {
-            z * polynomial(z, get_taylor_coefficients::<2>())
+            z * polynomial(z, w0_taylor_coefficients::<2>())
         } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
             .contains(&z)
         {
-            z * polynomial(z, get_taylor_coefficients::<18>())
+            z * polynomial(z, w0_taylor_coefficients::<18>())
         } else {
             // Between the near zero threshold and the end of the "tricky region".
             // This part of the domain was found by running a lot of tests on random data.
             // A polynomial of this degree should still be faster than a Halley iteration
             // since that would involve logarithms.
-            z * polynomial(z, get_taylor_coefficients::<32>())
+            z * polynomial(z, w0_taylor_coefficients::<32>())
         }
     } else {
         // Another artifact of taking z instead of z + 1/e as input.
@@ -96,126 +97,6 @@ pub fn lambert_w0(z: f64) -> f64 {
         // We compensate for that here.
         dw0c((z - NEG_INV_E) + NEG_INV_E_CORRECTION)
     }
-}
-
-/// Helper function that returns an array of Taylor coefficients to the given degree.
-///
-/// Needed because there is no nice short idiom to const convert an array into a smaller one at this MSRV.
-#[allow(clippy::indexing_slicing)]
-const fn get_taylor_coefficients<const DEGREE: usize>() -> [f64; DEGREE] {
-    /// The coefficients of the Taylor expansion of the principal branch for |z| < 1/e.
-    ///
-    /// Source: equation (5) in section 4.13 of the NIST Digital Library of Mathematical Functions.
-    /// Evaluated with `mpmath` in `python`.
-    const TAYLOR_COEFFICIENTS: [f64; 99] = [
-        1.0,
-        -1.0,
-        1.5,
-        -2.6666666666666665,
-        5.208333333333333,
-        -10.8,
-        23.343055555555555,
-        -52.01269841269841,
-        118.62522321428571,
-        -275.5731922398589,
-        649.7871723434745,
-        -1551.1605194805195,
-        3741.4497029592385,
-        -9104.500241158019,
-        22324.3085127066,
-        -55103.621972903835,
-        136808.86090394293,
-        -341422.05066583835,
-        855992.9659966076,
-        -2154990.2060910882,
-        5445552.922314462,
-        -13807330.002166629,
-        35117044.985139236,
-        -89568002.56102797,
-        229041684.61879498,
-        -587103504.1171799,
-        1508256053.8577929,
-        -3882630161.293189,
-        10013943136.654829,
-        -25873567362.657608,
-        66962097093.58074,
-        -173571165959.9198,
-        450568046564.2354,
-        -1171223178256.4873,
-        3048462517882.447,
-        -7944240398206.812,
-        20726462893727.055,
-        -54134309927745.64,
-        141537001323842.75,
-        -370420141783066.7,
-        970343148988291.6,
-        -2544149870142830.0,
-        6676186549945615.0,
-        -1.7533383884497608e+16,
-        4.60827878998424e+16,
-        -1.2120840403841997e+17,
-        3.1903175600194195e+17,
-        -8.402903354222312e+17,
-        2.21465954871603e+18,
-        -5.840571433838374e+18,
-        1.5412168778694736e+19,
-        -4.069322719765488e+19,
-        1.0750309245601006e+20,
-        -2.841523479625779e+20,
-        7.514576699787185e+20,
-        -1.9882580395853338e+21,
-        5.263181221319305e+21,
-        -1.393875696142799e+22,
-        3.6931170823009246e+22,
-        -9.789238808348462e+22,
-        2.5958848046636118e+23,
-        -6.886470406171994e+23,
-        1.82758313942499e+24,
-        -4.852007501582215e+24,
-        1.2886191206597694e+25,
-        -3.423588987248066e+25,
-        9.098881018831215e+25,
-        -2.419018815528663e+26,
-        6.433261047507392e+26,
-        -1.7114323043280685e+27,
-        4.554293613099411e+27,
-        -1.21230351895065e+28,
-        3.227952889170164e+28,
-        -8.597359350864599e+28,
-        2.2904550168353216e+29,
-        -6.103713000670467e+29,
-        1.6269682265597198e+30,
-        -4.337842335304133e+30,
-        1.1568455628188089e+31,
-        -3.085895746764332e+31,
-        8.233581124561597e+31,
-        -2.1973308306283072e+32,
-        5.865416934086536e+32,
-        -1.5660180769945114e+33,
-        4.182027286033164e+33,
-        -1.1170355799760446e+34,
-        2.9842494563739106e+34,
-        -7.974238176573383e+34,
-        2.1312151963492572e+35,
-        -5.697017455033175e+35,
-        1.523169120402824e+36,
-        -4.0731206898104024e+36,
-        1.089389810261902e+37,
-        -2.914167919306647e+37,
-        7.796855402425589e+37,
-        -2.0863947853703042e+38,
-        5.583983227480016e+38,
-        -1.494723567161428e+39,
-        4.001708187541245e+39,
-    ];
-
-    let mut arr = [0.0; DEGREE];
-    let mut i = 0;
-    while i < DEGREE {
-        arr[i] = TAYLOR_COEFFICIENTS[i];
-        i += 1;
-    }
-    arr
 }
 
 /// Fukushima's ~50 bit accurate approximation.
