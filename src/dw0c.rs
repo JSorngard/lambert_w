@@ -17,6 +17,90 @@ use crate::{
     PRINCIPAL_BRANCH_MAX_TRICKY_REGION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
 };
 
+/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
+///
+/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of it's Taylor polynomial[^2],
+/// and close to the branch point where the value of z + 1/e is corrected by adding back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^3].
+///
+/// # Examples
+///
+/// #### Basic usage
+///
+/// ```
+/// use lambert_w::lambert_w0;
+/// use approx::assert_abs_diff_eq;
+///
+/// let Ω = lambert_w0(1.0);
+///
+/// assert_abs_diff_eq!(Ω, 0.567143290409783873);
+/// ```
+///
+/// #### Edge cases
+///
+/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
+/// the constant [`NEG_INV_E`], which is the next float down, gives [`NAN`](f64::NAN):
+///
+/// ```
+/// use lambert_w::{lambert_w0, NEG_INV_E, SMALLEST_F64_IN_DOMAIN};
+///
+/// assert!(lambert_w0(NEG_INV_E).is_nan());
+/// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
+/// ```
+///
+/// An input of [`INFINITY`](f64::INFINITY) gives [`INFINITY`](f64::INFINITY) and an input of [`NAN`](f64::NAN) results in [`NAN`](f64::NAN):
+///
+/// ```
+/// use lambert_w::lambert_w0;
+///
+/// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
+/// assert!(lambert_w0(f64::NAN).is_nan());
+/// ```
+///
+/// # References
+///
+/// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
+/// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
+///
+/// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
+///
+/// [^3]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
+#[must_use = "this is a pure function that only returns a value and has no side effects"]
+pub fn lambert_w0(z: f64) -> f64 {
+    // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
+    // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
+
+    if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION).contains(&z) {
+        // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
+        //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
+        // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
+        // In the article by Fuskushima he does not do this special near-zero branch.
+        // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
+        // We want to take z directly because it makes the API much more intuitive.
+
+        if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD
+            ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
+            .contains(&z)
+        {
+            z * polynomial(z, get_taylor_coefficients::<2>())
+        } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
+            .contains(&z)
+        {
+            z * polynomial(z, get_taylor_coefficients::<18>())
+        } else {
+            // Between the near zero threshold and the end of the "tricky region".
+            // This part of the domain was found by running a lot of tests on random data.
+            // A polynomial of this degree should still be faster than a Halley iteration
+            // since that would involve logarithms.
+            z * polynomial(z, get_taylor_coefficients::<32>())
+        }
+    } else {
+        // Another artifact of taking z instead of z + 1/e as input.
+        // When we add 1/e we introduce a cancellation error.
+        // We compensate for that here.
+        dw0c((z - NEG_INV_E) + NEG_INV_E_CORRECTION)
+    }
+}
+
 /// Helper function that returns an array of Taylor coefficients to the given degree.
 ///
 /// Needed because there is no nice short idiom to const convert an array into a smaller one at this MSRV.
@@ -135,90 +219,6 @@ const fn get_taylor_coefficients<const DEGREE: usize>() -> [f64; DEGREE] {
         i += 1;
     }
     arr
-}
-
-/// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
-///
-/// The implementation follows the description in Fukushima's paper[^1] except around zero, where the function is implemented in terms of it's Taylor polynomial[^2],
-/// and close to the branch point where the value of z + 1/e is corrected by adding back the distance between [`NEG_INV_E`] and the true value of -1/e to reduce cancellation error, as done in FLINT[^3].
-///
-/// # Examples
-///
-/// #### Basic usage
-///
-/// ```
-/// use lambert_w::lambert_w0;
-/// use approx::assert_abs_diff_eq;
-///
-/// let Ω = lambert_w0(1.0);
-///
-/// assert_abs_diff_eq!(Ω, 0.567143290409783873);
-/// ```
-///
-/// #### Edge cases
-///
-/// The smallest (most negative) value for which this function returns a valid float is [`SMALLEST_F64_IN_DOMAIN`],
-/// the constant [`NEG_INV_E`], which is the next float down, gives [`NAN`](f64::NAN):
-///
-/// ```
-/// use lambert_w::{lambert_w0, NEG_INV_E, SMALLEST_F64_IN_DOMAIN};
-///
-/// assert!(lambert_w0(NEG_INV_E).is_nan());
-/// assert!(!lambert_w0(SMALLEST_F64_IN_DOMAIN).is_nan());
-/// ```
-///
-/// An input of [`INFINITY`](f64::INFINITY) gives [`INFINITY`](f64::INFINITY) and an input of [`NAN`](f64::NAN) results in [`NAN`](f64::NAN):
-///
-/// ```
-/// use lambert_w::lambert_w0;
-///
-/// assert_eq!(lambert_w0(f64::INFINITY), f64::INFINITY);
-/// assert!(lambert_w0(f64::NAN).is_nan());
-/// ```
-///
-/// # References
-///
-/// [^1]: Toshio Fukushima. **Precise and fast computation of Lambert W function by piecewise minimax rational function approximation with variable transformation**.
-/// DOI: [10.13140/RG.2.2.30264.37128](https://doi.org/10.13140/RG.2.2.30264.37128). November 2020.
-///
-/// [^2]: Equation (5) in section 4.13 of the Digital Library of Math Functions by NIST, [DLMF 4.13.5](https://dlmf.nist.gov/4.13.E5), release 1.2.8 of 2026-09-15.
-///
-/// [^3]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
-#[must_use = "this is a pure function that only returns a value and has no side effects"]
-pub fn lambert_w0(z: f64) -> f64 {
-    // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
-    // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
-
-    if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION).contains(&z) {
-        // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
-        //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
-        // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
-        // In the article by Fuskushima he does not do this special near-zero branch.
-        // That is because his function takes z + 1/e as an input instead of z, and then you can never get values super-close to zero.
-        // We want to take z directly because it makes the API much more intuitive.
-
-        if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD
-            ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
-            .contains(&z)
-        {
-            z * polynomial(z, const { get_taylor_coefficients::<2>() })
-        } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
-            .contains(&z)
-        {
-            z * polynomial(z, const { get_taylor_coefficients::<18>() })
-        } else {
-            // Between the near zero threshold and the end of the "tricky region".
-            // This part of the domain was found by running a lot of tests on random data.
-            // A polynomial of this degree should still be faster than a Halley iteration
-            // since that would involve logarithms.
-            z * polynomial(z, const { get_taylor_coefficients::<32>() })
-        }
-    } else {
-        // Another artifact of taking z instead of z + 1/e as input.
-        // When we add 1/e we introduce a cancellation error.
-        // We compensate for that here.
-        dw0c((z - NEG_INV_E) + NEG_INV_E_CORRECTION)
-    }
 }
 
 /// Fukushima's ~50 bit accurate approximation.
