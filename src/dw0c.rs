@@ -72,7 +72,11 @@ pub fn lambert_w0(z: f64) -> f64 {
 
     let zc = z - NEG_INV_E;
 
-    if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION).contains(&z) {
+    if zc < 0.0 {
+        f64::NAN
+    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION)
+        .contains(&z)
+    {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
         // Source: equation (5) in section 4.13 of the Digital Library of Mathematical Functions.
