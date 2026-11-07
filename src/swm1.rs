@@ -13,7 +13,7 @@
 
 use crate::{
     generic_math::{ln, rational_function, sqrt},
-    INV_SQRT_E, NEG_INV_E, NEG_INV_E_CORRECTION,
+    INV_SQRT_E, NEG_INV_E, NEG_INV_E_CORRECTION, SMALLEST_F64_IN_DOMAIN,
 };
 
 /// The secondary branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with Fukushima's method[^1].
@@ -70,24 +70,17 @@ use crate::{
 /// [^2]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn sp_lambert_wm1(z: f64) -> f64 {
-    swm1(z)
-}
-
-/// Fukushima's 24 bit accurate approximation.
-fn swm1(z: f64) -> f64 {
     // The critical arguments used in the if statements are related to the numbers in table 4 of the paper, column one.
     // The coefficients in the rational functions are related to the tables 8 and 9 in the paper.
     // The actual numbers are taken from Fukushima's Fortran implementation, where they have higher precision.
 
-    let zc = (z - NEG_INV_E) + NEG_INV_E_CORRECTION;
-
-    if zc < 0.0 {
+    if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
     } else if z <= -0.207_293_777_640_384_138_99 {
         // W >= -2.483, Y_-1
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION)),
             [
                 -6.383_722_822_801_905_640_2,
                 -74.968_653_259_594_050_421,
@@ -105,7 +98,7 @@ fn swm1(z: f64) -> f64 {
         // W >= -4.032, Y_-2
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -7.723_328_481_229_978_044_5,
                 -352.484_690_970_429_148_66,
@@ -123,7 +116,7 @@ fn swm1(z: f64) -> f64 {
         // W >= -5.600, Y_-3
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -9.137_773_141_758_154_626_2,
                 -1_644.724_479_150_888_940_7,
@@ -141,7 +134,7 @@ fn swm1(z: f64) -> f64 {
         // W >= -7.178, Y_-4
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -10.603_388_239_566_372_960,
                 -7_733.348_521_498_647_619_3,
@@ -159,7 +152,7 @@ fn swm1(z: f64) -> f64 {
         // W >= -8.766, Y_-5
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -12.108_699_273_343_437_997,
                 -36_896.535_108_166_377_289,
@@ -177,7 +170,7 @@ fn swm1(z: f64) -> f64 {
         // W >= -10.367, Y_-6
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -13.646_761_936_746_191_398,
                 -179_086.115_857_151_485_53,
@@ -195,7 +188,7 @@ fn swm1(z: f64) -> f64 {
         // W >= -11.983, Y_-7
 
         rational_function(
-            -z / (INV_SQRT_E + sqrt(zc)),
+            -z / (INV_SQRT_E + sqrt(z - NEG_INV_E)),
             [
                 -15.212_958_142_001_646_273,
                 -884_954.687_981_689_538_07,
