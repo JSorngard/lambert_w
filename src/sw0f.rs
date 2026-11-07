@@ -8,8 +8,9 @@
 
 use crate::generic_math::{ln, polynomial, rational_function, sqrt};
 use crate::{
-    NEG_INV_E_CORRECTION_32_BIT, PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD,
-    PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F32_IN_DOMAIN,
+    w0f_taylor_coefficients, NEG_INV_E_CORRECTION_32_BIT,
+    PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
+    SMALLEST_F32_IN_DOMAIN,
 };
 
 const NEG_INV_E: f32 = super::NEG_INV_E as f32;
@@ -91,21 +92,9 @@ pub fn lambert_w0f(z: f32) -> f32 {
             // The first two terms of the Taylor polynomial in the branch below.
             // All that's needed this close to zero.
 
-            z * polynomial(z, [1.0, -1.0])
+            z * polynomial(z, w0f_taylor_coefficients::<2>())
         } else {
-            z * polynomial(
-                z,
-                [
-                    1.0,
-                    -1.0,
-                    3.0 / 2.0,
-                    -8.0 / 3.0,
-                    125.0 / 24.0,
-                    -54.0 / 5.0,
-                    16807.0 / 720.0,
-                    -16384.0 / 315.0,
-                ],
-            )
+            z * polynomial(z, w0f_taylor_coefficients::<8>())
         }
     } else if z <= 2.008_217_8 {
         // W <= 0.854, X_1

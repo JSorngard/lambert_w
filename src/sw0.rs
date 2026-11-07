@@ -13,8 +13,9 @@
 
 use crate::{
     generic_math::{ln, polynomial, rational_function, sqrt},
-    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD,
-    PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN,
+    w0_taylor_coefficients, NEG_INV_E, NEG_INV_E_CORRECTION,
+    PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD,
+    SMALLEST_F64_IN_DOMAIN,
 };
 
 /// The principal branch of the Lambert W function computed to 24 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
@@ -89,21 +90,9 @@ pub fn sp_lambert_w0(z: f64) -> f64 {
             // The first two terms of the Taylor polynomial in the branch below.
             // All that's needed this close to zero.
 
-            z * polynomial(z, [1.0, -1.0])
+            z * polynomial(z, w0_taylor_coefficients::<2>())
         } else {
-            z * polynomial(
-                z,
-                [
-                    1.0,
-                    -1.0,
-                    3.0 / 2.0,
-                    -8.0 / 3.0,
-                    125.0 / 24.0,
-                    -54.0 / 5.0,
-                    16807.0 / 720.0,
-                    -16384.0 / 315.0,
-                ],
-            )
+            z * polynomial(z, w0_taylor_coefficients::<8>())
         }
     } else if z <= 2.008_217_811_584_472_656_3 {
         // W <= 0.854, X_1
