@@ -20,6 +20,7 @@ use crate::{
 /// Helper function that returns an array of Taylor coefficients to the given degree.
 ///
 /// Needed because there is no nice short idiom to const convert an array into a smaller one at this MSRV.
+#[allow(clippy::indexing_slicing)]
 const fn get_taylor_coefficients<const DEGREE: usize>() -> [f64; DEGREE] {
     /// The coefficients of the Taylor expansion of the principal branch for |z| < 1/e.
     ///

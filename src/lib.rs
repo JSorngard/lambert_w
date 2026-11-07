@@ -20,7 +20,8 @@
 #![forbid(clippy::unwrap_used)]
 #![forbid(clippy::expect_used)]
 #![forbid(clippy::panic)]
-#![forbid(clippy::indexing_slicing)]
+// Not forbid because we use this in some constant blocks.
+#![deny(clippy::indexing_slicing)]
 
 #[cfg(feature = "std")]
 extern crate std;
