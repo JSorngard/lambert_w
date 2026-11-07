@@ -12,7 +12,10 @@
 #![allow(clippy::excessive_precision)]
 
 use crate::{
-    NEG_INV_E, NEG_INV_E_CORRECTION, PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD, PRINCIPAL_BRANCH_MAX_TRICKY_REGION, PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN, generic_math::{ln, polynomial, rational_function, sqrt}, w0_taylor_coefficients,
+    generic_math::{ln, polynomial, rational_function, sqrt},
+    w0_taylor_coefficients, NEG_INV_E, NEG_INV_E_CORRECTION,
+    PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD, PRINCIPAL_BRANCH_MAX_TRICKY_REGION,
+    PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD, SMALLEST_F64_IN_DOMAIN,
 };
 
 /// The principal branch of the Lambert W function computed to 50 bits of accuracy on 64-bit floats with a method based on Fukushima's[^1].
