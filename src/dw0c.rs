@@ -67,6 +67,14 @@ use crate::{
 /// [^3]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_w0(z: f64) -> f64 {
+    // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
+    // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
+
+    // Another artifact of taking z instead of z + 1/e as input.
+    // When we add 1/e we introduce a cancellation error.
+    // We compensate for that here.
+    let zc = (z - NEG_INV_E) + NEG_INV_E_CORRECTION;
+
     if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION).contains(&z) {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
         //     W_0(z) = sum_{n >= 1} (-n)^(n-1) z^n / n!
@@ -91,21 +99,6 @@ pub fn lambert_w0(z: f64) -> f64 {
             // since that would involve logarithms.
             z * polynomial(z, w0_taylor_coefficients::<32>())
         }
-    } else {
-        // Another artifact of taking z instead of z + 1/e as input.
-        // When we add 1/e we introduce a cancellation error.
-        // We compensate for that here.
-        dw0c((z - NEG_INV_E) + NEG_INV_E_CORRECTION)
-    }
-}
-
-/// Fukushima's ~50 bit accurate approximation.
-fn dw0c(zc: f64) -> f64 {
-    // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
-    // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
-
-    if zc < 0.0 {
-        f64::NAN
     } else if zc <= 2.549_893_906_503_473_571_6 {
         // W <= 0.893, X_1
 
@@ -604,6 +597,6 @@ fn dw0c(zc: f64) -> f64 {
     } else {
         // In the branch the input was either +infinity or NaN,
         // in both cases the output of the W function happens to match the input.
-        zc
+        z
     }
 }
