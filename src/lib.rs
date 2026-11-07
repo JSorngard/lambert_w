@@ -264,6 +264,7 @@ const fn w0_taylor_coefficients<const DEGREE: usize>() -> [f64; DEGREE] {
 }
 
 /// Same as w0_taylor_coefficients but returns f32 values instead of f64 values.
+#[allow(clippy::indexing_slicing)]
 const fn w0f_taylor_coefficients<const DEGREE: usize>() -> [f32; DEGREE] {
     let mut arr = [0.0; DEGREE];
     let mut i = 0;
