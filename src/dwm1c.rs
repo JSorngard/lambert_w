@@ -71,6 +71,9 @@ use crate::{
 /// [^2]: The FLINT team, ["d_lambertw (double_extras.h)"](https://flintlib.org/doc/double_extras/d_lambertw.html), FLINT: Fast Library for Number Theory, documentation, version 3.7.0-dev, 2026 (generated 2026-10-20, url visited 2026-11-01).
 #[must_use = "this is a pure function that only returns a value and has no side effects"]
 pub fn lambert_wm1(z: f64) -> f64 {
+    // An artifact of taking z instead of z + 1/e as input.
+    // When we add 1/e we introduce a cancellation error.
+    // We compensate for that here.
     dwm1c(z, (z - NEG_INV_E) + NEG_INV_E_CORRECTION)
 }
 
