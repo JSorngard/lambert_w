@@ -70,10 +70,7 @@ pub fn lambert_w0(z: f64) -> f64 {
     // The critical arguments used in the if statements are the numbers in table 3 of the paper, column two, with 1/e added.
     // The coefficients in the rational functions are the ones in tables 10 through 14 in the paper.
 
-    // Another artifact of taking z instead of z + 1/e as input.
-    // When we add 1/e we introduce a cancellation error.
-    // We compensate for that here.
-    let zc = (z - NEG_INV_E) + NEG_INV_E_CORRECTION;
+    let zc = z - NEG_INV_E;
 
     if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION).contains(&z) {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
@@ -103,7 +100,10 @@ pub fn lambert_w0(z: f64) -> f64 {
         // W <= 0.893, X_1
 
         rational_function(
-            sqrt(zc),
+            // Another artifact of taking z instead of z + 1/e as input.
+            // When we add 1/e we introduce a cancellation error.
+            // We compensate for that here.
+            sqrt(zc + NEG_INV_E_CORRECTION),
             [
                 -0.999_999_999_999_999_889_0,
                 -2.739_966_866_820_365_930_4,
