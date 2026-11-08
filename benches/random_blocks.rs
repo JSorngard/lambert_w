@@ -217,12 +217,12 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within WM1F blocks");
 
     for (i, w) in SP_WM1_CRITICAL_POINTS.windows(2).enumerate() {
-        let upper = if (w[1] as f32) < f32::MAX {
+        let upper = if (w[1] as f32) < -f32::MIN_POSITIVE {
             w[1] as f32
         } else {
-            f32::MAX
+            0.0
         };
-        if w[0] as f32 > f32::MAX {
+        if w[0] as f32 > -f32::MIN_POSITIVE {
             break;
         }
         bench_on_vec_of_random_values_in_range(
