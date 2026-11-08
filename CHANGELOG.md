@@ -3,6 +3,12 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Use a binary search instead of a linear search to find the correct rational approximation.
+- Add benchmarks that check the performance for random inputs within each
+ rational approximation.
+
 ## [2.1.8] 2026-11-07
 
 - Fix the accuracy of `lambert_w0` in a region just above zero.
@@ -10,7 +16,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.1.7] - 2026-11-04
 
-- Fix a bug where the complex W-functions can fail to converge when given a negative error tolerance.
+- Fix a bug where the complex W-functions can fail to converge when given a
+ negative error tolerance.
 
 ## [2.1.6] - 2026-11-02
 
@@ -19,11 +26,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.1.5] - 2026-11-01
 
-- Actually exclude the file with the tests. The file name was misspelled in the last version.
+- Actually exclude the file with the tests. The file name was misspelled in the
+ last version.
 
 ## [2.1.4] - 2026-11-01
 
-- Split the tests that operate on the big files with generated data from the ones that don't.
+- Split the tests that operate on the big files with generated data from the ones
+ that don't.
 - Upload the integration tests that don't use the big data files to crates.io.
 
 ## [2.1.3] - 2026-11-01
@@ -43,12 +52,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.1.0] - 2026-10-30
 
-- Improve the accuracy of the W-functions based on Fukushima's method close to the branch point.
+- Improve the accuracy of the W-functions based on Fukushima's method close to
+ the branch point.
 - Documentation improvements.
 - The functions now return `NAN` when given an input of `NEG_INV_E`,
  because the floating point value closest to -1/e is smaller than -1/e.
  The new constants `SMALLEST_F64_IN_DOMAIN` and `SMALLEST_F32_IN_DOMAIN` are the
- smallest (most negative) values for which the W-functions in this crate return a real value.
+ smallest (most negative) values for which the W-functions in this crate return
+ a real value.
 
 ## [2.0.8] - 2026-10-26
 
@@ -64,8 +75,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.5] - 2026-09-18
 
-- Speed up the Lambert W functions that use Fukushima's method slightly (by up to 10 percent)
-  by skipping an unnecessary multiplication by 0 in the implementation of Horner's method.
+- Speed up the Lambert W functions that use Fukushima's method slightly
+  (by up to 10 percent)
+  by skipping an unnecessary multiplication by 0 in the implementation of
+  Horner's method.
 - Improvements to the integration tests.
 - Update transitive dev-dependencies.
 
@@ -88,15 +101,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.0.1] - 2026-03-26
 
-- Use [`kuva`](https://crates.io/crates/kuva) instead of [`plotters`](https://crates.io/crates/plotters/) as the plot backend in the plot example.
- This removes the need to install a system font package for every CI job that needs to compile the dev-dependencies on linux.
-- Note the fact that the implementation uses SIMD vectorization for parts of the computation in the readme and the docs.
+- Use [`kuva`](https://crates.io/crates/kuva) instead of [`plotters`](https://crates.io/crates/plotters/)
+ as the plot backend in the plot example.
+ This removes the need to install a system font package for every CI job that
+ needs to compile the dev-dependencies on linux.
+- Note the fact that the implementation uses SIMD vectorization for parts of the
+ computation in the readme and the docs.
 - Update transitive dev-dependencies.
 - CI improvements.
 
 ## [2.0.0] - 2026-02-22 (pre-released as 2.0.0-beta.1 on 2026-02-13)
 
-This release removes functionality that has been deprecated for several versions and almost a year.
+This release removes functionality that has been deprecated for several versions
+and almost a year.
 
 ### Breaking changes
 
@@ -113,22 +130,27 @@ This release removes functionality that has been deprecated for several versions
 
 ## [1.2.35-beta.1] - 2026-03-06
 
-This version can be depended on if you use version 1 and want the improvements from future releases of version 2, without the API break.
+This version can be depended on if you use version 1 and want the improvements
+from future releases of version 2, without the API break.
 
-- Simply re-exports the functions from version 2.0.0 (see https://github.com/dtolnay/semver-trick).
- [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks) flags this as an API-break, but that is a false detection: <https://github.com/obi1kenobi/cargo-semver-checks/issues/1586>.
+- Simply re-exports the functions from version 2.0.0 (see <https://github.com/dtolnay/semver-trick>).
+ [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks)
+ flags this as an API-break, but that is a false detection: <https://github.com/obi1kenobi/cargo-semver-checks/issues/1586>.
 - Updates transitive dev-dependencies.
 - Documentation improvements.
 - Update the copyright year to 2026.
 
-
 ## [1.2.34] - 2025-12-28
 
-Some code in the crate used to contain explicit calls to `unwrap()` that should always have been optimized away in theory.
-A build script and the crate [`no-panic`](https://crates.io/crates/no_panic) was used in CI to ensure that this was the case.
-That code has now been rewritten to not need those `unwraps`, and as a result this version:
+Some code in the crate used to contain explicit calls to `unwrap()` that should
+always have been optimized away in theory.
+A build script and the crate [`no-panic`](https://crates.io/crates/no_panic)
+was used in CI to ensure that this was the case.
+That code has now been rewritten to not need those `unwraps`,
+and as a result this version:
 
-- Forbids the `clippy::unwrap_used`, `clippy::expect_used`, `clippy::panic`, and `clippy::indexing_slicing` lints at the crate level,
+- Forbids the `clippy::unwrap_used`, `clippy::expect_used`, `clippy::panic`, and
+ `clippy::indexing_slicing` lints at the crate level,
 - Removes the build script that was used to check for panics in CI.
 
 This removes the audit burden due to a build script from users of the crate,
@@ -161,8 +183,8 @@ but retains most of the panic-proofness.
 - Add `inline` annotations to the math functions. This lets us keep the speedup
  that inlining grants on the target platform and CPU that I can test on,
  but lets the compiler have more of a say if it thinks
- that there should not be inlining on some other target or platform compared to `inline(always)`,
- which is what was used before version 1.2.29.
+ that there should not be inlining on some other target or platform compared to
+ `inline(always)`, which is what was used before version 1.2.29.
 - Internal code improvements.
 
 ## [1.2.30] - 2025-10-14
@@ -271,8 +293,8 @@ but retains most of the panic-proofness.
 
 ## [1.2.16] - 2025-04-27
 
-- Enabled documentation of dependencies in the documentation CI job in order to find
- broken cross-crate doc-links.
+- Enabled documentation of dependencies in the documentation CI job in order to
+ find broken cross-crate doc-links.
 - Added a header comment with an SPDX-License-Identifier to every source file.
 - Added an OpenSSF best practices badge. Probably not relevant for a project
  this small, but it was fun to do!
@@ -515,7 +537,8 @@ First stable version! 🎉
 - Removed the `24bits` and `50bits` features. Their only use was to reduce binary
  size and speed up compile time by letting the user skip compilation of parts
  of the crate if they didn't use them. However, the crate is small and very quick
- to compile, and the unused code should be removed during dead code elimination anyway.
+ to compile, and the unused code should be removed during dead code elimination
+ anyway.
 
 ## [0.5.9] - 2024-10-05
 

@@ -174,6 +174,8 @@ fn random_benches(c: &mut Criterion) {
         NEG_INV_E as f32..=0.0,
         &mut rng,
     );
+
+    drop(group);
 }
 
 criterion_group!(benches, random_benches);
