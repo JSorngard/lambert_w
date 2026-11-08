@@ -53,7 +53,7 @@ fn bench_on_vec_of_random_values_in_range<'a, R, T, F, U, Prng>(
 fn random_benches_within_blocks(c: &mut Criterion) {
     let mut rng = SmallRng::seed_from_u64(0b1010101010101);
 
-    let mut group = c.benchmark_group("random inputs within blocks");
+    let mut group = c.benchmark_group("random inputs within W0 blocks");
 
     const W0_CRITICAL_POINTS: [f64; 25] = [
         -0.3678794411714423_f64,
@@ -86,7 +86,49 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     for (i, w) in W0_CRITICAL_POINTS.windows(2).enumerate() {
         bench_on_vec_of_random_values_in_range(
             &mut group,
-            format!("W0, block {i}/{}", W0_CRITICAL_POINTS.len() - 1).as_str(),
+            format!("block {i}/{}", W0_CRITICAL_POINTS.len() - 1).as_str(),
+            lambert_w0,
+            w[0].next_up()..=w[1],
+            &mut rng,
+        );
+    }
+
+    drop(group);
+
+    let mut group = c.benchmark_group("random inputs within SP_W0 blocks");
+
+    const SP_W0_CRITICAL_POINTS: [f64; 25] = [
+        -0.3678794411714423,
+        -0.0675,
+        -1e-9,
+        1e-9,
+        0.0675,
+        0.15,
+        2.008_217_811_584_472_656_3,
+        30.539_142_109_510_895_244,
+        371.669_843_713_757_760_70,
+        4_705.918_954_265_969_037_7,
+        64_640.797_355_310_089_675,
+        965_649.030_871_163_226_41,
+        1.559_333_422_803_816_549_0e7,
+        2.702_564_027_724_190_315_7e8,
+        4.995_018_739_704_194_635_5e9,
+        9.791_115_441_672_696_027_7e10,
+        2.025_975_385_630_209_968_3e12,
+        4.407_744_425_147_793_893_9e13,
+        1.004_838_215_057_150_448_5e15,
+        2.393_255_260_235_983_768_7e16,
+        5.939_799_659_746_575_434_6e17,
+        1.532_693_858_990_176_659_2e19,
+        4.103_565_939_888_539_413_5e20,
+        2.172_370_661_049_060_431_7e141,
+        f64::MAX,
+    ];
+
+    for (i, w) in SP_W0_CRITICAL_POINTS.windows(2).enumerate() {
+        bench_on_vec_of_random_values_in_range(
+            &mut group,
+            format!("block {i}/{}", SP_W0_CRITICAL_POINTS.len() - 1).as_str(),
             lambert_w0,
             w[0].next_up()..=w[1],
             &mut rng,
