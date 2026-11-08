@@ -139,11 +139,19 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within W0F blocks");
 
     for (i, w) in SP_W0_CRITICAL_POINTS.windows(2).enumerate() {
+        let upper = if (w[1] as f32) < f32::MAX {
+            w[1] as f32
+        } else {
+            f32::MAX
+        };
+        if w[0] as f32 > f32::MAX {
+            break;
+        }
         bench_on_vec_of_random_values_in_range(
             &mut group,
             format!("block {}/{}", i + 1, SP_W0_CRITICAL_POINTS.len() - 1).as_str(),
             lambert_w0f,
-            (w[0] as f32).next_up()..=(w[1] as f32),
+            (w[0] as f32).next_up()..=upper,
             &mut rng,
         );
     }
@@ -209,11 +217,19 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within WM1F blocks");
 
     for (i, w) in SP_WM1_CRITICAL_POINTS.windows(2).enumerate() {
+        let upper = if (w[1] as f32) < f32::MAX {
+            w[1] as f32
+        } else {
+            f32::MAX
+        };
+        if w[0] as f32 > f32::MAX {
+            break;
+        }
         bench_on_vec_of_random_values_in_range(
             &mut group,
             format!("block {}/{}", i + 1, SP_WM1_CRITICAL_POINTS.len() - 1).as_str(),
             lambert_wm1f,
-            (w[0] as f32).next_up()..=(w[1] as f32),
+            (w[0] as f32).next_up()..=upper,
             &mut rng,
         );
     }
