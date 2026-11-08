@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 - Use a binary search instead of a linear search to find the correct rational approximation.
+- Add benchmarks that check the performance for random inputs within each rational approximation.
 
 ## [2.1.8] 2026-11-07
 
