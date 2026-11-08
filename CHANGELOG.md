@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-- Binary search the input domain.
+- Use a binary search instead of a linear search to find the correct rational approximation.
 
 ## [2.1.8] 2026-11-07
 
