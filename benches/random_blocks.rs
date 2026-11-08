@@ -86,7 +86,7 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     for (i, w) in W0_CRITICAL_POINTS.windows(2).enumerate() {
         bench_on_vec_of_random_values_in_range(
             &mut group,
-            format!("block {i}/{}", W0_CRITICAL_POINTS.len() - 1).as_str(),
+            format!("block {}/{}", i + 1, W0_CRITICAL_POINTS.len() - 1).as_str(),
             lambert_w0,
             w[0].next_up()..=w[1],
             &mut rng,
@@ -128,8 +128,51 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     for (i, w) in SP_W0_CRITICAL_POINTS.windows(2).enumerate() {
         bench_on_vec_of_random_values_in_range(
             &mut group,
-            format!("block {i}/{}", SP_W0_CRITICAL_POINTS.len() - 1).as_str(),
-            lambert_w0,
+            format!("block {}/{}", i + 1, SP_W0_CRITICAL_POINTS.len() - 1).as_str(),
+            sp_lambert_w0,
+            w[0].next_up()..=w[1],
+            &mut rng,
+        );
+    }
+
+    drop(group);
+
+    let mut group = c.benchmark_group("random inputs within W0F blocks");
+
+    for (i, w) in SP_W0_CRITICAL_POINTS.windows(2).enumerate() {
+        bench_on_vec_of_random_values_in_range(
+            &mut group,
+            format!("block {}/{}", i + 1, SP_W0_CRITICAL_POINTS.len() - 1).as_str(),
+            lambert_w0f,
+            (w[0] as f32).next_up()..=(w[1] as f32),
+            &mut rng,
+        );
+    }
+
+    drop(group);
+
+    let mut group = c.benchmark_group("random inputs within WM1 blocks");
+
+    const WM1_CRITICAL_POINTS: [f64; 12] = [
+        -0.3678794411714423,
+        -0.354_291_330_944_216_4,
+        -0.188_726_882_822_894_340_49,
+        -0.060_497_597_226_958_343_647,
+        -0.017_105_334_740_676_008_194,
+        -0.004_595_496_212_794_370_643_3,
+        -0.001_200_161_067_219_772_417_3,
+        -0.000_307_288_059_321_914_998_44,
+        -0.000_077_447_159_838_062_184_354,
+        -4.580_811_969_815_817_317_4e-17,
+        -6.107_367_223_659_479_298_2e-79,
+        0.0,
+    ];
+
+    for (i, w) in WM1_CRITICAL_POINTS.windows(2).enumerate() {
+        bench_on_vec_of_random_values_in_range(
+            &mut group,
+            format!("block {}/{}", i + 1, WM1_CRITICAL_POINTS.len() - 1).as_str(),
+            lambert_wm1,
             w[0].next_up()..=w[1],
             &mut rng,
         );
