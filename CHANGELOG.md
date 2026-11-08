@@ -7,6 +7,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Binary search the input domain.
 
+## [2.1.8] 2026-11-07
+
+- Fix the accuracy of `lambert_w0` in a region just above zero.
+ The accuracy was 49 bits there, it is now 50.
+
 ## [2.1.7] - 2026-11-04
 
 - Fix a bug where the complex W-functions can fail to converge when given a negative error tolerance.
