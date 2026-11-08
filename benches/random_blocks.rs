@@ -7,7 +7,7 @@ use criterion::{
     criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
 use lambert_w::{
-    lambert_w, lambert_w0, lambert_w0f, lambert_wf, lambert_wm1, lambert_wm1f, sp_lambert_w0,
+    lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0,
     sp_lambert_wm1, NEG_INV_E,
 };
 use rand::{
@@ -56,7 +56,7 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within W0 blocks");
 
     const W0_CRITICAL_POINTS: [f64; 25] = [
-        -0.3678794411714423_f64,
+        NEG_INV_E,
         -0.0675,
         -1e-9,
         1e-9,
@@ -98,7 +98,7 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within SP_W0 blocks");
 
     const SP_W0_CRITICAL_POINTS: [f64; 25] = [
-        -0.3678794411714423,
+        NEG_INV_E,
         -0.0675,
         -1e-9,
         1e-9,
@@ -154,7 +154,7 @@ fn random_benches_within_blocks(c: &mut Criterion) {
     let mut group = c.benchmark_group("random inputs within WM1 blocks");
 
     const WM1_CRITICAL_POINTS: [f64; 12] = [
-        -0.3678794411714423,
+        NEG_INV_E,
         -0.354_291_330_944_216_4,
         -0.188_726_882_822_894_340_49,
         -0.060_497_597_226_958_343_647,
@@ -174,6 +174,47 @@ fn random_benches_within_blocks(c: &mut Criterion) {
             format!("block {}/{}", i + 1, WM1_CRITICAL_POINTS.len() - 1).as_str(),
             lambert_wm1,
             w[0].next_up()..=w[1],
+            &mut rng,
+        );
+    }
+
+    drop(group);
+
+    let mut group = c.benchmark_group("random inputs within SP_WM1 blocks");
+
+    const SP_WM1_CRITICAL_POINTS: [f64; 10] = [
+        NEG_INV_E,
+        -0.207_293_777_640_384_138_99,
+        -0.071_507_705_083_841_949_275,
+        -0.020_704_412_621_717_479_786,
+        -0.005_480_012_945_209_443_573_3,
+        -0.001_367_466_989_250_804_268_7,
+        -0.000_326_142_267_310_725_659_15,
+        -0.000_074_906_612_036_101_435_088,
+        -1.096_244_452_641_099_391_9e-19,
+        -2.509_609_929_994_590_145_5e-136,
+    ];
+
+    for (i, w) in SP_WM1_CRITICAL_POINTS.windows(2).enumerate() {
+        bench_on_vec_of_random_values_in_range(
+            &mut group,
+            format!("block {}/{}", i + 1, SP_WM1_CRITICAL_POINTS.len() - 1).as_str(),
+            sp_lambert_wm1,
+            w[0].next_up()..=w[1],
+            &mut rng,
+        );
+    }
+
+    drop(group);
+
+    let mut group = c.benchmark_group("random inputs within WM1F blocks");
+
+    for (i, w) in SP_WM1_CRITICAL_POINTS.windows(2).enumerate() {
+        bench_on_vec_of_random_values_in_range(
+            &mut group,
+            format!("block {}/{}", i + 1, SP_WM1_CRITICAL_POINTS.len() - 1).as_str(),
+            lambert_wm1f,
+            (w[0] as f32).next_up()..=(w[1] as f32),
             &mut rng,
         );
     }
