@@ -7,8 +7,7 @@ use criterion::{
     criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
 use lambert_w::{
-    lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0,
-    sp_lambert_wm1, NEG_INV_E,
+    lambert_w0, lambert_w0f, lambert_wm1, lambert_wm1f, sp_lambert_w0, sp_lambert_wm1, NEG_INV_E,
 };
 use rand::{
     distr::uniform::{SampleRange, SampleUniform},
