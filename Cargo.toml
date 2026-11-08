@@ -48,6 +48,10 @@ codegen-units = 1
 panic="abort"
 
 [[bench]]
+name = "random_blocks"
+harness = false
+
+[[bench]]
 name = "random"
 harness = false
 
