@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.10] - 2026-11-18
+
+- Only try to use fused multiply-add instructions when the `std` feature is enabled.
+
 ## [2.1.9] - 2026-11-08
 
 - Use a binary search instead of a linear search to find the correct rational approximation.
