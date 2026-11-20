@@ -13,8 +13,8 @@
 
 This crate provides fast and accurate evaluation of the real valued parts of the
 principal and secondary branches of the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function),
-the inverse of x*e^x, with an extended version of the method of Toshio Fukushima [^1].
-The execution speed is of the same order as computing the natural logarithm,
+the inverse of x*e^x, with an extended version of the method of Toshio Fukushima
+[^1]. The execution speed is of the same order as computing the natural logarithm,
 and the accuracy is either 24 or 50 bits depending on user choice.
 This crate also provides a slower iterative evaluation method for all branches
 on the complex plane.
@@ -38,9 +38,7 @@ is known at compile time the optimizer can often evaluate the entire function
 at compile time as well.
 
 This crate deviates from Fukushima's method close to zero on the principal branch,
-where a Taylor polynomial is used instead.
-This is because Fukushima's method on the principal branch is optimized for an input of z + 1/e,
-but the functions in this crate just take z by itself for a more intuitive API.
+where a Taylor polynomial is used instead to improve the accuracy.
 
 ## Accuracy
 
@@ -52,7 +50,8 @@ with only 24 bits, and thus larger lookup tables.
 
 This crate can evaluate the approximation with 24 bits of accuracy on
 32-bit floats, even though it is defined on 64-bit floats in Fukushima's paper.
-This results in an accuracy reduction to 20-23 bits far from the branch point, and lower still close to it.
+This results in an accuracy reduction to 20-23 bits far from the branch point,
+and lower still close to it.
 
 ## Examples
 
@@ -107,8 +106,8 @@ assert_ulps_eq!(small, -714.9686572379665);
 assert_ulps_eq!(big, 703.2270331047702);
 ```
 
-The macros in the examples above that compare floating point values are from the [`approx`][] crate,
-and are used in the documentation examples of this crate.
+The macros in the examples above that compare floating point values are from the
+[`approx`][] crate, and are used in the documentation examples of this crate.
 
 ### Arbitrary branches in the complex plane
 
@@ -142,7 +141,8 @@ crate to compute square roots and logarithms during function evaluation.
 Does nothing if the `std` feature is enabled.
 
 `std`: use the standard library to compute square roots and logarithms for a
-potential performance gain. When this feature is disabled the crate is `no_std` compatible.
+potential performance gain.
+When this feature is disabled the crate is `no_std` compatible.
 
 <div class = "rustdoc-hidden">
 
