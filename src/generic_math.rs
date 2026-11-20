@@ -44,6 +44,7 @@ pub(crate) fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -
 /// Compute `x*mul + add` and use fused multiply-add instructions when available.
 #[inline]
 fn mul_add<T: Float>(x: T, mul: T, add: T) -> T {
+    // We demand both the std and fma features because without std every fma instruction becomes a call into libm even if the target has fma support.
     #[cfg(all(target_feature = "fma", feature = "std"))]
     {
         x.mul_add(mul, add)
