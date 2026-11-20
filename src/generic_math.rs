@@ -14,7 +14,6 @@ use num_traits::Float;
 /// Evaluate a rational function at `x` using [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method).
 ///
 /// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
-#[inline]
 pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
     x: T,
     numerator_coefficients: [T; N],
@@ -30,7 +29,6 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
 /// Evaluate a polynomial at `x` using [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method).
 ///
 /// The coefficients are assumed to be sorted in ascending order by the degree of the associated x-term.
-#[inline]
 pub(crate) fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
         .into_iter()
@@ -42,7 +40,6 @@ pub(crate) fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -
 }
 
 /// Compute `x*mul + add` and use fused multiply-add instructions when available.
-#[inline]
 fn mul_add<T: Float>(x: T, mul: T, add: T) -> T {
     // We demand both the std and fma features because without std every fma instruction becomes a call into libm even if the target has fma support.
     #[cfg(all(target_feature = "fma", feature = "std"))]
