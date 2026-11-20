@@ -104,8 +104,7 @@ pub fn lambert_w0f(z: f32) -> f32 {
                         // W <= 0.854, X_1
 
                         rational_function(
-                            // Another artifact of taking z instead of z + 1/e as input.
-                            // When we add 1/e we introduce a cancellation error.
+                            // When we add 1/e we introduce a cancellation error that matters close to the branch point.
                             // We compensate for that here.
                             sqrt((z - NEG_INV_E) + NEG_INV_E_CORRECTION_32_BIT),
                             [
