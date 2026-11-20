@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.11] - 2026-11-20
+
+- Documentation and code structure improvements.
+
 ## [2.1.10] - 2026-11-18
 
 - Only try to use fused multiply-add instructions when the `std` feature is enabled.
