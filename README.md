@@ -39,8 +39,6 @@ at compile time as well.
 
 This crate deviates from Fukushima's method close to zero on the principal branch,
 where a Taylor polynomial is used instead.
-This is because Fukushima's method on the principal branch is optimized for an input of z + 1/e,
-but the functions in this crate just take z by itself for a more intuitive API.
 
 ## Accuracy
 
