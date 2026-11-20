@@ -33,12 +33,12 @@ pub(crate) fn rational_function<T: Float, const N: usize, const D: usize>(
 #[inline]
 pub(crate) fn polynomial<T: Float, const N: usize>(x: T, coefficients: [T; N]) -> T {
     coefficients
-        .iter()
+        .into_iter()
         .rev()
-        .skip(1)
-        .fold(*coefficients.last().unwrap_or(&T::zero()), |acc, &c| {
+        .reduce(|acc, c| {
             mul_add(x, acc, c)
         })
+        .unwrap_or(T::zero())
 }
 
 /// Compute `x*mul + add` and use fused multiply-add instructions when available.
