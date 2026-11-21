@@ -92,6 +92,7 @@ with open("tests/test_data/random_test_cases.rs", "w") as f:
 
     critical_z_values = [
         -0.3678794411714423,
+        -0.15,
         -0.0675,
         0.0675,
         0.15,

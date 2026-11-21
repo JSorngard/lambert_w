@@ -69,7 +69,7 @@ use crate::{
 pub fn lambert_w0(z: f64) -> f64 {
     if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
-    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION)
+    } else if (-PRINCIPAL_BRANCH_MAX_TRICKY_REGION..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION)
         .contains(&z)
     {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
@@ -88,11 +88,7 @@ pub fn lambert_w0(z: f64) -> f64 {
         {
             z * polynomial(z, w0_taylor_coefficients::<18>())
         } else {
-            // Between the near zero threshold and the end of the "tricky region".
-            // This part of the domain was found by running a lot of tests on random data.
-            // A polynomial of this degree should still be faster than a Halley iteration
-            // since that would involve logarithms.
-            z * polynomial(z, w0_taylor_coefficients::<32>())
+            z * polynomial(z, w0_taylor_coefficients::<33>())
         }
     } else {
         // Fukushima's approximation.
