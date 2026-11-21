@@ -7,7 +7,7 @@
 
 use kuva::{
     backend::svg::SvgBackend,
-    plot::{LinePlot, legend::LegendPosition},
+    plot::{legend::LegendPosition, LinePlot},
     render::{layout::Layout, plots::Plot, render::render_multiple},
 };
 use lambert_w::{lambert_w0, lambert_wm1, SMALLEST_F64_IN_DOMAIN};
