@@ -7,7 +7,7 @@
 
 use kuva::{
     backend::svg::SvgBackend,
-    plot::LinePlot,
+    plot::{LinePlot, legend::LegendPosition},
     render::{layout::Layout, plots::Plot, render::render_multiple},
 };
 use lambert_w::{lambert_w0, lambert_wm1, SMALLEST_F64_IN_DOMAIN};
@@ -43,8 +43,9 @@ fn main() {
 
     let layout = Layout::auto_from_plots(&plots)
         .with_title("Lambert W function")
-        .with_x_label("x")
-        .with_y_label("y");
+        .with_x_label("z")
+        .with_y_label("W(z)")
+        .with_legend_position(LegendPosition::InsideBottomCenter);
 
     let scene = render_multiple(plots, layout);
     let svg = SvgBackend.render_scene(&scene);
