@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [2.1.12] - 2026-11-21
 
 - Increase the accuracy of `lambert_w0` near zero from an error of 8 ulps to 7.
+- CI improvements.
 
 ## [2.1.11] - 2026-11-20
 
