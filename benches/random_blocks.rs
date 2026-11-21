@@ -54,8 +54,9 @@ fn random_benches_within_blocks(c: &mut Criterion) {
 
     let mut group = c.benchmark_group("random inputs within W0 blocks");
 
-    const W0_CRITICAL_POINTS: [f64; 25] = [
+    const W0_CRITICAL_POINTS: [f64; 26] = [
         NEG_INV_E,
+        -0.15,
         -0.0675,
         -1e-9,
         1e-9,

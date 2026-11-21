@@ -69,7 +69,7 @@ use crate::{
 pub fn lambert_w0(z: f64) -> f64 {
     if z < SMALLEST_F64_IN_DOMAIN {
         f64::NAN
-    } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION)
+    } else if (-PRINCIPAL_BRANCH_MAX_TRICKY_REGION..=PRINCIPAL_BRANCH_MAX_TRICKY_REGION)
         .contains(&z)
     {
         // Around zero the principal branch of the W function can be expressed as a Taylor polynomial:
@@ -78,21 +78,23 @@ pub fn lambert_w0(z: f64) -> f64 {
         // In the article by Fuskushima he does not do this special near-zero branch.
         // His approximation has good absolute error near zero, but the error in ulps becomes very large there.
 
-        if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD
+        let w_guess = if (-PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD
             ..=PRINCIPAL_BRANCH_APPROXIMATELY_ZERO_THRESHOLD)
             .contains(&z)
         {
             z * polynomial(z, w0_taylor_coefficients::<2>())
-        } else if (-PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD..=PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD)
-            .contains(&z)
-        {
-            z * polynomial(z, w0_taylor_coefficients::<18>())
         } else {
-            // Between the near zero threshold and the end of the "tricky region".
-            // This part of the domain was found by running a lot of tests on random data.
-            // A polynomial of this degree should still be faster than a Halley iteration
-            // since that would involve logarithms.
-            z * polynomial(z, w0_taylor_coefficients::<32>())
+            z * polynomial(z, w0_taylor_coefficients::<18>())
+        };
+
+        if z.abs() >= PRINCIPAL_BRANCH_NEAR_ZERO_THRESHOLD {
+            let u = w_guess + 1.0;
+            let zn = ln(z / w_guess) - w_guess;
+            let qn = 2.0 * u * (u + (2.0 / 3.0) * zn);
+            let epsilon = zn / u * (qn - zn) / (qn - 2.0 * zn);
+            w_guess * (1.0 + epsilon)
+        } else {
+            w_guess
         }
     } else {
         // Fukushima's approximation.
