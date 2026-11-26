@@ -3,6 +3,10 @@
 This file contains the changes to the crate since version 0.1.1.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Update transitive dev-dependencies.
+
 ## [2.1.12] - 2026-11-21
 
 - Increase the accuracy of `lambert_w0` near zero from an error of 8 ulps to 7.
