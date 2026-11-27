@@ -65,7 +65,7 @@ use approx::assert_ulps_eq;
 
 let Ω = lambert_w0(1.0);
 
-assert_ulps_eq!(Ω, 0.567143290409783873, epsilon = 0.0, max_ulps = 8);
+assert_ulps_eq!(Ω, 0.567143290409783873, epsilon = 0.0, max_ulps = 7);
 assert_ulps_eq!(Ω * f64::exp(Ω), 1.0, epsilon = 0.0, max_ulps = 7);
 ```
 
