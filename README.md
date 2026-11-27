@@ -69,6 +69,8 @@ assert_ulps_eq!(Ω, 0.567143290409783873, epsilon = 0.0, max_ulps = 7);
 assert_ulps_eq!(Ω * f64::exp(Ω), 1.0, epsilon = 0.0, max_ulps = 7);
 ```
 
+Here the answer is asserted to be within at most 7 ulps of the closest `f64` to the true answer. The 7 comes from the 50 bits of accuracy in a 53-bit mantissa, or at most 2^(53 - 50) - 1 = 7 ulps of error.
+
 Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
 
 ```rust
@@ -89,8 +91,8 @@ use approx::assert_ulps_eq;
 let Ω = lambert_w0f(1.0);
 let mln4 = lambert_wm1f(-f32::ln(2.0) / 2.0);
 
-assert_ulps_eq!(Ω, 0.56714329);
-assert_ulps_eq!(mln4, -f32::ln(4.0));
+assert_ulps_eq!(Ω, 0.56714329, epsilon = 0.0, max_ulps = 15);
+assert_ulps_eq!(mln4, -f32::ln(4.0), epsilon = 0.0, max_ulps = 15);
 ```
 
 The implementation can handle extreme inputs just as well:
