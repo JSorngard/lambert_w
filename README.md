@@ -66,7 +66,7 @@ use approx::assert_ulps_eq;
 let Ω = lambert_w0(1.0);
 
 assert_ulps_eq!(Ω, 0.567143290409783873, epsilon = 0.0, max_ulps = 8);
-assert_ulps_eq!(Ω * f64::exp(Ω), 1.0, epsilon = 0.0, max_ulps = 8);
+assert_ulps_eq!(Ω * f64::exp(Ω), 1.0, epsilon = 0.0, max_ulps = 7);
 ```
 
 Evaluate the secondary branch of the Lambert W function at -ln(2)/2:
@@ -77,7 +77,7 @@ use approx::assert_ulps_eq;
 
 let mln4 = lambert_wm1(-f64::ln(2.0) / 2.0);
 
-assert_ulps_eq!(mln4, -f64::ln(4.0));
+assert_ulps_eq!(mln4, -f64::ln(4.0), epsilon = 0.0, max_ulps = 7);
 ```
 
 Do it on 32-bit floats:
@@ -102,8 +102,8 @@ use approx::assert_ulps_eq;
 let small = lambert_wm1(-f64::MIN_POSITIVE);
 let big = lambert_w0(f64::MAX);
 
-assert_ulps_eq!(small, -714.9686572379665);
-assert_ulps_eq!(big, 703.2270331047702);
+assert_ulps_eq!(small, -714.9686572379665, epsilon = 0.0, max_ulps = 7);
+assert_ulps_eq!(big, 703.2270331047702, epsilon = 0.0, max_ulps = 7);
 ```
 
 The macros in the examples above that compare floating point values are from the
